@@ -406,9 +406,6 @@
 
 ## 14. 参考链接
 
-### 精选列表
-- [Awesome-Force-Tactile-VLA](https://github.com/OpenHelix-Team/Awesome-Force-Tactile-VLA) — 力/触觉VLA论文维护列表
-
 ### 重要GitHub组织 / 项目主页
 - [Google DeepMind](https://deepmind.google/models/gemini-robotics/) — Gemini Robotics, Gemini Robotics-ER, RT-2
 - [PKU-EPIC](https://github.com/PKU-EPIC) — DexGraspNet, UniDexGrasp, BODex, Dexonomy

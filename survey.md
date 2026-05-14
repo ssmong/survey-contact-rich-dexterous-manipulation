@@ -406,9 +406,6 @@ The capability matrix and the broader survey reveal several patterns:
 
 ## 14. Reference Links
 
-### Curated Lists
-- [Awesome-Force-Tactile-VLA](https://github.com/OpenHelix-Team/Awesome-Force-Tactile-VLA) — Maintained list of force/tactile VLA papers
-
 ### Key GitHub Organizations / Project Pages
 - [Google DeepMind](https://deepmind.google/models/gemini-robotics/) — Gemini Robotics, Gemini Robotics-ER, RT-2
 - [PKU-EPIC](https://github.com/PKU-EPIC) — DexGraspNet, UniDexGrasp, BODex, Dexonomy

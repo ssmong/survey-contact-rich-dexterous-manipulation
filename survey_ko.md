@@ -406,9 +406,6 @@ VLM 백본을 사용하지 않지만 다지 조작의 베이스라인 또는 구
 
 ## 14. 참고 링크
 
-### 큐레이션된 목록
-- [Awesome-Force-Tactile-VLA](https://github.com/OpenHelix-Team/Awesome-Force-Tactile-VLA) — 힘/촉각 VLA 논문 관리 목록
-
 ### 주요 GitHub 조직 / 프로젝트 페이지
 - [Google DeepMind](https://deepmind.google/models/gemini-robotics/) — Gemini Robotics, Gemini Robotics-ER, RT-2
 - [PKU-EPIC](https://github.com/PKU-EPIC) — DexGraspNet, UniDexGrasp, BODex, Dexonomy

@@ -41,7 +41,7 @@ UI = {
         "ft_res": "Resources",
         "ft_bottom": "GitHub links and weight availability were checked as of {d}; links may become stale.",
         "og": "Interactive survey covering {n}+ papers across dexterous manipulation, force-aware VLAs, and impedance control.",
-        "lang_links": [("ko/", "한국어"), ("zh/", "中文")],
+        "lang_links": [("", "ENG", True), ("ko/", "KOR", False), ("zh/", "CHN", False)],
     },
     "ko": {
         "html_lang": "ko",
@@ -70,7 +70,7 @@ UI = {
         "ft_res": "참고 자료",
         "ft_bottom": "GitHub 링크 및 가중치 공개 여부는 {d} 기준으로 확인되었으며, 이후 변경될 수 있습니다.",
         "og": "다지 조작, 힘 인식 VLA 및 임피던스 제어에 관한 {n}+편의 논문을 다루는 인터랙티브 서베이.",
-        "lang_links": [("../", "English"), ("../zh/", "中文")],
+        "lang_links": [("../", "ENG", False), ("", "KOR", True), ("../zh/", "CHN", False)],
     },
     "zh": {
         "html_lang": "zh",
@@ -99,7 +99,7 @@ UI = {
         "ft_res": "参考资源",
         "ft_bottom": "GitHub链接和权重可用性截至{d}验证，链接可能会失效。",
         "og": "涵盖{n}+篇灵巧操作、力感知VLA及阻抗控制论文的交互式综述。",
-        "lang_links": [("../", "English"), ("../ko/", "한국어")],
+        "lang_links": [("../", "ENG", False), ("../ko/", "KOR", False), ("", "CHN", True)],
     },
 }
 
@@ -541,7 +541,13 @@ def count_stats(md: str) -> dict[str, int]:
 
 def build(md: str, lang: str = "en") -> tuple[str, int]:
     u = UI[lang]
-    lang_links_html = " ".join(f'<a href="{url}" class="lang-toggle">{label}</a>' for url, label in u["lang_links"])
+    parts = []
+    for url, label, active in u["lang_links"]:
+        if active:
+            parts.append(f'<span class="lang-toggle lang-active">{label}</span>')
+        else:
+            parts.append(f'<a href="{url}" class="lang-toggle">{label}</a>')
+    lang_links_html = '<span class="lang-sep">|</span>'.join(parts)
     detail_dir = ROOT / u["detail_src"]
     details_out = DOCS_DIR / u["details_out"]
     detail_map = scan_details(detail_dir)
@@ -665,7 +671,6 @@ def build(md: str, lang: str = "en") -> tuple[str, int]:
       </div>
       <div class="footer-links">
         <h4>{u['ft_res']}</h4>
-        <a href="https://github.com/OpenHelix-Team/Awesome-Force-Tactile-VLA" target="_blank" rel="noopener">Awesome-Force-Tactile-VLA</a>
         <a href="https://github.com/Physical-Intelligence/openpi" target="_blank" rel="noopener">OpenPI (pi0)</a>
         <a href="https://github.com/NVIDIA/Isaac-GR00T" target="_blank" rel="noopener">Isaac-GR00T</a>
       </div>
