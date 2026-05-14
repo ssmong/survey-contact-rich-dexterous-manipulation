@@ -16,8 +16,8 @@ DETAIL_BTN = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke
 UI = {
     "en": {
         "html_lang": "en",
-        "survey_file": "survey.md",
-        "detail_src": "detailed_survey",
+        "survey_file": "content/survey.md",
+        "detail_src": "content/detailed",
         "output": "index.html",
         "details_out": "details",
         "css": "style.css", "js": "app.js",
@@ -45,8 +45,8 @@ UI = {
     },
     "ko": {
         "html_lang": "ko",
-        "survey_file": "survey_ko.md",
-        "detail_src": "detailed_survey_ko",
+        "survey_file": "content/survey_ko.md",
+        "detail_src": "content/detailed_ko",
         "output": "ko/index.html",
         "details_out": "ko/details",
         "css": "../style.css", "js": "../app.js",
@@ -74,8 +74,8 @@ UI = {
     },
     "zh": {
         "html_lang": "zh",
-        "survey_file": "survey_zh.md",
-        "detail_src": "detailed_survey_zh",
+        "survey_file": "content/survey_zh.md",
+        "detail_src": "content/detailed_zh",
         "output": "zh/index.html",
         "details_out": "zh/details",
         "css": "../style.css", "js": "../app.js",

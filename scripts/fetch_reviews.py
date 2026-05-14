@@ -8,8 +8,8 @@ import urllib.request
 import urllib.parse
 from pathlib import Path
 
-ROOT = Path(__file__).parent
-DETAIL_DIR = ROOT / "detailed_survey"
+ROOT = Path(__file__).parent.parent
+DETAIL_DIR = ROOT / "content" / "detailed"
 REVIEWS_PATH = ROOT / "reviews" / "data.json"
 API = "https://api2.openreview.net"
 

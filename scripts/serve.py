@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Watch survey.md + detailed_survey/ → auto-rebuild → auto-refresh browser."""
+"""Watch content/ → auto-rebuild → auto-refresh browser."""
 
 import subprocess
 import sys
@@ -7,7 +7,7 @@ from pathlib import Path
 
 from livereload import Server
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).parent.parent
 
 def rebuild():
     print("Rebuilding...", flush=True)
@@ -17,8 +17,7 @@ def main():
     rebuild()
 
     server = Server()
-    server.watch(str(ROOT / "survey.md"), rebuild)
-    server.watch(str(ROOT / "detailed_survey"), rebuild)
+    server.watch(str(ROOT / "content"), rebuild)
     server.watch(str(ROOT / "docs" / "style.css"))
     server.watch(str(ROOT / "docs" / "app.js"))
 

@@ -15,22 +15,30 @@ Available in English, [Korean](https://ssmong.github.io/survey-contact-rich-dext
 - Dark / light theme toggle
 - Responsive layout
 
+## Structure
+
+```
+build.py            # Markdown → HTML build script
+content/            # Survey source files (EN/KO/ZH)
+  survey.md
+  detailed/         # Per-paper detail pages
+reviews/            # OpenReview data
+scripts/            # Dev utilities (serve, fetch_reviews)
+docs/               # Generated site (GitHub Pages)
+```
+
 ## Building
 
 ```bash
 python build.py
 ```
 
-This reads `survey.md` (and `survey_ko.md`, `survey_zh.md`) plus the `detailed_survey/` directories and generates the static site into `docs/`.
-
 ## Local dev server
 
 ```bash
 pip install livereload
-python serve.py
+python scripts/serve.py
 ```
-
-Auto-rebuilds on changes to source files.
 
 ## Author
 
