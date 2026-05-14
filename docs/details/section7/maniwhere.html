@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.4 Maniwhere</h3>
+<p class="dp-p"><strong>Full title:</strong> Maniwhere: Learning to Manipulate Anywhere with RL and Visual Generalization</p>
+<p class="dp-p"><strong>Authors:</strong> Zhecheng Yuan, et al. (Shanghai AI Lab / Tsinghua)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CoRL 2024</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2407.15815</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with visual representation learning. Teacher-student framework where the teacher uses privileged state and the student uses visual observations. Visual domain randomization and data augmentation for generalization across environments.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Allegro Hand (16 DoF) mounted on a robot arm</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes. Sim-to-real transfer demonstrated with visual generalization to novel environments (real).</p>
+<p class="dp-p"><strong>Tasks:</strong> 8 dexterous manipulation tasks including in-hand reorientation, object pick-and-place, and functional manipulation. The key evaluation dimension is visual generalization: policies must work across different backgrounds, lighting conditions, and distractor objects.</p>
+<p class="dp-p"><strong>Key methodology:</strong> Maniwhere addresses a critical gap in dexterous RL: policies that work in sim or in a specific real-world setup but fail when the visual environment changes. The approach combines RL training with aggressive visual domain randomization and learns visual representations that are invariant to background, lighting, and distractor changes. A teacher-student framework separates the manipulation skill (learned with privileged state) from the visual perception (learned via distillation with visual observations).</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated visually generalizable dexterous manipulation -- policies that transfer across different visual environments, not just sim-to-real (real)</li>
+<li>Showed that visual domain randomization combined with representation learning enables robust dexterous policies for diverse settings</li>
+<li>Evaluated on 8 tasks spanning grasping, reorientation, and functional manipulation with the Allegro Hand (real)</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Visual generalization is evaluated on background/lighting changes, not on object shape generalization. Allegro Hand is the only platform tested. 8 tasks is a moderate evaluation scale.</p>
+<p class="dp-p"><strong>Results:</strong> Achieved successful sim-to-real transfer with visual generalization across novel environments on 8 tasks (real). Code publicly available.</p>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL (PPO) with visual domain randomization -- all data generated in simulation.</li>
+<li><strong>Collection method:</strong> Pure RL in IsaacGym. Teacher-student framework: teacher trained with privileged state, student uses visual observations. Aggressive visual domain randomization (backgrounds, lighting, distractors) for visual generalization. Sim-to-real transfer on Allegro Hand + robot arm.</li>
+<li><strong>Data scale:</strong> Standard parallel RL training in IsaacGym. 8 dexterous manipulation tasks for evaluation.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> Code publicly available.</li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported. The visual student policy (CNN encoder + MLP) runs in <5ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Allegro Hand (16 DoF) mounted on a robot arm. Policy trained in IsaacGym; deployed via sim-to-real transfer with visual generalization to novel environments.</li>
+<li><strong>Real-time capable?</strong> Yes. Demonstrated real-time dexterous manipulation on real Allegro Hand across varied environments.</li>
+</ul>

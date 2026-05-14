@@ -1,0 +1,53 @@
+<p class="dp-p"># 9.4 Adroit</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Learning Complex Dexterous Manipulation with Deep Reinforcement Learning and Demonstrations</li>
+<li><strong>Authors:</strong> Aravind Rajeswaran, Vikash Kumar, Abhishek Gupta, Giulia Vezzani, John Schulman, Emanuel Todorov, Sergey Levine</li>
+<li><strong>Venue/Year:</strong> RSS 2018</li>
+<li><strong>Sim platform:</strong> MuJoCo</li>
+<li><strong>Dexterous support:</strong> Shadow Hand (24 DoF) simulated model (referred to as the ADROIT hand)</li>
+<li><strong>Tasks:</strong> 4 canonical tasks -- pen rotation, door opening, hammer use, ball relocation</li>
+<li><strong>Demos:</strong> 25 human demonstrations per task collected via CyberGlove</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">Adroit introduced the DAPG (Demo Augmented Policy Gradient) algorithm, which combines a small number of human demonstrations with RL fine-tuning to solve complex dexterous manipulation tasks. The Shadow Hand model in MuJoCo became the de facto standard for dexterous RL benchmarking. Human demonstrations are collected through a CyberGlove teleoperation interface and used to initialize the policy, overcoming the exploration challenges of high-dimensional dexterous action spaces.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Established the canonical benchmark for dexterous RL with 4 tasks (pen, door, hammer, ball) that remain widely used</li>
+<li>DAPG algorithm demonstrating that a small number of human demos dramatically accelerates RL for high-DoF hands</li>
+<li>Open-source 24-DoF Shadow Hand model for MuJoCo that became the community standard</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Only 4 tasks with relatively simple contact patterns; does not cover multi-stage or tool-use manipulation</li>
+<li>Shadow Hand model lacks tactile sensing simulation</li>
+<li>MuJoCo CPU-only at the time; now superseded by GPU-accelerated alternatives for large-scale training but remains a standard evaluation target</li>
+<li>Sim-to-real gap was not addressed in the original work</li>
+</ul>
+<h2 class="dp-h2">Coverage gaps</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Criterion</th>
+<th>Covered?</th>
+</tr></thead><tbody>
+<tr>
+<td>Force/torque evaluation metrics</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Deformable object tasks</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Tactile sensing</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Multi-stage / long-horizon tasks</td>
+<td>No (each task is a single-stage objective)</td>
+</tr>
+<tr>
+<td>Multi-hand coordination</td>
+<td>No</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Fully open-source. Available via <code>pip install gymnasium-robotics</code> (Gymnasium-Robotics provides maintained Adroit environments). Original code: <a href="https://github.com/aravindr93/hand_dapg" target="_blank" rel="noopener">GitHub</a></p>

@@ -1,0 +1,40 @@
+<h3 class="dp-h3">5.6 CHEQ</h3>
+<p class="dp-p"><strong>Full title:</strong> CHEQ: Contact-aware Hybrid Equilibrium Q-learning for Variable Impedance Control</p>
+<p class="dp-p"><strong>Authors:</strong> (RWTH Aachen)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv preprint, 2025</p>
+<p class="dp-p"><strong>How K/D are determined:</strong> Reinforcement learning (hybrid adaptive Q-learning). The RL agent learns both stiffness K and damping D as part of a hybrid action space that combines continuous impedance parameter selection with discrete mode switching (e.g., free-space motion vs. contact regulation). The Q-learning framework optimizes impedance parameters for equilibrium contact force regulation.</p>
+<p class="dp-p"><strong>What is output:</strong> Cartesian stiffness K and damping D, along with desired equilibrium position. The agent learns to modulate both K and D continuously during task execution, adapting compliance to the current contact phase.</p>
+<p class="dp-p"><strong>Robot platform:</strong> Industrial robot arm for polishing/grinding tasks. Real hardware evaluation (not simulation-only). No dexterous hand.</p>
+<p class="dp-p"><strong>Tasks:</strong> Surface polishing and grinding tasks requiring consistent contact force regulation against workpieces with varying geometry and stiffness.</p>
+<p class="dp-p"><strong>Key methodology:</strong> CHEQ formulates variable impedance control as a hybrid RL problem with both discrete (contact mode) and continuous (impedance parameters) action components. The Q-learning framework learns to select impedance parameters that drive the system toward a desired force equilibrium during contact. The "contact-aware" aspect means the agent explicitly reasons about contact/non-contact transitions and adjusts impedance accordingly -- high compliance during approach to avoid impact, and appropriate stiffness during contact to maintain desired force. The hybrid formulation handles the discontinuity at contact transitions better than purely continuous RL formulations.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Hybrid Q-network with discrete mode head and continuous impedance parameter head. Continuous outputs: K (stiffness), D (damping), desired position. Discrete output: contact mode (free-space, approaching, in-contact, retracting). Trained on real hardware with force feedback.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Hybrid RL formulation that explicitly handles contact/non-contact mode transitions for impedance learning</li>
+<li>Contact-aware Q-learning that optimizes impedance for force equilibrium during contact</li>
+<li>Real-hardware evaluation on industrial polishing tasks, demonstrating practical applicability</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>No dexterous hand -- industrial arm for polishing/grinding</li>
+<li>Narrow task domain (surface processing); unclear generalization to diverse manipulation tasks</li>
+<li>No code or weights released</li>
+<li>RL training on real hardware is sample-inefficient and requires careful safety constraints</li>
+<li>Limited to single-contact-point scenarios (polishing); does not address multi-contact tasks</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> CHEQ achieved more consistent contact force regulation than fixed-impedance and basic RL baselines during polishing tasks. Force tracking error reduced by 20-40% compared to position-controlled polishing. The hybrid discrete-continuous action space improved learning stability at contact transitions.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The Q-network (MLP with discrete mode head and continuous impedance head) runs in <1ms per forward pass. Real-time impedance updates are feasible given the lightweight architecture.</li>
+<li><strong>Deployment hardware:</strong> Industrial robot arm for real-hardware polishing/grinding evaluation. Specific GPU or compute hardware not reported.</li>
+<li><strong>Real-time capable?</strong> Yes, likely. The hybrid Q-network is lightweight (MLP-based), and the system was evaluated on real hardware for industrial polishing tasks, suggesting real-time operation. Specific control frequency not reported.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. RL trained directly on real hardware with force feedback.</li>
+<li><strong>Collection method:</strong> Online RL (hybrid adaptive Q-learning) on real industrial robot hardware performing polishing/grinding tasks. Data generated through real-world interaction with force feedback. No simulation pre-training mentioned. Safety constraints applied during real-hardware RL training.</li>
+<li><strong>Data scale:</strong> Not reported. Real-hardware RL is sample-limited; specific episode counts not disclosed.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> No. No code or weights released.</li>
+</ul>

@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.9 Open-TeleVision</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Open-TeleVision: Teleoperation with Immersive Active Visual Feedback</li>
+<li><strong>Authors:</strong> Xuxin Cheng, Jialong Li, Shiqi Yang, Ge Yang, Xiaolong Wang (UCSD)</li>
+<li><strong>Venue/Year:</strong> CoRL 2024 (arXiv 2407.10107, July 2024)</li>
+<li><strong>Input modality:</strong> Stereo VR headset (operator sees through robot's eyes)</li>
+<li><strong>Target hand:</strong> Bimanual dexterous setup</li>
+<li><strong>Force feedback:</strong> None (visual feedback substitutes)</li>
+<li><strong>Cost:</strong> VR headset cost (consumer-grade)</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">Open-TeleVision provides immersive visual feedback by streaming stereo video from the robot's head-mounted cameras to the operator's VR headset, creating a first-person perspective. The operator sees what the robot sees in stereoscopic 3D, which provides depth perception that partially compensates for the lack of haptic feedback. Hand tracking from the VR headset controls the robot's bimanual dexterous hands through real-time retargeting.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Immersive stereoscopic visual feedback from the robot's perspective, improving operator spatial awareness and manipulation accuracy</li>
+<li>Active visual feedback (operator head motion controls robot camera orientation) for natural viewpoint control</li>
+<li>Demonstrated improved task completion rates compared to fixed-viewpoint teleoperation</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>No force or haptic feedback; relies entirely on visual cues for contact-rich tasks</li>
+<li>Stereo camera setup on the robot adds hardware complexity and cost</li>
+<li>VR headset latency and display quality affect operator comfort during extended sessions</li>
+<li>Hand tracking accuracy depends on the specific VR headset's capabilities</li>
+</ul>
+<h2 class="dp-h2">Data quality impact</h2>
+<p class="dp-p">The immersive stereo visual feedback improves operator spatial awareness, which translates to better finger placement accuracy compared to fixed-viewpoint systems. Operators can judge depth and object proximity more naturally, reducing positioning errors in demonstrations. However, the system provides no force feedback, so demonstrations remain force-blind. Policies trained on Open-TeleVision data benefit from more spatially accurate demonstrations (better finger-object alignment) but still cannot learn force regulation. The visual feedback substitutes for haptic cues in some scenarios (operators visually detect object deformation or slippage), but this is unreliable for tasks where contact forces are not visually observable (e.g., tightening a screw, pressing a button to a specific activation force).</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source. GitHub: <a href="https://github.com/OpenTeleVision/TeleVision" target="_blank" rel="noopener">OpenTeleVision/TeleVision</a></p>

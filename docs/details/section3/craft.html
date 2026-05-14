@@ -1,0 +1,39 @@
+<h2 class="dp-h2">3.11 CRAFT</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> CRAFT: Contact-Rich Affordance-aware Force-guided Transformer for Manipulation</li>
+<li><strong>Authors:</strong> Not specified in survey table</li>
+<li><strong>Venue/Year:</strong> arXiv preprint, 2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2602.12532</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> Force sensing (specific sensor type not detailed in the survey table).</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> No. Position-only output.</p>
+<blockquote class="dp-quote"><strong>Limitation (position-only output):</strong> Position-only output; the policy cannot actively regulate contact forces despite receiving force/tactile input.</blockquote>
+<p class="dp-p"><strong>Robot platform:</strong> Teleoperated robotic arm.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> Deformable object manipulation and alignment tasks that require contact-rich interactions.</p>
+<p class="dp-p"><strong>Key methodology:</strong> CRAFT integrates force information with contact affordance reasoning within a transformer-based policy. The model learns to predict contact affordances (where and how to make contact) conditioned on force feedback, enabling force-guided manipulation of deformable objects and precise alignment. The affordance prediction module identifies task-relevant contact regions, and the force-guided transformer generates actions that achieve desired contact states. This approach is particularly suited for tasks where the contact geometry changes during manipulation (e.g., deformable objects).</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Transformer-based policy with affordance prediction module and force encoder. The architecture combines contact affordance reasoning with force-conditioned action generation.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Combines contact affordance prediction with force-guided action generation, providing a structured approach to contact-rich manipulation.</li>
+<li>Addresses deformable object manipulation, where contact geometry changes dynamically and force feedback is essential.</li>
+<li>Proposes a force-guided attention mechanism that conditions manipulation actions on the current and desired contact states.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> No code or weights released. Limited details available on the specific force sensor and robot platform. The affordance prediction module may not generalize to novel objects without retraining. Evaluation is limited to deformable and alignment tasks.</p>
+<p class="dp-p"><strong>Results:</strong></p>
+<blockquote class="dp-quote"><strong>Quantitative results: not available.</strong> The arXiv abstract does not provide specific success rates or numerical comparisons. The paper reports improved performance on deformable object manipulation compared to force-unaware baselines, particularly on tasks where contact geometry changes during execution, but no concrete numbers could be verified from publicly available information.</blockquote>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The paper does not disclose per-step inference latency or control frequency.</li>
+<li><strong>Deployment hardware:</strong> Franka Emika Panda robot arm for real-world experiments. The VIB module is described as "lightweight and model-agnostic," integrated with pi-zero and RDT architectures. Inference GPU not specified.</li>
+<li><strong>Real-time capable?</strong> Not verified. The lightweight VIB module suggests low computational overhead, but no quantitative latency benchmarks are provided.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstration dataset for deformable object manipulation and alignment tasks. No named benchmark.</li>
+<li><strong>Collection method:</strong> Teleoperated demonstrations collected via a "homologous leader-follower teleoperation system that collects synchronized vision, language, and force data across diverse contact-rich tasks."</li>
+<li><strong>Data scale:</strong> Not reported.</li>
+<li><strong>Teleop equipment:</strong> Homologous leader-follower teleoperation system (specific hardware not detailed).</li>
+<li><strong>Data format:</strong> Synchronized multi-modal: vision + language + force data.</li>
+<li><strong>Publicly available?</strong> No. No code or weights released.</li>
+</ul>

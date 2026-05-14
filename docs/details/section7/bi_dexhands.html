@@ -1,0 +1,55 @@
+<h3 class="dp-h3">7.3 Bi-DexHands</h3>
+<p class="dp-p"><strong>Type: Benchmark + baseline method</strong></p>
+<p class="dp-p"><strong>Full title:</strong> Towards Human-Level Bimanual Dexterous Manipulation with Reinforcement Learning</p>
+<p class="dp-p"><strong>Authors:</strong> Yuanpei Chen, Tianhao Wu, Shengjie Wang, Xidong Feng, Jiechuan Jiang, Zongqing Lu, Stephen McAleer, Hao Dong, Song-Chun Zhu, Yaodong Yang</p>
+<p class="dp-p"><strong>Venue/Year:</strong> NeurIPS 2022 (Datasets and Benchmarks Track)</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2206.08686</p>
+<p class="dp-p"><strong>RL algorithm:</strong> Comprehensive benchmark supporting multiple RL algorithms: PPO, SAC, TRPO, MAPPO, HAPPO, MADDPG. Also supports offline RL (BCQ, CQL, TD3+BC) and multi-agent RL formulations.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> 2x Shadow Hands (48 DoF total, 24 per hand)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym (NVIDIA GPU-accelerated)</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No. Simulation-only benchmark.</p>
+<p class="dp-p"><strong>Tasks:</strong> 16+ bimanual dexterous tasks organized by difficulty: (1) simple tasks -- hand-over, catch underarm, two-catch underarm; (2) moderate tasks -- over-arm catch, pen twirling, door open/close, push block, scissors, swing cup; (3) complex tasks -- re-orientation, grasp-and-place, stack blocks, pour water, lift pot. Tasks involve coordinated bimanual contact-rich manipulation.</p>
+<p class="dp-p"><strong>Key methodology:</strong> Bi-DexHands formulates bimanual manipulation as both single-agent and multi-agent RL problems, enabling systematic comparison of centralized vs. decentralized training. The benchmark provides standardized reward functions, observation spaces, and evaluation protocols for each task. GPU-parallelized environments in IsaacGym enable training thousands of environments simultaneously.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Created the first large-scale bimanual dexterous manipulation benchmark with 16+ tasks of varying difficulty</li>
+<li>Systematically compared single-agent RL, multi-agent RL, and offline RL algorithms on the same task suite</li>
+<li>Found that multi-agent RL (especially HAPPO) can match or outperform single-agent methods on bimanual tasks while offering better scalability</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Algorithm</th>
+<th>Relative performance</th>
+</tr></thead><tbody>
+<tr>
+<td>HAPPO</td>
+<td>Best overall across tasks</td>
+</tr>
+<tr>
+<td>PPO</td>
+<td>Competitive on simpler tasks</td>
+</tr>
+<tr>
+<td>Offline RL (BCQ, CQL, TD3+BC)</td>
+<td>Significant gap vs online methods</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">All results are simulation-only (sim).</p>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Simulation-only with no sim-to-real transfer. Shadow Hands are expensive and rarely used in real-world labs. Tasks use privileged state observations (object pose, velocity), not vision. No force/tactile sensing modeled.</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<p class="dp-p"><strong>Results:</strong> HAPPO achieved the best overall performance across tasks (sim). PPO remained competitive on simpler tasks. Offline RL methods showed significant performance gaps compared to online methods. Code and pretrained checkpoints released.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not applicable (simulation benchmark). MLP policy inference runs in <1ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacGym). No real-robot deployment.</li>
+<li><strong>Real-time capable?</strong> Not applicable (simulation benchmark; no real-robot deployment).</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset for online RL methods. Benchmark also supports offline RL using replay buffers from trained online policies.</li>
+<li><strong>Collection method:</strong> Pure RL (PPO, SAC, TRPO, MAPPO, HAPPO, MADDPG) in IsaacGym with GPU-parallelized environments. 16+ bimanual dexterous tasks with dual Shadow Hands (48 DoF total). Offline RL baselines (BCQ, CQL, TD3+BC) use replay buffers generated from online RL training.</li>
+<li><strong>Data scale:</strong> 16+ tasks. Thousands of parallel environments in IsaacGym. Offline datasets generated from online RL rollouts.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL benchmark).</li>
+<li><strong>Data format:</strong> IsaacGym simulation data. Standardized reward functions and observation spaces per task.</li>
+<li><strong>Publicly available?</strong> Yes -- code and pretrained checkpoints released. Benchmark environment publicly available.</li>
+</ul>

@@ -1,0 +1,52 @@
+<h3 class="dp-h3">7.4 DQ-RISE</h3>
+<p class="dp-p"><strong>Full title:</strong> DQ-RISE: Dexterous Quasi-Static Robotic In-Hand Skill Execution via Sim-to-Real Reinforcement Learning</p>
+<p class="dp-p"><strong>Authors:</strong> Chengzhong Ma, Wenzhao Lian, Changhao Wang, et al.</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICRA 2026</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2503.01766</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO-based sim-to-real RL with teacher-student distillation. Teacher uses privileged state; student uses proprioception and tactile/force input. Domain randomization for sim-to-real transfer.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> OyMotion RoHand (dexterous hand) + Flexiv Rizon 4 arm</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym (inferred from Flexiv/dexterous RL pipeline norms)</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes. Zero-shot sim-to-real transfer demonstrated on 6 real-world tasks with 85.83% average success rate (real).</p>
+<p class="dp-p"><strong>Tasks:</strong> 6 real-world dexterous manipulation tasks involving quasi-static in-hand manipulation: object reorientation, precision placement, tool re-grasping, and functional manipulation. Tasks require careful force regulation and stable multi-finger coordination.</p>
+<p class="dp-p"><strong>Key methodology:</strong> DQ-RISE focuses on quasi-static dexterous manipulation -- tasks where objects move slowly and forces must be carefully controlled to maintain stable grasps during manipulation. The approach uses teacher-student RL: a teacher policy trained with privileged simulation state (object pose, contact forces) is distilled into a student that relies on proprioception and available sensing. Domain randomization over dynamics parameters (friction, mass, motor gains) enables zero-shot sim-to-real transfer.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated sim-to-real dexterous in-hand manipulation with the OyMotion RoHand, expanding the set of validated dexterous hand platforms</li>
+<li>Achieved 85.83% average success rate across 6 real tasks via zero-shot transfer (real)</li>
+<li>Focused on quasi-static manipulation, which is practically important for precise assembly and tool-use tasks</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Average real-world success rate</td>
+<td>85.83% (real)</td>
+</tr>
+<tr>
+<td>Number of real tasks</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Hand</td>
+<td>OyMotion RoHand + Flexiv Rizon 4</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Quasi-static assumption limits applicability to dynamic tasks. 85.83% success rate leaves room for improvement. Limited object diversity in real-world evaluation.</p>
+<p class="dp-p"><strong>Results:</strong> 85.83% average success rate on 6 real-world tasks (real). Code publicly available.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported. The distilled student MLP policy runs in <1ms per forward pass, enabling high-frequency control.</li>
+<li><strong>Deployment hardware:</strong> OyMotion RoHand (dexterous hand) + Flexiv Rizon 4 arm. Policy trained in IsaacGym; deployed via zero-shot sim-to-real transfer.</li>
+<li><strong>Real-time capable?</strong> Yes. MLP-based policy supports real-time control. Demonstrated on real hardware with 85.83% success across 6 tasks.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL (PPO) with teacher-student distillation -- all data generated in simulation.</li>
+<li><strong>Collection method:</strong> Pure RL in IsaacGym (inferred). Teacher trained with privileged state (object pose, contact forces); student uses proprioception and tactile/force input. Domain randomization for sim-to-real (friction, mass, motor gains). Zero-shot transfer to OyMotion RoHand + Flexiv Rizon 4 system.</li>
+<li><strong>Data scale:</strong> Standard parallel RL training. 6 real-world quasi-static dexterous manipulation tasks for evaluation.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> Code publicly available.</li>
+</ul>

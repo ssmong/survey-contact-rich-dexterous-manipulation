@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.2 AnyRotate</h3>
+<p class="dp-p"><strong>Full title:</strong> AnyRotate: Gravity-Invariant In-Hand Object Rotation with Sim-to-Real Touch</p>
+<p class="dp-p"><strong>Authors:</strong> Max Yang, Chenghua Lu, Alex Church, Yijiong Lin, Chris Li, Efi Psomopoulou, Nathan F. Lepora</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CoRL 2024</p>
+<p class="dp-p"><strong>Hora/RotateIt/AnyRotate evolutionary chain:</strong> Extends the Hora/RotateIt framework with gravity randomization; the RL algorithm (PPO+RMA) is inherited from Hora. The primary novelty is training across randomized gravity directions to enable rotation with any hand orientation, plus the finding that tactile sensing is essential for gravity-invariant rotation (proprioception-only fails in non-palm-up orientations).</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with tactile-conditioned policy; extends tactile in-hand rotation to arbitrary gravity directions (gravity-invariant)</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Allegro Hand (16 DoF) + tactile sensors (TacTip-based)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes; sim-to-real with tactile domain randomization across varied hand orientations (real)</p>
+<p class="dp-p"><strong>Object count:</strong> Multiple objects evaluated in various orientations</p>
+<p class="dp-p"><strong>Tasks:</strong> Gravity-invariant in-hand object rotation -- continuous rotation with the hand held at arbitrary orientations (palm-up, palm-down, sideways)</p>
+<p class="dp-p"><strong>Key methodology:</strong> Addresses a key limitation of prior work (Hora, RotateIt) which assumes a palm-up hand configuration. Trains the rotation policy across randomized gravity directions relative to the hand, using tactile feedback to maintain stable contact regardless of gravity orientation. The tactile signal provides critical contact state information when gravity is not aligned with the palm, where proprioception alone is insufficient.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>First gravity-invariant in-hand rotation policy, enabling rotation with any hand orientation (real)</li>
+<li>Demonstrated that tactile sensing is essential for gravity-invariant rotation (proprioception-only fails in non-palm-up orientations)</li>
+<li>Sim-to-real transfer across hand orientations not seen during real-world training (real)</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Still single-axis rotation; limited object diversity in real-world evaluation; custom tactile sensor setup may not generalize to other sensor types; no code publicly released at time of survey</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported. The tactile-conditioned MLP policy runs in <1ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Allegro Hand (16 DoF) + TacTip-based tactile sensors. Policy trained in IsaacGym; deployed via zero-shot sim-to-real transfer across varied hand orientations.</li>
+<li><strong>Real-time capable?</strong> Yes. MLP-based policy with tactile conditioning supports real-time control. Demonstrated on real Allegro Hand in multiple orientations.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL (PPO) with tactile-conditioned policy and gravity randomization -- all data generated in simulation.</li>
+<li><strong>Collection method:</strong> Pure RL in IsaacGym extending Hora/RotateIt framework. Gravity direction randomized during training. Tactile feedback (TacTip-based) for contact state in varied hand orientations. Sim-to-real via tactile domain randomization.</li>
+<li><strong>Data scale:</strong> Standard parallel RL training in IsaacGym. Multiple objects in various orientations.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> No code publicly released at time of survey.</li>
+</ul>

@@ -1,0 +1,56 @@
+<h3 class="dp-h3">7.1 BODex</h3>
+<p class="dp-p"><strong>Full title:</strong> BODex: Bilevel Optimization for Efficient and Scalable Dexterous Grasping</p>
+<p class="dp-p"><strong>Authors:</strong> Jiayi Chen, Yuxing Chen, Jialiang Zhang, He Wang</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICRA 2025</p>
+<p class="dp-p"><strong>PKU-EPIC lineage:</strong> Replaces RL-based grasp generation (UniDexGrasp/UniDexGrasp++) with bilevel optimization, enabling cross-hand support without per-hand RL training. Core algorithmic shift from learned policies to optimization-based grasp synthesis.</p>
+<p class="dp-p"><strong>RL algorithm:</strong> Bilevel optimization (not standard RL) -- outer loop optimizes grasp contact points, inner loop solves inverse kinematics via cuRobo; generates grasp datasets rather than learned policies</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Shadow Hand (24 DoF), Allegro Hand (16 DoF), LEAP Hand (16 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> cuRobo (CUDA-accelerated robot optimization)</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes; 81% real-world success rate (real) with generated grasps</p>
+<p class="dp-p"><strong>Object count:</strong> 5355 objects; massive-scale grasp dataset generation</p>
+<p class="dp-p"><strong>Tasks:</strong> Dexterous grasp generation (grasp pose synthesis rather than closed-loop control)</p>
+<p class="dp-p"><strong>Key methodology:</strong> Formulates dexterous grasp synthesis as a bilevel optimization problem. The outer level optimizes contact point locations on the object surface to maximize grasp quality metrics (force closure, surface coverage). The inner level uses cuRobo's GPU-accelerated inverse kinematics to find feasible hand configurations reaching those contacts. This avoids RL training entirely, enabling rapid grasp generation at scale.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Orders of magnitude faster grasp generation than RL-based approaches (minutes vs. hours)</li>
+<li>Cross-embodiment support (Shadow, Allegro, LEAP) from a single optimization framework</li>
+<li>81% sim-to-real transfer rate (real), validating generated grasps on physical hardware</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Real-world success rate</td>
+<td>81% (real)</td>
+</tr>
+<tr>
+<td>Object set size</td>
+<td>5355</td>
+</tr>
+<tr>
+<td>Hands supported</td>
+<td>Shadow, Allegro, LEAP</td>
+</tr>
+<tr>
+<td>Generation speed</td>
+<td>Orders of magnitude faster than RL</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Open-loop grasp synthesis (no closed-loop execution policy); relies on accurate object geometry; no handling of object uncertainty or partial views; grasp quality metrics may not capture real-world robustness factors (surface friction, compliance)</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Optimization-based grasp computation is offline (not real-time inference). cuRobo-accelerated IK solving is orders of magnitude faster than RL-based alternatives for grasp generation. Deployment executes pre-computed grasps open-loop.</li>
+<li><strong>Deployment hardware:</strong> Real deployment on Shadow, Allegro, and LEAP hands (81% real-world success rate). Grasp computation uses NVIDIA GPU via cuRobo.</li>
+<li><strong>Real-time capable?</strong> Yes, at deployment (pre-computed grasps executed open-loop). Grasp generation itself is offline but fast (cuRobo-accelerated).</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Procedurally generated grasp dataset via bilevel optimization (not RL). 5,355 objects from 3D model repositories.</li>
+<li><strong>Collection method:</strong> Optimization-based grasp synthesis using cuRobo (CUDA-accelerated). Outer loop optimizes contact points on object surfaces; inner loop solves inverse kinematics. Cross-embodiment (Shadow, Allegro, LEAP). No RL training, no demonstrations.</li>
+<li><strong>Data scale:</strong> 5,355 objects. Massive-scale grasp dataset generated in minutes (vs. hours for RL approaches).</li>
+<li><strong>Teleop equipment:</strong> Not applicable (optimization-based, no demonstrations).</li>
+<li><strong>Data format:</strong> Generated grasp poses (hand configurations for target objects). Specific format not reported.</li>
+<li><strong>Publicly available?</strong> Dataset/code release status not reported.</li>
+</ul>

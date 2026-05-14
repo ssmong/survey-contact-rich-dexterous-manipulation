@@ -1,0 +1,117 @@
+<h3 class="dp-h3">2.7 VLA + Diffusion Policy Switching</h3>
+<p class="dp-p"><strong>Full title:</strong> Bi-Manual Dexterous Manipulation via Reinforcement Learning with Vision-Language Action Switching</p>
+<p class="dp-p"><strong>Authors:</strong> Cheng Pan, Kai Junge, Benhui Dai, Qinghua Guan, Josie Hughes (CREATE Lab, STI, EPFL, Lausanne; Embodied AI, Lausanne)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv preprint, 2024</p>
+<p class="dp-p"><strong>arXiv:</strong> <a href="https://arxiv.org/abs/2410.14022" target="_blank" rel="noopener">2410.14022</a></p>
+<p class="dp-p"><strong>Hand hardware:</strong> ADAPT Hand (13 DoF) -- a series-elastic, tendon-driven multi-finger hand designed for compliant manipulation</p>
+<p class="dp-p"><strong>Tasks:</strong></p>
+<ul class="dp-list">
+<li>Pick-and-place with dexterous multi-finger hand</li>
+<li>VLA-guided manipulation with policy switching between high-level VLA commands and low-level diffusion policy execution</li>
+</ul>
+<p class="dp-p"><strong>Key methodology:</strong> This work proposes a switching mechanism between a vision-language-action model and a diffusion policy for dexterous manipulation on a series-elastic multi-finger hand. The VLA handles high-level task understanding and coarse motion planning from language instructions, while the diffusion policy takes over for fine-grained dexterous control during contact-rich phases. The switching logic determines when to transition between VLA-level commands and diffusion-level execution based on task state. The ADAPT Hand's series-elastic actuation provides inherent mechanical compliance, complementing the position-based policy output.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong></p>
+<ul class="dp-list">
+<li>High-level: VLA model for language-conditioned task understanding</li>
+<li>Low-level: diffusion policy for fine-grained dexterous action generation</li>
+<li>Switching mechanism: state-dependent transition between VLA and diffusion policy</li>
+<li>Hand: ADAPT Hand with 13 DoF and series-elastic elements</li>
+<li>Specific model sizes not publicly detailed</li>
+</ul>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposed a VLA-to-diffusion policy switching framework for dexterous manipulation, leveraging the strengths of each: VLAs for semantic understanding and diffusion policies for precise motor control</li>
+<li>Demonstrated the approach on a series-elastic multi-finger hand (ADAPT, 13 DoF), one of the few VLA works to target a compliant dexterous hand rather than rigid position-controlled hands</li>
+<li>Highlighted the value of mechanical compliance (series-elastic actuation) as a complement to learned position policies in contact-rich settings</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>No open-source code or model weights released</li>
+<li>Limited task diversity: primarily pick-and-place; does not cover tool use, assembly, or in-hand manipulation</li>
+<li>The switching mechanism is relatively simple; more sophisticated arbitration (e.g., learned switching, continuous blending) is not explored</li>
+<li>No explicit force or impedance output from the policy; compliance comes from the hand's mechanical design rather than learned control</li>
+<li>Single hand platform (ADAPT 13 DoF); no cross-embodiment evaluation</li>
+<li>Evaluation scope appears limited compared to other works in this section</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong></p>
+<p class="dp-p"><strong>Pick-and-place success (5 trials per object-placement combination):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Method</th>
+<th>Avg. Success Score</th>
+</tr></thead><tbody>
+<tr>
+<td>VLA-only (pepper)</td>
+<td>0.43</td>
+</tr>
+<tr>
+<td>VLA-only (tape)</td>
+<td>0.23</td>
+</tr>
+<tr>
+<td><strong>VLA + Diffusion switching</strong></td>
+<td><strong>0.82</strong></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">VLA+Diffusion switching improves over VLA-only by ~90% for pepper and ~257% for tape.</p>
+<p class="dp-p"><strong>Compliance vs. rigid configuration:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Condition</th>
+<th>Compliant</th>
+<th>Rigid</th>
+</tr></thead><tbody>
+<tr>
+<td>Knob-turning with size variation</td>
+<td>+58% avg. improvement over rigid</td>
+<td>baseline</td>
+</tr>
+<tr>
+<td>Control noise robustness (Gaussian N(0,5)mm)</td>
+<td><8% performance decrease</td>
+<td>74% performance decrease</td>
+</tr>
+<tr>
+<td>Spring contact stability</td>
+<td>+38% improvement</td>
+<td>baseline</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Multi-step dexterous tasks (10 trials each):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>Success Rate</th>
+</tr></thead><tbody>
+<tr>
+<td>Water bottle opening & pouring</td>
+<td>>0.6</td>
+</tr>
+<tr>
+<td>Sticky note peeling & pasting</td>
+<td>>0.6</td>
+</tr>
+<tr>
+<td>Multi-object grasping</td>
+<td>>0.6</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Initial configuration sensitivity:</strong> >50% success when hand starts within ~15 cm of target; drops below 50% beyond 15 cm offset (8 trials per distance).</p>
+<p class="dp-p"><strong>Data collection:</strong> 20 demonstration trajectories per object-placement (pick-and-place); 30 demonstrations per dexterous task; ~5 Hz sampling frequency.</p>
+<ul class="dp-list">
+<li>Demonstrated VLA + diffusion policy switching on the 13-DoF ADAPT Hand</li>
+<li>Series-elastic actuation provides useful passive compliance during contact, with quantified robustness gains</li>
+<li>No public code or weights available</li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. Demonstration data was collected at ~5 Hz sampling frequency, but this reflects data capture rate, not deployment control frequency.</li>
+<li><strong>Deployment hardware:</strong> UR5 robotic arm + ADAPT Hand (13 DoF) with series-elastic actuation. Vision/sensor processing on Raspberry Pi 4B units. Inference GPU not specified.</li>
+<li><strong>Real-time capable?</strong> Not verified. The paper does not report autonomous execution control frequency or inference latency. The switching mechanism between VLA and diffusion policy may introduce variable latency depending on which mode is active.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstration dataset. "Minimal demonstration data" mentioned in the abstract.</li>
+<li><strong>Collection method:</strong> Teleoperated demonstrations on the UR5 + ADAPT Hand (13 DoF) system. Data collected at ~5 Hz sampling frequency.</li>
+<li><strong>Data scale:</strong> 20 demonstration trajectories per object-placement combination (pick-and-place tasks); 30 demonstration trajectories per dexterous task (tasks A--C).</li>
+<li><strong>Teleop equipment:</strong> Not detailed. The ADAPT Hand uses series-elastic, tendon-driven actuation; teleoperation interface specifics are not disclosed.</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> No. No code, data, or model weights publicly released.</li>
+</ul>

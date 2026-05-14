@@ -1,0 +1,51 @@
+<p class="dp-p"># 9.3 MuJoCo Manipulus</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> MuJoCo Manipulus: A Dexterous Tool Manipulation Benchmark</li>
+<li><strong>Authors:</strong> Google DeepMind and collaborators</li>
+<li><strong>Venue/Year:</strong> 2025 (preprint)</li>
+<li><strong>Sim platform:</strong> MuJoCo</li>
+<li><strong>Dexterous support:</strong> Multi-finger hands performing tool manipulation</li>
+<li><strong>Tasks:</strong> 16 tool-use tasks including hammering, screwdriving, stirring, and other functional tool manipulation scenarios</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">Manipulus provides a benchmark specifically targeting dexterous tool manipulation, an area underrepresented in existing simulation benchmarks. The environments require coordinated multi-finger control to grasp, reorient, and functionally use tools -- going beyond simple pick-and-place to contact-rich functional interactions. Tasks are designed to test both the grasping and functional use phases of tool manipulation.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>First dedicated benchmark for dexterous tool manipulation with 16 distinct tasks in MuJoCo</li>
+<li>Systematic evaluation of tool-use capabilities requiring both grasp stability and functional dexterity</li>
+<li>Compatible with standard MuJoCo ecosystem (Gymnasium, dm_control)</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Tool geometries and physical properties are simplified compared to real-world tools</li>
+<li>No deformable tool or workpiece interactions (e.g., cutting, spreading)</li>
+<li>Limited sim-to-real validation for tool-use policies</li>
+</ul>
+<h2 class="dp-h2">Coverage gaps</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Criterion</th>
+<th>Covered?</th>
+</tr></thead><tbody>
+<tr>
+<td>Force/torque evaluation metrics</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Deformable object tasks</td>
+<td>No (rigid tools and workpieces only)</td>
+</tr>
+<tr>
+<td>Tactile sensing</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Multi-stage / long-horizon tasks</td>
+<td>Partial (tool-use involves grasp + functional use, but tasks are not explicitly multi-stage sequences)</td>
+</tr>
+<tr>
+<td>Multi-hand coordination</td>
+<td>No</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source. Available through MuJoCo ecosystem.</p>

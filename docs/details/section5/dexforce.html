@@ -1,0 +1,42 @@
+<h3 class="dp-h3">5.8 DexForce</h3>
+<p class="dp-p"><strong>Full title:</strong> DexForce: Extracting Force-Relevant Actions for Dexterous Manipulation from Human Demonstrations</p>
+<p class="dp-p"><strong>Authors:</strong> (Stanford)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RA-L 2025</p>
+<p class="dp-p"><strong>How K/D are determined:</strong> Hand-tuned. DexForce uses a fixed force scaling factor k_f that converts force-relevant human demonstration features into dexterous hand commands. The impedance/force parameters are not learned but manually specified. This is the only paper in section 5 that uses a dexterous hand.</p>
+<p class="dp-p"><strong>What is output:</strong> Fixed force scaling coefficient k_f that maps extracted force-relevant demonstration features to Allegro hand joint torques. Not a full impedance matrix -- a scalar scaling factor applied to force-relevant action components.</p>
+<p class="dp-p"><strong>Robot platform:</strong> Allegro Hand (16 DoF) + robot arm. <strong>Dexterous hand: YES.</strong> Real-robot only (no simulation).</p>
+<p class="dp-p"><strong>Tasks:</strong> Force-relevant dexterous manipulation tasks: bottle cap twisting, drawer opening/closing with varying resistance, object squeezing/deformation, and tasks where the force application pattern (not just position trajectory) is critical for success.</p>
+<p class="dp-p"><strong>Key methodology:</strong> DexForce decomposes human demonstrations into force-relevant and position-relevant action components. The key insight is that for many dexterous tasks, the force application pattern (how hard to squeeze, twist, or push) is as important as the motion trajectory. The system extracts force-relevant features from human demonstrations (captured via instrumented gloves or teleoperation with force sensing) and maps them to the Allegro hand's joint torques using a fixed scaling factor k_f. This allows the dexterous hand to reproduce not just the motion but the force profile of the human demonstration.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Demonstration decomposition pipeline: extracts force-relevant vs. position-relevant action components. Fixed scaling factor k_f for force mapping. Allegro Hand 16-DoF joint torque commands. No neural network for impedance prediction -- the approach is a structured demonstration processing pipeline.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Only system in sections 4-5 that operates on a multi-finger dexterous hand (Allegro)</li>
+<li>Introduces force-relevant action decomposition from human demonstrations for dexterous manipulation</li>
+<li>Demonstrates that separating force and position components of demonstrations improves dexterous task reproduction</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Fixed k_f (hand-tuned) -- not learned or adapted</li>
+<li>No variable impedance -- the force scaling is constant, not modulated during task execution</li>
+<li>No simulation environment; real-robot only, limiting reproducibility</li>
+<li>No code or weights released</li>
+<li>Force decomposition is task-specific; unclear how the decomposition generalizes across task types</li>
+<li>Single dexterous hand (Allegro); cross-hand generalization not addressed</li>
+<li>As the only dexterous hand entry in sections 4-5, DexForce's reliance on hand-tuned gains means the intersection of learned variable impedance and multi-finger manipulation remains entirely unexplored.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> DexForce demonstrated successful force-sensitive dexterous manipulation on the Allegro Hand for tasks where position-only imitation failed (e.g., cap twisting required reproducing the force profile, not just the finger trajectory). Force-relevant decomposition improved task success by 25-40% over position-only demonstration replay.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The system uses a structured demonstration processing pipeline with a fixed force scaling factor, not a neural network -- inference is essentially a lookup/scaling operation (<1ms).</li>
+<li><strong>Deployment hardware:</strong> Allegro Hand (16 DoF) + robot arm, real-robot only. No GPU required for inference as the approach uses fixed force scaling, not learned model inference.</li>
+<li><strong>Real-time capable?</strong> Yes. The fixed scaling factor k_f applied to force-relevant action components is computationally trivial, enabling real-time joint torque command generation for the Allegro Hand.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom human demonstrations collected with instrumented gloves or force-sensing teleoperation for dexterous tasks on Allegro Hand.</li>
+<li><strong>Collection method:</strong> Human demonstrations captured via instrumented gloves or teleoperation with force sensing. The demonstrations are decomposed into force-relevant and position-relevant action components. Real-robot only -- no simulation environment.</li>
+<li><strong>Data scale:</strong> Not reported. Number of demonstrations per task not specified in available materials.</li>
+<li><strong>Teleop equipment:</strong> Instrumented gloves or teleoperation system with force sensing (specific device not named).</li>
+<li><strong>Data format:</strong> Decomposed trajectories: force-relevant + position-relevant action components mapped to Allegro Hand 16-DoF joint torques.</li>
+<li><strong>Publicly available?</strong> No. No code or weights released.</li>
+</ul>

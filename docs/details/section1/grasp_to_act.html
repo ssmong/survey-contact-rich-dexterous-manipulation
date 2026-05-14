@@ -1,0 +1,78 @@
+<h3 class="dp-h3">Grasp-to-Act</h3>
+<p class="dp-p"><strong>Full Title:</strong> Grasp-to-Act: Dynamic Tool Use via Dexterous Grasping</p>
+<p class="dp-p"><strong>Authors:</strong> Researchers from UIUC RoboTouch lab et al.</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv preprint, 2026</p>
+<p class="dp-p"><strong>Hand Hardware:</strong> LEAP Hand (16 DoF) mounted on a UR5 robotic arm. (Note: earlier version of this entry incorrectly stated Allegro Hand; the paper specifies "16-DoF LEAP hand mounted on a 6-DoF UR5 robotic arm.")</p>
+<p class="dp-p"><strong>Tasks:</strong> 5 dynamic tool-use tasks: (1) hammering a nail, (2) sawing, (3) cutting with scissors/knife, (4) stirring with a spoon, (5) scooping with a spatula. These tasks require dynamic interaction forces between the tool and the environment, going beyond quasi-static pick-and-place.</p>
+<p class="dp-p"><strong>Key Methodology:</strong> Grasp-to-Act decomposes dexterous tool use into two phases: first establishing a functional grasp on the tool, then executing the task-specific manipulation action. The approach combines grasp planning with action execution, enabling the LEAP hand to dynamically wield tools for contact-rich tasks. The method integrates simulation-based training with real-world validation.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Not publicly detailed. The policy architecture handles the transition from grasp acquisition to dynamic tool manipulation as a continuous control problem.</p>
+<p class="dp-p"><strong>Sim Platform:</strong> Training uses simulation environments, with sim-to-real transfer demonstrated on the physical LEAP hand. The specific simulator details are not fully disclosed.</p>
+<p class="dp-p"><strong>Main Contributions:</strong></p>
+<ul class="dp-list">
+<li>Introduces a grasp-to-action decomposition that separates functional grasp planning from task execution, whereas prior dexterous tool-use methods train monolithic policies that must learn both grasping and manipulation jointly.</li>
+<li>Demonstrates dynamic tool-use tasks (hammering, sawing) on a 16-DoF dexterous hand, requiring sustained contact forces during tool operation -- extending beyond the quasi-static grasping focus of most prior LEAP hand work.</li>
+<li>Validates across 5 tool-use tasks requiring qualitatively different manipulation strategies (impact, reciprocating, rotational, scooping motions).</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force/impedance awareness:</strong> No. No explicit force/impedance control is incorporated despite the dynamic nature of the tool-use tasks. Contact forces during hammering, sawing, and cutting are not explicitly regulated, relying instead on learned position trajectories and hardware compliance to produce adequate tool-environment interaction forces.</li>
+<li><strong>VLA/language conditioning:</strong> No. Policies are task-specific with no language or vision-language backbone.</li>
+<li><strong>Sim-to-real:</strong> Yes. Sim-to-real transfer is demonstrated on the physical LEAP hand, though simulator details are not fully disclosed.</li>
+<li><strong>Code/weights availability:</strong> No code or model weights publicly released.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Simulation results (Table I from paper) and real-world validation on the LEAP hand:</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>Success Rate (Sim)</th>
+<th>Translational Slip (cm)</th>
+<th>Rotational Slip (deg)</th>
+</tr></thead><tbody>
+<tr>
+<td>Hammer</td>
+<td>100.0%</td>
+<td>0.69</td>
+<td>1.35</td>
+</tr>
+<tr>
+<td>Saw</td>
+<td>100.0%</td>
+<td>1.06</td>
+<td>3.13</td>
+</tr>
+<tr>
+<td>Cut</td>
+<td>100.0%</td>
+<td>0.48</td>
+<td>2.23</td>
+</tr>
+<tr>
+<td>Stir</td>
+<td>100.0%</td>
+<td>0.24</td>
+<td>2.08</td>
+</tr>
+<tr>
+<td>Scoop</td>
+<td>100.0%</td>
+<td>0.17</td>
+<td>1.25</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">G2A outperforms all baselines (analytical methods, RL base, RL with contact rewards, RL with pre-grasp pose, RL with eigengrasp, and G2A w/o adaptation) across all five tasks in both success rate and slip metrics. Real-world trials confirmed G2A's superiority with lowest slip and highest task completion rates.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported in the paper or project page.</li>
+<li><strong>Deployment hardware:</strong> 16-DoF LEAP hand mounted on a UR5 robotic arm + Intel RealSense D435 RGB-D camera. RL policy training on NVIDIA RTX 4070 Ti Super GPU (~15 min convergence). Inference GPU not specified.</li>
+<li><strong>Real-time capable?</strong> The system operates at <strong>30 Hz control frequency</strong> (both wrist trajectory and finger joint adjustments updated synchronously at 30 Hz). Per-step inference latency not quantified, but 30 Hz real-time control is demonstrated.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom dataset; no standard benchmark name reported.</li>
+<li><strong>Collection method:</strong> Simulation-based training with sim-to-real transfer. Specific details on demonstration collection method (e.g., scripted trajectories vs. teleoperation) are not publicly disclosed.</li>
+<li><strong>Data scale:</strong> Not reported.</li>
+<li><strong>Teleop equipment:</strong> Not reported.</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> No. No code, data, or model weights publicly released.</li>
+</ul>
+<blockquote class="dp-quote">*Results verified from arXiv:2602.20466. Hardware confirmed as LEAP Hand (not Allegro Hand as previously stated).*</blockquote>
+<hr>

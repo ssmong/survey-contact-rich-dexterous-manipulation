@@ -1,0 +1,73 @@
+<p class="dp-p"># 10.10 HATO</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Learning Visuotactile Skills with Two Multifingered Hands</li>
+<li><strong>Authors:</strong> Toru Lin, Yu Zhang, Qiyang Li, Haozhi Qi, Brent Yi, Sergey Levine, Jitendra Malik (UC Berkeley)</li>
+<li><strong>Venue/Year:</strong> ICRA 2024 (arXiv 2404.16823, April 2024)</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2404.16823</li>
+<li><strong>Input modality:</strong> Meta Quest 2 VR controllers (arm pose tracking) + grip button/thumbstick (finger control)</li>
+<li><strong>Target hand:</strong> 2x Psyonic Ability Hand (6 DoF each, repurposed prosthetic hands with built-in touch sensors)</li>
+<li><strong>Force feedback:</strong> None to operator (but touch sensors on the robot hands provide tactile input to the learned policy)</li>
+<li><strong>Cost:</strong> Low-cost (off-the-shelf VR hardware + prosthetic hands)</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">HATO is a bimanual dexterous teleoperation system built from off-the-shelf VR electronics (Meta Quest 2) and repurposed prosthetic hands (Psyonic Ability Hand) equipped with fingertip touch sensors. The system uses two UR5e arms with one Ability Hand each. Arm control maps VR controller pose to end-effector position via IK. Finger control uses the grip button for non-thumb flexion (4 DoF) and thumbstick for thumb flexion/abduction (2 DoF per hand). The system collects visuotactile demonstrations at 10 Hz, capturing RGB-D images (3 cameras: 2 wrist-mounted + 1 head-view), proprioception, and touch sensor readings.</p>
+<p class="dp-p">Policies are learned using Denoising Diffusion Probabilistic Models (DDPM) following the diffusion policy framework. A single observation predicts 16-step action sequences. Each modality is encoded separately: ResNet-18 for RGB-D (with GroupNorm), two-layer MLPs for proprioception and touch signals. All encoded features are concatenated as input to the diffusion model, which outputs 24-dimensional actions (6 DoF per arm + 6 DoF per hand). Inference uses temporal ensemble for motion smoothing.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Low-cost bimanual dexterous teleoperation system using off-the-shelf VR hardware and prosthetic hands (~$600/hand vs. $10K+ for research hands)</li>
+<li>Among the first demonstrations of visuotactile policy learning on bimanual multifingered hands, with systematic ablation of sensing modalities</li>
+<li>Shows that touch sensing is critical for contact-rich bimanual tasks (removing touch drops Steak Serving from 5/10 to 0/10)</li>
+<li>Dataset saturation analysis: 75-200 demonstrations sufficient for effective learning across tasks</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Prosthetic Ability Hand has only 6 DoF per hand (underactuated), significantly less dexterous than Shadow (24) or Allegro (16)</li>
+<li>VR controller-based finger mapping is coarse: grip button controls 4 fingers simultaneously, limiting independent finger control</li>
+<li>No force/haptic feedback to the operator during teleoperation, which limits contact-rich task quality</li>
+<li>Touch sensors provide binary/low-resolution contact signals (6 per fingertip), not high-resolution tactile like DIGIT or GelSight</li>
+<li>Evaluated on 4 tasks only; no in-hand manipulation or fine assembly tasks</li>
+</ul>
+<h2 class="dp-h2">Data quality impact</h2>
+<p class="dp-p">The built-in touch sensors on the Ability Hand provide fingertip contact information that is recorded during teleoperation and used as input to learned policies. However, the operator receives no haptic feedback, so force modulation during data collection relies entirely on visual cues. The touch signals are low-resolution compared to vision-based tactile sensors (DIGIT, GelSight), providing coarse contact/no-contact information rather than spatially resolved pressure maps. Despite these limitations, ablations show that including touch data meaningfully improves policy success on contact-sensitive tasks.</p>
+<h2 class="dp-h2">Quantitative results</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>Success (full)</th>
+<th>Pickup</th>
+<th>Demos used</th>
+</tr></thead><tbody>
+<tr>
+<td>Slippery Handover</td>
+<td>10/10</td>
+<td>10/10</td>
+<td>75</td>
+</tr>
+<tr>
+<td>Tower Block Stacking</td>
+<td>10/10</td>
+<td>10/10</td>
+<td>75</td>
+</tr>
+<tr>
+<td>Wine Pouring</td>
+<td>9/10</td>
+<td>10/10</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Steak Serving</td>
+<td>5/10</td>
+<td>10/10</td>
+<td>200</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Ablation results (Steak Serving):</strong></p>
+<ul class="dp-list">
+<li>Full model (vision + touch + proprio): 5/10</li>
+<li>Without touch: 0/10</li>
+<li>Without vision: 0/10</li>
+<li>Without wrist cameras: 2/10</li>
+<li>Depth does not markedly improve learning</li>
+</ul>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source (hardware + software + dataset). Project page: https://toruowo.github.io/hato/</p>

@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.7 Open TeleDex</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Open TeleDex: Phone-Based Teleoperation for Dexterous Manipulation</li>
+<li><strong>Authors:</strong> Omar Rayyan and collaborators</li>
+<li><strong>Venue/Year:</strong> arXiv 2510.14771, October 2025</li>
+<li><strong>Input modality:</strong> Smartphone-based hand tracking (phone camera + on-device ML)</li>
+<li><strong>Target hand:</strong> Any arm + dexterous hand combination</li>
+<li><strong>Force feedback:</strong> None</li>
+<li><strong>Cost:</strong> Very low (uses existing smartphone)</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">Open TeleDex leverages smartphone cameras and on-device machine learning models for hand pose estimation to enable dexterous teleoperation. The operator holds or positions their phone to capture their hand motions, which are processed on-device and streamed to the robot controller. By using hardware that most researchers already own, it eliminates all specialized input device costs. The system supports arbitrary arm + hand combinations through a modular retargeting layer.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Zero additional hardware cost (uses existing smartphone) for dexterous teleoperation</li>
+<li>On-device hand tracking eliminates the need for a dedicated workstation for pose estimation</li>
+<li>Modular support for diverse arm + hand combinations</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Smartphone-based tracking has lower accuracy and higher latency than dedicated tracking systems</li>
+<li>Single-viewpoint camera limits tracking of occluded fingers</li>
+<li>No force feedback of any kind</li>
+<li>Phone must be positioned to maintain line-of-sight to the operator's hand, constraining workspace</li>
+</ul>
+<h2 class="dp-h2">Data quality impact</h2>
+<p class="dp-p">Smartphone-based tracking introduces the highest positional noise and latency among the teleoperation systems in this section. Demonstrations are position-only with no force information, and the tracking quality is further degraded by the constrained phone viewpoint (single camera, potential occlusions). Policies trained on Open TeleDex data inherit both the force blindness common to all no-feedback systems and additional trajectory noise from the lower-fidelity tracking pipeline. This combination makes Open TeleDex data least suitable for precision contact-rich tasks, though it may be adequate for coarse grasping tasks where exact finger placement and force control are less critical.</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source. GitHub: <a href="https://github.com/omarrayyann/TeleDex" target="_blank" rel="noopener">omarrayyann/TeleDex</a></p>

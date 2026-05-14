@@ -1,0 +1,46 @@
+<p class="dp-p"># 11.3 ISyHand</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> ISyHand: An Intrinsically Soft Dexterous Hand for Contact-Rich Manipulation</li>
+<li><strong>Authors:</strong> MPI for Intelligent Systems (MPI-IS), Tubingen</li>
+<li><strong>Venue/Year:</strong> 2025</li>
+<li><strong>DoF:</strong> 18 (12 finger DoF + 6 palm/wrist DoF)</li>
+<li><strong>Cost:</strong> ~$1,300</li>
+<li><strong>Tactile sensing:</strong> None built-in</li>
+<li><strong>Actuation:</strong> Tendon-driven with intrinsically soft (compliant) joints</li>
+</ul>
+<h2 class="dp-h2">Quantitative specs</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Spec</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Actuator control bandwidth</td>
+<td>Not reported in available documentation</td>
+</tr>
+<tr>
+<td>Maximum fingertip force</td>
+<td>Not reported in available documentation (compliant joints may limit maximum force compared to rigid-joint designs)</td>
+</tr>
+<tr>
+<td>Durability</td>
+<td>Not reported in available documentation (tendon wear is a potential maintenance concern)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">ISyHand takes a fundamentally different mechanical approach from rigid-joint hands like LEAP: it uses intrinsically soft (compliant) joints and tendon-driven actuation. The compliance is built into the joint mechanics rather than being achieved through control. This means the hand passively adapts to object geometries during grasping -- a physical form of impedance that does not require explicit force control. The 18-DoF design (12 finger + 6 palm/wrist) provides high dexterity, and the tendon-driven actuation allows the motors to be placed in the forearm, reducing fingertip weight and inertia.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Intrinsic mechanical compliance providing passive force regulation without explicit impedance control</li>
+<li>Highest DoF count (18) among sub-$2K hands in this survey</li>
+<li>Lowest cost ($1,300) with the highest DoF, offering strong dexterity-per-dollar</li>
+<li>Tendon-driven actuation enabling lightweight fingertips with low inertia</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>No tactile sensing; the compliant joints provide implicit contact adaptation but no explicit contact measurement</li>
+<li>Tendon-driven actuation introduces cable routing complexity and potential maintenance issues (tendon wear, slack)</li>
+<li>Sim-to-real transfer is more challenging for soft/compliant hands due to difficulty modeling tendon dynamics and joint compliance accurately</li>
+<li>Compliant joints may limit maximum fingertip force compared to rigid-joint designs</li>
+</ul>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Project page: <a href="https://isyhand.is.mpg.de/" target="_blank" rel="noopener">isyhand.is.mpg.de</a>. Design files available.</p>

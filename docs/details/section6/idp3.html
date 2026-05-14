@@ -1,0 +1,52 @@
+<h3 class="dp-h3">iDP3: Improved 3D Diffusion Policy via Egocentric Point Clouds</h3>
+<p class="dp-p"><strong>Full title:</strong> Generalizable Humanoid Manipulation with Improved 3D Diffusion Policies</p>
+<p class="dp-p"><strong>Authors:</strong> Yanjie Ze, Zixuan Chen, Wenhao Wang, Peract Chen, Xialin He, Jianglong Ye, Ying Yuan, Huazhe Xu (Stanford / Tsinghua)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> IROS 2025</p>
+<p class="dp-p"><strong>Architecture:</strong> iDP3 extends DP3 to real-world dexterous humanoid manipulation by addressing three practical challenges: (1) egocentric point cloud processing from head-mounted depth cameras, (2) scalable 3D representation for large workspaces, and (3) high-DoF action spaces for humanoid bodies with dexterous hands. The visual encoder uses a sparse 3D backbone (e.g., Minkowski engine) processing egocentric point clouds, with a diffusion action head generating joint-space commands. Architecture size is approximately 30-50M parameters.</p>
+<p class="dp-p"><strong>Action space:</strong> Up to 25+ DoF: arm joints + dexterous hand joints (Inspire hand: 6 DoF per hand on the Fourier GR1 humanoid). Actions are continuous joint positions generated via diffusion.</p>
+<p class="dp-p"><strong>Dex hand support?</strong> ✅ --- Deployed on the Fourier GR1 humanoid with Inspire dexterous hands (6 DoF per hand, 25 DoF total for upper body). Demonstrated on real-world dexterous manipulation tasks including object handovers, tabletop manipulation, and tool use.</p>
+<p class="dp-p"><strong>Force/impedance output?</strong> ✗ --- Joint position targets only.</p>
+<p class="dp-p"><strong>Key methodology:</strong> iDP3 adapts the 3D diffusion policy framework for practical humanoid deployment. Key innovations include: (1) egocentric point cloud processing from the robot's head-mounted stereo cameras, eliminating the need for external depth cameras; (2) a point cloud cropping and normalization scheme that handles variable workspace sizes while maintaining spatial precision for fine manipulation; and (3) demonstration that the 3D diffusion policy framework scales to real-world dexterous humanoid control with minimal sim-to-real gap. The system uses teleoperation via Apple Vision Pro or similar devices for demonstration collection.</p>
+<p class="dp-p"><strong>Training data:</strong> Real-world teleoperated demonstrations on the Fourier GR1 humanoid. Typically 20-50 demonstrations per task. No simulation pretraining.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Among the first real-world deployments of 3D diffusion policies on a dexterous humanoid, demonstrating that DP3's 3D representation scales to high-DoF systems.</li>
+<li>Introduced egocentric point cloud processing for manipulation, enabling practical head-mounted depth camera usage.</li>
+<li>Demonstrated generalization to novel objects and scenes with minimal demonstrations on a real humanoid.</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>iDP3</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>*(Consult the IROS 2025 paper for per-task success rates on Fourier GR1 humanoid manipulation tasks.)*</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Requires stereo depth cameras for point cloud generation; sensitive to depth noise at close range.</li>
+<li>Real-world evaluation on a limited number of tasks; generalization across diverse dexterous tasks not yet demonstrated at scale.</li>
+<li>No language conditioning; task-specific policies only.</li>
+<li>No force/compliance output; relies on joint PD control.</li>
+</ul>
+<p class="dp-p"><strong>Open weights/code:</strong> ✅ Code: <a href="https://github.com/YanjieZe/Improved-3D-Diffusion-Policy" target="_blank" rel="noopener">GitHub</a>. ✗ No pre-trained weights (task-specific training).</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly benchmarked. Similar architecture size to DP3 (~30-50M parameters), with egocentric point cloud processing adding overhead for larger workspace coverage. Estimated ~5-15 Hz on a desktop GPU with DDIM acceleration.</li>
+<li><strong>Deployment hardware:</strong> Fourier GR1 humanoid with head-mounted stereo depth cameras. Desktop GPU for policy inference (specific model not reported). Real-world deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, for demonstrated tasks. The system was deployed on a real humanoid (Fourier GR1) for dexterous manipulation, implying real-time operation. The 25-DoF action space and egocentric point cloud processing are more demanding than DP3's simulation setup, but the lightweight architecture supports practical control rates.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Real-world teleoperated demonstrations on Fourier GR1 humanoid with Inspire dexterous hands (6 DoF per hand, 25 DoF total upper body). No simulation pretraining.</li>
+<li><strong>Collection method:</strong> Teleoperation via Apple Vision Pro or similar VR devices. Egocentric point clouds from head-mounted stereo depth cameras. Real-world only -- no sim-to-real transfer.</li>
+<li><strong>Data scale:</strong> 20-50 demonstrations per task. Small-data regime demonstrating sample efficiency of 3D diffusion policies.</li>
+<li><strong>Teleop equipment:</strong> Apple Vision Pro (or similar VR headset) for upper-body teleoperation of Fourier GR1 humanoid.</li>
+<li><strong>Data format:</strong> Egocentric point clouds + joint positions (25 DoF). Task-specific datasets.</li>
+<li><strong>Publicly available?</strong> Code at https://github.com/YanjieZe/Improved-3D-Diffusion-Policy. Demonstration datasets not released.</li>
+</ul>
+<hr>

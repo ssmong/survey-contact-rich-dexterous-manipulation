@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.3 DexGarmentLab</h3>
+<p class="dp-p"><strong>Full title:</strong> DexGarmentLab: Dexterous Garment Manipulation Benchmark with Multi-Finger Hands</p>
+<p class="dp-p"><strong>Authors:</strong> Yuxuan Gao, Zihang Zhao, Zhenjun Yu, Haoyu Xiong, Ruihai Wu, Yan Shen, Jiangtao Gong, He Wang, et al.</p>
+<p class="dp-p"><strong>Venue/Year:</strong> NeurIPS 2025 (Spotlight)</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2503.18693</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO and SAC baselines provided. The benchmark supports multiple RL approaches and includes IL baselines (e.g., diffusion policy). Deformable simulation uses GPU-accelerated FEM/PBD cloth solvers.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Bimanual dexterous hands (simulated), supporting multiple hand models</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacSim (with GPU-accelerated cloth simulation)</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No. Simulation benchmark only.</p>
+<p class="dp-p"><strong>Tasks:</strong> 15 garment manipulation tasks across 2500+ garment instances. Tasks include: folding (t-shirts, pants, towels), hanging (on hangers, hooks), dressing (putting garments on mannequins), buttoning/unbuttoning, zipping, and re-arranging. These are long-horizon, multi-stage tasks requiring sequential contact-rich interactions with deformable objects.</p>
+<p class="dp-p"><strong>Key methodology:</strong> DexGarmentLab tackles the intersection of dexterous manipulation and deformable object manipulation -- a particularly challenging combination because garments exhibit complex dynamics (folding, draping, wrinkling) that require precise multi-finger coordination. The benchmark leverages GPU-accelerated cloth simulation for parallel training and includes a large garment asset library (2500+ instances) for generalization evaluation. Task difficulty spans from simple pick-and-place to multi-stage sequences (e.g., fold, then stack).</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>First large-scale benchmark for dexterous garment manipulation with multi-finger hands (prior garment benchmarks used grippers)</li>
+<li>Scaled to 2500+ garment instances across 15 tasks, enabling systematic generalization evaluation</li>
+<li>Demonstrated that existing RL/IL methods achieve limited success on complex garment tasks, establishing challenging baselines for future work</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Sim-only; cloth simulation fidelity (especially friction, self-collision) may not transfer to real. Current RL baselines achieve low success rates on complex tasks, suggesting the benchmark may require new algorithmic approaches. No tactile sensing modeled despite garment manipulation being inherently tactile.</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<p class="dp-p"><strong>Results:</strong> PPO and diffusion policy baselines achieved moderate success on simpler tasks (folding towels) but low success on complex multi-stage tasks (dressing) (sim). NeurIPS 2025 Spotlight. Code publicly available.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not applicable (simulation benchmark). Policy inference speed depends on the RL/IL algorithm used; MLP policies run in <1ms.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacSim with GPU-accelerated cloth simulation). No real-robot deployment.</li>
+<li><strong>Real-time capable?</strong> Not applicable (simulation benchmark; no real-robot deployment).</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Benchmark environment with 2,500+ garment instances across 15 tasks in IsaacSim.</li>
+<li><strong>Collection method:</strong> Pure RL (PPO, SAC) and IL (diffusion policy) baselines trained in IsaacSim with GPU-accelerated cloth simulation. Deformable simulation via FEM/PBD cloth solvers. 15 garment tasks (folding, hanging, dressing, buttoning, zipping) with bimanual dexterous hands.</li>
+<li><strong>Data scale:</strong> 2,500+ garment instances across 15 tasks. Benchmark provides standardized environments, not pre-collected datasets.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (simulation benchmark).</li>
+<li><strong>Data format:</strong> IsaacSim simulation environments. Standardized task definitions and evaluation protocols.</li>
+<li><strong>Publicly available?</strong> Yes -- benchmark code publicly available.</li>
+</ul>

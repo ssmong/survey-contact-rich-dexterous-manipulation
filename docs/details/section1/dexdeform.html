@@ -1,0 +1,77 @@
+<h3 class="dp-h3">DexDeform</h3>
+<p class="dp-p"><strong>Full Title:</strong> DexDeform: Dexterous Deformable Object Manipulation with Human Demonstrations and Differentiable Physics</p>
+<p class="dp-p"><strong>Authors:</strong> Sizhe Li et al. (MIT-IBM Watson AI Lab)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICLR 2023</p>
+<p class="dp-p"><strong>Hand Hardware:</strong> Multi-finger hand in simulation. The hand model operates within the PlasticineLab differentiable physics environment, which provides soft-body contact dynamics for deformable object manipulation.</p>
+<p class="dp-p"><strong>Tasks:</strong> 6 deformable object manipulation tasks, modeled on clay/play-doh manipulation scenarios. Tasks include shaping, molding, pressing, and forming deformable materials into target configurations. These tasks represent a unique challenge in dexterous manipulation due to the high-dimensional deformable state space.</p>
+<p class="dp-p"><strong>Key Methodology:</strong> DexDeform combines human demonstrations with differentiable physics simulation for deformable object manipulation. The approach uses PlasticineLab, a differentiable soft-body simulator, to provide gradient information through the manipulation process. Human demonstrations guide the initial policy, which is then refined using differentiable physics gradients to optimize for target shape achievement. This hybrid approach leverages the efficiency of gradient-based optimization while using human demonstrations to provide reasonable initialization in the complex deformable manipulation landscape.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> The policy network maps the current deformable object state to multi-finger hand actions. Differentiable physics gradients from PlasticineLab enable backpropagation through the simulation dynamics. Specific model sizes are not extensively documented.</p>
+<p class="dp-p"><strong>Sim Platform:</strong> PlasticineLab (differentiable soft-body simulator). No sim-to-real transfer -- the work is entirely in simulation, with the unique challenge being the deformable object physics rather than rigid-body contact.</p>
+<p class="dp-p"><strong>Main Contributions:</strong></p>
+<ul class="dp-list">
+<li>Addresses dexterous deformable object manipulation, a domain requiring fundamentally different contact reasoning than rigid-body manipulation -- prior dexterous manipulation work focused almost exclusively on rigid objects, leaving deformable manipulation underexplored.</li>
+<li>Combines human demonstrations with differentiable physics gradients, enabling efficient policy optimization in the high-dimensional deformable state space -- this hybrid is novel because prior deformable manipulation used either pure RL (sample-inefficient) or pure trajectory optimization (prone to local minima without demonstration initialization).</li>
+<li>Introduces 6 benchmark tasks for deformable object manipulation with multi-finger hands, filling a gap in dexterous manipulation evaluation where no standardized deformable tasks previously existed.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force/impedance awareness:</strong> No. No explicit force/impedance control is used. Although deformable object manipulation inherently involves force-mediated shape change, the system controls the hand via position targets and relies on differentiable physics gradients to implicitly learn appropriate force application. There is no explicit force feedback loop or impedance regulation.</li>
+<li><strong>VLA/language conditioning:</strong> No. No language conditioning or vision-language integration. Tasks are specified via target shape configurations, not language descriptions.</li>
+<li><strong>Sim-to-real:</strong> No. The work is entirely in simulation. Sim-to-real transfer for deformable manipulation is particularly challenging due to the difficulty of accurately modeling real-world deformable material properties (stiffness, plasticity, friction) in simulation.</li>
+<li><strong>Code/weights availability:</strong> Code is released but without pretrained weights.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Evaluated on a suite of 6 dexterous deformable object manipulation tasks. DexDeform outperforms RL baselines (PPO, SAC) and pure demonstration replay on final shape accuracy (Chamfer distance). The method uses human demonstrations for initialization and differentiable physics gradients for refinement, enabling better exploration and generalization across novel target shapes unseen in the initial demonstrations.</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric / Finding</th>
+<th>Value</th>
+<th>Context</th>
+</tr></thead><tbody>
+<tr>
+<td>Tasks evaluated</td>
+<td>6</td>
+<td>Deformable object shaping/molding tasks in PlasticineLab</td>
+</tr>
+<tr>
+<td>Primary metric</td>
+<td>Chamfer distance (CD)</td>
+<td>Measures shape accuracy vs. target configuration</td>
+</tr>
+<tr>
+<td>vs. PPO</td>
+<td>Lower CD</td>
+<td>DexDeform achieves better final shape accuracy</td>
+</tr>
+<tr>
+<td>vs. SAC</td>
+<td>Lower CD</td>
+<td>DexDeform achieves better final shape accuracy</td>
+</tr>
+<tr>
+<td>vs. Demonstration replay</td>
+<td>Lower CD</td>
+<td>Refinement via differentiable physics improves upon raw demonstrations</td>
+</tr>
+<tr>
+<td>Key advantage</td>
+<td>Generalization</td>
+<td>Better exploration across novel goals unseen in initial demos</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Note: Specific per-task Chamfer distance values are reported in the paper's results tables but could not be extracted from the arXiv page (no HTML version available for this 2023 paper). The paper PDF should be consulted for exact numerical values per task and method.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The work is entirely in simulation (PlasticineLab differentiable physics simulator).</li>
+<li><strong>Deployment hardware:</strong> Simulation only. No real-world deployment.</li>
+<li><strong>Real-time capable?</strong> Not applicable (simulation-only). The differentiable physics optimization is inherently offline and not designed for real-time control.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstrations for 6 deformable object manipulation tasks in PlasticineLab. No named benchmark dataset.</li>
+<li><strong>Collection method:</strong> Human demonstrations collected in the PlasticineLab differentiable simulator. Demonstrations guide the initial policy, which is then refined using differentiable physics gradients.</li>
+<li><strong>Data scale:</strong> Not reported. The number of human demonstrations per task is not specified in public materials.</li>
+<li><strong>Teleop equipment:</strong> Not reported. The method of human demonstration collection in PlasticineLab (e.g., keyboard, scripted trajectories) is not detailed.</li>
+<li><strong>Data format:</strong> Not reported. Code is released but without pretrained weights.</li>
+<li><strong>Publicly available?</strong> Code released (without pretrained weights). Whether demonstration data is included in the code release is not confirmed.</li>
+</ul>
+<blockquote class="dp-quote">*ArXiv ID 2304.03223 confirmed as DexDeform (ICLR 2023). No HTML version available on arXiv; per-task Chamfer distance values are in the paper PDF tables.*</blockquote>
+<hr>

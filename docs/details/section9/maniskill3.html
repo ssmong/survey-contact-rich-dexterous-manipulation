@@ -1,0 +1,52 @@
+<p class="dp-p"># 9.1 ManiSkill3</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> ManiSkill3: GPU Parallelized Robotics Simulation and Benchmark with Enhanced Visual and Contact-Rich Environments</li>
+<li><strong>Authors:</strong> Stone Tao, Fanbo Xiang, Arth Shukla, Yuzhe Qin, Xander Gao, Hao Su, and collaborators (UCSD, Stanford, others)</li>
+<li><strong>Venue/Year:</strong> RSS 2025 (arXiv 2410.00425, October 2024)</li>
+<li><strong>Sim platform:</strong> SAPIEN with GPU-parallelized physics (PhysX 5) and rendering</li>
+<li><strong>Dexterous support:</strong> Allegro Hand, DClaw; extensible to arbitrary URDF hands</li>
+<li><strong>Tasks:</strong> 20+ task families spanning rigid-body, deformable, and fluid manipulation; includes dexterous in-hand reorientation and multi-finger grasping environments</li>
+<li><strong>Performance:</strong> Up to 430x faster than prior ManiSkill versions; supports thousands of parallel environments on a single GPU</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">ManiSkill3 redesigns the simulation loop to exploit GPU parallelism for both physics stepping and visual rendering. It wraps SAPIEN's PhysX 5 backend to run thousands of environments simultaneously, enabling RL training that previously took days to complete in minutes. The framework provides a unified Gym-compatible API with built-in baselines for RL (PPO, SAC), imitation learning, and VLA evaluation.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>GPU-parallelized simulation achieving 430x speedup over ManiSkill2 on rigid-body tasks, with significant speedups for soft-body and fluid tasks</li>
+<li>Unified benchmark with baselines spanning RL, IL (Diffusion Policy, ACT), and VLA (RT-2, Octo) for standardized comparison</li>
+<li>Enhanced contact-rich environments with improved collision detection and friction modeling for dexterous manipulation tasks</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Tactile sensing simulation is limited; no native support for high-resolution tactile sensor models (e.g., GelSight, DIGIT)</li>
+<li>Soft-body simulation, while supported, is slower than rigid-body and less thoroughly benchmarked for dexterous tasks</li>
+<li>Sim-to-real transfer results for dexterous hand tasks are not extensively validated in the paper</li>
+</ul>
+<h2 class="dp-h2">Coverage gaps</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Criterion</th>
+<th>Covered?</th>
+</tr></thead><tbody>
+<tr>
+<td>Force/torque evaluation metrics</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Deformable object tasks</td>
+<td>Yes (soft-body and fluid tasks included, though less benchmarked for dexterous hands)</td>
+</tr>
+<tr>
+<td>Tactile sensing</td>
+<td>No (no native tactile sensor models)</td>
+</tr>
+<tr>
+<td>Multi-stage / long-horizon tasks</td>
+<td>Partial (some multi-step tasks, but not a systematic long-horizon suite)</td>
+</tr>
+<tr>
+<td>Multi-hand coordination</td>
+<td>No</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Fully open-source. Install via <code>pip install mani-skill</code>. GitHub: <a href="https://github.com/haosulab/ManiSkill" target="_blank" rel="noopener">haosulab/ManiSkill</a></p>

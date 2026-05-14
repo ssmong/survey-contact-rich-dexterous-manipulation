@@ -1,0 +1,81 @@
+<p class="dp-p"># 12.1 Sparsh</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Sparsh: Self-Supervised Touch Representations for Vision-Based and Multi-Modal Tactile Sensing</li>
+<li><strong>Authors:</strong> Carolina Higuera, Akash Sharma, Chaithanya Krishna Bodduluri, Taosha Fan, Patrick Chaney, Mrinal Kalakrishnan, Michael Kaess, Byron Boots, Mike Lambeta, Tingfan Wu, Mustafa Mukadam (Meta FAIR, CMU)</li>
+<li><strong>Venue/Year:</strong> CoRL 2024</li>
+<li><strong>Sensors supported:</strong> DIGIT, GelSight (cross-sensor)</li>
+<li><strong>Training data:</strong> 460K+ tactile images across multiple sensor types</li>
+<li><strong>Pretraining method:</strong> Self-supervised learning (SSL) -- MAE (Masked Autoencoder), DINO, IJEPA variants</li>
+<li><strong>Benchmark:</strong> TacBench -- 5-task tactile benchmark (force estimation, slip detection, texture classification, pose estimation, grasp stability)</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">Sparsh trains tactile encoders using self-supervised learning on a large corpus of tactile images from multiple sensor types (DIGIT, GelSight). By using SSL pretraining (MAE, DINO, IJEPA), Sparsh learns tactile representations without requiring task-specific labels, analogous to how vision foundation models learn from unlabeled image data. The key innovation is cross-sensor generalization: representations learned on DIGIT images transfer to GelSight and vice versa, despite the significant visual differences between sensor outputs. Sparsh also introduces TacBench, a standardized 5-task benchmark for evaluating tactile representations.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>First large-scale SSL tactile encoder demonstrating cross-sensor transfer (DIGIT to GelSight and reverse)</li>
+<li>TacBench: standardized 5-task benchmark (force estimation, slip detection, texture classification, pose estimation, grasp stability) for tactile representation evaluation</li>
+<li>Systematic comparison of SSL methods (MAE, DINO, IJEPA) for tactile data, finding that MAE and DINO outperform IJEPA</li>
+<li>460K+ image pretraining corpus establishing a scale precedent for tactile SSL</li>
+</ul>
+<h2 class="dp-h2">Quantitative results (TacBench)</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>Metric</th>
+<th>MAE</th>
+<th>DINO</th>
+<th>IJEPA</th>
+<th>Supervised baseline</th>
+</tr></thead><tbody>
+<tr>
+<td>Force estimation</td>
+<td>RMSE (N)</td>
+<td>Best among SSL</td>
+<td>Comparable to MAE</td>
+<td>Worse</td>
+<td>Comparable to SSL</td>
+</tr>
+<tr>
+<td>Slip detection</td>
+<td>Accuracy (%)</td>
+<td>Best among SSL</td>
+<td>Comparable to MAE</td>
+<td>Worse</td>
+<td>Comparable to SSL</td>
+</tr>
+<tr>
+<td>Texture classification</td>
+<td>Accuracy (%)</td>
+<td>Competitive</td>
+<td>Competitive</td>
+<td>Lower</td>
+<td>Slightly better</td>
+</tr>
+<tr>
+<td>Pose estimation</td>
+<td>Error (mm/deg)</td>
+<td>Best among SSL</td>
+<td>Comparable</td>
+<td>Worse</td>
+<td>Comparable</td>
+</tr>
+<tr>
+<td>Grasp stability</td>
+<td>Accuracy (%)</td>
+<td>Competitive</td>
+<td>Competitive</td>
+<td>Lower</td>
+<td>Comparable</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">*Note: MAE and DINO consistently outperform IJEPA across TacBench tasks. SSL methods achieve performance comparable to supervised baselines, demonstrating that task-specific labels are not necessary for learning useful tactile representations.*</p>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Limited to vision-based tactile sensors (camera-based like DIGIT/GelSight); does not handle resistive, capacitive, or barometric tactile arrays</li>
+<li>Cross-sensor transfer, while demonstrated, still shows performance degradation compared to within-sensor training</li>
+<li>TacBench tasks are relatively simple (classification, regression); does not evaluate representations on full manipulation policies</li>
+<li>Pretraining data is predominantly from flat-surface probing; diversity of contact geometries is limited</li>
+</ul>
+<h2 class="dp-h2">Shared limitation: No closed-loop policy integration</h2>
+<p class="dp-p"><strong>This limitation -- no integration into closed-loop manipulation policies -- is shared by all tactile representation models in this section (Sparsh, <a href="unitouch.md" target="_blank" rel="noopener">UniTouch</a>, <a href="anytouch.md" target="_blank" rel="noopener">AnyTouch</a>, <a href="neuralfeels.md" target="_blank" rel="noopener">NeuralFeels</a>).</strong> All four models evaluate their learned representations on standalone perception tasks (classification, regression, tracking) rather than demonstrating end-to-end use as a tactile encoder within a manipulation policy (VLA or RL). This disconnect means the representations are validated for perceptual quality but not for actionable utility -- a representation that accurately estimates contact force may not produce features useful for a policy deciding how to adjust grasp force. Closing this loop by using a pretrained tactile encoder as the tactile backbone of a dexterous manipulation policy is the critical next step for this line of work.</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Fully open-source (code + pretrained weights). GitHub: <a href="https://github.com/facebookresearch/sparsh" target="_blank" rel="noopener">facebookresearch/sparsh</a></p>

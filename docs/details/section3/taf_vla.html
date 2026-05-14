@@ -1,0 +1,38 @@
+<h2 class="dp-h2">3.9 TaF-VLA</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> TaF-VLA: Tactile and Force Vision-Language-Action Model for Contact-Rich Manipulation</li>
+<li><strong>Authors:</strong> Not specified in survey table</li>
+<li><strong>Venue/Year:</strong> arXiv preprint, 2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2601.20321</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> Dual-modality force sensing: GelSight vision-based tactile sensor + 6-axis F/T sensor. Both modalities are processed and fused within the VLA framework, providing complementary contact information (local surface contact from GelSight and global wrench from F/T sensor).</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> No. Position-only output.</p>
+<blockquote class="dp-quote"><strong>Limitation (position-only output):</strong> Position-only output; the policy cannot actively regulate contact forces despite receiving force/tactile input.</blockquote>
+<p class="dp-p"><strong>Robot platform:</strong> Franka FR3 robotic arm + parallel-jaw gripper with GelSight and F/T sensors.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> 8 contact-rich manipulation tasks spanning a range of contact modalities.</p>
+<p class="dp-p"><strong>Key methodology:</strong> TaF-VLA fuses two complementary force/tactile modalities within a unified VLA framework. The GelSight sensor provides high-resolution local contact geometry (surface deformation, slip detection), while the 6-axis F/T sensor provides global interaction wrench information. Separate encoders process each modality: a CNN-based encoder for GelSight images and an MLP encoder for F/T signals. The encoded features are fused through cross-attention with visual and language tokens in the VLM backbone. The dual-modality design aims to capture both fine-grained contact properties (from GelSight) and global force trends (from F/T).</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> VLA backbone with dual tactile/force encoders -- a CNN encoder for GelSight tactile images and an MLP encoder for 6-axis F/T readings. Both are projected into the VLM embedding space and fused via cross-attention.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposes joint fusion of vision-based tactile and F/T sensing within a VLA, demonstrating that the two modalities provide complementary information for contact-rich tasks.</li>
+<li>Evaluates on 8 diverse contact-rich tasks, the largest task set among force-aware VLA papers.</li>
+<li>Ablation studies demonstrate that the dual-modality (tactile + F/T) fusion outperforms either single modality alone.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> No code or weights released. Position-only output despite rich force/tactile input. The requirement for both GelSight and F/T sensors increases hardware cost and complexity. Evaluated only on Franka FR3 with no cross-platform experiments. The dual-sensor requirement limits practical applicability.</p>
+<p class="dp-p"><strong>Results:</strong> The dual-modality (GelSight + F/T) model outperforms single-modality variants across the 8 tasks. The complementary nature of local tactile and global force information is most beneficial on tasks with varied contact geometries.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported in Hz or ms. The authors acknowledge that "predicting a long horizon of future actions ensures trajectory smoothness, [but] it inherently limits the frequency of closed-loop corrections" and that "force interactions are inherently fast, highlighting the need for architectures capable of faster inference."</li>
+<li><strong>Deployment hardware:</strong> NVIDIA RTX 4090 workstation for inference. Franka FR3 arm + parallel-jaw gripper with GelSight and F/T sensors.</li>
+<li><strong>Real-time capable?</strong> Partially. Deployed on RTX 4090 but the authors explicitly identify real-time control frequency as an unmet need, noting the policy "exhibits latency and is prone to failure during high-frequency dynamic events." The receding-horizon action output limits closed-loop correction frequency.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> TaF-Dataset (custom dataset released with this work). Features synchronized dual-modality force/tactile data.</li>
+<li><strong>Collection method:</strong> Automated tactile-force data acquisition device (custom hardware). The system automatically collects synchronized GelSight vision-based tactile observations, 6-axis force/torque readings, and matrix force maps.</li>
+<li><strong>Data scale:</strong> Over 10 million synchronized tactile observations, 6-axis F/T readings, and matrix force maps.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (automated data acquisition device, not teleoperation).</li>
+<li><strong>Data format:</strong> Synchronized multi-modal: GelSight tactile images + 6-axis F/T signals + force map data.</li>
+<li><strong>Publicly available?</strong> Not confirmed. The arXiv abstract does not specify whether the TaF-Dataset is publicly released.</li>
+</ul>

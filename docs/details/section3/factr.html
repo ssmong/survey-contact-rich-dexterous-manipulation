@@ -1,0 +1,55 @@
+<h2 class="dp-h2">3.14 FACTR</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> FACTR: Force-Attending Curriculum Training for Contact-Rich Robotic Manipulation</li>
+<li><strong>Authors:</strong> RaindragonD et al. (CMU)</li>
+<li><strong>Venue/Year:</strong> RSS 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2502.17432</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> Joint torque signals derived from servo motor current readings. No external F/T or tactile sensor required -- the approach uses the Franka Panda's built-in joint torque sensing capabilities.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> No. Position-only output. The joint torque is used as input context only.</p>
+<blockquote class="dp-quote"><strong>Limitation (position-only output):</strong> Position-only output; the policy cannot actively regulate contact forces despite receiving force/tactile input.</blockquote>
+<p class="dp-p"><strong>Robot platform:</strong> Franka Panda robotic arm + parallel-jaw gripper.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> Box lifting, pivoting, and dough rolling -- contact-rich tasks requiring different force interaction modes (lifting requires grasp force, pivoting requires precise rotational torque, dough rolling requires consistent downward pressure).</p>
+<p class="dp-p"><strong>Key methodology:</strong> FACTR introduces a curriculum training strategy for integrating force (joint torque) into visuomotor policies. The key insight is that naively adding force inputs can hurt performance due to the distribution shift between demonstration and deployment force profiles. FACTR addresses this through a force-attending curriculum: the model first learns vision-based manipulation, then gradually introduces force attention layers that learn to modulate the policy's actions based on joint torque readings. The curriculum prevents catastrophic forgetting of visual features while adding force reactivity. A force-attending transformer layer uses cross-attention between visual features and force tokens.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Transformer-based visuomotor policy with force-attending layers added via curriculum training. The force encoder processes joint torque signals into tokens that attend to visual features through cross-attention. Only the force encoder weights are publicly released.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposes curriculum training for force integration, addressing the practical challenge that naively adding force inputs can degrade performance.</li>
+<li>Uses joint torque (no additional sensors), making the approach applicable to any torque-controlled robot.</li>
+<li>Demonstrates that the force-attending curriculum improves performance on diverse contact-rich tasks (lifting, pivoting, rolling) beyond what vision alone provides.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> No full model weights released (only the force encoder). Position-only output. Joint torque provides less precise contact information than dedicated F/T sensors or tactile sensors. Evaluated on 3 tasks on a single platform. The curriculum training adds complexity to the training pipeline.</p>
+<p class="dp-p"><strong>Results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Improvement over vision-only baselines</td>
+<td>10--30% across 3 tasks</td>
+</tr>
+<tr>
+<td>Largest single-task gain</td>
+<td>Dough rolling (consistent force application critical)</td>
+</tr>
+<tr>
+<td>Curriculum vs. naive force concatenation</td>
+<td>15--20% improvement</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The paper does not disclose per-step inference latency or control frequency during deployment.</li>
+<li><strong>Deployment hardware:</strong> Not specified. The policy uses a ViT encoder + MLP force encoder + transformer decoder. Franka Panda arm for real-world experiments.</li>
+<li><strong>Real-time capable?</strong> Not verified. No quantitative latency benchmarks provided. The force-attending transformer layers add computational overhead, but the overall architecture is relatively lightweight.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstration dataset for 3 contact-rich tasks (box lifting, pivoting, dough rolling) on Franka Panda. No named benchmark.</li>
+<li><strong>Collection method:</strong> Teleoperated demonstrations collected via a "low-cost, intuitive, bilateral teleoperation setup that relays external forces" -- the operator receives force feedback from the robot arm during demonstration, enabling force-sensitive data collection.</li>
+<li><strong>Data scale:</strong> Not reported.</li>
+<li><strong>Teleop equipment:</strong> Custom bilateral teleoperation system with force feedback relay. The operator's arm receives forces from the Franka Panda during demonstration collection.</li>
+<li><strong>Data format:</strong> Not reported. Joint torque signals derived from servo motor current readings (Franka's built-in sensing).</li>
+<li><strong>Publicly available?</strong> Partial. Force encoder weights released. Video results, codebase, and instructions available at jasonjzliu.com/factr/. Whether demonstration data is included is not confirmed.</li>
+</ul>

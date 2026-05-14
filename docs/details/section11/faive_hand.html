@@ -1,0 +1,63 @@
+<p class="dp-p"># 11.6 FAIVE Hand</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> FAIVE Hand: A Low-Cost, 3D-Printed, Tendon-Driven Dexterous Robot Hand</li>
+<li><strong>Authors:</strong> ETH Zurich, Soft Robotics Lab (SRL)</li>
+<li><strong>Venue/Year:</strong> 2024 (open-source hardware release; associated publications on policy learning)</li>
+<li><strong>DoF:</strong> 11+ actuated (varies by version; P0/P2/P4 revisions with increasing DoF)</li>
+<li><strong>Cost:</strong> ~$500-800 (bill of materials; significantly below all other hands in this section)</li>
+<li><strong>Tactile sensing:</strong> None built-in (fingertip design accommodates aftermarket sensors)</li>
+<li><strong>Actuation:</strong> Tendon-driven with off-the-shelf servo motors; tendons routed through 3D-printed finger linkages</li>
+<li><strong>Fabrication:</strong> Fully 3D-printed structural components (FDM/SLA); no CNC or custom machining required</li>
+</ul>
+<h2 class="dp-h2">Quantitative specs</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Spec</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Fingers</td>
+<td>4 fingers + thumb (anthropomorphic layout)</td>
+</tr>
+<tr>
+<td>Actuated DoF</td>
+<td>11+ (version-dependent; P4 has higher DoF)</td>
+</tr>
+<tr>
+<td>Passive DoF</td>
+<td>Additional under-actuated joints via tendon coupling</td>
+</tr>
+<tr>
+<td>Weight</td>
+<td>Not reported (3D-printed structure suggests low weight)</td>
+</tr>
+<tr>
+<td>Actuator control bandwidth</td>
+<td>~50 Hz (limited by servo motors)</td>
+</tr>
+<tr>
+<td>Maximum fingertip force</td>
+<td>Limited by tendon tension and servo torque; lower than direct-drive designs</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">The FAIVE Hand is designed around the principle of ultra-low-cost accessibility. All structural components are 3D-printable on consumer-grade printers, and actuation uses commodity servo motors with tendon routing. The under-actuated tendon-driven design means fewer motors are needed than the number of joint DoFs, with passive joint coupling providing adaptive grasping. Multiple hardware revisions (P0, P2, P4) have been released with progressively refined designs. The hand mounts on standard robot arms and has been demonstrated with RL-based sim-to-real transfer for dexterous manipulation tasks.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Ultra-low-cost dexterous hand (~$500-800), approximately 2-6x cheaper than any other hand in this survey</li>
+<li>Fully 3D-printable: no CNC machining, laser cutting, or custom parts required; democratizes access to dexterous manipulation hardware</li>
+<li>Tendon-driven under-actuation providing adaptive grasping with fewer motors than joints</li>
+<li>Multiple open-source hardware revisions with community contributions</li>
+<li>Demonstrated sim-to-real transfer for manipulation policies</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Lower DoF (11+) than LEAP (16), ORCA (17), or ISyHand (18), limiting fine manipulation dexterity</li>
+<li>Tendon-driven actuation introduces cable routing complexity, tendon wear, and potential slack issues</li>
+<li>No integrated tactile sensing; fingertip forces are not measurable without aftermarket sensors</li>
+<li>3D-printed parts have lower mechanical durability than injection-molded or CNC-machined alternatives; may require reprinting after extended use</li>
+<li>Limited servo motor bandwidth (~50 Hz) and torque compared to Dynamixel or custom actuators</li>
+<li>Smaller research community and fewer published sim-to-real results compared to LEAP Hand</li>
+<li>Sim-to-real gap may be larger due to difficulty accurately modeling tendon dynamics and 3D-printed joint compliance</li>
+</ul>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Fully open-source (CAD, firmware, assembly instructions, BOM). GitHub: <a href="https://github.com/srl-ethz/faive-hand" target="_blank" rel="noopener">srl-ethz/faive-hand</a> (note: repository may use different naming conventions across versions). Multiple hardware revisions available.</p>

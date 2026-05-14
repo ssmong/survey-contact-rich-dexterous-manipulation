@@ -1,0 +1,54 @@
+<h3 class="dp-h3">7.2 Rotating without Seeing</h3>
+<p class="dp-p"><strong>Full title:</strong> Rotating without Seeing: Towards In-hand Dexterity through Touch</p>
+<p class="dp-p"><strong>Authors:</strong> Zhao-Heng Yin, Binghao Huang, Yuzhe Qin, Qifeng Chen, Xiaolong Wang</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2023</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2303.10880</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with teacher-student distillation. Teacher policy trained with privileged state (object pose, contact forces); student policy distilled to use only proprioception and tactile input.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Allegro Hand (16 DoF) with dense binary tactile sensors (touch/no-touch) covering fingertips, finger links, and palm</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes. Zero-shot sim-to-real transfer. The use of binary tactile sensors (touch/no-touch) minimizes the sim-to-real gap since binary contact signals are easier to simulate accurately than high-resolution tactile images. Domain randomization over physical parameters.</p>
+<p class="dp-p"><strong>Tasks:</strong> In-hand object rotation around specified axes using tactile feedback only (no vision). Tested on diverse objects including cubes, cylinders, and irregular shapes.</p>
+<p class="dp-p"><strong>Key methodology:</strong> Demonstrates that tactile sensing alone (without any visual input) is sufficient for dexterous in-hand rotation. Uses dense binary force sensors that provide broad coverage across the hand surface. The binary nature of the sensors (contact vs. no contact) is deliberately chosen to minimize the sim-to-real gap, since binary contact signals can be simulated with high fidelity. A teacher-student framework first trains with privileged information, then distills to a policy using only proprioception and binary touch signals.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>First RL-based demonstration of tactile-only (no vision) in-hand object rotation with sim-to-real transfer</li>
+<li>Showed that dense binary tactile sensors with broad coverage outperform sparse high-resolution sensors for sim-to-real dexterous manipulation</li>
+<li>Minimized sim-to-real gap by using binary (touch/no-touch) sensing modality that is trivially simulatable</li>
+<li>Generalized to novel objects not seen during training in real-world experiments</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Rotation success (sim)</td>
+<td>>90% across objects</td>
+</tr>
+<tr>
+<td>Real-world transfer</td>
+<td>Zero-shot, multiple objects</td>
+</tr>
+<tr>
+<td>Sensor modality</td>
+<td>Binary tactile only (no vision)</td>
+</tr>
+<tr>
+<td>Hand</td>
+<td>Allegro (16 DoF)</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force control:</strong> Binary tactile only (touch/no-touch); no continuous force measurement or impedance control</li>
+<li><strong>VLA/Language:</strong> No language conditioning or VLA integration</li>
+<li><strong>Sim2Real:</strong> Binary tactile simplifies transfer but sacrifices force magnitude information</li>
+<li><strong>Code:</strong> Project page at https://touchdexterity.github.io; code availability limited</li>
+<li><strong>Task scope:</strong> Limited to rotation; does not address functional manipulation or tool use</li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported. The tactile-conditioned MLP policy runs in <1ms per forward pass. Binary tactile processing is computationally trivial.</li>
+<li><strong>Deployment hardware:</strong> Allegro Hand (16 DoF) with dense binary tactile sensors. Policy trained in IsaacGym; deployed via zero-shot sim-to-real transfer.</li>
+<li><strong>Real-time capable?</strong> Yes. Demonstrated real-time in-hand rotation on real Allegro Hand with binary tactile feedback.</li>
+</ul>

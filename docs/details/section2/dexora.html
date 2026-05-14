@@ -1,0 +1,87 @@
+<h3 class="dp-h3">2.4 Dexora</h3>
+<p class="dp-p"><strong>Full title:</strong> Dexora: Open-Source VLA for High-DoF Bimanual Dexterity</p>
+<p class="dp-p"><strong>Authors:</strong> Dexora Team (Tsinghua University; contact: pjr24@mails.tsinghua.edu.cn)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICRA 2026</p>
+<p class="dp-p"><strong>GitHub:</strong> <a href="https://github.com/ZZongzheng0918/Dexora" target="_blank" rel="noopener">ZZongzheng0918/Dexora</a></p>
+<p class="dp-p"><strong>Hand hardware:</strong> Bimanual system with dual dexterous hands, 36 DoF total. Teleoperation uses exoskeleton for arm control and Apple Vision Pro for dexterous hand control.</p>
+<p class="dp-p"><strong>Tasks (by category with dataset proportions):</strong></p>
+<ul class="dp-list">
+<li>Pick-and-place (55% of dataset)</li>
+<li>Dexterous manipulation (20%)</li>
+<li>Assembly (15%)</li>
+<li>Articulated object manipulation (10%)</li>
+</ul>
+<p class="dp-p"><strong>Key methodology:</strong> Dexora is an open-source VLA framework that combines large-scale teleoperated real-world data with simulated training data for high-DoF bimanual dexterous manipulation. The hybrid data collection approach uses exoskeleton teleoperation for arm control and Vision Pro hand tracking for dexterous finger control. Multi-view synchronized recording across four camera perspectives captures demonstrations alongside robot proprioceptive feedback. The system follows the LIBERO-2.1 standard for data format compliance.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong></p>
+<ul class="dp-list">
+<li>VLA architecture details not fully disclosed in the repository as of the survey date</li>
+<li>Training data: 12.2K real-world teleoperated episodes + 100K simulated episodes</li>
+<li>Real-world data: approximately 40.5 hours</li>
+<li>Object inventory: curated 347-object set with procurement links for reproducibility</li>
+<li>Multi-view input: four synchronized camera perspectives</li>
+</ul>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Large-scale open-source bimanual dexterous dataset: 12.2K real-world episodes (40.5 hours) plus 100K simulated episodes, with a curated 347-object inventory including procurement links</li>
+<li>Hybrid teleoperation pipeline combining exoskeleton (arms) and Vision Pro (hands) for high-quality bimanual dexterous demonstrations</li>
+<li>LIBERO-2.1 standard compliance and full data release on HuggingFace, lowering the barrier for reproducible dexterous VLA research</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>arXiv link is placeholder format ("2026.xxxxx") as of the survey date, suggesting the full paper may not yet be publicly available</li>
+<li>VLA architecture details are sparse in the current repository</li>
+<li>No force or tactile sensing in the data collection pipeline; demonstrations capture joint positions and visual data only</li>
+<li>36-DoF bimanual system is specific; cross-embodiment transfer to other hand platforms is not addressed</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong></p>
+<blockquote class="dp-quote"><strong>[EDITORIAL NOTE -- no task success rates reported]:</strong> This entry contains only dataset statistics (episode counts, hours, object counts) but no task success rates or manipulation performance metrics. This is a critical gap: without success rates per task category (pick-and-place, dexterous manipulation, assembly, articulated object manipulation), it is impossible to assess the VLA's actual manipulation capability. The full paper or repository should be consulted for quantitative task performance. Until then, this entry documents a dataset and framework contribution, not a demonstrated manipulation capability.</blockquote>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Real-world episodes</td>
+<td>12.2K</td>
+<td>Teleoperated</td>
+</tr>
+<tr>
+<td>Simulated episodes</td>
+<td>100K</td>
+<td>Generated</td>
+</tr>
+<tr>
+<td>Real-world data duration</td>
+<td>~40.5 hours</td>
+<td></td>
+</tr>
+<tr>
+<td>Object inventory</td>
+<td>347 objects</td>
+<td>With procurement links</td>
+</tr>
+<tr>
+<td>Task success rates</td>
+<td><strong>Not reported</strong></td>
+<td>Critical gap</td>
+</tr>
+</tbody></table></div>
+<ul class="dp-list">
+<li>Data and model weights released on HuggingFace</li>
+<li>Code released at <a href="https://github.com/ZZongzheng0918/Dexora" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The repository and available documentation do not disclose inference latency or control frequency.</li>
+<li><strong>Deployment hardware:</strong> Bimanual system with dual dexterous hands (36 DoF total). Data collection uses exoskeleton (arms) + Apple Vision Pro (hands). Inference hardware not specified.</li>
+<li><strong>Real-time capable?</strong> Not verified. No inference latency or deployment hardware information available in public materials.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Dexora dataset (custom, released with this work). Two components: real-world teleoperated episodes and simulated episodes.</li>
+<li><strong>Collection method:</strong> Hybrid teleoperation system coupling an exoskeleton (for arm control, 7 DoF per arm) with Apple Vision Pro (for dexterous hand control). Multi-view synchronized recording across four camera perspectives with robot proprioceptive feedback.</li>
+<li><strong>Data scale:</strong> 12.2K real-world teleoperated episodes (2.92M frames, ~40.5 hours) + 100K simulated episodes (coming soon). 347 objects across 17 semantic categories with procurement links (Taobao/Amazon) for reproducibility.</li>
+<li><strong>Teleop equipment:</strong> Exoskeleton for arm control + Apple Vision Pro for dexterous hand tracking (36 DoF bimanual system total).</li>
+<li><strong>Data format:</strong> LIBERO-2.1 standard. Episodes contain multi-view RGB observations, robot state (joint positions/velocities), action commands, and 5 natural language task descriptions per trajectory. Available in both episode-centric and task-level organizational views.</li>
+<li><strong>Publicly available?</strong> Yes. Real-world dataset (12.2K episodes) released on HuggingFace. Model weights also on HuggingFace. Code at <a href="https://github.com/ZZongzheng0918/Dexora" target="_blank" rel="noopener">GitHub</a>. Simulation dataset release forthcoming.</li>
+</ul>

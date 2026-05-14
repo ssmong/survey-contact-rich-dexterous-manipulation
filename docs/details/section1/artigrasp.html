@@ -1,0 +1,91 @@
+<h3 class="dp-h3">ArtiGrasp</h3>
+<p class="dp-p"><strong>Full Title:</strong> ArtiGrasp: Physically Plausible Synthesis of Bi-Manual Dexterous Grasping and Articulation</p>
+<p class="dp-p"><strong>Authors:</strong> Zijian Dong et al. (ETH Zurich)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> 3DV 2024</p>
+<p class="dp-p"><strong>Hand Hardware:</strong> MANO hand model (human hand proxy). ArtiGrasp operates on the parametric MANO representation of human hands, using it as a physics-based proxy for studying bimanual dexterous grasping and articulation in simulation.</p>
+<p class="dp-p"><strong>Tasks:</strong> 8 bimanual grasp + articulation environments from the ARCTIC-like dataset (3 objects excluded: scissors, capsule machine, phone). Tasks require two hands to simultaneously grasp an articulated object and operate its degrees of freedom (e.g., opening a laptop, operating a stapler). The tasks combine stable bimanual grasping with articulated object state change. 745 hand pose references generated across all objects.</p>
+<p class="dp-p"><strong>Key Methodology:</strong> ArtiGrasp synthesizes physically plausible bimanual grasping and articulation motions using reinforcement learning in physics simulation. The approach trains policies that control two MANO hands to perform coordinated bimanual manipulation of articulated objects, ensuring physical plausibility through contact-aware simulation. The RaiSim physics engine provides accurate contact dynamics for hand-object interactions. The method learns to jointly optimize grasp stability and articulation progress.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> RL policies trained with PPO. Pretrained model weights are publicly released. The policy takes as input the object state and hand proprioception, outputting joint angle targets for both MANO hands.</p>
+<p class="dp-p"><strong>Sim Platform:</strong> RaiSim physics engine. Sim-to-real transfer is not demonstrated -- the work uses the MANO human hand model rather than a specific robot hand, focusing on motion synthesis rather than robot deployment.</p>
+<p class="dp-p"><strong>Main Contributions:</strong></p>
+<ul class="dp-list">
+<li>Jointly synthesizes bimanual grasping and articulation in a single policy, whereas prior work typically addressed grasping and articulated object manipulation as separate problems -- this is the first to optimize grasp stability and articulation progress simultaneously.</li>
+<li>Demonstrates physically plausible bimanual motions across 8 articulated objects using physics-based RL in RaiSim, producing motions that respect contact dynamics and joint limits rather than relying on kinematic interpolation.</li>
+<li>Releases pretrained models and code (<a href="https://github.com/zdchan/artigrasp" target="_blank" rel="noopener">GitHub</a>), enabling reproducibility.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force/impedance awareness:</strong> No. No explicit force sensing or impedance control beyond implicit contact forces computed by the RaiSim physics engine. The policy outputs joint position targets; contact forces arise from the simulation's contact solver rather than being explicitly controlled. This means the system cannot regulate grasp force magnitude (e.g., to avoid crushing fragile objects) or articulation force (e.g., to detect joint limits).</li>
+<li><strong>VLA/language conditioning:</strong> No. No language conditioning or vision-language integration.</li>
+<li><strong>Sim-to-real:</strong> Not applicable in current form. The work uses the MANO human hand model rather than a specific robot hand, making direct robot deployment non-trivial -- it would require retargeting from MANO to a physical robot hand and addressing the additional sim-to-real gap.</li>
+<li><strong>Code/weights availability:</strong> Code and pretrained model weights released (<a href="https://github.com/zdchan/artigrasp" target="_blank" rel="noopener">GitHub</a>).</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Evaluated on 8 articulated objects (745 hand pose references). Metrics include articulation success rate, displacement (object base movement), position error, and articulation angle error. Results are aggregated across objects.</p>
+<p class="dp-p">Table 2 -- Grasping and Articulation (combined, aggregated across objects):</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>ArtiGrasp (Ours)</th>
+<th>D-Grasp (Baseline)</th>
+</tr></thead><tbody>
+<tr>
+<td>Articulation success rate</td>
+<td>0.55</td>
+<td>0.22</td>
+</tr>
+<tr>
+<td>Object base displacement</td>
+<td>0.01 m</td>
+<td>0.49 m</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Table 3 -- Dynamic Object Grasping and Articulation:</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>ArtiGrasp (Ours)</th>
+<th>D-Grasp (Baseline)</th>
+</tr></thead><tbody>
+<tr>
+<td>Task success rate</td>
+<td>0.50</td>
+<td>0.11</td>
+</tr>
+<tr>
+<td>Position error</td>
+<td>0.03 m</td>
+<td>0.05 m</td>
+</tr>
+<tr>
+<td>Articulation angle error</td>
+<td>0.41 rad</td>
+<td>0.66 rad</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Table 4 -- Robustness to noisy hand pose estimates (image-based input):</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>MoCap Input</th>
+<th>Noisy (Image-based)</th>
+</tr></thead><tbody>
+<tr>
+<td>Grasping success</td>
+<td>0.67</td>
+<td>0.64</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">ArtiGrasp achieves 2.5x higher articulation success and 4.5x higher dynamic task success than D-Grasp, with near-zero object displacement (0.01m vs. 0.49m).</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The work uses MANO human hand model in RaiSim simulation; no physical robot deployment.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (RaiSim physics engine). No real-world deployment hardware.</li>
+<li><strong>Real-time capable?</strong> Not applicable (simulation-only, MANO hand model rather than a physical robot hand).</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No external dataset. Training data is generated via RL simulation rollout in RaiSim across 6 articulated object environments. Hand pose references are used to guide the policy.</li>
+<li><strong>Collection method:</strong> RL simulation rollout with PPO in RaiSim physics engine. The policy learns bimanual grasping and articulation from scratch through physics-based RL. Image-based hand-object pose estimates from an off-the-shelf regressor are used for evaluation.</li>
+<li><strong>Data scale:</strong> Not reported (on-policy RL training; data generated on-the-fly).</li>
+<li><strong>Teleop equipment:</strong> Not applicable (RL-trained, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (on-policy RL training). Pretrained model weights released.</li>
+<li><strong>Publicly available?</strong> Yes. Code and pretrained model weights released (<a href="https://github.com/zdchan/artigrasp" target="_blank" rel="noopener">GitHub</a>).</li>
+</ul>
+<hr>

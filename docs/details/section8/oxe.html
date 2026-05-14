@@ -1,0 +1,40 @@
+<p class="dp-p"># 8.4.1 Open X-Embodiment (OXE)</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Open X-Embodiment: Robotic Learning Datasets and RT-X Models</li>
+<li><strong>Authors:</strong> 294+ authors from 21 institutions (Google DeepMind, UC Berkeley, Stanford, CMU, MIT, and others); notable contributors include Sergey Levine, Pieter Abbeel, Chelsea Finn, Jitendra Malik</li>
+<li><strong>Venue/Year:</strong> arXiv 2023 (submitted October 2023; last revised May 2025); associated with ICRA 2024</li>
+<li><strong>Scale:</strong> ~1M robot episodes, 22 robot embodiments, 527 skills, 160K+ tasks</li>
+<li><strong>Hand/embodiment types:</strong> 22 different robot platforms spanning single-arm, bimanual, and mobile manipulators (primarily parallel-jaw grippers; no dedicated multi-finger dexterous hand data)</li>
+<li><strong>Data format:</strong> Standardized RLDS (Reinforcement Learning Datasets) format via TensorFlow Datasets</li>
+<li><strong>Collection method:</strong> Multi-institutional collaborative aggregation of existing and newly collected datasets from 21 research labs worldwide</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">OXE is the first large-scale cross-embodiment robot manipulation dataset, aggregating data from 21 institutions into a unified format. The core thesis is that pooling diverse robot data -- across different morphologies, sensors, and tasks -- enables positive transfer when training large generalist policies. The dataset is accompanied by the RT-X models (RT-1-X, RT-2-X), which demonstrate that a single policy trained on the full mixture outperforms policies trained on any single institution's data alone. The standardized RLDS format includes observations (images, proprioception), actions (end-effector or joint), language instructions, and episode metadata.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Largest cross-embodiment robot manipulation dataset at time of release (~1M episodes across 22 robots)</li>
+<li>Demonstrated positive transfer: RT-2-X trained on the full mixture shows 50%+ improvement over specialist models on average</li>
+<li>Established RLDS as the de facto standard format for cross-embodiment robot data</li>
+<li>Foundational pretraining dataset adopted by OpenVLA, Octo, RDT-1B, HPT, CrossFormer, and many subsequent generalist policies</li>
+</ul>
+<h2 class="dp-h2">Downstream usage in surveyed works</h2>
+<p class="dp-p">OXE is the primary pretraining dataset for multiple systems covered in this survey:</p>
+<ul class="dp-list">
+<li><strong>OpenVLA</strong> (§6): pretrained on OXE mixture</li>
+<li><strong>Octo</strong> (§6): pretrained on OXE; OXE was designed alongside Octo</li>
+<li><strong>RDT-1B</strong> (§6): uses OXE for large-scale pretraining</li>
+<li><strong>HPT</strong> (§6): cross-embodiment pretraining on OXE</li>
+<li><strong>CrossFormer</strong> (§6): designed specifically for OXE-scale cross-embodiment data</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>No multi-finger dexterous hand data: all embodiments use parallel-jaw grippers or simple end-effectors, making OXE unsuitable for pretraining dexterous manipulation policies without additional data</li>
+<li>No force/torque or tactile data: observations are limited to images and proprioception</li>
+<li>Significant class imbalance across embodiments: some robots contribute orders of magnitude more data than others</li>
+<li>Quality variance: data from different institutions uses different collection protocols, annotation quality, and task definitions</li>
+<li>Limited real-world diversity within individual embodiments compared to datasets like DROID that specifically target scene/environment diversity</li>
+<li>Action space heterogeneity requires careful normalization or embodiment-specific action heads</li>
+<li>No impedance/compliance control data or contact event annotations, limiting use for contact-rich policy learning.</li>
+</ul>
+<h2 class="dp-h2">Availability</h2>
+<p class="dp-p">Open-source under CC BY 4.0. Available via TensorFlow Datasets and the <a href="https://robotics-transformer-x.github.io/" target="_blank" rel="noopener">Open X-Embodiment project page</a>. Individual component datasets have varying licenses.</p>

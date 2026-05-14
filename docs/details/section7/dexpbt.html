@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.2 DexPBT</h3>
+<p class="dp-p"><strong>Full title:</strong> DexPBT: Scaling up Dexterous Manipulation for Hand-Arm Systems with Population Based Training</p>
+<p class="dp-p"><strong>Authors:</strong> Aleksei Petrenko, Arthur Allshire, Gavriel State, Ankur Handa, Viktor Makoviychuk</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2023</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with Population-Based Training (PBT); maintains a population of policies with different hyperparameters, periodically replacing underperformers with mutated copies of top performers</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Allegro Hand (16 DoF) + Kuka arm</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No (simulation-only evaluation)</p>
+<p class="dp-p"><strong>Object count:</strong> Multiple objects; evaluated on cube reorientation and other manipulation tasks</p>
+<p class="dp-p"><strong>Tasks:</strong> Coordinated arm-hand manipulation including in-hand reorientation, regrasping, and object handover; multi-task training across diverse manipulation objectives</p>
+<p class="dp-p"><strong>Key methodology:</strong> Applies Population-Based Training to dexterous arm-hand manipulation, automatically tuning reward weights, learning rates, and domain randomization parameters across a population of policies. PBT enables efficient hyperparameter search in the challenging high-dimensional action space of arm-hand systems (16 + 7 = 23 DoF). The population evolves toward policies that balance multiple task objectives without manual reward shaping.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>First application of PBT to dexterous arm-hand manipulation, automating hyperparameter and reward tuning</li>
+<li>Multi-task training framework handling diverse manipulation objectives with a single population</li>
+<li>Demonstrated that PBT significantly outperforms fixed-hyperparameter PPO on arm-hand tasks</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Simulation-only (no sim2real); PBT requires significant compute (population of parallel policies); limited object diversity; the evolved hyperparameters may not transfer across tasks or embodiments</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The MLP policy runs in <1ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacGym). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL (PPO) with Population-Based Training (PBT) -- all data generated in simulation.</li>
+<li><strong>Collection method:</strong> Pure RL in IsaacGym. PBT maintains a population of policies with different hyperparameters, automatically tuning reward weights, learning rates, and domain randomization. Multi-task training across diverse arm-hand manipulation objectives.</li>
+<li><strong>Data scale:</strong> Standard parallel RL training in IsaacGym. Multiple objects for cube reorientation and other tasks.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> Code release status not reported.</li>
+</ul>

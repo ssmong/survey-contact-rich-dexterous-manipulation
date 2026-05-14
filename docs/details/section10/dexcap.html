@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.1 DexCap</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation</li>
+<li><strong>Authors:</strong> Chen Wang, Haochen Shi, Weizhuo Wang, Ruohan Zhang, Li Fei-Fei, C. Karen Liu (Stanford)</li>
+<li><strong>Venue/Year:</strong> RSS 2024 (arXiv 2403.07788, March 2024)</li>
+<li><strong>Input modality:</strong> SLAM-based hand tracking + electromagnetic finger sensors (StretchSense gloves)</li>
+<li><strong>Target hand:</strong> LEAP Hand (16 DoF)</li>
+<li><strong>Force feedback:</strong> None</li>
+<li><strong>Cost:</strong> ~$2,000 (gloves + sensors)</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">DexCap captures human hand motion using electromagnetic tracking sensors attached to each finger, combined with SLAM-based wrist tracking for global positioning. The system retargets captured human hand motions to the LEAP Hand using an optimization-based retargeting pipeline that maps human finger kinematics to the robot hand's joint space. The portable design -- requiring no external motion capture infrastructure -- enables data collection in diverse real-world environments rather than being confined to a lab.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Portable, infrastructure-free dexterous motion capture system requiring only worn sensors (no external cameras or markers)</li>
+<li>Optimization-based retargeting pipeline mapping human hand motions to LEAP Hand with kinematic feasibility constraints</li>
+<li>Demonstrated scalable data collection for imitation learning of dexterous manipulation policies</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>No force/haptic feedback to the operator, which limits contact-rich task performance (operator cannot feel grasp forces)</li>
+<li>Electromagnetic sensors can suffer from interference in metallic environments</li>
+<li>Retargeting introduces motion artifacts when human and robot hand kinematics diverge significantly</li>
+<li>Demonstrated primarily on LEAP Hand; adaptation to other hand platforms requires re-calibration</li>
+</ul>
+<h2 class="dp-h2">Data quality impact</h2>
+<p class="dp-p">Demonstrations capture finger joint trajectories but lack any force or contact information. Policies trained on DexCap data learn position-based grasp strategies without force regulation, resulting in brittle grasps that either apply excessive force (crushing) or insufficient force (dropping) when transferred to real hardware. The absence of force feedback also means the operator cannot modulate grasp force during collection, so demonstrations do not encode the force profiles needed for contact-rich tasks like insertion or in-hand reorientation under load.</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source. GitHub: <a href="https://github.com/j96w/DexCap" target="_blank" rel="noopener">j96w/DexCap</a></p>

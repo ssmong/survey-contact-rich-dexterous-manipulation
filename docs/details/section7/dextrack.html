@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.4 DexTrack</h3>
+<p class="dp-p"><strong>Full title:</strong> DexTrack: Towards Generalizable Neural Tracking Control for Dexterous Manipulation from Human References</p>
+<p class="dp-p"><strong>Authors:</strong> Yuzhe Qin, Meowuu7 (pseudonym), Hao Su, Xiaolong Wang, et al. (PKU / Shanghai AI Lab)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICLR 2025</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2501.15760</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with motion tracking reward. Policy learns to track retargeted human hand motion capture trajectories on robot hands. Uses privileged training with distillation.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Shadow Hand (24 DoF), Allegro Hand (16 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym (inferred)</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No. Simulation-only.</p>
+<p class="dp-p"><strong>Tasks:</strong> Motion capture tracking: the robot hand must reproduce human hand motion trajectories retargeted from MoCap data. Tasks span grasping, in-hand manipulation, and dexterous coordination as captured in human demonstrations.</p>
+<p class="dp-p"><strong>Key methodology:</strong> DexTrack trains a generalizable neural controller that can track arbitrary human hand motions retargeted to a robot hand. Rather than training one policy per task, DexTrack conditions on the target trajectory, enabling a single policy to handle diverse manipulation behaviors. The approach uses a tracking reward that penalizes deviations from reference joint angles and fingertip positions, combined with contact-aware rewards that encourage physically plausible interactions.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Trained a single generalizable policy that can track diverse human hand motions on robot hands, rather than per-task policies</li>
+<li>Demonstrated cross-embodiment tracking: the same framework works for Shadow (24 DoF) and Allegro (16 DoF) hands</li>
+<li>Provided a pathway from human demonstrations to robot execution via motion retargeting + neural tracking</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Sim-only; real-world tracking not demonstrated. Retargeting from human to robot hand introduces kinematic mismatches. Tracking does not guarantee task success (faithfully reproducing motion does not account for object dynamics). Partial code release.</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<p class="dp-p"><strong>Results:</strong> Achieved high tracking accuracy across diverse motion trajectories on both Shadow and Allegro hands (sim). Code partially available.</p>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Human hand motion capture data retargeted to robot hands. RL training in IsaacGym.</li>
+<li><strong>Collection method:</strong> RL + human MoCap demos. PPO with motion tracking reward. Human hand MoCap trajectories retargeted to Shadow (24 DoF) and Allegro (16 DoF) hands. Policy conditioned on target trajectory for generalizable tracking. Privileged training with distillation.</li>
+<li><strong>Data scale:</strong> Diverse MoCap trajectories spanning grasping, in-hand manipulation, and dexterous coordination. Specific trajectory counts not reported.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (MoCap data, not live teleoperation).</li>
+<li><strong>Data format:</strong> Retargeted MoCap trajectories (joint angle sequences for robot hands).</li>
+<li><strong>Publicly available?</strong> Code partially available.</li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The distilled student MLP policy runs in <1ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacGym). Evaluated on Shadow Hand (24 DoF) and Allegro Hand (16 DoF) in simulation. No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>

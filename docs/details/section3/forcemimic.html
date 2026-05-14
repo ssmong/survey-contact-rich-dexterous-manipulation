@@ -1,0 +1,38 @@
+<h2 class="dp-h2">3.15 ForceMimic</h2>
+<blockquote class="dp-quote"><strong>Note:</strong> This is not a VLA (no language conditioning). Included in Section 3 for its force-output methodology, which is directly relevant to force-aware manipulation policy design.</blockquote>
+<ul class="dp-list">
+<li><strong>Full title:</strong> ForceMimic: Force-Centric Imitation Learning with Force-Motion Capture System for Contact-Rich Manipulation</li>
+<li><strong>Authors:</strong> SJTU / Flexiv et al.</li>
+<li><strong>Venue/Year:</strong> ICRA 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2410.07554</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> Captured interaction wrench from a custom force-motion capture system that records both the human demonstrator's motions and the interaction forces during teleoperation.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> Yes -- wrench-position hybrid output. The model predicts both desired end-effector positions and desired interaction wrenches, enabling a hybrid controller that actively regulates contact forces. <strong>Force output type: full wrench (6D).</strong></p>
+<p class="dp-p"><strong>Robot platform:</strong> Flexiv Rizon robotic arm + parallel-jaw gripper.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> Vegetable peeling as the primary evaluation task -- a challenging contact-rich task requiring precise force control to peel without damaging the vegetable.</p>
+<p class="dp-p"><strong>Key methodology:</strong> ForceMimic introduces a force-motion capture system that records both kinematic trajectories and interaction forces during human demonstrations. Unlike standard teleoperation that captures only positions, this system uses F/T sensors to record the forces the demonstrator applies during contact-rich tasks. The imitation learning policy then learns to predict both position and force targets, enabling a hybrid force-position controller that actively regulates contact. The hybrid imitation learning (HybridIL) formulation treats force and position as jointly predicted quantities, with separate loss terms for position tracking and force tracking.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Imitation learning policy trained on force-augmented demonstrations. The policy outputs both position targets and wrench targets. A hybrid force-position controller executes both targets simultaneously.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Introduces a force-motion capture system that captures both motions and forces during demonstrations, providing richer supervision for contact-rich imitation learning.</li>
+<li>Proposes HybridIL, a hybrid imitation learning formulation that jointly predicts position and force targets, enabling active force regulation.</li>
+<li>Demonstrates that hybrid force-position imitation significantly outperforms position-only imitation on vegetable peeling, where precise force control is critical.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Evaluated on a single task (vegetable peeling). The force-motion capture system adds hardware cost and complexity to the demonstration process. No VLA/language conditioning -- this is a visuomotor policy with force, not a full VLA. Code released (github.com/ForceMimic/hybridil) but no pretrained weights.</p>
+<p class="dp-p"><strong>Results:</strong> ForceMimic achieves significantly higher success rates on vegetable peeling compared to position-only imitation learning baselines. The hybrid force-position output is critical for maintaining consistent peeling forces without cutting through or leaving too much skin.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The paper does not disclose per-step inference latency or control frequency during deployment. Data collection uses various sensor rates (F/T sensor at 1000 Hz, SLAM camera at 200 Hz, RGB-D at 30 Hz), but these are acquisition rates, not deployment specifications.</li>
+<li><strong>Deployment hardware:</strong> Flexiv Rizon arm + parallel-jaw gripper with the ForceCapture system (custom F/T sensor integration). Inference hardware not specified.</li>
+<li><strong>Real-time capable?</strong> Not verified. The hybrid force-position controller requires real-time execution, but specific inference latency figures are not provided.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstrations collected via the ForceCapture system (custom force-motion capture hardware). Focused on vegetable peeling tasks.</li>
+<li><strong>Collection method:</strong> Human demonstrations collected using the ForceCapture system, which simultaneously records both kinematic trajectories and interaction wrenches during teleoperation. The system enables an operator to complete a vegetable peeling demonstration in ~5 minutes (vs. 13+ min with traditional force-feedback teleoperation).</li>
+<li><strong>Data scale:</strong> Not explicitly reported. The paper focuses on the vegetable peeling task.</li>
+<li><strong>Teleop equipment:</strong> ForceCapture system -- a custom force-motion capture system integrating F/T sensor (1000 Hz), SLAM camera (200 Hz), and RGB-D camera (30 Hz) for synchronized force-motion recording during demonstrations.</li>
+<li><strong>Data format:</strong> Not reported. Processed dataset available for download.</li>
+<li><strong>Publicly available?</strong> Yes. Processed dataset available via Google Drive. Code at <a href="https://github.com/ForceMimic/hybridil" target="_blank" rel="noopener">GitHub</a>. ForceCapture system at <a href="https://github.com/ForceMimic/forcecapture" target="_blank" rel="noopener">GitHub</a>. No pretrained weights released.</li>
+</ul>

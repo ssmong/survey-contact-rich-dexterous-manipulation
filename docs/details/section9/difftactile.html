@@ -1,0 +1,56 @@
+<p class="dp-p"># 9.6 DiffTactile</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> DiffTactile: A Physics-based Differentiable Tactile Simulator for Contact-Rich Robotic Manipulation</li>
+<li><strong>Authors:</strong> Zilin Si, Gu Zhang, Qingwei Ben, Branden Romero, Zhou Xian, Chao Liu, Chuang Gan</li>
+<li><strong>Venue/Year:</strong> ICLR 2024</li>
+<li><strong>Sim platform:</strong> Custom differentiable physics engine</li>
+<li><strong>Sensor models:</strong> FEM-based tactile sensor models, parallel-jaw gripper implementations</li>
+<li><strong>Object models:</strong> Soft (elastic, elastoplastic), rigid, multi-material, and cable objects</li>
+<li><strong>Tasks:</strong> Box opening, manipulation with tactile reward signals</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">DiffTactile models soft tactile sensors using finite element methods (FEM) and simulates contact interactions between sensors and objects with varied material properties. The entire simulation pipeline is differentiable, enabling gradient-based optimization of manipulation trajectories. This allows direct optimization of contact-rich behaviors through backpropagation through the physics, rather than requiring reward-based RL exploration.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>First fully differentiable tactile simulation platform supporting FEM-based soft sensor models</li>
+<li>Support for diverse material properties (elastic, elastoplastic, rigid, multi-material, cable) enabling contact-rich task diversity</li>
+<li>Gradient-based skill learning for manipulation tasks using tactile feedback, bypassing the sample inefficiency of RL</li>
+<li>Integration of tactile sensing with differentiable contact physics for end-to-end optimization</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Simulation speed is limited compared to GPU-parallel platforms (IsaacGym, ManiSkill3); FEM computation is expensive</li>
+<li>Sensor models are simplified compared to real GelSight/DIGIT sensors; optical simulation of tactile images is not included</li>
+<li>Limited to planar/parallel-jaw gripper configurations; multi-finger dexterous hand support is not demonstrated</li>
+<li>Real-world validation of optimized policies is limited</li>
+</ul>
+<h2 class="dp-h2">Dexterous hand gap</h2>
+<p class="dp-p"><strong>Does not support multi-finger hands -- only parallel-jaw grippers. This is a fundamental scope limitation for dexterous manipulation research.</strong> All tasks and sensor models are designed around planar grippers with two opposing contact surfaces. Extending to multi-finger hands would require: (1) FEM models for multiple independently articulated fingertip sensors, (2) contact resolution between many simultaneous finger-object contact pairs, and (3) substantially higher computational cost. Until multi-finger support is added, DiffTactile's differentiable tactile physics cannot be applied to the dexterous hand platforms (LEAP, Allegro, Shadow) that dominate the field.</p>
+<h2 class="dp-h2">Coverage gaps</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Criterion</th>
+<th>Covered?</th>
+</tr></thead><tbody>
+<tr>
+<td>Force/torque evaluation metrics</td>
+<td>Partial (tactile reward signals include force information, but no standardized force evaluation protocol)</td>
+</tr>
+<tr>
+<td>Deformable object tasks</td>
+<td>Yes (elastic, elastoplastic, cable objects)</td>
+</tr>
+<tr>
+<td>Tactile sensing</td>
+<td>Yes (core contribution -- FEM-based differentiable tactile simulation)</td>
+</tr>
+<tr>
+<td>Multi-stage / long-horizon tasks</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Multi-hand coordination</td>
+<td>No</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source under MIT license. GitHub: <a href="https://github.com/Genesis-Embodied-AI/DiffTactile" target="_blank" rel="noopener">Genesis-Embodied-AI/DiffTactile</a></p>

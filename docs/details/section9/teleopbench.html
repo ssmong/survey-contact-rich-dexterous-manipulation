@@ -1,0 +1,55 @@
+<p class="dp-p"># 9.7 TeleOpBench</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> TeleOpBench: A Simulator-Centric Benchmark for Dual-Arm Dexterous Teleoperation</li>
+<li><strong>Authors:</strong> Hangyu Li, Qin Zhao, Haoran Xu, and collaborators</li>
+<li><strong>Venue/Year:</strong> 2025 (arXiv 2505.12748)</li>
+<li><strong>Sim platform:</strong> Isaac Sim</li>
+<li><strong>Dexterous support:</strong> 3 humanoid embodiments with dual-arm dexterous hands</li>
+<li><strong>Teleoperation interfaces:</strong> Camera-based (SMPLerX + MediaPipe) and VisionPro-based (Apple Vision Pro)</li>
+<li><strong>Tasks:</strong> 30 dual-arm dexterous manipulation tasks</li>
+<li><strong>Evaluation:</strong> 4 teleoperation modalities benchmarked</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">TeleOpBench provides a standardized benchmark for evaluating teleoperation systems for dual-arm dexterous manipulation. It implements two motion capture pipelines: a camera-based pipeline using SMPLerX and MediaPipe for webcam-based human motion capture, and a VR-based pipeline using Apple Vision Pro. The benchmark includes real-time inverse kinematics processing, MeshCat-based 3D visualization, and motion data transmission. By standardizing the evaluation environment and metrics, it enables direct comparison of different teleoperation approaches.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>First systematic benchmark for dual-arm dexterous teleoperation with 30 standardized tasks</li>
+<li>Support for multiple teleoperation modalities (camera-based and VR-based) with direct comparison</li>
+<li>Real-time inverse kinematics pipeline for mapping human hand motion to diverse robot embodiments</li>
+<li>Standardized metrics for teleoperation quality assessment</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Benchmark is simulation-only; real robot execution is not included in the evaluation pipeline</li>
+<li>Limited to two teleoperation input modalities; glove-based and exoskeleton-based interfaces are not covered</li>
+<li>Force feedback evaluation is not included despite its relevance to contact-rich manipulation</li>
+<li>3 humanoid embodiments may not cover the diversity of real-world dexterous platforms</li>
+</ul>
+<h2 class="dp-h2">Coverage gaps</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Criterion</th>
+<th>Covered?</th>
+</tr></thead><tbody>
+<tr>
+<td>Force/torque evaluation metrics</td>
+<td>No (teleoperation quality metrics do not include force regulation assessment)</td>
+</tr>
+<tr>
+<td>Deformable object tasks</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Tactile sensing</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Multi-stage / long-horizon tasks</td>
+<td>Partial (some tasks involve sequential steps, but no explicit long-horizon evaluation protocol)</td>
+</tr>
+<tr>
+<td>Multi-hand coordination</td>
+<td>Yes (dual-arm dexterous manipulation is the core focus)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source (Python 98%, C++ 2%). GitHub: <a href="https://github.com/cyjdlhy/TeleOpBench" target="_blank" rel="noopener">cyjdlhy/TeleOpBench</a></p>

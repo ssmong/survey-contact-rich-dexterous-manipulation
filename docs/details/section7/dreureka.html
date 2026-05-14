@@ -1,0 +1,60 @@
+<h3 class="dp-h3">7.4 DrEureka</h3>
+<p class="dp-p"><strong>Full title:</strong> DrEureka: Language Model Guided Sim-To-Real Transfer</p>
+<p class="dp-p"><strong>Authors:</strong> Yecheng Jason Ma, William Liang, Hung-Ju Wang, Sam Wang, Yuke Zhu, Linxi Fan, Osbert Bastani, Dinesh Jayaraman</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2024</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2406.01967</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO for policy training; LLM (GPT-4) generates both reward functions and domain randomization distributions. Extends Eureka by adding automated sim-to-real configuration.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Shadow Hand (simulation, dexterous manipulation tasks); Unitree Go1 (quadruped locomotion tasks, real-world)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes. Key contribution is automating sim-to-real transfer configuration. The LLM generates domain randomization parameter distributions (ranges for mass, friction, motor gains, etc.) alongside reward functions, eliminating manual DR tuning. Demonstrated real-world transfer on quadruped locomotion (balancing on yoga ball) and dexterous manipulation.</p>
+<p class="dp-p"><strong>Tasks:</strong> Quadruped locomotion (walking, balancing on yoga ball -- novel task) and dexterous manipulation tasks. The yoga ball balancing task is a novel real-world demonstration that had not been previously solved.</p>
+<p class="dp-p"><strong>Key methodology:</strong> Extends Eureka from reward-only generation to full sim-to-real pipeline automation. Given environment source code and a task description, GPT-4 generates: (1) reward functions (as in Eureka) and (2) domain randomization distributions specifying the ranges of physics parameters to randomize during training. This eliminates the two most labor-intensive components of sim-to-real RL: reward engineering and domain randomization tuning. The LLM reasons about which physical parameters are relevant and proposes reasonable randomization ranges based on physical intuition encoded in its training data.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposed automating both reward design and domain randomization via LLMs, extending Eureka to the sim-to-real setting</li>
+<li>Achieved competitive or superior sim-to-real performance compared to human-designed configurations on standard benchmarks</li>
+<li>Solved novel real-world tasks (quadruped yoga ball balancing) without any manual sim-to-real tuning</li>
+<li>Extended the Eureka framework from simulation-only to real-world deployment</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Sim2Real method</td>
+<td>LLM-generated domain randomization</td>
+</tr>
+<tr>
+<td>LLM used</td>
+<td>GPT-4</td>
+</tr>
+<tr>
+<td>Real-world tasks</td>
+<td>Quadruped yoga ball balancing, dexterous manipulation</td>
+</tr>
+<tr>
+<td>vs. human-designed DR</td>
+<td>Competitive or superior</td>
+</tr>
+<tr>
+<td>Manual tuning required</td>
+<td>None (fully automated)</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force control:</strong> No force/impedance control; position-based actuation only</li>
+<li><strong>VLA/Language:</strong> LLM used as a tool for configuration (not for policy); no language-conditioned policies</li>
+<li><strong>Sim2Real:</strong> LLM-proposed DR ranges are not guaranteed to cover real-world conditions; relies on LLM's physical intuition</li>
+<li><strong>Code:</strong> <a href="https://github.com/eureka-research/DrEureka" target="_blank" rel="noopener">GitHub</a> available</li>
+<li><strong>Dexterous results:</strong> Real-world dexterous manipulation results less extensively validated than locomotion results</li>
+<li><strong>Compute:</strong> Inherits Eureka's compute requirements plus sim-to-real training overhead</li>
+</ul>
+<blockquote class="dp-quote"><strong>Note:</strong> The primary real-world demonstration is a locomotion task (quadruped yoga ball balancing); dexterous manipulation results are less extensively validated.</blockquote>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The trained MLP policy runs in <1ms per forward pass. LLM-based reward and DR generation is offline.</li>
+<li><strong>Deployment hardware:</strong> Real-world deployment demonstrated (quadruped locomotion on Unitree Go1; dexterous manipulation on Shadow Hand). LLM (GPT-4) used offline only.</li>
+<li><strong>Real-time capable?</strong> Yes. The deployed MLP policy supports real-time control. LLM is only used during the offline training configuration phase.</li>
+</ul>

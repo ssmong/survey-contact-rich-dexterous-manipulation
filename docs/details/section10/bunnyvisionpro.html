@@ -1,0 +1,30 @@
+<p class="dp-p"># 10.2 BunnyVisionPro</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> BunnyVisionPro: Real-Time Bimanual Dexterous Teleoperation for Imitation Learning</li>
+<li><strong>Authors:</strong> Runyu Ding, Yuzhe Qin, Jiyue Zhu, Chengzhe Jia, Xiaolong Wang (HKU, UCSD)</li>
+<li><strong>Venue/Year:</strong> arXiv 2407.03162, July 2024</li>
+<li><strong>Input modality:</strong> Apple Vision Pro hand tracking (markerless, built-in cameras)</li>
+<li><strong>Target hand:</strong> Bimanual dexterous setup (dual arms + dexterous hands)</li>
+<li><strong>Force feedback:</strong> Low-cost haptic feedback module (optional)</li>
+<li><strong>Cost:</strong> ~$3,500+ (Apple Vision Pro hardware cost)</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">BunnyVisionPro repurposes the Apple Vision Pro's built-in hand tracking for real-time bimanual dexterous teleoperation. The system streams hand pose data from the Vision Pro headset to the robot controller over a local network, with real-time inverse kinematics mapping human hand poses to robot joint commands. An optional low-cost haptic feedback module provides basic contact feedback to the operator. The VR headset's high-quality hand tracking eliminates the need for gloves or external sensors.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Leverages consumer VR hardware (Apple Vision Pro) for research-grade bimanual dexterous teleoperation</li>
+<li>Real-time streaming pipeline with low-latency hand pose transfer over local network</li>
+<li>Optional haptic feedback integration for improved contact-rich task performance</li>
+<li>Demonstrated imitation learning from collected demonstrations</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>High hardware cost ($3,500 for Vision Pro alone) limits accessibility</li>
+<li>Hand tracking accuracy depends on lighting conditions and hand visibility to the headset cameras</li>
+<li>Haptic feedback is rudimentary compared to dedicated force feedback gloves</li>
+<li>Finger-level tracking resolution from Vision Pro may be insufficient for precise fine-motor tasks</li>
+</ul>
+<h2 class="dp-h2">Data quality impact</h2>
+<p class="dp-p">The optional haptic module provides rudimentary binary contact feedback, but lacks force magnitude or direction information. Demonstrations collected without the haptic module are purely position-based, producing the same force-blind data quality issues as camera-only systems. Even with the haptic module enabled, the coarse contact signal does not allow operators to modulate grasp forces precisely, resulting in demonstrations that encode approximate finger trajectories without the force profiles needed for delicate manipulation tasks (e.g., handling fragile objects, controlled sliding).</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source. GitHub: <a href="https://github.com/Dingry/BunnyVisionPro" target="_blank" rel="noopener">Dingry/BunnyVisionPro</a></p>

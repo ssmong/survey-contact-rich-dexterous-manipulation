@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.2 SAPG</h3>
+<p class="dp-p"><strong>Full title:</strong> SAPG: Split and Merge Policy Gradient for Dexterous Manipulation</p>
+<p class="dp-p"><strong>Authors:</strong> Jayesh Singla, Ananye Agarwal, Deepak Pathak</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICML 2024 (Oral presentation)</p>
+<p class="dp-p"><strong>RL algorithm:</strong> Split-and-merge policy gradient -- a novel RL algorithm that splits the policy into finger-level sub-policies during exploration (allowing independent per-finger exploration) and merges them during policy update (maintaining a single coordinated policy)</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Allegro Hand (16 DoF), Shadow Hand (24 DoF), and higher-DoF configurations (up to 46 DoF with additional arm joints)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym Preview 4</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No (simulation-only)</p>
+<p class="dp-p"><strong>Object count:</strong> Evaluated on standard benchmarks (cube rotation, pen spinning, baoding balls, etc.)</p>
+<p class="dp-p"><strong>Tasks:</strong> In-hand reorientation, pen spinning, baoding ball manipulation, and other dexterous tasks from standard benchmarks (Adroit, DexHand)</p>
+<p class="dp-p"><strong>Key methodology:</strong> Addresses the exploration challenge in high-DoF dexterous manipulation by splitting the policy gradient computation. During rollouts, each finger group explores independently with its own perturbation, enabling coordinated yet diverse exploration in the high-dimensional joint space. During gradient updates, the finger-level explorations are merged into a single policy update. This split-and-merge scheme dramatically improves sample efficiency over standard PPO in high-DoF settings.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Novel split-and-merge policy gradient algorithm specifically designed for high-DoF manipulation</li>
+<li>Significantly improved sample efficiency and final performance over PPO/SAC on standard dexterous benchmarks</li>
+<li>Scales to very high-DoF systems (46 DoF) where standard RL algorithms fail to learn</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Simulation-only; the split structure assumes meaningful finger-level decomposition which may not apply to all manipulation tasks; evaluated primarily on standard benchmarks rather than real-world task diversity; no sim2real validation</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The merged MLP policy runs in <1ms per forward pass, even for 46-DoF configurations.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacGym). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL with novel split-and-merge policy gradient -- all data generated in simulation.</li>
+<li><strong>Collection method:</strong> Pure RL in IsaacGym. Split-and-merge exploration: each finger group explores independently during rollouts, merged during gradient updates. Evaluated on standard Adroit/DexHand benchmarks (cube rotation, pen spinning, baoding balls). Up to 46 DoF.</li>
+<li><strong>Data scale:</strong> Standard parallel RL training in IsaacGym. Standard benchmark objects.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> Code release status not reported.</li>
+</ul>

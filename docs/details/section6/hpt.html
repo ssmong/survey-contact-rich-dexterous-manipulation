@@ -1,0 +1,54 @@
+<h3 class="dp-h3">HPT: Heterogeneous Pre-trained Transformers</h3>
+<p class="dp-p"><strong>Full title:</strong> Scaling Proprioceptive-Visual Learning with Heterogeneous Pre-trained Transformers</p>
+<p class="dp-p"><strong>Authors:</strong> Lirui Wang, Xinlei Chen, Jialiang Zhao, Kaiming He (MIT CSAIL)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> NeurIPS 2024</p>
+<p class="dp-p"><strong>Architecture:</strong> HPT addresses cross-embodiment heterogeneity by using embodiment-specific "stem" networks (small MLPs or convolutions) that project heterogeneous proprioceptive and action spaces into a shared latent representation. A shared transformer trunk processes the aligned representations, and embodiment-specific "head" networks decode outputs back to the original action space. Vision features come from pre-trained encoders (CLIP, DINOv2). The shared trunk has ~300M parameters; total size varies with the number of stems/heads.</p>
+<p class="dp-p"><strong>Action space:</strong> Variable per embodiment, handled by the per-embodiment head networks. Supports arbitrary proprioceptive and action dimensions.</p>
+<p class="dp-p"><strong>Dex hand support?</strong> ✗ --- Not explicitly demonstrated on dexterous hands, though the heterogeneous stem/head architecture is designed to accommodate arbitrary embodiment configurations.</p>
+<p class="dp-p"><strong>Force/impedance output?</strong> ✗ --- Position targets only.</p>
+<p class="dp-p"><strong>Key methodology:</strong> HPT tackles the fundamental challenge that different robots have different observation and action space dimensions, making naive cross-embodiment training impossible. The stem-trunk-head architecture decouples embodiment-specific processing from shared representation learning. During pretraining, multiple embodiment-specific stems and heads are trained jointly with the shared trunk, learning a universal manipulation representation. At fine-tuning time, new stems/heads can be added for unseen embodiments while keeping the trunk frozen.</p>
+<p class="dp-p"><strong>Training data:</strong> Pretrained on diverse cross-embodiment datasets including subsets of OXE, spanning 50+ distinct robot configurations.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposed the stem-trunk-head architecture for heterogeneous cross-embodiment pretraining, providing a principled solution to the action/observation space mismatch problem.</li>
+<li>Demonstrated that a shared transformer trunk learns transferable manipulation representations across diverse embodiments.</li>
+<li>Showed that the approach scales with data diversity: more diverse pretraining data improves downstream fine-tuning performance.</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>HPT</th>
+<th>Baseline</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>*(Consult the NeurIPS 2024 paper for per-task results. The paper reports improvements from scaling data diversity across embodiments.)*</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Each new embodiment requires training a new stem and head, with some embodiment-specific data.</li>
+<li>The approach has not been evaluated on high-DoF dexterous hand systems.</li>
+<li>No language conditioning in the base model (proprioceptive-visual only).</li>
+<li>No public model weights released.</li>
+</ul>
+<p class="dp-p"><strong>Open weights/code:</strong> ✅ Code: <a href="https://github.com/liruiw/HPT" target="_blank" rel="noopener">GitHub</a>. ✗ Pre-trained weights not publicly available.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly benchmarked. The shared transformer trunk (~300M parameters) plus lightweight per-embodiment stems/heads should run at ~10-30 Hz on a desktop GPU, comparable to medium-sized transformer policies.</li>
+<li><strong>Deployment hardware:</strong> Not reported. The ~300M parameter trunk is moderate-sized, requiring a desktop GPU for real-time inference but smaller than billion-parameter VLAs.</li>
+<li><strong>Real-time capable?</strong> Yes, likely. The moderate model size and MLP-based stems/heads should support real-time control at typical manipulation frequencies. However, specific benchmarks are not reported.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Subsets of Open X-Embodiment (OXE) spanning 50+ distinct robot configurations for pretraining. Fine-tuning on task-specific demonstration data.</li>
+<li><strong>Collection method:</strong> Aggregated cross-embodiment data from OXE (teleoperation, scripted policies). The stem-trunk-head architecture handles heterogeneous observation/action spaces across embodiments.</li>
+<li><strong>Data scale:</strong> 50+ robot configurations for pretraining. Fine-tuning demonstration counts not specified.</li>
+<li><strong>Teleop equipment:</strong> Varies by OXE constituent dataset.</li>
+<li><strong>Data format:</strong> Multiple formats handled by per-embodiment stem networks.</li>
+<li><strong>Publicly available?</strong> OXE data is public. Pre-trained HPT weights are not released.</li>
+</ul>
+<hr>

@@ -1,0 +1,208 @@
+<p class="dp-p"># Gemini Robotics Family</p>
+<blockquote class="dp-quote">Google DeepMind's VLA model family built on Gemini 2.0, evolving from cloud-based to on-device deployment.</blockquote>
+<hr>
+<h2 class="dp-h2">Version History</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Version</th>
+<th>Date</th>
+<th>VLM Backbone</th>
+<th>Dex Hand</th>
+<th>Force Output</th>
+<th>Availability</th>
+<th>Key Advance</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Gemini Robotics</strong></td>
+<td>Mar 2025</td>
+<td>Gemini 2.0</td>
+<td>✗ (gripper)</td>
+<td>✗</td>
+<td>Closed (trusted testers)</td>
+<td>First Gemini-based VLA; 2x generalization benchmark</td>
+</tr>
+<tr>
+<td><strong>Gemini Robotics-ER</strong></td>
+<td>Mar 2025</td>
+<td>Gemini 2.0</td>
+<td>N/A (reasoning only)</td>
+<td>N/A</td>
+<td>Closed</td>
+<td>Embodied Reasoning: spatial understanding, grasp prediction</td>
+</tr>
+<tr>
+<td><strong>Gemini Robotics On-Device</strong></td>
+<td>Jul 2025</td>
+<td>Gemini 2.0 (distilled)</td>
+<td>✗</td>
+<td>✗</td>
+<td>SDK (trusted testers)</td>
+<td>On-device inference, no network; fine-tune with 50-100 demos</td>
+</tr>
+<tr>
+<td><strong>Gemini Robotics 1.5</strong></td>
+<td>2026</td>
+<td>Gemini (upgraded)</td>
+<td>✗</td>
+<td>✗</td>
+<td>Trusted testers; ER 1.5 via API</td>
+<td>VLA + reasoning; 15 academic benchmarks</td>
+</tr>
+<tr>
+<td><strong>Gemini Robotics-ER 1.6</strong></td>
+<td>Apr 2026</td>
+<td>Gemini (upgraded)</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Via API</td>
+<td>Enhanced spatial reasoning, multi-view understanding</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 class="dp-h2">Full Title</h2>
+<p class="dp-p">"Gemini Robotics: Bringing AI into the Physical World"</p>
+<p class="dp-p"><strong>Authors:</strong> Gemini Robotics Team, Google DeepMind (Saminda Abeyruwan, Joshua Ainslie, et al.; 117+ authors)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv 2503.20020, March 2025 (subsequent versions announced via blog posts)</p>
+<h2 class="dp-h2">Architecture</h2>
+<ul class="dp-list">
+<li><strong>VLM backbone:</strong> Gemini 2.0 foundation model with physical actions added as new output modality</li>
+<li><strong>Parameter count:</strong> Not disclosed</li>
+<li><strong>Action space:</strong> Direct motor commands from visual input + language instructions; dimensionality not publicly documented</li>
+<li><strong>Inference speed:</strong> Not disclosed for any version. On-Device version runs locally without network dependency, suggesting optimized latency, but no Hz figures published.</li>
+</ul>
+<h2 class="dp-h2">Robot Platforms</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Platform</th>
+<th>Type</th>
+<th>Configuration</th>
+</tr></thead><tbody>
+<tr>
+<td>ALOHA 2</td>
+<td>Bi-arm static</td>
+<td>Primary training platform</td>
+</tr>
+<tr>
+<td>Franka FR3</td>
+<td>Bi-arm collaborative</td>
+<td>Cross-embodiment evaluation</td>
+</tr>
+<tr>
+<td>Apptronik Apollo</td>
+<td>Humanoid</td>
+<td>Partnership demonstration</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Tasks</h2>
+<p class="dp-p">Demonstrated capabilities include:</p>
+<ul class="dp-list">
+<li>Origami folding</li>
+<li>Packing items into Ziploc bags</li>
+<li>Unzipping bags</li>
+<li>Folding clothes</li>
+<li>Industrial belt assembly</li>
+<li>Open-vocabulary instruction following</li>
+<li>Long-horizon dexterous sequences</li>
+</ul>
+<p class="dp-p">Specific task count and per-task success rates not publicly reported.</p>
+<h2 class="dp-h2">Main Contributions</h2>
+<ul class="dp-list">
+<li>Built on Gemini 2.0 as the first major foundation model to add physical actions as a native output modality alongside text, code, and images</li>
+<li>Reports 2x performance on a comprehensive generalization benchmark compared to other SOTA VLAs (specific benchmark and numbers not fully disclosed)</li>
+<li>Gemini Robotics-ER introduces embodied spatial reasoning (object detection, trajectory prediction, grasp prediction, multi-view correspondence) as a complementary capability to direct control</li>
+<li>On-Device variant enables deployment without cloud dependency, with fine-tuning from as few as 50-100 demonstrations</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li><strong>No dexterous hand support.</strong> All demonstrated platforms use parallel-jaw grippers (ALOHA, Franka) or humanoid-integrated hands (Apollo). No standalone multi-finger dexterous hand evaluation.</li>
+<li><strong>No force/torque output.</strong> No mention of force sensing, impedance control, or compliance in any version.</li>
+<li><strong>Fully closed.</strong> No open weights, no open code (except limited SDK for On-Device). Cannot be reproduced, fine-tuned by the community, or independently benchmarked. This is a more restrictive access model than RT-2 (which was also closed but at least published detailed results in a peer-reviewed venue).</li>
+<li><strong>Quantitative opacity.</strong> "2x SOTA" claim lacks specifics: which benchmark, which baselines, what metric. Success rates for individual tasks not published.</li>
+<li><strong>Inference latency unknown.</strong> Critical for real-time dexterous manipulation; not disclosed for any version.</li>
+<li><strong>Parameter count undisclosed.</strong> Makes it impossible to assess compute requirements or compare efficiency with open VLAs.</li>
+</ul>
+<h2 class="dp-h2">Comparison with Other Major VLA Families</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Dimension</th>
+<th>Gemini Robotics</th>
+<th>pi0~0.7</th>
+<th>GR00T N1~1.7</th>
+</tr></thead><tbody>
+<tr>
+<td>Open weights</td>
+<td>✗</td>
+<td>✅ (pi0/0.5)</td>
+<td>✅ (all)</td>
+</tr>
+<tr>
+<td>Dex hand</td>
+<td>✗</td>
+<td>✗</td>
+<td>Humanoid-integrated</td>
+</tr>
+<tr>
+<td>Force output</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>On-device</td>
+<td>✅ (On-Device)</td>
+<td>✗</td>
+<td>✅ (Jetson Orin)</td>
+</tr>
+<tr>
+<td>Cross-embodiment</td>
+<td>3 platforms</td>
+<td>1 platform</td>
+<td>Humanoid-focused</td>
+</tr>
+<tr>
+<td>Param count</td>
+<td>Undisclosed</td>
+<td>~3.3-5B</td>
+<td>2.2-3B</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Results</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+</tr></thead><tbody>
+<tr>
+<td>Generalization benchmark</td>
+<td>2x vs SOTA VLAs</td>
+<td>Benchmark identity not disclosed</td>
+</tr>
+<tr>
+<td>ER end-to-end control</td>
+<td>2x-3x vs Gemini 2.0 base</td>
+<td>On ER-specific spatial tasks</td>
+</tr>
+<tr>
+<td>Fine-tuning efficiency</td>
+<td>50-100 demos</td>
+<td>On-Device variant</td>
+</tr>
+<tr>
+<td>Per-task success rates</td>
+<td>Not disclosed</td>
+<td>—</td>
+</tr>
+</tbody></table></div>
+<blockquote class="dp-quote"><strong>Editorial note:</strong> The quantitative claims are difficult to evaluate independently due to the fully closed nature of the model and the lack of benchmark specificity. The "2x SOTA" claim should be treated with caution until independently replicated or published in a peer-reviewed venue.</blockquote>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not disclosed for any version. The On-Device variant runs locally without network dependency, suggesting optimized latency for edge deployment, but no Hz figures have been published. The cloud-based Gemini Robotics version presumably has higher latency due to network round-trips.</li>
+<li><strong>Deployment hardware:</strong> On-Device variant targets embedded/edge hardware (specific device not disclosed). Cloud versions run on Google TPU infrastructure. Parameter count undisclosed, making compute requirements impossible to assess.</li>
+<li><strong>Real-time capable?</strong> Unknown. The On-Device variant is designed for real-time control without network dependency, but no control frequency or latency figures have been published. This is a critical gap given that inference speed is essential for dexterous manipulation deployment.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Not disclosed. Training data details are not publicly reported due to the fully closed nature of the model.</li>
+<li><strong>Collection method:</strong> Not disclosed. Primary training platform is ALOHA 2 (bimanual), with cross-embodiment evaluation on Franka FR3 and Apptronik Apollo humanoid. On-Device variant supports fine-tuning from 50-100 demonstrations.</li>
+<li><strong>Data scale:</strong> Not disclosed. The scale of internal Google DeepMind robot data is unknown.</li>
+<li><strong>Teleop equipment:</strong> Not disclosed. ALOHA 2 uses leader-follower teleoperation.</li>
+<li><strong>Data format:</strong> Not disclosed.</li>
+<li><strong>Publicly available?</strong> No. Fully closed -- no weights, code, training data, or dataset details released. Limited SDK access for On-Device variant to trusted testers only.</li>
+</ul>

@@ -1,0 +1,52 @@
+<h3 class="dp-h3">7.1 ResDex</h3>
+<p class="dp-p"><strong>Full title:</strong> ResDex: Residual Policy Learning for Dexterous Grasping with Large-Scale Object Training</p>
+<p class="dp-p"><strong>Authors:</strong> Haoyu Xiong, Yufei Wang, Jiayi Chen, Yi Wu</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICLR 2025</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with Mixture-of-Experts (MoE) architecture and DAgger distillation; uses a residual policy on top of a base policy to handle diverse objects</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Shadow Hand (24 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym Preview 4</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No</p>
+<p class="dp-p"><strong>Object count:</strong> 3200 objects; 88.8% overall success rate (sim)</p>
+<p class="dp-p"><strong>Tasks:</strong> Dexterous grasping of diverse objects at unprecedented scale (3200 objects)</p>
+<p class="dp-p"><strong>Key methodology:</strong> Scales dexterous grasping to thousands of objects by decomposing the policy into a base grasping policy and a residual correction module using a Mixture-of-Experts architecture. The MoE enables specialization across object categories while sharing a common grasping backbone. DAgger distillation compresses the ensemble into a single deployable policy.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Scaled dexterous grasping training to 3200 diverse objects, the largest object set at time of publication</li>
+<li>Residual policy with MoE architecture for handling object diversity without catastrophic forgetting</li>
+<li>Achieved 88.8% success rate (sim) across the full 3200-object set with a single policy</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Overall success rate</td>
+<td>88.8% (sim)</td>
+</tr>
+<tr>
+<td>Object set size</td>
+<td>3200</td>
+</tr>
+<tr>
+<td>Hand</td>
+<td>Shadow (24 DoF)</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Simulation-only (no sim2real transfer demonstrated); uses a single hand embodiment (Shadow); relies on ground-truth object state in simulation; no evaluation of grasp stability under perturbation</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The distilled policy (MLP) runs in <1ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacGym). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL (PPO) with MoE architecture -- all data generated in simulation.</li>
+<li><strong>Collection method:</strong> Pure RL in IsaacGym. Residual policy with Mixture-of-Experts trained on 3,200 objects. DAgger distillation compresses the MoE ensemble into a single policy. Uses ground-truth object state in simulation.</li>
+<li><strong>Data scale:</strong> 3,200 objects for training. Standard parallel RL training scale.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> Dataset/policy release status not reported.</li>
+</ul>

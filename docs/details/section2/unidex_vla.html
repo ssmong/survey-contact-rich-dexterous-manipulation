@@ -1,0 +1,82 @@
+<h3 class="dp-h3">2.1 UniDex-VLA</h3>
+<p class="dp-p"><strong>Full title:</strong> UniDex-VLA: A Universal Dexterous Manipulation Framework with Vision-Language-Action Model</p>
+<p class="dp-p"><strong>Authors:</strong> Chen, Y. et al. (UniDex-AI)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CVPR 2026</p>
+<p class="dp-p"><strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.22264" target="_blank" rel="noopener">2603.22264</a></p>
+<p class="dp-p"><strong>Hand hardware:</strong> 8 dexterous robot hands via the Fingertip-Aligned Action Space (FAAS): Allegro (16 DoF), LEAP (16 DoF), Shadow (24 DoF), Inspire (12 DoF), Wuji, Oymotion, Ability, and Xhand. FAAS projects arbitrary hand kinematics into a unified fingertip-centric representation, enabling a single policy to control all eight hands without per-embodiment fine-tuning.</p>
+<p class="dp-p"><strong>Tasks:</strong></p>
+<ul class="dp-list">
+<li>Tool use (hammer, screwdriver, spatula)</li>
+<li>Object grasping and reorientation</li>
+<li>Pick-and-place manipulation</li>
+<li>Articulated object manipulation</li>
+</ul>
+<p class="dp-p"><strong>Key methodology:</strong> UniDex-VLA combines a 3D VLA backbone with a flow-matching action head. The core innovation is FAAS (Fingertip-Aligned Action Space), a cross-embodiment action representation that maps heterogeneous hand joint spaces to a shared fingertip-centric coordinate frame. Language instructions condition the policy via the VLA's language encoder, enabling task specification through natural language. The 3D representation provides spatial grounding for precise finger-object interactions.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong></p>
+<ul class="dp-list">
+<li>VLA backbone: 3D vision-language model (specific backbone size not publicly disclosed as of the survey date)</li>
+<li>Action head: flow-matching generative model</li>
+<li>Action space: FAAS unified representation across 8 hand embodiments</li>
+<li>Training data: 9M frames, 50K+ trajectories across 8 hand types (UniDex dataset)</li>
+</ul>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>FAAS (Fingertip-Aligned Action Space): a novel cross-embodiment action representation that unifies 8 different dexterous hands into a single policy, removing the need for per-hand fine-tuning</li>
+<li>Among the first VLAs to demonstrate cross-hand generalization (8 platforms, per authors' claim), achieving 81% task progress across 8 physically different hand platforms</li>
+<li>Release of the UniDex dataset (9M frames, 50K+ trajectories) and pretrained model weights (3-epoch and 32-epoch checkpoints on HuggingFace)</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Outputs position targets only; no force or impedance output despite targeting contact-rich tool-use tasks</li>
+<li>FAAS reduces diverse hand kinematics to fingertip poses, potentially losing intra-finger dexterity for tasks requiring specific joint configurations (e.g., power grasps, finger gaiting)</li>
+<li>Primary evaluation is in simulation; real-world deployment across all 8 hands not demonstrated</li>
+<li>No tactile or force/torque sensing integration</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Average task progress</td>
+<td>81%</td>
+<td>Across 8 dexterous hand embodiments</td>
+</tr>
+<tr>
+<td>Hands evaluated</td>
+<td>8</td>
+<td>DoF range: 12 (Inspire) to 24 (Shadow)</td>
+</tr>
+<tr>
+<td>Training data</td>
+<td>9M frames, 50K+ trajectories</td>
+<td>UniDex dataset</td>
+</tr>
+<tr>
+<td>Cross-hand transfer</td>
+<td>Zero-shot</td>
+<td>Single trained policy controls all 8 hands</td>
+</tr>
+</tbody></table></div>
+<blockquote class="dp-quote"><strong>[EDITORIAL NOTE -- metric ambiguity]:</strong> The reported "81% task progress" metric is ambiguous. It is unclear whether this is a binary task success rate (fraction of tasks completed) or a continuous progress metric (average percentage of task completion across episodes, where partial completions contribute fractionally). The paper should be consulted directly to resolve this distinction, as the two interpretations imply very different levels of performance. If continuous progress, the effective binary success rate may be substantially lower.</blockquote>
+<ul class="dp-list">
+<li>Pretrained weights publicly available (3-epoch and 32-epoch on HuggingFace)</li>
+<li>Code released at <a href="https://github.com/unidex-ai/UniDex" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<blockquote class="dp-quote"><strong>[EDITORIAL NOTE -- results verification needed]:</strong> Per-task and per-hand breakdowns of the 81% figure were not extractable from the abstract. The full paper should be consulted for disaggregated results by task type and hand embodiment.</blockquote>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The paper does not disclose per-step inference latency or control frequency.</li>
+<li><strong>Deployment hardware:</strong> Training uses 8 NVIDIA H800 GPUs (total batch size 128 for pretraining; 2 H800 GPUs per task for post-training). Real-world setup uses a 7-DoF Franka arm with three dexterous end-effectors and Intel RealSense L515 for egocentric RGB-D. Inference GPU not specified.</li>
+<li><strong>Real-time capable?</strong> Not verified. Training hardware (H800) is disclosed but inference hardware and latency are not reported, making real-time capability assessment impossible from public information.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> UniDex-Dataset (custom, robot-centric dataset constructed for this work). Also uses UniDex-Cap, a portable capture setup enabling human-robot data co-training.</li>
+<li><strong>Collection method:</strong> Human-in-the-loop retargeting from egocentric human video datasets. Researchers employed a retargeting procedure to align fingertip trajectories while preserving plausible hand-object contacts. Operates on 3D point clouds with human hands masked to narrow kinematic and visual gaps between human and robot data.</li>
+<li><strong>Data scale:</strong> 9M frames, 50K+ trajectories across 8 dexterous hand types (DoF range: 12 to 24).</li>
+<li><strong>Teleop equipment:</strong> UniDex-Cap portable capture setup (details in paper). Source data from egocentric human video, retargeted to robot embodiments.</li>
+<li><strong>Data format:</strong> Synchronized RGB-D streams and human hand poses converted into robot-executable trajectories through FAAS (Fingertip-Aligned Action Space).</li>
+<li><strong>Publicly available?</strong> Pretrained weights (3-epoch and 32-epoch checkpoints) on HuggingFace. Code at <a href="https://github.com/unidex-ai/UniDex" target="_blank" rel="noopener">GitHub</a>. Whether the UniDex-Dataset itself is publicly released is not confirmed in available materials.</li>
+</ul>

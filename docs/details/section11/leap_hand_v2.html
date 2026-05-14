@@ -1,0 +1,48 @@
+<p class="dp-p"># 11.1 LEAP Hand V2</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> LEAP Hand V2: Advanced Dexterous Robotic Hand</li>
+<li><strong>Authors:</strong> Kenneth Shaw, Deepak Pathak (CMU)</li>
+<li><strong>Venue/Year:</strong> 2024 (V1: RSS 2023)</li>
+<li><strong>DoF:</strong> 16 actuated + articulated palm</li>
+<li><strong>Actuators:</strong> Dynamixel servos</li>
+<li><strong>Cost:</strong> ~$3,000</li>
+<li><strong>Weight:</strong> Lightweight (mountable on standard robot arms)</li>
+<li><strong>Tactile sensing:</strong> None built-in (aftermarket integration possible)</li>
+<li><strong>Sim model:</strong> MuJoCo, Isaac Lab</li>
+</ul>
+<h2 class="dp-h2">Quantitative specs</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Spec</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Actuator control bandwidth</td>
+<td>~50 Hz effective control rate (Dynamixel servo limitation)</td>
+</tr>
+<tr>
+<td>Maximum fingertip force</td>
+<td>Not reported in available documentation</td>
+</tr>
+<tr>
+<td>Durability</td>
+<td>Thousands of grasp cycles demonstrated across multiple research groups (CrossDex, SeqDex, HandelBot, DexCap, ComFree-Sim)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">LEAP Hand V2 builds on the original LEAP Hand (RSS 2023) with improved mechanical design, stronger actuators, and an articulated palm for enhanced grasp stability. The hand uses Dynamixel servo motors for all joints, providing position and current (torque proxy) feedback. The design emphasizes research accessibility: all structural parts are 3D-printable or use off-the-shelf components, and the bill of materials is fully documented. V2 adds an opposable palm joint that increases the grasp envelope and enables more human-like manipulation patterns.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Among the most widely adopted low-cost dexterous hands in the research community (used by CrossDex, SeqDex, HandelBot, DexCap, ComFree-Sim, and others)</li>
+<li>Articulated palm (V2) expanding grasp types beyond V1's fixed-palm design</li>
+<li>Proven sim-to-real pipeline with zero-shot transfer demonstrated across multiple independent research groups</li>
+<li>Robust mechanical design tolerating thousands of grasp cycles in research settings</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>No integrated tactile sensing; fingertip contact is position-controlled only</li>
+<li>Dynamixel servos have limited bandwidth (~50 Hz effective control rate) compared to custom actuators</li>
+<li>$3,000 cost, while low for a dexterous hand, is the highest in this section</li>
+<li>16 DoF is fewer than the human hand (~20-25 functional DoF), limiting manipulation dexterity for some tasks</li>
+</ul>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Fully open-source (CAD, firmware, software). Project page: <a href="https://v2-adv.leaphand.com/" target="_blank" rel="noopener">v2-adv.leaphand.com</a></p>

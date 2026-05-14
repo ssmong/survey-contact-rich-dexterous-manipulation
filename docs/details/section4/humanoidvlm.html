@@ -1,0 +1,42 @@
+<h3 class="dp-h3">4.3 HumanoidVLM</h3>
+<p class="dp-p"><strong>Full title:</strong> VLM-based Impedance Control for Safe Physical Human-Robot Interaction with Humanoid Robots</p>
+<p class="dp-p"><strong>Authors:</strong> (Multiple authors, likely overlapping with SafeHumanoid group)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> HRI 2026</p>
+<p class="dp-p"><strong>How K/D are determined:</strong> VLM (Molmo-7B, open-weight) + FAISS-based RAG retrieval. The system uses a vector database of prior impedance configurations indexed by task context and visual scene features. Given a new interaction scenario, the VLM retrieves similar prior configurations from the FAISS database and adapts them to the current context. Molmo-7B (a 7B-parameter open-weight VLM) performs the reasoning, avoiding dependence on commercial APIs.</p>
+<p class="dp-p"><strong>What is output:</strong> Retrieved and adapted Cartesian stiffness K and damping D parameters for the humanoid's end-effector impedance controller. Parameters govern the compliance of the humanoid's arms during physical human-robot interaction.</p>
+<p class="dp-p"><strong>Robot platform:</strong> Unitree G1 humanoid robot. No standalone dexterous hand (uses G1's integrated Dex3-1 gripper, 7 DoF per hand).</p>
+<p class="dp-p"><strong>Tasks:</strong> Physical human-robot interaction (pHRI) scenarios: collaborative object handover, guided manipulation, physical assistance tasks. Focus is on safety-critical interactions where the humanoid must be compliant to avoid injuring the human partner.</p>
+<p class="dp-p"><strong>Key methodology:</strong> The system combines a VLM for semantic understanding of the interaction context with RAG-based retrieval of appropriate impedance parameters. Molmo-7B processes the visual scene (including the human partner's pose and intent cues) and retrieves impedance configurations from a FAISS database that were successful in similar prior interactions. The retrieved K/D values are applied to the humanoid's Cartesian impedance controller, enabling safe and adaptive physical interaction. The use of an open-weight VLM (Molmo-7B) rather than a commercial API distinguishes this from CompliantVLA-adaptor and OmniVIC.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Molmo-7B (open-weight VLM, ~7B parameters) for scene understanding and impedance reasoning. FAISS vector database for nearest-neighbor retrieval of impedance configurations. Cartesian impedance controller on Unitree G1. The pipeline processes camera input, generates scene embeddings, retrieves matching impedance profiles, and applies them to the low-level controller.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Applies VLM-guided impedance control to humanoid robots for physical human-robot interaction</li>
+<li>Uses open-weight VLM (Molmo-7B) rather than commercial API, enabling on-device deployment</li>
+<li>Demonstrates RAG-based impedance retrieval for safety-critical pHRI scenarios on a full humanoid platform</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>No standalone dexterous hand -- relies on G1's integrated simple gripper</li>
+<li>Impedance parameters are retrieved/adapted at the task level, not continuously modulated during contact</li>
+<li>Limited to the G1 humanoid platform; generalization to other humanoids not demonstrated</li>
+<li>RAG database requires manual population with initial impedance configurations</li>
+<li>Does not address multi-finger contact force distribution</li>
+<li>Safety validation is primarily empirical rather than formally guaranteed</li>
+<li>VLM inference latency (~100ms-1s) limits impedance updates to ~1-10 Hz, three orders of magnitude below the 100-1000 Hz required by real-time impedance controllers.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Demonstrated safe physical interactions on the Unitree G1 humanoid, with the VLM-guided impedance controller producing appropriate compliance levels for different interaction types. Reduced peak interaction forces compared to fixed-impedance baselines during handover and collaborative manipulation tasks.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly benchmarked. Molmo-7B inference (open-weight, on-device) likely requires ~200-500ms per query on a modern GPU, plus FAISS retrieval time (<10ms). Impedance parameters are set per task phase.</li>
+<li><strong>Deployment hardware:</strong> Unitree G1 humanoid. VLM inference (Molmo-7B) can run on a local GPU (specific model not reported), avoiding cloud API dependency. FAISS retrieval runs locally.</li>
+<li><strong>Real-time capable?</strong> No, for impedance adaptation. The low-level impedance controller on the G1 runs at real-time rates, but VLM-based impedance updates are limited to ~1-10 Hz. The use of an open-weight model (Molmo-7B) enables on-device deployment but does not achieve real-time continuous impedance modulation.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom FAISS-based RAG database of impedance configurations for pHRI scenarios. No standard benchmark dataset used.</li>
+<li><strong>Collection method:</strong> RAG database manually populated with initial impedance configurations from prior pHRI trials on Unitree G1. Real-world experiments with human interaction partners. No teleoperation -- impedance parameters are generated by VLM (Molmo-7B) reasoning, not learned from demonstrations.</li>
+<li><strong>Data scale:</strong> Not reported. RAG database size and number of evaluation trials not specified in available materials.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (VLM-based impedance reasoning system, not imitation learning).</li>
+<li><strong>Data format:</strong> FAISS vector database entries containing scene embeddings and associated impedance parameter profiles.</li>
+<li><strong>Publicly available?</strong> Not reported. Paper venue is HRI 2026; public release status unknown.</li>
+</ul>

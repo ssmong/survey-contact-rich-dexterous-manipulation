@@ -1,0 +1,37 @@
+<h3 class="dp-h3">7.3 Complementarity-Free</h3>
+<h3 class="dp-h3">Model-Based MPC (not RL)</h3>
+<p class="dp-p"><strong>Note: Model-based trajectory optimization/MPC, not RL.</strong></p>
+<p class="dp-p"><strong>Full title:</strong> Differentiable Compliant Contact Simulation for Dexterous Manipulation (Complementarity-Free Multi-Contact Model)</p>
+<p class="dp-p"><strong>Authors:</strong> Tao Pang, Russ Tedrake group (MIT CSAIL)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2025 (submitted 2024)</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2408.07855</p>
+<p class="dp-p"><strong>Method:</strong> Differentiable simulation for trajectory optimization and MPC. Replaces non-smooth complementarity constraints with a smooth, closed-form compliant contact model that permits gradient computation through contact events.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Allegro Hand (16 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> Drake (MIT)</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No. Simulation-only.</p>
+<p class="dp-p"><strong>Tasks:</strong> Contact-rich dexterous manipulation with the Allegro Hand. Tasks requiring MPC at 50-100 Hz with multi-finger contact, including in-hand pivoting, finger gaiting, and contact-mode-switching manipulation.</p>
+<p class="dp-p"><strong>Key methodology:</strong> Standard rigid-body contact simulation uses complementarity constraints (LCPs) that are non-smooth and non-differentiable at contact mode transitions. This work replaces them with a compliant (penalty-based) contact model that has a closed-form, differentiable expression. This enables gradient-based trajectory optimization and MPC to "see through" contact events, computing informative gradients even when contacts are being made and broken. The resulting MPC runs at 50-100 Hz for multi-finger manipulation.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Derived a closed-form differentiable contact model that eliminates the need for complementarity constraints while preserving physical realism</li>
+<li>Achieved 50-100 Hz MPC rates for multi-finger contact-rich manipulation -- a significant speedup over prior contact-implicit optimizers</li>
+<li>Enabled gradient-based planning through contact mode transitions, where prior methods relied on combinatorial or sampling-based approaches</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> The compliant contact model introduces approximation errors (penetration). Not validated on real hardware. Requires accurate model parameters (stiffness, damping). Limited to quasi-static or slow-dynamic regimes where the compliant model is valid.</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<p class="dp-p"><strong>Results:</strong> Demonstrated real-time MPC at 50-100 Hz for Allegro Hand contact-rich manipulation in Drake (sim). Presented at RSS 2025.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> MPC runs at 50-100 Hz (10-20ms per control step) for Allegro Hand contact-rich manipulation in Drake simulation.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (Drake). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, in simulation. The differentiable contact model enables real-time MPC at 50-100 Hz, which is sufficient for dexterous manipulation. Real-hardware deployment not validated.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No dataset. Model-based differentiable simulation and MPC (not learning-based).</li>
+<li><strong>Collection method:</strong> Not applicable. Differentiable compliant contact simulation replaces complementarity constraints with smooth, closed-form contact model. Enables gradient-based trajectory optimization and MPC at 50-100 Hz. No training data needed.</li>
+<li><strong>Data scale:</strong> Not applicable (model-based, no training data).</li>
+<li><strong>Teleop equipment:</strong> Not applicable.</li>
+<li><strong>Data format:</strong> Not applicable.</li>
+<li><strong>Publicly available?</strong> Drake simulator is open-source. Paper-specific code release status not reported.</li>
+</ul>

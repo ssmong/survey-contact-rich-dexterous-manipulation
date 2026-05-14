@@ -1,0 +1,61 @@
+<p class="dp-p"># 12.4 NeuralFeels</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> NeuralFeels: Neural Field Methods for Tactile-Visual Object State Tracking</li>
+<li><strong>Authors:</strong> Suddhu Sudharshan, Haozhi Qi, Pieter Abbeel, Jitendra Malik, Roberto Calandra, Michael Kaess, and collaborators (Meta FAIR, CMU, Berkeley)</li>
+<li><strong>Venue/Year:</strong> Science Robotics, 2024</li>
+<li><strong>Hardware:</strong> Allegro Hand (16 DoF) + DIGIT tactile sensors (4 fingertips)</li>
+<li><strong>Method:</strong> Neural radiance fields (NeRF-style) fusing tactile and visual observations</li>
+<li><strong>Task:</strong> In-hand object pose and shape tracking during manipulation</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">NeuralFeels applies neural field methods (NeRF-inspired) to the problem of tracking object state during dexterous in-hand manipulation. The system fuses visual observations from external cameras with tactile images from DIGIT sensors mounted on an Allegro Hand's fingertips. A neural field represents the object's shape and appearance, and is continuously updated as the hand manipulates the object. Tactile observations provide local contact geometry that resolves visual ambiguities (e.g., when fingers occlude the object), while visual observations provide global shape context. This fusion enables accurate 6-DoF pose tracking even during complex in-hand manipulation where the object is heavily occluded.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>First neural field method for real-time tactile-visual object tracking during dexterous in-hand manipulation</li>
+<li>Demonstrated on real Allegro Hand + DIGIT hardware performing in-hand manipulation of diverse objects</li>
+<li>Principled fusion of tactile (local contact geometry) and visual (global shape) observations through a shared neural field representation</li>
+<li>Published in Science Robotics, representing one of the highest-impact venues for this line of work</li>
+</ul>
+<h2 class="dp-h2">Quantitative results (pose tracking)</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Object category</th>
+<th>Pose error (translation, mm)</th>
+<th>Pose error (rotation, deg)</th>
+<th>Vision-only baseline</th>
+<th>Tactile-only baseline</th>
+</tr></thead><tbody>
+<tr>
+<td>Simple geometries</td>
+<td>Low</td>
+<td>Low</td>
+<td>Higher (occlusion errors)</td>
+<td>Higher (no global context)</td>
+</tr>
+<tr>
+<td>Complex/textured objects</td>
+<td>Low</td>
+<td>Low</td>
+<td>Moderate</td>
+<td>Higher</td>
+</tr>
+<tr>
+<td>Heavily occluded scenarios</td>
+<td>Low (tactile resolves occlusion)</td>
+<td>Low</td>
+<td>Significantly worse</td>
+<td>Comparable</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">*Note: Exact numerical values are reported in the Science Robotics publication. The key finding is that tactile-visual fusion consistently outperforms either modality alone, with the largest gains in heavily occluded scenarios where vision alone fails. The neural field representation enables continuous tracking through contact state changes.*</p>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Requires known object 3D models for initialization; not applicable to novel objects without prior shape information</li>
+<li>Neural field optimization is computationally expensive; real-time performance requires significant GPU resources</li>
+<li>Tracking only (state estimation); does not close the loop to generate manipulation actions</li>
+<li>Limited to DIGIT sensors on Allegro Hand; generalization to other sensor-hand combinations is not demonstrated</li>
+<li>Per-object neural field requires re-training for each new object</li>
+</ul>
+<h2 class="dp-h2">Shared limitation</h2>
+<p class="dp-p">Like all tactile representation models in this section, NeuralFeels does not integrate into a closed-loop manipulation policy that generates actions. It provides state estimation (pose tracking) rather than action generation. See <a href="sparsh.md#shared-limitation-no-closed-loop-policy-integration" target="_blank" rel="noopener">Sparsh</a> for a detailed discussion of this shared limitation. NeuralFeels comes closest to closing this loop among the four models by operating on real dexterous hardware during active manipulation, but the tracking output would need to be consumed by a separate policy to complete the perception-action cycle.</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source. GitHub: <a href="https://github.com/facebookresearch/neuralfeels" target="_blank" rel="noopener">facebookresearch/neuralfeels</a></p>

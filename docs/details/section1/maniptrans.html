@@ -1,0 +1,108 @@
+<h3 class="dp-h3">ManipTrans</h3>
+<p class="dp-p"><strong>Full Title:</strong> ManipTrans: Transferring Dexterous Manipulation Across Embodiments</p>
+<p class="dp-p"><strong>Authors:</strong> Researchers from BIGAI / Tsinghua University / Peking University et al.</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CVPR 2025</p>
+<p class="dp-p"><strong>Hand Hardware:</strong> 4 robot hand embodiments evaluated: Shadow Hand (K=22 DoF), Articulated MANO (K=22 DoF), Inspire Hand (K=12 DoF), and Allegro Hand (K=16 DoF). Cross-embodiment transfer is demonstrated across these morphologically diverse hands.</p>
+<p class="dp-p"><strong>Tasks:</strong> Bimanual dexterous manipulation tasks including pen cap removal, bottle unscrewing, and other articulated object manipulation requiring coordinated two-hand operation. The associated DexManipNet dataset contains 3,300 episodes across these tasks and embodiments.</p>
+<p class="dp-p"><strong>Key Methodology:</strong> ManipTrans addresses the challenge of transferring dexterous manipulation skills across different robot hand embodiments. The approach learns an embodiment-agnostic manipulation representation that can be mapped to diverse hand morphologies. It uses a universal imitator architecture that takes demonstrations on one hand embodiment and produces policies executable on a different target hand, enabling cross-embodiment skill transfer without per-embodiment demonstration collection.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> The imitator network learns a shared latent space for manipulation across embodiments. Pretrained imitator checkpoints and full model weights are released on HuggingFace. The system is trained in IsaacGym Preview 4 with parallel environments.</p>
+<p class="dp-p"><strong>Sim Platform:</strong> NVIDIA IsaacGym Preview 4. Sim-to-real transfer is not demonstrated -- the work focuses on cross-embodiment transfer in simulation. The DexManipNet dataset provides MuJoCo-compatible demonstration data.</p>
+<p class="dp-p"><strong>Main Contributions:</strong></p>
+<ul class="dp-list">
+<li>Introduces a universal imitator that transfers manipulation demonstrations across 4 robot hand embodiments (Shadow, MANO, Inspire, Allegro) without requiring per-target demonstrations, whereas prior cross-embodiment approaches required at least some demonstration data on each target hand.</li>
+<li>Releases DexManipNet, a dataset of 3,300 bimanual manipulation episodes across multiple hands on HuggingFace -- the largest publicly available cross-embodiment dexterous manipulation dataset.</li>
+<li>Shows that a shared latent manipulation representation can match the performance of embodiment-specific policies trained with matched demonstrations, demonstrating that cross-embodiment transfer does not inherently sacrifice manipulation quality.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force/impedance awareness:</strong> No. No force/torque sensing or impedance control is incorporated. The universal imitator operates entirely in joint position space, meaning that the force profiles arising during contact-rich manipulation (e.g., bottle unscrewing torques) are not explicitly controlled. For tasks where contact force magnitude matters (e.g., avoiding over-tightening or crushing), this could limit real-world applicability.</li>
+<li><strong>VLA/language conditioning:</strong> No. Language conditioning and VLA integration are not explored. The universal imitator conditions on demonstration trajectories, not language instructions.</li>
+<li><strong>Sim-to-real:</strong> No. The work is simulation-only. Cross-embodiment transfer is demonstrated within IsaacGym, but deployment on physical hardware is not addressed.</li>
+<li><strong>Code/weights availability:</strong> Pretrained imitator checkpoints and model weights released on HuggingFace. DexManipNet dataset publicly available.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Evaluated on bimanual manipulation tasks across 4 robot hand embodiments. Success defined as meeting thresholds: rotation <30 deg, translation <3cm, joint error <8cm, fingertip error <6cm.</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Method</th>
+<th>Single-hand SR</th>
+<th>Bimanual SR</th>
+<th>Rotation Err (deg)</th>
+<th>Translation Err (cm)</th>
+<th>Joint Err (cm)</th>
+<th>Fingertip Err (cm)</th>
+</tr></thead><tbody>
+<tr>
+<td>Retarget-Only</td>
+<td>4.6%</td>
+<td>0.0%</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td>RL-Only</td>
+<td>34.3%</td>
+<td>12.1%</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td>Retarget + Residual</td>
+<td>47.8%</td>
+<td>13.9%</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><strong>ManipTrans</strong></td>
+<td><strong>58.1%</strong></td>
+<td><strong>39.5%</strong></td>
+<td><strong>8.60</strong></td>
+<td><strong>0.49</strong></td>
+<td><strong>2.15</strong></td>
+<td><strong>1.36</strong></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Policy learning benchmark on bottle rearrangement (using DexManipNet):</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Method</th>
+<th>Success Rate</th>
+</tr></thead><tbody>
+<tr>
+<td>IBC</td>
+<td>4.69%</td>
+</tr>
+<tr>
+<td>BET</td>
+<td>9.69%</td>
+</tr>
+<tr>
+<td>DP-UNet</td>
+<td>18.44%</td>
+</tr>
+<tr>
+<td>DP-Trans</td>
+<td>14.69%</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Hands evaluated: Shadow Hand (K=22), Articulated MANO (K=22), Inspire Hand (K=12), Allegro Hand (K=16). ManipTrans achieves consistent performance across all embodiments without per-embodiment hyperparameter adjustment.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The work is simulation-only (IsaacGym Preview 4).</li>
+<li><strong>Deployment hardware:</strong> Simulation only. No real-world deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Not applicable (simulation-only). The universal imitator inference speed is not characterized.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> DexManipNet (custom dataset released with this work). Contains bimanual manipulation demonstrations across multiple robot hand embodiments.</li>
+<li><strong>Collection method:</strong> Simulation-generated demonstrations in IsaacGym Preview 4. Demonstrations are produced via trajectory optimization / scripted controllers for bimanual manipulation tasks, then used for imitation learning across embodiments.</li>
+<li><strong>Data scale:</strong> 3,300 bimanual manipulation episodes (1.34 million frames) across ~1,200 objects, 61 tasks from OakInk-V2, and ~600 bimanual sequences. 4 robot hand embodiments.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (simulation-generated data).</li>
+<li><strong>Data format:</strong> MuJoCo-compatible demonstration data; released on HuggingFace.</li>
+<li><strong>Publicly available?</strong> Yes. DexManipNet dataset publicly available on HuggingFace. Pretrained imitator checkpoints and model weights also released on HuggingFace.</li>
+</ul>
+<hr>

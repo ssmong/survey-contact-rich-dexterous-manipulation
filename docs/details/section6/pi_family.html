@@ -1,0 +1,120 @@
+<h2 class="dp-h2">6.1 Physical Intelligence pi Family</h2>
+<h3 class="dp-h3">pi0 / pi0-FAST / pi0.5 / pi0.6 / pi0.7</h3>
+<p class="dp-p"><strong>Full title:</strong> pi0: A Vision-Language-Action Flow Model for General Robot Control (initial paper); subsequent versions released as technical reports or blog posts without individual arXiv publications.</p>
+<p class="dp-p"><strong>Authors:</strong> Physical Intelligence (Kevin Black, Noah Brown, Danny Driess, Adnan Esmail, Michael Equi, Chelsea Finn, Niccolo Fusai, Lachy Groom, Karol Hausman, Brian Ichter, Szymon Jakubczak, Tim Jones, Liyiming Ke, Sergey Levine, Adrian Li-Bell, Mohith Mothukuri, Suraj Nair, Karl Pertsch, Lucy Xiaoyang Shi, James Tanner, Quan Vuong, Anna Walling, Haohuan Wang, Ury Zhilinsky)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> pi0 introduced Oct 2024 (arXiv 2410.24164); pi0-FAST Jan 2025 (arXiv 2501.13987); pi0.5 Apr 2025 (technical report); pi0.6 ~Nov 2025; pi0.7 ~Apr 2026.</p>
+<p class="dp-p"><strong>Architecture:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Version</th>
+<th>Date</th>
+<th>Params</th>
+<th>VLM Backbone</th>
+<th>Action Head</th>
+<th>Key Change</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>pi0</strong></td>
+<td>Oct 2024</td>
+<td>3.3B</td>
+<td>PaliGemma 3B (SigLIP ViT + Gemma 2B LM)</td>
+<td>Flow matching (~300M params)</td>
+<td>Foundational VLA with flow-matching action generation</td>
+</tr>
+<tr>
+<td><strong>pi0-FAST</strong></td>
+<td>Jan 2025</td>
+<td>3.3B</td>
+<td>PaliGemma 3B</td>
+<td>Autoregressive with FAST tokenizer</td>
+<td>Replaced continuous flow head with discrete action tokens for faster inference</td>
+</tr>
+<tr>
+<td><strong>pi0.5</strong></td>
+<td>Apr 2025</td>
+<td>3.3B</td>
+<td>PaliGemma 3B</td>
+<td>Two-stage: FAST pretrain then flow matching fine-tune</td>
+<td>Knowledge insulation for better open-world generalization; web-scale VLM knowledge preserved</td>
+</tr>
+<tr>
+<td><strong>pi0.6</strong></td>
+<td>~Nov 2025</td>
+<td>~5B</td>
+<td>Gemma 3 4B</td>
+<td>Dual flow + token heads</td>
+<td>Upgraded VLM backbone from PaliGemma to Gemma 3; larger capacity</td>
+</tr>
+<tr>
+<td><strong>pi0.7</strong></td>
+<td>~Apr 2026</td>
+<td>~5B</td>
+<td>Gemma 3 4B + 400M vision encoder</td>
+<td>Flow matching (860M DiT)</td>
+<td>Larger dedicated DiT action head; improved vision encoder</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">The architecture follows a consistent pattern across versions: a pre-trained vision-language model processes multi-view images and optional language instructions, producing contextualized embeddings that condition an action generation head. The action head denoises or decodes a chunk of future actions (typically 16-50 timesteps) in a single forward pass.</p>
+<p class="dp-p"><strong>Action space:</strong> 18-19 dimensions across all versions: dual 6-DoF arms (position + orientation) + gripper widths + optional mobile base velocity. All versions use parallel-jaw grippers exclusively.</p>
+<p class="dp-p"><strong>Dex hand support?</strong> ✗ --- No version supports multi-finger dexterous hands. Action representations are designed for bimanual arm + gripper setups.</p>
+<p class="dp-p"><strong>Force/impedance output?</strong> ✗ --- All versions output position targets only. No force, torque, or impedance parameters.</p>
+<p class="dp-p"><strong>Key methodology:</strong> pi0 introduced flow matching as an action generation mechanism for VLAs, treating robot action prediction as a conditional denoising process. The VLM backbone is co-fine-tuned with the action head on robot demonstration data, enabling the model to follow natural language instructions while generating precise motor commands. pi0-FAST replaced the continuous flow head with an autoregressive discrete tokenizer (FAST) that bins continuous actions into a learned vocabulary, trading some precision for 5-10x faster inference. pi0.5 introduced a two-stage training recipe --- FAST pretraining for broad coverage followed by flow-matching fine-tuning for precision --- with "knowledge insulation" to prevent catastrophic forgetting of the base VLM's world knowledge during robot fine-tuning.</p>
+<p class="dp-p"><strong>Training data:</strong> 10,000+ hours of robot manipulation data across multiple embodiments. Pre-training uses a mixture of internet-scale vision-language data (inherited from PaliGemma/Gemma) and cross-embodiment robot demonstrations. Fine-tuning datasets include DROID, ALOHA, Bridge V2, and proprietary Physical Intelligence data. Supported robots include UR5, ALOHA bimanual, and various single-arm platforms.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Established flow matching as a viable action head for VLAs, enabling continuous multi-modal action distributions without the quantization artifacts of autoregressive tokenization.</li>
+<li>Demonstrated that co-fine-tuning a frozen VLM with a lightweight action head achieves strong language-conditioned manipulation from relatively modest robot data.</li>
+<li>The open-source openpi framework provides a complete fine-tuning and inference pipeline, making pi0/pi0-FAST/pi0.5 accessible for academic research.</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<p class="dp-p">*pi0 (arXiv 2410.24164):*</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>pi0</th>
+<th>Best Baseline</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>*(Results not independently verified --- arXiv page could not be fetched. Consult the paper directly for per-task success rates on DROID, ALOHA, and Bridge V2 benchmarks.)*</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">*pi0-FAST (arXiv 2501.13987):*</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>pi0-FAST</th>
+<th>pi0 (flow)</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>*(Results not independently verified --- arXiv page could not be fetched. The paper reports comparable success rates to pi0 flow matching at 5-10x faster inference speed. Consult the paper for per-task numbers.)*</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Strictly gripper-only: the 18-19D action space cannot represent multi-finger hand configurations. Extending to dexterous hands would require fundamental changes to the action representation.</li>
+<li>No force or compliance awareness: all outputs are position targets, making the model unsuitable for contact-rich tasks requiring force regulation.</li>
+<li>pi0.6 and pi0.7 are not publicly released; only pi0, pi0-FAST, and pi0.5 have open weights.</li>
+<li>Training data is predominantly from parallel-jaw gripper demonstrations, creating an embodiment bias that would hinder adaptation to dexterous platforms.</li>
+</ul>
+<p class="dp-p"><strong>Open weights/code:</strong> ✅ pi0, pi0-FAST, pi0.5 available under Apache 2.0 via <a href="https://github.com/Physical-Intelligence/openpi" target="_blank" rel="noopener">openpi</a> and <a href="https://huggingface.co/lerobot/pi0_base" target="_blank" rel="noopener">HuggingFace</a>. pi0.6 and pi0.7 not publicly released as of May 2026.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> pi0 (flow matching) runs at approximately 3-5 Hz due to the iterative denoising process (multiple flow-matching steps per action chunk). pi0-FAST achieves 5-10x faster inference (~15-50 Hz) by replacing the flow head with autoregressive FAST token decoding, generating action chunks in a single forward pass. pi0.5 fine-tuning with flow matching returns to pi0-level speed (~3-5 Hz). Specific ms-per-step figures not publicly benchmarked on standardized hardware.</li>
+<li><strong>Deployment hardware:</strong> Evaluated on desktop GPUs (specific model not disclosed in public materials). The 3.3B parameter model requires a capable GPU (e.g., NVIDIA A100/RTX 4090 class) for real-time flow-matching inference. pi0-FAST's discrete tokenization is more CPU/edge-friendly. No Jetson Orin deployment reported.</li>
+<li><strong>Real-time capable?</strong> pi0-FAST: Yes, at ~15-50 Hz with action chunking, suitable for typical manipulation control frequencies. pi0 (flow matching): Marginal, at ~3-5 Hz -- sufficient for slow manipulation but too slow for dexterous tasks requiring 20+ Hz. Action chunking (predicting 16-50 future steps per inference) compensates for low inference frequency by executing multiple steps between inferences.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> 10,000+ hours of robot manipulation data across multiple embodiments. Pre-training mixture includes internet-scale vision-language data (inherited from PaliGemma/Gemma) and cross-embodiment robot demonstrations. Fine-tuning datasets include DROID (~76K trajectories, 350 hours), ALOHA bimanual demonstrations, Bridge V2, and proprietary Physical Intelligence data.</li>
+<li><strong>Collection method:</strong> Teleoperation (various setups per dataset: VR controllers for DROID, leader-follower for ALOHA, keyboard/SpaceMouse for Bridge V2) + web-scale vision-language pretraining data. Supported robots include UR5, ALOHA bimanual, and various single-arm platforms.</li>
+<li><strong>Data scale:</strong> 10,000+ hours total robot data. DROID: ~76K trajectories / 350 hours / 564 scenes. Bridge V2: ~60K trajectories / 24 environments. Additional proprietary data from Physical Intelligence.</li>
+<li><strong>Teleop equipment:</strong> Varies by dataset component -- Meta Quest VR controllers (DROID), leader-follower arms (ALOHA), keyboard/SpaceMouse (Bridge V2).</li>
+<li><strong>Data format:</strong> RLDS (TensorFlow Datasets) for OXE-compatible datasets; proprietary formats for Physical Intelligence data. LeRobot format for open-source release.</li>
+<li><strong>Publicly available?</strong> Partially. DROID, Bridge V2, and ALOHA datasets are publicly available. Proprietary Physical Intelligence data is not released. Model weights for pi0/pi0-FAST/pi0.5 are open (Apache 2.0).</li>
+</ul>
+<hr>

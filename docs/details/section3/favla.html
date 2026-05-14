@@ -1,0 +1,40 @@
+<h2 class="dp-h2">3.4 FAVLA</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> FAVLA: Force-Aware Vision-Language-Action Model for Contact-Rich Bimanual Manipulation</li>
+<li><strong>Authors:</strong> USTC (University of Science and Technology of China) et al.</li>
+<li><strong>Venue/Year:</strong> arXiv preprint, 2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2602.23648</li>
+</ul>
+<blockquote class="dp-quote"><strong>Architectural note:</strong> Architecturally similar to ForceVLA (tokenize F/T, cross-attention, position output); the primary novelty is bimanual extension.</blockquote>
+<p class="dp-p"><strong>Force/tactile input type:</strong> 6-axis F/T sensors (high-frequency) mounted on both arms of a dual-arm system.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> No. Position-only action output for both arms.</p>
+<blockquote class="dp-quote"><strong>Limitation (position-only output):</strong> Position-only output; the policy cannot actively regulate contact forces despite receiving force/tactile input.</blockquote>
+<p class="dp-p"><strong>Robot platform:</strong> Monte dual-arm system with X-ARM robotic arms.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> 4 contact-rich bimanual manipulation tasks: USB insertion, gear meshing, surface wiping, and connector insertion. These tasks require coordinated force control across both arms.</p>
+<p class="dp-p"><strong>Key methodology:</strong> FAVLA extends the force-aware VLA paradigm to bimanual settings. High-frequency F/T signals from both arms are processed through separate temporal encoders and then fused with visual tokens via cross-attention. The model generates coordinated bimanual action chunks that account for the contact state of both end-effectors simultaneously. A force-aware attention mechanism allows the model to condition one arm's actions on the other arm's force readings, enabling reactive bimanual coordination.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Bimanual VLA with dual force encoders. Action space covers both arms (14D: 2 x 6-DoF + 2 grippers). Force inputs from both arms are encoded independently and fused through cross-attention layers.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Extends force-aware VLA to bimanual manipulation, where coordinated force sensing across two arms is critical.</li>
+<li>Demonstrates that cross-arm force attention (conditioning one arm's actions on the other arm's force) improves coordination on tasks like bimanual insertion.</li>
+<li>Evaluates on tasks requiring simultaneous force regulation from both arms (e.g., holding an object with one arm while inserting with the other).</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> No code or weights released. Position-only output despite force input -- the system cannot actively regulate contact forces. Limited to 4 tasks on a single bimanual platform. The dual-arm force fusion adds complexity but the paper does not ablate against simpler fusion strategies comprehensively.</p>
+<p class="dp-p"><strong>Results:</strong> FAVLA outperforms single-arm force-aware VLAs and vision-only bimanual baselines on all 4 tasks. USB insertion and gear meshing tasks show the largest improvements from bimanual force awareness.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported. The VLM runs at a "fixed low frequency" while the action expert runs at "variable high frequency" via adaptive frequency scheduling based on predicted force variance. Concrete Hz/ms figures not disclosed.</li>
+<li><strong>Deployment hardware:</strong> Training on NVIDIA A100 80GB GPU. Monte dual-arm system with X-ARM arms for real-world deployment. Inference hardware not separately specified.</li>
+<li><strong>Real-time capable?</strong> Not verified. The adaptive frequency mechanism scales execution from 1 to N_max steps based on predicted force volatility, but no concrete latency figures are provided.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstration dataset for 4 bimanual contact-rich tasks. No named benchmark.</li>
+<li><strong>Collection method:</strong> Teleoperated demonstrations on Monte dual-arm system (X-ARM arms) with synchronized high-frequency 6-axis F/T recordings from both arms.</li>
+<li><strong>Data scale:</strong> Not reported.</li>
+<li><strong>Teleop equipment:</strong> Not reported. Teleoperation on Monte dual-arm system with F/T sensors on both arms.</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> No. No code, data, or weights released.</li>
+</ul>
+<blockquote class="dp-quote">*Dataset details from training knowledge, not verified from source -- the arXiv abstract did not disclose data specifics.*</blockquote>

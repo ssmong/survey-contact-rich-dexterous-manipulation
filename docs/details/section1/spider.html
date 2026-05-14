@@ -1,0 +1,99 @@
+<h3 class="dp-h3">SPIDER</h3>
+<p class="dp-p"><strong>Full Title:</strong> SPIDER: Sim-to-Real Policy Adaptation for Dexterous Manipulation via Embodiment Retargeting</p>
+<p class="dp-p"><strong>Authors:</strong> Researchers from Meta FAIR / UC Berkeley et al.</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv preprint, 2025</p>
+<p class="dp-p"><strong>Hand Hardware:</strong> 9 different humanoid embodiments evaluated. SPIDER targets the broad challenge of retargeting human demonstrations to diverse humanoid robot morphologies, covering a wide range of hand-arm kinematic configurations.</p>
+<p class="dp-p"><strong>Tasks:</strong> Retargeted human demonstration tasks. The system takes human motion capture data and produces physically executable policies for different humanoid embodiments. Tasks span manipulation behaviors captured from human demonstrations.</p>
+<p class="dp-p"><strong>Key Methodology:</strong> SPIDER addresses sim-to-real policy adaptation through embodiment retargeting. The approach takes human demonstrations captured via motion capture and retargets them to target humanoid embodiments using a physics-based optimization in MuJoCo simulation. The retargeting preserves the functional intent of the original human motion while respecting the kinematic and dynamic constraints of each target embodiment. The method focuses on producing physically plausible motions that can serve as initializations for further RL-based policy refinement.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> The retargeting pipeline uses optimization-based motion adaptation combined with physics simulation to ensure dynamic feasibility. Specific network architecture details depend on the downstream policy learning approach.</p>
+<p class="dp-p"><strong>Sim Platform:</strong> MuJoCo. Sim-to-real transfer IS demonstrated -- the paper deploys retargeted trajectories on a physical Franka Emika Panda + Allegro Hand system for four dexterous tasks (rotating light bulb, manipulating spoon, playing guitar, unplugging charger). Trajectories are retargeted from single RGB video input and executed directly on the physical robot.</p>
+<p class="dp-p"><strong>Main Contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposes a retargeting framework covering 9 humanoid embodiments -- the broadest embodiment coverage in the surveyed literature -- whereas prior retargeting work (DexMachina: 4, ManipTrans: 6) covered fewer and less morphologically diverse targets.</li>
+<li>Demonstrates that physics-based retargeting in MuJoCo preserves manipulation intent across morphologically diverse robots, producing motions that satisfy dynamic feasibility constraints rather than only kinematic correspondence.</li>
+<li>Open-sources the framework (<a href="https://github.com/facebookresearch/spider" target="_blank" rel="noopener">GitHub</a>), enabling community extensions to new embodiments.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force/impedance awareness:</strong> No. No force sensing or impedance control is incorporated. The retargeting optimizes for kinematic and dynamic feasibility but does not explicitly reason about contact force profiles. Tasks requiring precise force modulation (e.g., insertion, polishing) would need additional force-aware policy layers beyond what SPIDER provides.</li>
+<li><strong>VLA/language conditioning:</strong> No. The pipeline operates on motion capture demonstrations with no language input or vision-language integration.</li>
+<li><strong>Sim-to-real:</strong> Yes. Real robot deployment is demonstrated on a Franka Emika Panda + Allegro Hand for four dexterous tasks. Retargeted trajectories from single RGB video are executed directly on physical hardware.</li>
+<li><strong>Code/weights availability:</strong> Code released (<a href="https://github.com/facebookresearch/spider" target="_blank" rel="noopener">GitHub</a>). Pretrained weights depend on the specific downstream policy.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Evaluated across 9 embodiments (5 dexterous hands: Allegro, XHand, Inspire, Ability, Schunk; 4 humanoid robots: Unitree G1, Unitree H1-2, Fourier N1, Booster T1) using multiple datasets.</p>
+<p class="dp-p">Table 1 -- Ablation study success rates (full method improves ~18% over annealed sampling alone, range 0.54--1.00).</p>
+<p class="dp-p">Table 2 -- Full dataset success rates:</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Dataset</th>
+<th>Inspire</th>
+<th>Allegro</th>
+<th>XHand</th>
+<th>Ability</th>
+<th>Schunk</th>
+</tr></thead><tbody>
+<tr>
+<td>Oakink</td>
+<td>0.479 (best)</td>
+<td>0.413--0.459 range</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td>GigaHands</td>
+<td>0.879 (best)</td>
+<td>0.706--0.812 range</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Table 3 -- Comparison with RL baselines:</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Method</th>
+<th>Dataset</th>
+<th>Success Rate</th>
+<th>Speed</th>
+</tr></thead><tbody>
+<tr>
+<td>SPIDER</td>
+<td>Oakink (1022 traj.)</td>
+<td>47.9%</td>
+<td>2.5 FPS</td>
+</tr>
+<tr>
+<td>ManipTrans</td>
+<td>Oakink</td>
+<td>39.5%</td>
+<td>0.1 FPS</td>
+</tr>
+<tr>
+<td>SPIDER</td>
+<td>ARCTIC</td>
+<td>42.0%</td>
+<td>1.5 FPS</td>
+</tr>
+<tr>
+<td>DexMachina</td>
+<td>ARCTIC</td>
+<td>67.1%</td>
+<td>0.05 FPS</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">SPIDER is 10x faster than RL baselines. Generated 2.4M frames of dynamically feasible robot data. Real robot deployment confirmed on Franka Emika Panda + Allegro Hand for 4 dexterous tasks (rotating light bulb, manipulating spoon, playing guitar, unplugging charger).</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Trajectory generation runs at 2.5 FPS for dexterous manipulation (Oakink dataset) and 19.6--23.1 FPS for humanoid tasks. Not real-time for dexterous manipulation at the 50 Hz control frequency used in physics simulation.</li>
+<li><strong>Deployment hardware:</strong> RTX 4090 GPUs for ablations/speed tests; H100 GPUs for large-scale dataset generation. Real robot deployment on Franka Emika Panda + Allegro Hand uses direct trajectory execution (no GPU required at execution time).</li>
+<li><strong>Real-time capable?</strong> No for dexterous manipulation generation (2.5 FPS vs. 50 Hz target). Approaching real-time for humanoid tasks (19.6--23.1 FPS). The system is 10x faster than RL baselines but designed primarily for offline trajectory generation rather than closed-loop real-time control.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Multiple existing human hand-object interaction datasets, including Gigahands, Hot3D, OakInk, and others. SPIDER integrates and processes these public datasets rather than collecting new data. ManipTrans data is also referenced.</li>
+<li><strong>Collection method:</strong> Human video / motion capture data from the above datasets, processed through the SPIDER retargeting pipeline to produce robot-executable trajectories for 9 humanoid embodiments.</li>
+<li><strong>Data scale:</strong> Not reported as a single number; depends on the source datasets used. Example data provided via HuggingFace (<code>retarget/retarget_example</code>).</li>
+<li><strong>Teleop equipment:</strong> Not applicable (source data is human video / MoCap, not robot teleoperation).</li>
+<li><strong>Data format:</strong> Processed through multi-stage pipeline (raw data -> preprocessing -> kinematic trajectories -> retargeted outputs). Example data on HuggingFace.</li>
+<li><strong>Publicly available?</strong> Yes. Code released (<a href="https://github.com/facebookresearch/spider" target="_blank" rel="noopener">GitHub</a>). Example retargeted datasets available on HuggingFace.</li>
+</ul>
+<hr>

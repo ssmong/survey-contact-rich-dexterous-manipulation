@@ -1,0 +1,30 @@
+<p class="dp-p"># 10.4 DOGlove</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> DOGlove: Dexterous Manipulation with a Low-Cost Open-Source Haptic Force Feedback Glove</li>
+<li><strong>Authors:</strong> Han Zhang, Hanwen Zhao, Yixuan Wang, and collaborators (TEA Lab)</li>
+<li><strong>Venue/Year:</strong> RSS 2025 (arXiv 2505.14635, May 2025)</li>
+<li><strong>Input modality:</strong> Custom haptic glove with joint angle sensors + force feedback actuators</li>
+<li><strong>Target hand:</strong> Any dexterous hand (demonstrated with multiple platforms)</li>
+<li><strong>Force feedback:</strong> 5-DoF haptic feedback (one per finger)</li>
+<li><strong>Cost:</strong> <$600</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">DOGlove is a custom-designed haptic glove that provides both motion capture and force feedback for dexterous teleoperation. The glove measures finger joint angles through embedded sensors and renders contact forces back to the operator's fingers through small actuators (one per finger, 5-DoF total). The design prioritizes low cost and open-source reproducibility, using off-the-shelf components and 3D-printed structural parts. The bidirectional force feedback enables operators to feel grasp contacts, significantly improving teleoperation quality for contact-rich tasks.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Sub-$600 dexterous teleoperation glove with bidirectional haptic feedback -- the lowest-cost force-feedback solution surveyed</li>
+<li>5-DoF haptic rendering (one per fingertip) enabling operators to feel contact forces during manipulation</li>
+<li>Fully open-source hardware design (3D-printable) and software stack</li>
+<li>Demonstrated improved manipulation quality compared to no-feedback teleoperation</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>5-DoF haptic feedback provides only per-finger force, not spatially distributed fingertip contact patterns</li>
+<li>Force rendering fidelity is limited by actuator bandwidth and power</li>
+<li>Requires per-user calibration for accurate kinematic mapping</li>
+<li>Glove form factor may restrict natural hand motion range</li>
+</ul>
+<h2 class="dp-h2">Data quality impact</h2>
+<p class="dp-p">DOGlove is the only sub-$1K system that embeds force information into collected demonstrations. The 5-DoF haptic feedback allows operators to modulate grasp force during data collection, producing demonstrations that encode force-aware behaviors absent from camera-only or position-only systems. However, the per-finger force granularity is coarse: each finger receives a single scalar force signal rather than spatially distributed contact pressure, so operators cannot distinguish contact location or pressure distribution within a fingertip. Policies trained on DOGlove data show improved force regulation compared to force-blind demonstrations, but still lack the fine contact awareness needed for tasks requiring precise fingertip pressure control (e.g., controlled sliding, texture-dependent grasping).</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Fully open-source (hardware + software). GitHub: <a href="https://github.com/TEA-Lab/DOGlove" target="_blank" rel="noopener">TEA-Lab/DOGlove</a></p>

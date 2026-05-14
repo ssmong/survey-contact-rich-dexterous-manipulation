@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.4 BiDexHD</h3>
+<p class="dp-p"><strong>Full title:</strong> BiDexHD: Bimanual Dexterous Manipulation from Human Demonstrations</p>
+<p class="dp-p"><strong>Authors:</strong> Yuanpei Chen, Yaodong Yang, et al. (PKU)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv 2025</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2501.09821</p>
+<p class="dp-p"><strong>RL algorithm:</strong> RL (PPO) with human demonstration-guided exploration. Uses retargeted human bimanual demonstrations to initialize and guide RL training on 141 tasks from the TACO benchmark.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> 2x Shadow Hands (48 DoF total)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No. Simulation-only.</p>
+<p class="dp-p"><strong>Tasks:</strong> 141 bimanual dexterous manipulation tasks from the TACO dataset. Tasks include: bimanual object handover, coordinated assembly, tool use with two hands, container manipulation, and other tasks requiring tight bimanual coordination. This is the largest bimanual dexterous task set reported.</p>
+<p class="dp-p"><strong>Key methodology:</strong> BiDexHD addresses the challenge of learning bimanual dexterous policies at scale. Human bimanual demonstrations are retargeted to the dual Shadow Hand setup and used to initialize RL exploration. The demonstration-guided approach significantly reduces the exploration burden for complex bimanual tasks where random exploration rarely discovers useful behaviors. The TACO benchmark provides a standardized evaluation across 141 tasks with varying complexity.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Scaled bimanual dexterous RL to 141 tasks -- the largest reported bimanual dexterous task set</li>
+<li>Demonstrated that human demonstration-guided RL substantially outperforms pure RL on complex bimanual tasks</li>
+<li>Built on and extended the TACO benchmark for systematic bimanual evaluation</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Simulation-only with dual Shadow Hands (48 DoF), which are impractical for most real-world labs. No vision-based policies (uses privileged state). Quality of retargeted demonstrations depends on the human-to-robot morphology mapping. Code not publicly available.</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<p class="dp-p"><strong>Results:</strong> Achieved successful learning on a large fraction of the 141 TACO tasks (sim), significantly outperforming baselines without demonstration guidance.</p>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> TACO benchmark (141 bimanual dexterous tasks). Human bimanual demonstrations retargeted to dual Shadow Hands.</li>
+<li><strong>Collection method:</strong> RL + human demo-guided exploration (DAPG-style). Human bimanual demonstrations retargeted to dual Shadow Hand setup (48 DoF total) to initialize and guide PPO exploration on 141 tasks. Privileged state observations (no vision).</li>
+<li><strong>Data scale:</strong> 141 bimanual tasks from TACO dataset. Human demonstrations used for exploration guidance.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (retargeted human MoCap/video demonstrations, not live robot teleoperation).</li>
+<li><strong>Data format:</strong> Retargeted demonstration trajectories for dual Shadow Hands.</li>
+<li><strong>Publicly available?</strong> Code not publicly available. TACO benchmark available separately.</li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The MLP policy runs in <1ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacGym). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>

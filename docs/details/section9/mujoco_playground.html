@@ -1,0 +1,51 @@
+<p class="dp-p"># 9.2 MuJoCo Playground</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> MuJoCo Playground</li>
+<li><strong>Authors:</strong> Google DeepMind MuJoCo team (Kevin Zakka, Baruch Tabanpour, and collaborators)</li>
+<li><strong>Venue/Year:</strong> RSS 2025 (systems demo track)</li>
+<li><strong>Sim platform:</strong> MuJoCo MJX (JAX-accelerated MuJoCo)</li>
+<li><strong>Dexterous support:</strong> LEAP Hand tasks included; Shadow Hand variants available through MuJoCo's standard model library</li>
+<li><strong>Tasks:</strong> Locomotion, dexterous manipulation (in-hand reorientation, cube rotation), whole-body control; tasks trainable in minutes on a single GPU</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">MuJoCo Playground leverages MuJoCo MJX, the JAX-compiled version of the MuJoCo physics engine, to enable massively parallel simulation entirely on GPU/TPU. It provides a curated collection of environments with reward functions and training scripts that demonstrate how policies can be trained from scratch in minutes rather than hours. The system emphasizes zero-shot sim-to-real transfer by using MuJoCo's accurate contact dynamics.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Demonstration that accurate contact physics (MuJoCo) combined with JAX compilation can train dexterous policies in minutes on commodity hardware</li>
+<li>Pre-built environments for LEAP Hand manipulation with zero-shot sim-to-real transfer results</li>
+<li>Browser-based visualization and interactive environment exploration</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Narrower task diversity compared to ManiSkill3 or Isaac Lab; focused on demonstrating speed rather than comprehensive benchmarking</li>
+<li>No built-in tactile simulation or deformable object support</li>
+<li>Documentation and community adoption still growing relative to established platforms</li>
+</ul>
+<h2 class="dp-h2">Coverage gaps</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Criterion</th>
+<th>Covered?</th>
+</tr></thead><tbody>
+<tr>
+<td>Force/torque evaluation metrics</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Deformable object tasks</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Tactile sensing</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Multi-stage / long-horizon tasks</td>
+<td>No (focused on single-objective tasks like cube rotation)</td>
+</tr>
+<tr>
+<td>Multi-hand coordination</td>
+<td>No</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source under Apache 2.0. Install via <code>pip install playground</code>. GitHub: <a href="https://github.com/google-deepmind/mujoco_playground" target="_blank" rel="noopener">google-deepmind/mujoco_playground</a></p>

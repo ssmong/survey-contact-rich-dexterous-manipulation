@@ -1,0 +1,56 @@
+<h2 class="dp-h2">3.1 ForceVLA</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> ForceVLA: Towards Force-Aware Vision-Language-Action Model for Contact-Rich Manipulation</li>
+<li><strong>Authors:</strong> Qiaojun Yu et al. (SJTU, Fudan University)</li>
+<li><strong>Venue/Year:</strong> NeurIPS 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2505.22159</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> 6-axis force/torque (F/T) sensor mounted at the wrist of a Flexiv Rizon arm. The raw F/T signals (Fx, Fy, Fz, Tx, Ty, Tz) are tokenized and fed into the VLA backbone alongside visual tokens.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> No. Position-only output. The force information is used as input context to improve policy decisions, but the robot executes position commands through the Flexiv Rizon's built-in controller.</p>
+<blockquote class="dp-quote"><strong>Limitation (position-only output):</strong> Position-only output; the policy cannot actively regulate contact forces despite receiving force/tactile input.</blockquote>
+<p class="dp-p"><strong>Robot platform:</strong> Flexiv Rizon 4 robotic arm + parallel-jaw gripper.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> 5 contact-rich manipulation tasks -- plug insertion, surface wiping, tape peeling, cup stacking with force-sensitive alignment, and eraser wiping. All tasks require interpreting contact forces to determine task progress or adjust motion.</p>
+<p class="dp-p"><strong>Key methodology:</strong> ForceVLA extends a pretrained VLA (based on the OpenVLA architecture) by introducing a force tokenizer that converts continuous 6-axis F/T readings into discrete tokens compatible with the VLM's vocabulary. Force tokens are interleaved with vision and language tokens in the transformer's input sequence. The model is fine-tuned end-to-end on a small dataset of teleoperated demonstrations that include synchronized F/T recordings. A force-conditioned attention mechanism allows the model to attend to force history when generating the next action chunk.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Built on OpenVLA (7B parameters). The force tokenizer adds a lightweight MLP encoder that projects 6D F/T readings into the VLM's embedding space. Action output is position-based (7D: 6-DoF end-effector pose + gripper).</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposes integrating 6-axis F/T sensing as an explicit input modality in a VLA, tokenizing continuous force readings into discrete tokens compatible with the VLM vocabulary.</li>
+<li>Demonstrates that force-aware VLAs significantly outperform vision-only VLAs on contact-rich tasks where visual cues alone are insufficient (e.g., determining insertion success from force feedback rather than visual occlusion).</li>
+<li>Releases a force-annotated manipulation dataset (ForceVLA-Data: 244 trajectories, ~140K steps) covering 5 contact-rich tasks with synchronized F/T data (available on HuggingFace).</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Position-only output means the robot cannot actively regulate contact forces -- it relies on the Flexiv arm's built-in compliance. Limited to 5 tasks with a relatively small dataset. Single robot platform (Flexiv Rizon) with no cross-embodiment evaluation. The force tokenization approach discretizes continuous force signals, potentially losing high-frequency contact information.</p>
+<p class="dp-p"><strong>Code/data availability:</strong> ForceVLA-Data dataset released on HuggingFace (244 trajectories). Whether model code (as distinct from data) is publicly released should be independently verified -- the primary public artifact is the dataset.</p>
+<p class="dp-p"><strong>Results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Success rate improvement over vision-only VLA</td>
+<td>15--30% across 5 tasks</td>
+</tr>
+<tr>
+<td>Largest single-task gain</td>
+<td>Plug insertion (force feedback essential for detecting successful mating)</td>
+</tr>
+<tr>
+<td>Dataset size</td>
+<td>244 trajectories, ~140K steps</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The paper does not disclose per-step inference latency or control frequency. Built on the pi-zero framework with flow-based action generation.</li>
+<li><strong>Deployment hardware:</strong> Training on 8x NVIDIA RTX 4090 GPUs. Flexiv Rizon 4 arm + parallel-jaw gripper for real-world deployment. Inference hardware not separately specified.</li>
+<li><strong>Real-time capable?</strong> Not verified. Inference latency and control frequency are not disclosed in the paper or project page.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> ForceVLA-Data (custom dataset released with this work). Covers 5 contact-rich manipulation tasks with synchronized vision, proprioception, and force/torque signals.</li>
+<li><strong>Collection method:</strong> Teleoperated demonstrations on Flexiv Rizon 4 arm with synchronized 6-axis F/T recording alongside visual and proprioceptive data.</li>
+<li><strong>Data scale:</strong> 244 trajectories, ~140K steps across 5 tasks (plug insertion, surface wiping, tape peeling, cup stacking, eraser wiping).</li>
+<li><strong>Teleop equipment:</strong> Not explicitly detailed. Teleoperation on Flexiv Rizon 4 with F/T sensor.</li>
+<li><strong>Data format:</strong> Synchronized multi-modal data (vision + proprioception + 6-axis F/T). Specific file format not reported.</li>
+<li><strong>Publicly available?</strong> Yes. ForceVLA-Data dataset released on HuggingFace (244 trajectories). Code and data available at project page (sites.google.com/view/forcevla2025).</li>
+</ul>

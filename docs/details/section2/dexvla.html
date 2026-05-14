@@ -1,0 +1,234 @@
+<h3 class="dp-h3">2.3 DexVLA</h3>
+<p class="dp-p"><strong>Full title:</strong> DexVLA: Vision-Language Model with Plug-In Diffusion Expert for Dexterous Manipulation</p>
+<p class="dp-p"><strong>Authors:</strong> Junjie Wen, Yichen Zhu, Jinming Li, Zhibin Tang, Chaomin Shen, Feifei Feng</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CoRL 2025</p>
+<p class="dp-p"><strong>arXiv:</strong> <a href="https://arxiv.org/abs/2502.05855" target="_blank" rel="noopener">2502.05855</a></p>
+<p class="dp-p"><strong>Hand hardware:</strong> Inspired Dexterous Hand (6 DoF hand joints) mounted on a Franka Emika robot arm. Action space is 12-dimensional: SE(3) end-effector pose (3D position + 3D orientation) plus 6D hand joint space. Cross-embodiment evaluation also covers single-arm gripper and bimanual UR5e setups.</p>
+<p class="dp-p"><strong>Tasks:</strong></p>
+<ul class="dp-list">
+<li>Dexterous skill learning via curriculum</li>
+<li>Multi-finger manipulation tasks</li>
+<li>Pick-and-place with dexterous hands</li>
+<li>In-hand manipulation</li>
+</ul>
+<p class="dp-p"><strong>Key methodology:</strong> DexVLA introduces a plug-in architecture that attaches a 1-billion-parameter diffusion expert to a frozen vision-language model. The VLM backbone provides visual understanding and language grounding while remaining frozen during dexterous training. The diffusion expert generates high-dimensional dexterous hand actions conditioned on the VLM's latent representations. This design avoids catastrophic forgetting of the VLM's pre-trained knowledge while enabling precise dexterous control. A curriculum learning strategy progressively increases task difficulty.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong></p>
+<ul class="dp-list">
+<li>VLM backbone: frozen pre-trained vision-language model (backbone size not publicly specified at abstract level)</li>
+<li>Action head: ScaleDP (Scalable Diffusion Policy), offered in two variants:</li>
+<li>ScaleDP-H (large variant)</li>
+<li>ScaleDP-L (lightweight variant)</li>
+<li>Approximately 1B parameters for the diffusion expert</li>
+<li>Both ScaleDP-H and ScaleDP-L checkpoints available on HuggingFace</li>
+</ul>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Plug-in diffusion expert architecture: a 1B-parameter diffusion model that attaches to a frozen VLM, enabling dexterous manipulation without degrading the VLM's pre-trained capabilities (this claim is not independently verified in the entry)</li>
+<li>ScaleDP (Scalable Diffusion Policy): a scalable diffusion-based action generation module designed for high-dimensional dexterous action spaces, with both large (H) and lightweight (L) variants</li>
+<li>Curriculum-based training strategy that progressively increases dexterous task complexity, improving sample efficiency and final performance</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Outputs position targets only; no force, impedance, or compliance output</li>
+<li>The 1B diffusion expert adds significant computational overhead on top of the frozen VLM</li>
+<li>Cross-embodiment evaluation across different dexterous hand types is not a primary focus (unlike UniDex-VLA's 8-hand evaluation)</li>
+<li>No tactile or force/torque sensor integration</li>
+<li>Real-world evaluation scope is narrow compared to simulation</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong></p>
+<p class="dp-p"><strong>LIBERO Benchmark (average over Spatial / Object / Goal suites):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Method</th>
+<th>Spatial</th>
+<th>Object</th>
+<th>Goal</th>
+<th>Average</th>
+</tr></thead><tbody>
+<tr>
+<td>Diffusion Policy</td>
+<td>78.3</td>
+<td>92.5</td>
+<td>68.3</td>
+<td>79.7</td>
+</tr>
+<tr>
+<td>OpenVLA</td>
+<td>84.7</td>
+<td>88.4</td>
+<td>79.2</td>
+<td>84.1</td>
+</tr>
+<tr>
+<td>pi0-FAST</td>
+<td>96.4</td>
+<td>96.8</td>
+<td>88.6</td>
+<td>93.9</td>
+</tr>
+<tr>
+<td>pi0</td>
+<td>96.8</td>
+<td>98.8</td>
+<td>95.8</td>
+<td>97.1</td>
+</tr>
+<tr>
+<td><strong>DexVLA</strong></td>
+<td><strong>97.2</strong></td>
+<td><strong>99.1</strong></td>
+<td><strong>95.6</strong></td>
+<td><strong>97.3</strong></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Real-world tasks (without task-specific adaptation):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>DexVLA</th>
+<th>OpenVLA</th>
+<th>Octo</th>
+<th>Diffusion Policy</th>
+</tr></thead><tbody>
+<tr>
+<td>Shirt Folding</td>
+<td>0.92</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>Bin Picking Easy</td>
+<td>~0.85</td>
+<td>~0.15</td>
+<td>~0.10</td>
+<td>~0.20</td>
+</tr>
+<tr>
+<td>Table Bussing Easy</td>
+<td>~0.80</td>
+<td>~0.25</td>
+<td>~0.15</td>
+<td>~0.30</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Novel embodiment learning (100 demonstrations):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>DexVLA</th>
+<th>OpenVLA</th>
+<th>Octo</th>
+<th>Diffusion Policy</th>
+</tr></thead><tbody>
+<tr>
+<td>Drink Pouring (Inspired Dexterous Hand)</td>
+<td>0.90</td>
+<td>~0.10</td>
+<td>~0.05</td>
+<td>~0.70</td>
+</tr>
+<tr>
+<td>Packing (Bimanual UR5e)</td>
+<td>0.90</td>
+<td>~0.20</td>
+<td>~0.15</td>
+<td>~0.65</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Long-horizon tasks:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>DexVLA</th>
+<th>pi0</th>
+</tr></thead><tbody>
+<tr>
+<td>Laundry Folding</td>
+<td>0.40</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>Table Bussing (Hard)</td>
+<td>0.70</td>
+<td>0.62</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Three-stage curriculum ablation:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Stage 1</th>
+<th>Stage 2</th>
+<th>Stage 3</th>
+<th>Shirt Folding</th>
+<th>Laundry Folding</th>
+</tr></thead><tbody>
+<tr>
+<td>Yes</td>
+<td>--</td>
+<td>--</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>--</td>
+<td>Yes</td>
+<td>--</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>Yes</td>
+<td>--</td>
+<td>0.92</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>0.92</td>
+<td>0.40</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Stage 3 (long-horizon fine-tuning) is necessary for complex tasks like laundry folding; curriculum stages 1+2 alone suffice for simpler tasks like shirt folding.</p>
+<p class="dp-p"><strong>Diffusion expert scale ablation (shirt folding):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Model</th>
+<th>Parameters</th>
+<th>Success Rate</th>
+</tr></thead><tbody>
+<tr>
+<td>UNet</td>
+<td>93M</td>
+<td>0.17</td>
+</tr>
+<tr>
+<td>ScaleDP (medium)</td>
+<td>410M</td>
+<td>0.63</td>
+</tr>
+<tr>
+<td>ScaleDP (large)</td>
+<td>1B</td>
+<td>0.92</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Training efficiency:</strong> Training only the diffusion expert runs at 0.89 epoch/hour vs. 0.32 epoch/hour for the entire VLA (2.78x speedup).</p>
+<p class="dp-p"><strong>Zero-shot cross-embodiment transfer:</strong> Gripper-to-dexterous-hand on bin-picking achieves 60% success rate vs. 67% with the original gripper embodiment.</p>
+<ul class="dp-list">
+<li>ScaleDP-H and ScaleDP-L weights publicly released on HuggingFace</li>
+<li>Code released at <a href="https://github.com/juruobenruo/DexVLA" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Runs at <strong>60 Hz</strong> on a single NVIDIA A6000 GPU. This is one of the fastest VLA inference rates reported in the surveyed literature.</li>
+<li><strong>Deployment hardware:</strong> Single NVIDIA A6000 GPU for inference. The system achieves cost-efficient training and fast inference despite scaling the diffusion expert to 1 billion parameters.</li>
+<li><strong>Real-time capable?</strong> Yes. 60 Hz on a single A6000 GPU is sufficient for real-time dexterous manipulation control, exceeding the 10--30 Hz control frequencies typical of most VLA-based systems.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Cross-embodiment training data covering single-arm, bimanual, and dexterous hand robots. No single named benchmark; uses a combination of data sources.</li>
+<li><strong>Collection method:</strong> Cross-embodiment data collection. Specific collection methodology (teleoperation device, simulation, etc.) is not detailed in public materials. The project page references cross-embodiment learning.</li>
+<li><strong>Data scale:</strong> Not reported in available abstracts. The paper should be consulted for dataset size per embodiment.</li>
+<li><strong>Teleop equipment:</strong> Not reported.</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> ScaleDP-H and ScaleDP-L weights publicly released on HuggingFace. Code at <a href="https://github.com/juruobenruo/DexVLA" target="_blank" rel="noopener">GitHub</a>. Whether training data is released is not confirmed.</li>
+</ul>
+<blockquote class="dp-quote">*Dataset details partially from training knowledge -- the project page (dex-vla.github.io) was not accessible at time of review.*</blockquote>

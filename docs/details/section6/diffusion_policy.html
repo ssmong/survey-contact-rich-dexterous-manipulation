@@ -1,0 +1,56 @@
+<h3 class="dp-h3">Diffusion Policy: Visuomotor Policy Learning via Action Diffusion</h3>
+<p class="dp-p"><strong>Full title:</strong> Diffusion Policy: Visuomotor Policy Learning via Action Diffusion</p>
+<p class="dp-p"><strong>Authors:</strong> Cheng Chi, Siyuan Feng, Yilun Du, Zhenjia Xu, Eric Cousineau, Benjamin Burchfiel, Shuran Song (Columbia University)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2023</p>
+<p class="dp-p"><strong>Architecture:</strong> Diffusion Policy adapts denoising diffusion probabilistic models (DDPMs) to robot action generation. Two architecture variants are proposed: (1) a CNN-based variant using 1D temporal convolutions (similar to a 1D U-Net) over the action sequence, and (2) a transformer-based variant where a transformer decoder attends to observation features and denoises action tokens. Both take visual observations (from ResNet or ViT encoders) as conditioning input. The model is lightweight: the CNN variant has ~25M parameters; the transformer variant ~40M.</p>
+<p class="dp-p"><strong>Action space:</strong> Continuous, variable dimensionality. Typically 2D (planar pushing) to 7D (6-DoF EEF + gripper). The key innovation is "action chunking" --- predicting a chunk of T future actions (typically T=8-16) in a single denoising pass, then executing only the first few steps before replanning. This temporal action abstraction enables smooth, temporally coherent behavior.</p>
+<p class="dp-p"><strong>Dex hand support?</strong> ✗ --- Designed and evaluated for gripper-based manipulation. However, the continuous action space and action chunking framework have been adopted by subsequent dexterous hand policies (DP3, iDP3).</p>
+<p class="dp-p"><strong>Force/impedance output?</strong> ✗ --- Position targets only. Subsequent works (TacDiffusion, Reactive Diffusion Policy) have extended the diffusion framework to force-domain outputs.</p>
+<p class="dp-p"><strong>Key methodology:</strong> Diffusion Policy treats visuomotor policy learning as a conditional denoising problem: given visual observations, the policy iteratively denoises a random noise vector into a coherent action trajectory. This formulation naturally handles multi-modality in the action distribution (e.g., reaching around an obstacle from the left or right), which is a key failure mode of MSE-based behavioral cloning. The action chunking mechanism generates temporally coherent action sequences, avoiding the jittery behavior of single-step policies. The denoising process uses DDPM with 10-100 diffusion steps during inference, with DDIM acceleration reducing this to 5-10 steps.</p>
+<p class="dp-p"><strong>Training data:</strong> Trained from scratch on task-specific demonstration datasets. The original paper uses Push-T (200 episodes), robomimic tasks, and real-robot tabletop manipulation demonstrations. Typically requires 50-500 demonstrations per task.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Introduced diffusion models to robot action generation, establishing a new paradigm for visuomotor policy learning that naturally handles multi-modal action distributions.</li>
+<li>Proposed action chunking for diffusion policies, enabling temporally coherent behavior and stable closed-loop control.</li>
+<li>Demonstrated that diffusion policies significantly outperform behavioral cloning, energy-based models, and single-step policies on both simulated and real manipulation tasks.</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>Diffusion Policy (CNN)</th>
+<th>Diffusion Policy (Transformer)</th>
+<th>BC Baseline</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>*(Consult the RSS 2023 paper for per-task results on Push-T, robomimic, and real-robot benchmarks. The paper reports significant improvements over behavioral cloning and energy-based model baselines.)*</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Multi-step denoising introduces inference latency (10-100ms per action chunk depending on the number of diffusion steps), which may be problematic for high-frequency dexterous control.</li>
+<li>No language conditioning in the base model (task-specific training only).</li>
+<li>Requires task-specific training from scratch; no cross-task or cross-embodiment generalization in the original formulation.</li>
+<li>No force/compliance awareness.</li>
+</ul>
+<p class="dp-p"><strong>Open weights/code:</strong> ✅ Code: <a href="https://github.com/real-stanford/diffusion_policy" target="_blank" rel="noopener">GitHub</a>. ✗ No pre-trained weights (each task requires training from scratch).</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> 10-100ms per action chunk depending on diffusion steps. With DDIM acceleration (5-10 steps instead of 100), the CNN variant (~25M parameters) achieves ~10-20 Hz on a desktop GPU (RTX 3090 class). The transformer variant (~40M parameters) is slightly slower. Action chunking (predicting 8-16 future steps) reduces the effective inference frequency requirement.</li>
+<li><strong>Deployment hardware:</strong> Desktop GPU (NVIDIA RTX 3090/4090 or similar) for real-time inference. The lightweight model size (25-40M parameters) enables deployment on consumer hardware. No edge device (Jetson) benchmarks reported, but the small model size suggests feasibility.</li>
+<li><strong>Real-time capable?</strong> Yes, with DDIM acceleration. At 10-20 Hz with 5-10 denoising steps, Diffusion Policy supports real-time control for typical manipulation tasks. With full 100-step DDPM, inference is too slow (~1-5 Hz). Action chunking further reduces the required inference frequency.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Task-specific demonstration datasets. Push-T (200 episodes), robomimic benchmark tasks (lift, can, square, transport), and custom real-robot tabletop manipulation demonstrations.</li>
+<li><strong>Collection method:</strong> Human demonstrations via teleoperation or scripted policies. Push-T: scripted. Robomimic: human teleop (SpaceMouse). Real-robot: SpaceMouse/keyboard teleoperation on UR5 or Franka.</li>
+<li><strong>Data scale:</strong> 50-500 demonstrations per task. Push-T: 200 episodes. Robomimic: standard dataset sizes (200-300 episodes per task). Task-specific training from scratch (no cross-task pretraining).</li>
+<li><strong>Teleop equipment:</strong> SpaceMouse and keyboard for real-robot demonstrations. Robomimic uses its standard proficient human (PH) and multi-human (MH) demonstration sets.</li>
+<li><strong>Data format:</strong> HDF5 (robomimic format) and zarr (Diffusion Policy native format).</li>
+<li><strong>Publicly available?</strong> Yes. Push-T and robomimic datasets are publicly available. Diffusion Policy code at https://github.com/real-stanford/diffusion_policy.</li>
+</ul>
+<hr>

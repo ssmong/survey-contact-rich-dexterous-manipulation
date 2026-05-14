@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.2 DexHandDiff</h3>
+<p class="dp-p"><strong>Full title:</strong> DexHandDiff: Interaction-Aware Diffusion Planning for Adaptive Dexterous Manipulation</p>
+<p class="dp-p"><strong>Authors:</strong> Zixuan Liang, Xinyu Zhan, Yisi Hu, Zhehao Cai, Jian Tang, Jianqiang Wang</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CVPR 2025</p>
+<p class="dp-p"><strong>RL algorithm:</strong> Diffusion-based planning (denoising diffusion for trajectory generation); not standard RL but generates full manipulation trajectories via conditional diffusion</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Shadow Hand (24 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> Adroit (MuJoCo-based benchmark)</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No (simulation benchmark evaluation)</p>
+<p class="dp-p"><strong>Object count:</strong> Standard Adroit benchmark objects (pen, door, hammer, ball, etc.)</p>
+<p class="dp-p"><strong>Tasks:</strong> In-hand pen rotation, door opening, hammer use, ball relocation -- the standard Adroit benchmark suite plus additional manipulation tasks</p>
+<p class="dp-p"><strong>Key methodology:</strong> Uses a conditional diffusion model to generate full manipulation trajectories (sequence of hand joint configurations) conditioned on the current state and goal. The key innovation is interaction-aware denoising: the diffusion process incorporates predicted contact information to guide trajectory generation toward physically plausible contact-rich motions. This avoids the myopic behavior of single-step RL policies by planning entire trajectories.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Interaction-aware diffusion planning that incorporates contact prediction into trajectory generation</li>
+<li>Full-trajectory planning for dexterous manipulation (vs. single-step policy output)</li>
+<li>State-of-the-art results on Adroit benchmark tasks, outperforming prior RL and imitation learning methods</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Simulation-only (Adroit benchmark); computational cost of diffusion planning may limit real-time deployment; evaluated on Shadow Hand in MuJoCo only; no real-world validation; limited to the standard Adroit task set</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Diffusion-based trajectory planning requires multiple denoising steps (50-500ms per trajectory on a modern GPU). Not designed for real-time step-by-step control.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (Adroit/MuJoCo). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Limited. Diffusion planning generates full trajectories offline; real-time replanning would require fast denoising (DDIM acceleration) or caching.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Adroit benchmark demonstration data (MuJoCo) for training the diffusion-based trajectory planner.</li>
+<li><strong>Collection method:</strong> Diffusion-based planning -- not standard RL. Conditional diffusion model generates full manipulation trajectories from state+goal. Trained on demonstration trajectories from the Adroit benchmark suite. Interaction-aware denoising incorporates predicted contact information.</li>
+<li><strong>Data scale:</strong> Standard Adroit benchmark demonstration sets (pen, door, hammer, ball tasks). Specific episode counts per task follow Adroit conventions.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (Adroit demonstrations are pre-collected scripted/expert data).</li>
+<li><strong>Data format:</strong> Adroit benchmark format (MuJoCo state trajectories).</li>
+<li><strong>Publicly available?</strong> Adroit benchmark is publicly available. DexHandDiff code release status not reported.</li>
+</ul>

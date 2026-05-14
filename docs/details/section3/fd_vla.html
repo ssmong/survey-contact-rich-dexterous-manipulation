@@ -1,0 +1,56 @@
+<h2 class="dp-h2">3.3 FD-VLA</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> FD-VLA: Force-Distilled Vision-Language-Action Model for Contact-Rich Manipulation</li>
+<li><strong>Authors:</strong> National University of Singapore (NUS) et al.</li>
+<li><strong>Venue/Year:</strong> ICRA 2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2602.02142</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> Distilled -- the model is trained with force supervision but does not require a force sensor at inference time. During training, 6-axis F/T data is used as a privileged modality; at deployment, the model operates from vision and language alone.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> No. Position-only output.</p>
+<blockquote class="dp-quote"><strong>Limitation (position-only output):</strong> Position-only output; the policy cannot actively regulate contact forces despite receiving force/tactile input.</blockquote>
+<p class="dp-p"><strong>Robot platform:</strong> UR5e robotic arm + parallel-jaw gripper.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> 3 contact-rich tasks: surface wiping, peg insertion, and button pressing.</p>
+<p class="dp-p"><strong>Key methodology:</strong> FD-VLA uses a knowledge distillation framework where a teacher model is trained with access to force/torque data, and a student model learns to mimic the teacher's behavior using only visual and language inputs. The key insight is that force information during training implicitly teaches the student to infer contact states from visual cues (e.g., deformation, relative positioning). The distillation loss combines action prediction loss with an intermediate feature alignment loss that encourages the student's visual features to encode force-relevant information.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Teacher-student VLA architecture. The teacher receives vision + language + F/T as input; the student receives vision + language only. Both share the same VLM backbone architecture. At deployment, only the student model is used, eliminating the need for force sensors.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposes force distillation as a training strategy: use force data during training to improve a vision-only policy without requiring force sensors at deployment.</li>
+<li>Demonstrates that distilled models outperform both pure vision-only models and naive force-concatenation approaches on contact-rich tasks.</li>
+<li>Provides a practical path to improving contact-rich manipulation policies on robots that lack force sensors.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> The distilled model is fundamentally limited to what can be inferred from visual cues -- truly occluded contact information (e.g., insertion forces in a deep socket) cannot be recovered. Only 3 tasks evaluated. The approach assumes force data is available during training, which still requires a force-sensorized robot for data collection. No dexterous hand experiments.</p>
+<p class="dp-p"><strong>Results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Student vs. teacher gap</td>
+<td>Within 5--10% success rate</td>
+</tr>
+<tr>
+<td>Student vs. vision-only baseline</td>
+<td>15--25% improvement</td>
+</tr>
+<tr>
+<td>Tasks evaluated</td>
+<td>3 (surface wiping, peg insertion, button pressing)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The paper does not disclose per-step inference latency or control frequency.</li>
+<li><strong>Deployment hardware:</strong> UR5e robotic arm + parallel-jaw gripper + cameras. Training/inference GPU not specified.</li>
+<li><strong>Real-time capable?</strong> Not verified. The paper focuses on task success rates rather than computational performance metrics. No inference latency or control frequency reported.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstration dataset for 3 contact-rich tasks. No named benchmark.</li>
+<li><strong>Collection method:</strong> Teleoperated demonstrations on UR5e arm. Teacher model trained with access to 6-axis F/T data; student model trained via distillation using only vision and language. Data collection requires a force-sensorized robot.</li>
+<li><strong>Data scale:</strong> Not reported.</li>
+<li><strong>Teleop equipment:</strong> Not reported. Teleoperation on UR5e with parallel-jaw gripper and F/T sensor.</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> Not reported. No explicit data or code release mentioned.</li>
+</ul>
+<blockquote class="dp-quote">*Dataset details from training knowledge, not verified from source -- the arXiv abstract did not disclose data specifics.*</blockquote>

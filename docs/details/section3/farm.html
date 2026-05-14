@@ -1,0 +1,38 @@
+<h2 class="dp-h2">3.19 FARM</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> FARM: Force-Aware Robotic Manipulation with Tactile Feedback</li>
+<li><strong>Authors:</strong> TU Munich MIRMI et al.</li>
+<li><strong>Venue/Year:</strong> arXiv preprint, 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2510.13324</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> GelSight Mini vision-based tactile sensor integrated into a modified UMI gripper.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> Yes -- grip force prediction. The model jointly predicts end-effector position and grip force, enabling closed-loop grip force control based on tactile feedback. <strong>Force output type: partial (grip force only, not full 6D wrench).</strong></p>
+<p class="dp-p"><strong>Robot platform:</strong> Modified UMI (Universal Manipulation Interface) gripper with integrated GelSight Mini tactile sensors.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> Manipulation tasks requiring coordinated position and grip force control. The model jointly predicts joint position and grip force trajectories.</p>
+<p class="dp-p"><strong>Key methodology:</strong> FARM integrates GelSight Mini tactile sensors into the UMI gripper and learns a policy that jointly predicts position and grip force. The GelSight images are processed through a CNN encoder that extracts contact features (pressure distribution, slip detection, surface texture). These features condition a policy that outputs both joint position trajectories and grip force targets. The grip force prediction is particularly important for tasks involving fragile or deformable objects where excessive grip force can cause damage. The approach extends the UMI framework (which typically provides position-only trajectories from human demonstrations) with force awareness.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Policy model with GelSight CNN encoder, outputting joint position + grip force trajectories. Extends the UMI data collection and policy framework with tactile sensing and force prediction.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Extends the popular UMI manipulation framework with tactile sensing (GelSight Mini) and grip force prediction.</li>
+<li>Demonstrates that joint position + force prediction improves manipulation of force-sensitive objects compared to position-only UMI policies.</li>
+<li>Provides a practical integration of vision-based tactile sensing into an existing, widely-used manipulation framework (UMI).</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> No code or weights released. The grip force prediction is limited to the gripper's closing force -- it does not provide full 6D wrench control. The modified UMI gripper design may not be compatible with standard UMI hardware. Limited evaluation scope.</p>
+<p class="dp-p"><strong>Results:</strong></p>
+<blockquote class="dp-quote"><strong>Quantitative results: not available.</strong> Specific success rates or numerical comparisons could not be verified from publicly available information. The paper reports improved manipulation performance on force-sensitive tasks compared to standard UMI (position-only), and that grip force prediction enables handling fragile objects that standard UMI policies damage.</blockquote>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Diffusion policy runs at <strong>7 Hz</strong> (~143 ms between high-level action predictions). The lower-level force controller operates at 25 Hz (synchronized with GelSight Mini image acquisition), and the gripper actuator operates at ~50 Hz.</li>
+<li><strong>Deployment hardware:</strong> Franka Research 3 robot + Actuated UMI gripper with integrated GelSight Mini tactile sensors. GPU for inference not specified.</li>
+<li><strong>Real-time capable?</strong> Yes, through hierarchical control. The 7 Hz policy provides targets that faster lower-level controllers execute at 25--50 Hz, bridging the gap between "high-level action selection and real-time motor actuation."</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstration dataset collected via a modified UMI gripper with integrated GelSight Mini tactile sensor. No named benchmark.</li>
+<li><strong>Collection method:</strong> Human demonstrations collected using a modified handheld Universal Manipulation Interface (UMI) gripper that integrates a GelSight Mini visual tactile sensor. The demonstrations capture both position trajectories and tactile contact information.</li>
+<li><strong>Data scale:</strong> Not reported.</li>
+<li><strong>Teleop equipment:</strong> Modified UMI handheld gripper with integrated GelSight Mini visual tactile sensor. The GelSight Mini provides contact images during demonstrations.</li>
+<li><strong>Data format:</strong> Not reported. Follows the UMI framework extended with tactile data.</li>
+<li><strong>Publicly available?</strong> Codebase and design files open-sourced at <a href="https://tactile-farm.github.io" target="_blank" rel="noopener">tactile-farm.github.io</a>. Whether the demonstration dataset itself is publicly released is not confirmed. No pretrained weights released.</li>
+</ul>

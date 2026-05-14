@@ -1,0 +1,55 @@
+### CogACT: A Foundational Vision-Language-Action Model for Synergizing Cognition and Action in Robotic Manipulation
+
+**Full title:** CogACT: A Foundational Vision-Language-Action Model for Synergizing Cognition and Action in Robotic Manipulation
+
+**Authors:** Qixiu Li, Yaobo Liang, Zeyu Wang, Lin Luo, Xi Chen, Mozheng Liao, Fangyun Wei, Yu Deng, Sicheng Xu, Yizhong Zhang, Xiaofan Wang, Bei Liu, Jianlong Fu, Jianmin Bao, Dong Chen, Yuanchun Shi, Jiaolong Yang, Baining Guo (Microsoft Research)
+
+**Venue/Year:** arXiv 2024
+
+**Architecture:** CogACT separates the VLA into explicit cognition and action stages. The cognition module is a VLM (InternVL2 based on InternViT-300M + InternLM2-1.8B) that processes visual observations and language instructions to produce a latent "cognitive plan." The action module is a diffusion-based decoder that translates the cognitive plan into continuous robot actions. This separation allows each module to be optimized independently and enables iterative refinement of the action generation.
+
+**Action space:** 7D (6-DoF EEF delta + gripper), generated as continuous values via diffusion decoding with action chunking.
+
+**Dex hand support?** ✗ --- Gripper-only evaluation.
+
+**Force/impedance output?** ✗ --- Position targets only.
+
+**Key methodology:** CogACT argues that existing VLAs conflate two fundamentally different tasks --- semantic understanding and precise motor control --- in a single autoregressive decoding process, which degrades both. By explicitly separating cognition (VLM reasoning) from action (diffusion generation), each module can use the architecture best suited to its task. The cognitive plan serves as a compressed, semantically rich conditioning signal for the diffusion action head, avoiding the information bottleneck of tokenized actions.
+
+**Training data:** Pretrained on OXE cross-embodiment data. Fine-tuned on SimplerEnv and real-robot manipulation tasks.
+
+**Main contributions:**
+- Proposed explicit cognition-action separation *within a single end-to-end VLA architecture*, with a VLM generating a latent plan and a diffusion head generating precise actions. (Note: prior work such as SayCan separated reasoning from action execution differently --- at the system level, with a language model selecting from a fixed set of pre-trained skills. CogACT's contribution is integrating both stages into a single differentiable architecture where the cognitive plan is a learned latent representation, not a discrete skill selection.)
+- Demonstrated that this separation improves both language understanding and action precision compared to monolithic VLAs.
+- Achieved highest reported results on SimplerEnv benchmarks at the time of publication.
+
+**Quantitative results:**
+
+| Benchmark / Task | CogACT | OpenVLA | RT-2-X | Notes |
+|---|---|---|---|---|
+| *(Consult the arXiv paper for per-task results on SimplerEnv and real-robot evaluations. The paper reports highest reported SimplerEnv performance at time of publication.)* | | | | |
+
+**Limitations/Gaps:**
+- Two-stage architecture increases overall model complexity and may introduce latency between cognition and action.
+- Only evaluated on gripper-based systems with 7D actions.
+- No force/compliance awareness.
+- Pre-trained weights not publicly released.
+
+**Open weights/code:** ✅ Code: [GitHub](https://github.com/microsoft/CogACT). ✗ Model weights not publicly available.
+
+## Inference / Deployment
+
+- **Inference latency:** Not explicitly benchmarked. The two-stage architecture (VLM cognition + diffusion action) introduces latency from both stages: the InternVL2 VLM (~2B parameters) processes visual/language input, then the diffusion decoder generates actions over multiple denoising steps. Estimated ~5-15 Hz depending on diffusion steps and hardware.
+- **Deployment hardware:** Not reported. The ~2B parameter VLM backbone requires a GPU for real-time inference (e.g., A100 or RTX 4090 class).
+- **Real-time capable?** Limited. The two-stage pipeline adds latency compared to monolithic VLAs. The diffusion action head requires multiple denoising steps. Suitable for moderate-speed manipulation but may be too slow for high-frequency dexterous control.
+
+## Dataset / Data Collection
+
+- **Dataset used:** Open X-Embodiment (OXE) for cross-embodiment pretraining. Fine-tuned on SimplerEnv and real-robot manipulation tasks.
+- **Collection method:** Aggregated cross-embodiment data from OXE. Fine-tuning demonstrations from standard manipulation benchmarks.
+- **Data scale:** OXE pretraining scale (comparable to OpenVLA). Fine-tuning task-specific demonstration counts not reported.
+- **Teleop equipment:** Varies by OXE constituent dataset.
+- **Data format:** RLDS (OXE standard).
+- **Publicly available?** OXE data is public. CogACT model weights are not released.
+
+---

@@ -1,0 +1,77 @@
+<p class="dp-p"># 11.8 XHand / Inspire Hand</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> XHand (also marketed as X-Hand) and Inspire Hand (also known as Inspire-Robots Dexterous Hand)</li>
+<li><strong>Manufacturer:</strong> Chinese robotics manufacturers (Inspire-Robots for Inspire Hand; various manufacturers for XHand variants)</li>
+<li><strong>Year:</strong> Available from ~2023 onward; increasingly adopted in research from 2024-2025</li>
+<li><strong>DoF:</strong> Inspire Hand: ~12 actuated (5 fingers, independent flexion/extension + some abduction/adduction); XHand: ~12-16 DoF (varies by version)</li>
+<li><strong>Cost:</strong> Significantly lower than Western-manufactured alternatives (estimated $1,000-3,000 range; specific pricing varies by supplier and configuration)</li>
+<li><strong>Tactile sensing:</strong> None standard (some versions support optional tactile modules)</li>
+<li><strong>Actuation:</strong> DC motors with gear reduction; position-controlled</li>
+</ul>
+<h2 class="dp-h2">Quantitative specs</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Spec</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Fingers</td>
+<td>5 (anthropomorphic layout)</td>
+</tr>
+<tr>
+<td>Actuated DoF (Inspire)</td>
+<td>~12 (independent finger flexion + thumb opposition)</td>
+</tr>
+<tr>
+<td>Actuated DoF (XHand)</td>
+<td>~12-16 (version-dependent)</td>
+</tr>
+<tr>
+<td>Weight</td>
+<td>~500-800g (varies by version)</td>
+</tr>
+<tr>
+<td>Grip force</td>
+<td>Moderate (sufficient for typical manipulation tasks)</td>
+</tr>
+<tr>
+<td>Control interface</td>
+<td>Serial/CAN bus; ROS driver available for some versions</td>
+</tr>
+<tr>
+<td>Sim model</td>
+<td>MuJoCo, IsaacGym (community-contributed URDFs)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">The XHand and Inspire Hand are Chinese-manufactured dexterous hands that have gained significant traction in the robotics research community due to their combination of reasonable cost, adequate DoF, and commercial availability. Unlike the open-source research hands (LEAP, ORCA, ISyHand, RUKA, FAIVE), these are commercially produced products with professional-grade construction. They fill a practical niche: more affordable than Shadow Hand (~$100K+) or Allegro Hand (~$15K+), commercially available without assembly, and with enough DoF (12-16) for meaningful dexterous manipulation research. The Inspire Hand and XHand are sometimes used interchangeably in the literature, though they come from different manufacturers and have distinct specifications.</p>
+<h2 class="dp-h2">Usage in surveyed works</h2>
+<p class="dp-p">These hands appear frequently across the survey, despite having no dedicated hardware entry until now:</p>
+<ul class="dp-list">
+<li><strong>DexMachina</strong> (§1): Inspire Hand and XHand both used as target embodiments for bimanual manipulation</li>
+<li><strong>ManipTrans</strong> (§1): Inspire Hand and XHand among 6 supported hands for cross-embodiment motion transfer</li>
+<li><strong>DexUMI</strong> (§1): XHand and Inspire Hand used for real-world dexterous manipulation (CoRL 2025 Best Paper Finalist)</li>
+<li><strong>UniDex-VLA</strong> (§2): both Inspire and XHand included in the 8-hand FAAS framework</li>
+<li><strong>iDP3</strong> (§6): Inspire Hand (25 DoF configuration) on Fourier GR1 humanoid</li>
+<li><strong>Dex1B</strong> (§8): Inspire Hand included in the 1B-demo dataset</li>
+</ul>
+<h2 class="dp-h2">Main contributions (as research platforms)</h2>
+<ul class="dp-list">
+<li>Among the most frequently adopted commercially available dexterous hands in recent research, particularly in the Chinese robotics community</li>
+<li>Cost-effective alternative to Shadow/Allegro for labs needing multi-finger manipulation hardware</li>
+<li>Proven cross-embodiment compatibility: successfully integrated into retargeting frameworks (ManipTrans, UniDex-VLA FAAS) alongside Shadow, Allegro, and LEAP</li>
+<li>Commercial availability eliminates assembly time and calibration effort</li>
+<li>Growing ecosystem of community-contributed URDF/MJCF models for simulation</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Specifications inconsistently reported across papers: DoF counts vary (12 to 25 reported for "Inspire Hand" depending on how passive joints are counted), making direct comparison difficult</li>
+<li>No standardized sim model: URDF/MJCF files are community-contributed and may not match actual hardware precisely</li>
+<li>Closed-source hardware: no CAD files or firmware modification possible</li>
+<li>No integrated tactile sensing in standard configurations</li>
+<li>Documentation and support primarily in Chinese; English documentation may be limited</li>
+<li>Multiple manufacturers and versions create confusion: "XHand" and "Inspire Hand" are sometimes conflated despite being different products</li>
+<li>Build quality and consistency may vary between production batches and suppliers</li>
+<li>Limited independent benchmarking of actuator specs (bandwidth, force, repeatability)</li>
+</ul>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Closed-source commercial products. Inspire Hand available from <a href="https://www.inspire-robots.com/" target="_blank" rel="noopener">inspire-robots.com</a>. XHand available from various Chinese robotics suppliers. Community-contributed URDF models available in some research repositories (ManipTrans, DexMachina).</p>

@@ -1,0 +1,51 @@
+<h2 class="dp-h2">3.8 Tactile-VLA</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Tactile-VLA: Tactile Vision-Language-Action Model with Hybrid Position-Force Control</li>
+<li><strong>Authors:</strong> Tsinghua University et al.</li>
+<li><strong>Venue/Year:</strong> arXiv preprint, 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2507.09160</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> Tactile sensors (specific type not detailed in the survey table).</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> Yes -- hybrid position-force output. The model generates both position targets and force targets, which are executed through a hybrid position-force controller. <strong>Force output type: partial (hybrid pos-force, not full 6D wrench).</strong></p>
+<p class="dp-p"><strong>Robot platform:</strong> Not specified in detail.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> Charger insertion as the primary evaluation task. Achieves 90% success rate.</p>
+<p class="dp-p"><strong>Key methodology:</strong> Tactile-VLA integrates tactile input into a VLA framework and extends the action space to include both position and force targets. The hybrid output enables the robot to switch between position control (for free-space motion) and force control (for contact phases) based on the inferred task phase. The tactile input provides rich contact information that helps the model determine when to transition between control modes and what force targets to command during contact.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> VLA with tactile encoder and hybrid position-force action head. The action space includes both Cartesian position targets and desired contact forces.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>One of the few VLA models to output hybrid position-force actions, enabling active force regulation during contact.</li>
+<li>Demonstrates that combining tactile input with hybrid force-position output achieves high success rates on precision insertion tasks (90% on charger insertion).</li>
+<li>Proposes an integrated approach where the VLA itself determines when to use position vs. force control based on tactile feedback.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> No code or weights released. Robot platform details are underspecified. Evaluated primarily on a single task (charger insertion). The hybrid controller design and force target calibration likely require per-task tuning.</p>
+<p class="dp-p"><strong>Results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Charger insertion success rate</td>
+<td>90%</td>
+</tr>
+<tr>
+<td>vs. position-only baselines</td>
+<td>Hybrid position-force output outperforms position-only</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The paper does not disclose per-step inference latency, control frequency, or deployment hardware.</li>
+<li><strong>Deployment hardware:</strong> Not specified. Robot platform details are underspecified in available materials.</li>
+<li><strong>Real-time capable?</strong> Not verified. Inference latency and deployment hardware not reported.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstration dataset for charger insertion task. No named benchmark. The paper uses "few demonstrations" to connect VLM knowledge to robot tactile sensors.</li>
+<li><strong>Collection method:</strong> Teleoperated demonstrations with tactile sensor input. Specific collection details not reported.</li>
+<li><strong>Data scale:</strong> Few demonstrations (exact count not reported).</li>
+<li><strong>Teleop equipment:</strong> Not reported.</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> No. No code or weights released.</li>
+</ul>
+<blockquote class="dp-quote">*Dataset details from training knowledge, not verified from source -- the arXiv abstract did not disclose data specifics.*</blockquote>

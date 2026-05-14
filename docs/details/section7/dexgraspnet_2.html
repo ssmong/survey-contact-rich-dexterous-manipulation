@@ -1,0 +1,56 @@
+<h3 class="dp-h3">7.1 DexGraspNet 2.0</h3>
+<p class="dp-p"><strong>Full title:</strong> DexGraspNet 2.0: Learning Generative Dexterous Grasping in Large-scale Synthetic Cluttered Scenes</p>
+<p class="dp-p"><strong>Authors:</strong> Jiayi Chen, Yuxing Chen, Jialiang Zhang, Yinzhen Xu, Weikang Wan, He Wang</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CoRL 2024</p>
+<p class="dp-p"><strong>PKU-EPIC lineage:</strong> Extends DexGraspNet 1.0 from isolated object grasping to scene-aware grasping in clutter; introduces diffusion-based generation (vs optimization in BODex) and massive dataset scale (426M grasps).</p>
+<p class="dp-p"><strong>RL algorithm:</strong> Diffusion model for grasp generation; trained on massive synthetic dataset with scene-level context (clutter awareness)</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Shadow Hand (24 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes; 90.7% real-world success rate (real) on cluttered tabletop grasping</p>
+<p class="dp-p"><strong>Object count:</strong> 1319 objects; 426 million grasps in the dataset</p>
+<p class="dp-p"><strong>Tasks:</strong> Dexterous grasping in cluttered scenes with scene-aware grasp generation</p>
+<p class="dp-p"><strong>Key methodology:</strong> Extends DexGraspNet to cluttered scenes by training a diffusion model that generates grasps conditioned on both the target object and the surrounding scene context (neighboring objects, table). The 426M-grasp dataset is generated in simulation with procedural clutter layouts. Scene-level conditioning enables collision-aware grasp generation that avoids neighboring objects.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>First large-scale dexterous grasping dataset with clutter context (426M grasps)</li>
+<li>Scene-aware diffusion model that generates collision-free grasps in cluttered environments</li>
+<li>90.7% sim-to-real success rate (real), demonstrating practical deployment of diffusion-based grasp generation</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Real-world success rate</td>
+<td>90.7% (real)</td>
+</tr>
+<tr>
+<td>Dataset size</td>
+<td>426M grasps</td>
+</tr>
+<tr>
+<td>Object set size</td>
+<td>1319</td>
+</tr>
+<tr>
+<td>Hand</td>
+<td>Shadow (24 DoF)</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Still open-loop grasp generation (no reactive execution); relies on accurate scene reconstruction; Shadow Hand only; clutter handling is geometric (no reasoning about object semantics or task goals)</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Diffusion-based grasp generation requires multiple denoising steps. Specific latency not reported, but typical diffusion inference is 50-500ms per grasp on a modern GPU.</li>
+<li><strong>Deployment hardware:</strong> Real-world deployment on Shadow Hand demonstrated (90.7% success rate on cluttered tabletop grasping). GPU for diffusion inference not specified.</li>
+<li><strong>Real-time capable?</strong> Limited. Grasp generation is offline (diffusion sampling), but execution of generated grasps is real-time. The diffusion model generates grasp poses, not closed-loop control commands.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom large-scale synthetic cluttered-scene grasping dataset. 426 million grasps across 1,319 objects with scene-level clutter context.</li>
+<li><strong>Collection method:</strong> Procedural generation in IsaacGym simulation. Cluttered scenes created with procedural layout generation. Diffusion model trained on generated grasps conditioned on both target object and surrounding scene context.</li>
+<li><strong>Data scale:</strong> 426 million grasps, 1,319 objects. Largest scene-aware dexterous grasping dataset at time of publication.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (procedural simulation generation).</li>
+<li><strong>Data format:</strong> Object/scene point clouds + grasp poses. Specific format not reported.</li>
+<li><strong>Publicly available?</strong> Dataset release status not reported.</li>
+</ul>

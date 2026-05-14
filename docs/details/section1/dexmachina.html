@@ -1,0 +1,82 @@
+<h3 class="dp-h3">DexMachina</h3>
+<p class="dp-p"><strong>Full Title:</strong> DexMachina: Learning Dexterous Manipulation from Human Video via Retargeting and Reinforcement Learning</p>
+<p class="dp-p"><strong>Authors:</strong> Mandi Zhao et al. (Stanford / NVIDIA)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv preprint, 2025</p>
+<p class="dp-p"><strong>Hand Hardware:</strong> Six robot hands evaluated -- Inspire Hand, Allegro Hand (16 DoF), XHand, Schunk Hand, Ability Hand, and DexRobot Hand. This cross-embodiment evaluation is a distinguishing feature of the work.</p>
+<p class="dp-p"><strong>Tasks:</strong> Bimanual articulated object manipulation tasks, including manipulating objects with complex kinematic structures (e.g., opening containers, operating mechanisms). The tasks require coordinated finger motions across multiple contact points.</p>
+<p class="dp-p"><strong>Key Methodology:</strong> DexMachina learns dexterous manipulation skills from human video demonstrations. The pipeline consists of three stages: (1) extracting hand-object interaction trajectories from human videos, (2) retargeting these motions to diverse robot hand morphologies, and (3) refining the retargeted motions using reinforcement learning in simulation to produce physically feasible and robust policies. The Genesis simulator is used for physics-based training, enabling fast parallel environment rollouts.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> The system uses hand motion retargeting networks to map human MANO hand representations to various robot hand joint configurations, followed by RL policy networks (PPO-based) for refinement. Model weights are not yet publicly released (evaluation marked as TODO).</p>
+<p class="dp-p"><strong>Sim Platform:</strong> Genesis simulator. Sim-to-real transfer is not demonstrated -- the work is currently simulation-only, with the focus on the retargeting and learning pipeline across diverse hand embodiments.</p>
+<p class="dp-p"><strong>Main Contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposes a video-to-policy pipeline that eliminates the need for robot-specific demonstration collection: human video alone is sufficient to produce policies for multiple robot hands, whereas prior retargeting work required kinematic correspondence tuning per embodiment.</li>
+<li>Demonstrates cross-embodiment dexterous manipulation across 6 morphologically distinct robot hands (Inspire, Allegro, XHand, Schunk, Ability, DexRobot) from the same human video source, showing that the retargeting generalizes across DoF counts and finger configurations.</li>
+<li>Introduces an RL refinement stage that closes the gap between kinematic retargeting and physically feasible execution, improving over direct retargeting baselines that produce kinematically valid but dynamically infeasible motions.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force/impedance awareness:</strong> No. No force/torque sensing or impedance control is used. Contact forces during manipulation are determined by the simulation contact model and position-tracking behavior, not explicitly regulated. This may limit transfer to tasks requiring precise force modulation (e.g., fragile object manipulation).</li>
+<li><strong>VLA/language conditioning:</strong> No. The pipeline is vision-based (human video input) but does not use language conditioning or VLA architectures.</li>
+<li><strong>Sim-to-real:</strong> No. The work is simulation-only. Real-world deployment would require addressing the additional sim-to-real gap beyond the human-to-robot retargeting gap already addressed.</li>
+<li><strong>Code/weights availability:</strong> Model weights and evaluation benchmarks are listed as TODO. Availability is pending.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Evaluated on 7 demonstrations from the ARCTIC dataset involving 5 articulated objects, split into short-horizon (3 clips) and long-horizon (4 clips, including complex sequences like mid-air manipulation, lid opening/closing, flipping).</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric / Finding</th>
+<th>Value</th>
+<th>Context</th>
+</tr></thead><tbody>
+<tr>
+<td>Hands evaluated</td>
+<td>6</td>
+<td>Inspire, Allegro, XHand, Schunk, Ability, DexRobot</td>
+</tr>
+<tr>
+<td>ARCTIC demonstrations</td>
+<td>7</td>
+<td>3 short-horizon + 4 long-horizon clips</td>
+</tr>
+<tr>
+<td>Performance vs. baselines</td>
+<td>Consistent improvement</td>
+<td>DexMachina improves on all hands and tasks over direct retargeting</td>
+</tr>
+<tr>
+<td>Long-horizon gains</td>
+<td>Strongest</td>
+<td>Particularly large improvements on long-horizon demos</td>
+</tr>
+<tr>
+<td>Hand morphology effect</td>
+<td>Larger hands perform better</td>
+<td>Fully-actuated hands achieve higher final performance and better learning efficiency</td>
+</tr>
+<tr>
+<td>Allegro Hand</td>
+<td>Strong despite less anthropomorphic</td>
+<td>Notable performance despite morphological differences from human hand</td>
+</tr>
+<tr>
+<td>Inspire Hand</td>
+<td>Requires strategy deviation</td>
+<td>Less-actuated hands needed more deviation from human-guided strategies</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Note: Precise per-hand success rate numbers are reported in Figure 3 of the paper as bar charts rather than tabulated values.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The work is simulation-only with no real-world deployment.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (Genesis physics engine with PPO training using 12,000 parallel environments). No physical deployment hardware. The authors note "our learned RL policies have not yet been evaluated in real-world settings on the examined range of dexterous hands due to lack of hardware access."</li>
+<li><strong>Real-time capable?</strong> Not applicable (simulation-only).</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Human video demonstrations of hand-object interactions (no named benchmark dataset). The pipeline ingests in-the-wild human videos as the data source.</li>
+<li><strong>Collection method:</strong> Human video capture (passive recording of human hand manipulation). Hand-object interaction trajectories are extracted from video, retargeted to robot hand morphologies, and refined via RL in simulation. No robot teleoperation is required.</li>
+<li><strong>Data scale:</strong> Not reported. The number of human video demonstrations used is not specified in public materials.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (human video input, not teleoperation).</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> Model weights and evaluation benchmarks listed as TODO; availability is pending.</li>
+</ul>
+<blockquote class="dp-quote">*Results verified from arXiv:2505.24853. Hand count updated from 4 to 6 (adding Ability Hand and DexRobot Hand). Evaluation uses ARCTIC dataset.*</blockquote>
+<hr>

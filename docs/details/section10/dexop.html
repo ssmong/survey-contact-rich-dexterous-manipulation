@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.5 DEXOP</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> DEXOP: Dexterous Teleoperation with a Passive Exoskeleton</li>
+<li><strong>Authors:</strong> Stanford team</li>
+<li><strong>Venue/Year:</strong> arXiv 2509.04441, September 2025</li>
+<li><strong>Input modality:</strong> Passive exoskeleton worn on the operator's hand</li>
+<li><strong>Target hand:</strong> Any dexterous hand (universal retargeting)</li>
+<li><strong>Force feedback:</strong> Proprioceptive feedback through exoskeleton mechanical coupling</li>
+<li><strong>Cost:</strong> Not reported (research prototype)</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">DEXOP uses a passive (unpowered) exoskeleton that the operator wears over their hand. The exoskeleton mechanically mirrors the kinematics of the target robot hand, so the operator's finger motions directly drive the robot hand joints through a kinematic coupling. Because the exoskeleton is passive, it provides inherent proprioceptive feedback -- the operator feels the mechanical resistance of the exoskeleton structure, which approximates the robot hand's joint limits and mechanical impedance. This approach eliminates the need for electronic sensors or actuators for basic force feedback.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Passive (unpowered) exoskeleton design providing inherent proprioceptive feedback without electronics</li>
+<li>Universal retargeting to arbitrary dexterous hand platforms through modular kinematic coupling</li>
+<li>Mechanical simplicity enabling robust, low-maintenance operation</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Proprioceptive feedback reflects exoskeleton mechanics, not actual robot-environment contact forces</li>
+<li>Exoskeleton design must be customized for different robot hand kinematics</li>
+<li>No active force rendering limits the system to passive compliance feedback only</li>
+<li>Bulky form factor may fatigue operators during extended data collection sessions</li>
+</ul>
+<h2 class="dp-h2">Data quality impact</h2>
+<p class="dp-p">The passive exoskeleton provides proprioceptive feedback that helps operators respect joint limits and avoid kinematically infeasible configurations, improving positional accuracy compared to vision-only systems. However, the feedback reflects exoskeleton mechanics rather than actual robot-environment contact forces. Demonstrations capture kinematically plausible trajectories but without force information from the manipulation task itself. Policies trained on DEXOP data benefit from cleaner joint-space trajectories (fewer retargeting artifacts) but still lack force awareness for contact-rich tasks. The proprioceptive signal helps with gross motion quality but does not address the fundamental force-blindness that limits downstream policy performance on tasks requiring force regulation.</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Project page: <a href="https://dex-op.github.io/" target="_blank" rel="noopener">dex-op.github.io</a>. Hardware designs availability unclear.</p>

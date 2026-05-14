@@ -1,0 +1,66 @@
+<h3 class="dp-h3">SimToolReal</h3>
+<p class="dp-p"><strong>Full Title:</strong> From Sim to Real: A Pipeline for Training and Deploying Dexterous Tool-Use Policies</p>
+<p class="dp-p"><strong>Authors:</strong> Tyler Lum et al. (Stanford IPRL)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv preprint, 2026</p>
+<p class="dp-p"><strong>Hand Hardware:</strong> Sharpa Hand (22 DoF) mounted on a KUKA robotic arm. The Sharpa hand is a high-DoF anthropomorphic dexterous hand designed for complex manipulation tasks requiring multi-finger coordination.</p>
+<p class="dp-p"><strong>Tasks:</strong> 24 tool-use tasks evaluated, including hammer striking, screwdriver turning, spatula flipping, and other tool-mediated manipulation scenarios. The task suite is designed to cover a broad range of everyday tool-use behaviors that require coordinated finger-tool-object interactions.</p>
+<p class="dp-p"><strong>Key Methodology:</strong> SimToolReal proposes an end-to-end pipeline for training dexterous tool-use policies in simulation and deploying them on real hardware. The approach trains reinforcement learning policies in IsaacGym with domain randomization to achieve robust sim-to-real transfer. The pipeline addresses the full workflow from simulation environment design through policy training to real-world deployment on the 22-DoF Sharpa hand.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> RL policies trained with PPO in massively parallel IsaacGym environments. Policy networks are typically MLP-based with proprioceptive state inputs. Checkpoints are publicly released.</p>
+<p class="dp-p"><strong>Sim Platform:</strong> NVIDIA IsaacGym. Sim-to-real transfer is demonstrated -- policies trained entirely in simulation are deployed on real hardware without fine-tuning.</p>
+<p class="dp-p"><strong>Main Contributions:</strong></p>
+<ul class="dp-list">
+<li>First to demonstrate a complete sim-to-real pipeline for dexterous tool use at 24-task scale, prior work covered at most a handful of tool-use tasks with high-DoF hands.</li>
+<li>Provides the largest dexterous tool-use evaluation suite, spanning diverse tool categories (striking, turning, scooping, etc.), whereas prior benchmarks focused on single tool types.</li>
+<li>Open-sources code (<a href="https://github.com/tylerlum/simtoolreal" target="_blank" rel="noopener">GitHub</a>) and model checkpoints, enabling reproducibility -- most comparable works do not release trained policies.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force/impedance awareness:</strong> No. The system does not incorporate force/torque sensing or impedance control; it relies purely on position-based control targets. For tasks involving significant contact forces (hammering, prying), contact management is handled implicitly via simulation contact models and hardware compliance rather than explicit force regulation.</li>
+<li><strong>VLA/language conditioning:</strong> No. Policies are task-specific RL agents with no language or vision-language model integration.</li>
+<li><strong>Sim-to-real:</strong> Yes. Policies trained entirely in IsaacGym are deployed on real hardware without fine-tuning, using domain randomization to bridge the sim-to-real gap.</li>
+<li><strong>Code/weights availability:</strong> Code released (<a href="https://github.com/tylerlum/simtoolreal" target="_blank" rel="noopener">GitHub</a>); model checkpoints publicly available.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Evaluated across 120 real-world rollouts spanning 24 tasks, 12 object instances, and 6 tool categories (hammers, markers, erasers, brushes, spatulas, screwdrivers). The paper reports Task Progress (percentage of demonstrated goal poses tracked within epsilon=2cm tolerance) rather than binary success rates.</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+</tr></thead><tbody>
+<tr>
+<td>Improvement over baselines</td>
+<td>+37%</td>
+<td>SimToolReal vs. prior retargeting and fixed-grasp methods in task progress</td>
+</tr>
+<tr>
+<td>Real-world rollouts</td>
+<td>120</td>
+<td>Spanning 24 tasks, 12 object instances, 6 tool categories</td>
+</tr>
+<tr>
+<td>Best performance category</td>
+<td>Eraser tasks</td>
+<td>Translation-focused trajectories (highest task progress)</td>
+</tr>
+<tr>
+<td>Specialist comparison</td>
+<td>Matches</td>
+<td>SimToolReal matches specialist policies on training conditions while maintaining robustness under trajectory variations</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Per-tool-category results (from paper figures): eraser and marker tasks achieve highest task progress; hammer, brush, spatula, and screwdriver tasks (requiring in-hand rotations) show moderate but successful performance. Kinematic retargeting baseline failed to grasp in most cases. Fixed-grasp baseline degraded on rotation-required tasks.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported. The paper mentions 30 Hz object pose tracking during real-world inference and domain randomization over observation delays and action-execution latency during training, but does not quantify per-step policy inference time.</li>
+<li><strong>Deployment hardware:</strong> KUKA arm + Sharpa Hand (22 DoF) + ZED stereo camera for real-world deployment. GPU model used for policy inference not reported.</li>
+<li><strong>Real-time capable?</strong> Likely yes for RL-based MLP policies (typically sub-millisecond inference), but specific control frequency not reported. The 30 Hz pose estimation suggests the control loop runs at or below 30 Hz.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> DexToolBench (custom benchmark created for this work), covering 6 tool categories: hammers, markers, erasers, brushes, spatulas, and screwdrivers, with multiple object instances and task variants per category.</li>
+<li><strong>Collection method:</strong> RL simulation rollout in IsaacGym. Real-world RGB-D demonstrations captured via ZED camera (processed through SAM 2, SAM 3D for mesh extraction, FoundationPose for 6D pose estimation) are used to define task trajectories, which are converted to JSON pose files for simulation training.</li>
+<li><strong>Data scale:</strong> Not explicitly reported (organized hierarchically per object category / object / task).</li>
+<li><strong>Teleop equipment:</strong> Not applicable (RL-trained in simulation; real demonstrations captured via passive RGB-D recording, not teleoperation).</li>
+<li><strong>Data format:</strong> RGB images, depth images, object masks, camera intrinsics (cam_K.txt), poses in robot frame (poses.json), organized in per-task directories.</li>
+<li><strong>Publicly available?</strong> Yes. Benchmark data downloadable via <code>download_dextoolbench_data.py</code>; pretrained policy checkpoints via <code>download_pretrained_policy.py</code> (<a href="https://github.com/tylerlum/simtoolreal" target="_blank" rel="noopener">GitHub</a>).</li>
+</ul>
+<hr>

@@ -1,0 +1,94 @@
+<h3 class="dp-h3">DexterityGen</h3>
+<p class="dp-p"><strong>Full Title:</strong> DexterityGen: Foundation Controller for Unprecedented Dexterity</p>
+<p class="dp-p"><strong>Authors:</strong> Researchers from UC Berkeley / Meta et al.</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2025</p>
+<p class="dp-p"><strong>Hand Hardware:</strong> Allegro Hand (16 DoF) mounted on a robotic arm. The Allegro is used as the primary evaluation platform for tool-use dexterity.</p>
+<p class="dp-p"><strong>Tasks:</strong> Dexterous tool-use tasks including pen manipulation (writing/drawing), screwdriver operation, and syringe handling. These tasks require precise fingertip control and coordinated multi-finger motions for tool-mediated actions.</p>
+<p class="dp-p"><strong>Key Methodology:</strong> DexterityGen trains a foundation controller (3 tools demonstrated) for dexterous manipulation that generalizes across tool-use tasks. The approach uses reinforcement learning in IsaacGym to develop a general-purpose dexterous controller that can be adapted to specific tool-use scenarios. The foundation controller concept aims to provide a base policy with sufficient finger coordination skills that can be quickly specialized for new tools and tasks, reducing the per-task training burden.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> RL-based policy trained in IsaacGym with massively parallel environments. The foundation controller architecture enables transfer to new tool-use tasks. No public code or weights are released.</p>
+<p class="dp-p"><strong>Sim Platform:</strong> NVIDIA IsaacGym. Sim-to-real transfer is demonstrated -- the paper shows successful real-world deployment of policies trained in simulation.</p>
+<p class="dp-p"><strong>Main Contributions:</strong></p>
+<ul class="dp-list">
+<li>Introduces a "foundation controller" concept (3 tools demonstrated: pen, screwdriver, syringe) that provides a reusable base policy transferable across tool-use tasks, reducing per-task training time compared to training each tool-use policy from scratch.</li>
+<li>Demonstrates dexterous tool use on the Allegro hand requiring precise and varied fingertip control strategies -- pen writing requires fine tip control, screwdriver turning requires torque-generating finger coordination, and syringe handling requires linear push motions.</li>
+<li>Achieves sim-to-real transfer for tool-use tasks, showing that the foundation controller concept survives the sim-to-real gap on the physical Allegro hand system.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force/impedance awareness:</strong> No. No force/impedance control is used. Tool-environment contact forces (e.g., pen pressure on paper, screwdriver insertion torque) are not explicitly regulated. The system relies on learned position trajectories and implicit compliance to produce adequate contact forces, which may limit applicability to tasks requiring precise force modulation.</li>
+<li><strong>VLA/language conditioning:</strong> No. No language conditioning or VLA integration. The foundation controller is adapted to new tools via RL fine-tuning, not via language-specified task descriptions.</li>
+<li><strong>Sim-to-real:</strong> Yes. Policies trained in IsaacGym are successfully deployed on the physical Allegro hand.</li>
+<li><strong>Code/weights availability:</strong> No code or weights released.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Evaluated on atomic dexterous skills and long-horizon tool-use tasks. Raw teleoperation baseline fails completely on most tasks; DexterityGen enables both stability and success.</p>
+<p class="dp-p">Table I -- Real-world atomic skill performance (Success Rate and Time-to-Fall):</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>Metric</th>
+<th>Context</th>
+</tr></thead><tbody>
+<tr>
+<td>Reorient Large (Up/Down)</td>
+<td>SR reported</td>
+<td>Raw teleop fails; DexGen succeeds</td>
+</tr>
+<tr>
+<td>Reorient Small (Up/Down)</td>
+<td>SR reported</td>
+<td>Raw teleop fails; DexGen succeeds</td>
+</tr>
+<tr>
+<td>Functional Grasp (normal/horizontal)</td>
+<td>SR reported</td>
+<td>DexGen enables stable functional grasps</td>
+</tr>
+<tr>
+<td>Regrasp (Ball/Cylinder)</td>
+<td>SR reported</td>
+<td>DexGen enables stable regrasps</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Table II -- Long-horizon tool-use task breakdown (stage-wise success, N=20 trials each):</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>Reorient</th>
+<th>Regrasp</th>
+<th>Align</th>
+<th>Use</th>
+<th>Context</th>
+</tr></thead><tbody>
+<tr>
+<td>Screwdriver</td>
+<td>16/20 (80%)</td>
+<td>11/20 (55%)</td>
+<td>5/20 (25%)</td>
+<td>3/20 (15%)</td>
+<td>Sequential stages; each requires prior stage success</td>
+</tr>
+<tr>
+<td>Syringe</td>
+<td>15/20 (75%)</td>
+<td>9/20 (45%)</td>
+<td>--</td>
+<td>4/20 (20%)</td>
+<td>Three-stage pipeline</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Long-horizon success drops at each stage due to sequential chaining difficulty. The foundation controller provides reusable dexterous primitives that generalize across tool types.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> ~27 ms per inference cycle (37 Hz) on NVIDIA RTX 4090. Tested with both 8 and 12 DDIM sampling steps, with a trade-off between action accuracy and latency.</li>
+<li><strong>Deployment hardware:</strong> NVIDIA RTX 4090 GPU on a Lambda workstation. Allegro Hand (16 DoF) mounted on a robotic arm for real-world deployment.</li>
+<li><strong>Real-time capable?</strong> Yes. Diffusion sampling runs at 37 Hz; actual robot control operates at 10 Hz. Human teleoperation operates at 300 Hz via a separate retargeting method. The 10 Hz control rate is sufficient for arm-level tool use but below the frequencies needed for high-speed dexterous finger control.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No external dataset; training data generated via RL simulation rollout in IsaacGym, supplemented by human teleoperation demonstrations for imitation learning.</li>
+<li><strong>Collection method:</strong> RL simulation rollout in IsaacGym for foundation controller pre-training; human teleoperation via a retargeting method at 300 Hz for demonstration collection on the physical Allegro hand.</li>
+<li><strong>Data scale:</strong> Not reported (RL training generates data on-the-fly; number of teleoperated demonstrations not specified).</li>
+<li><strong>Teleop equipment:</strong> Human hand retargeting system operating at 300 Hz for real-world demonstration collection.</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> No. No code, data, or model weights released.</li>
+</ul>
+<blockquote class="dp-quote">*Results verified from arXiv:2502.04307. Stage-wise success rates extracted from Table II.*</blockquote>
+<hr>

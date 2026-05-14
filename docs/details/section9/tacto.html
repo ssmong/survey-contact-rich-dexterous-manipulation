@@ -1,0 +1,64 @@
+<p class="dp-p"># 9.9 TACTO</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> TACTO: A Fast, Flexible and Open-source Simulator for High-Resolution Vision-based Tactile Sensors</li>
+<li><strong>Authors:</strong> Shaoxiong Wang, Mike Lambeta, Po-Wei Chou, Roberto Calandra</li>
+<li><strong>Institution:</strong> Meta FAIR (Facebook AI Research)</li>
+<li><strong>Venue/Year:</strong> IEEE Robotics and Automation Letters (RA-L) 2022</li>
+<li><strong>Sim platform:</strong> PyBullet (physics) + PyRender (tactile rendering)</li>
+<li><strong>Sensor models:</strong> DIGIT, OmniTact, GelSight-style vision-based tactile sensors</li>
+<li><strong>Tasks:</strong> Grasping, rolling, object manipulation with tactile feedback</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">TACTO simulates vision-based tactile sensors by rendering synthetic tactile images from contact geometry. Rather than attempting physically accurate contact deformation simulation, TACTO focuses on fast, visually plausible tactile image generation. When an object contacts a simulated sensor, TACTO renders the contact patch using PyRender with appropriate lighting and gel surface properties, producing RGB tactile images similar to those from real DIGIT or GelSight sensors. The physics simulation (rigid body dynamics, collision detection) is handled by PyBullet, while TACTO handles only the tactile rendering pipeline. This separation allows TACTO to be integrated with any PyBullet-based manipulation environment.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>First open-source simulator specifically targeting high-resolution synthetic tactile images for DIGIT and OmniTact vision-based tactile sensors</li>
+<li>Fast rendering enabling RL training with tactile observations (significantly faster than FEM-based alternatives like DiffTactile)</li>
+<li>Modular design: sensor geometry and optical properties are configurable via YAML files</li>
+<li>Simple integration with existing PyBullet environments via a thin API layer</li>
+<li>Headless rendering support (EGL/OSMESA) for server-side training</li>
+</ul>
+<h2 class="dp-h2">Usage in surveyed works</h2>
+<p class="dp-p">TACTO or its tactile simulation approach has been referenced by multiple works in this survey:</p>
+<ul class="dp-list">
+<li><strong>Sparsh</strong> (§12): tactile encoder trained/evaluated with simulated and real DIGIT data</li>
+<li><strong>RotateIt</strong> (§7): uses tactile simulation for in-hand rotation</li>
+<li>Other tactile manipulation papers using DIGIT/GelSight benefit from TACTO-style simulated data for pretraining or augmentation</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Explicitly not physically accurate: "not meant to provide physically accurate dynamics of contacts (e.g., deformation, friction)" -- contact forces and deformation are approximated</li>
+<li>PyBullet backend limits simulation speed compared to GPU-parallel engines (IsaacGym, ManiSkill3)</li>
+<li>No differentiable rendering: cannot backpropagate gradients through the tactile image generation</li>
+<li>Limited to vision-based tactile sensors (DIGIT, OmniTact, GelSight); does not simulate resistive, capacitive, or barometric tactile sensors</li>
+<li>No multi-finger dexterous hand environments included out of the box (examples focus on parallel-jaw grippers)</li>
+<li>Some visualization issues between PyBullet and PyRender on macOS</li>
+</ul>
+<h2 class="dp-h2">Coverage gaps</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Criterion</th>
+<th>Covered?</th>
+</tr></thead><tbody>
+<tr>
+<td>Force/torque evaluation metrics</td>
+<td>No (tactile images are visual, not force-calibrated)</td>
+</tr>
+<tr>
+<td>Deformable object tasks</td>
+<td>No (rigid body physics only via PyBullet)</td>
+</tr>
+<tr>
+<td>Tactile sensing</td>
+<td>Yes (core contribution -- synthetic tactile image generation)</td>
+</tr>
+<tr>
+<td>Multi-stage / long-horizon tasks</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Multi-hand coordination</td>
+<td>No</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source under MIT License. Install via <code>pip install tacto</code>. GitHub: <a href="https://github.com/facebookresearch/tacto" target="_blank" rel="noopener">facebookresearch/tacto</a></p>

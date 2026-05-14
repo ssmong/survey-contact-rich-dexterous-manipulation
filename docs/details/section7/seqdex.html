@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.3 SeqDex</h3>
+<p class="dp-p"><strong>Full title:</strong> Sequential Dexterity: Chaining Dexterous Policies for Long-Horizon Manipulation</p>
+<p class="dp-p"><strong>Authors:</strong> Yuanpei Chen, Chen Wang, Li Fei-Fei, C. Karen Liu</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CoRL 2023</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2309.00987</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with teacher-student distillation. Each sub-policy is trained independently with privileged state access (teacher), then distilled to a vision-based student policy. Policies are chained via learned transition conditions.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Allegro Hand (16 DoF) mounted on a Kuka arm</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym (NVIDIA)</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes. Sim-to-real transfer demonstrated via domain randomization and teacher-student distillation from privileged state to point-cloud observations (real).</p>
+<p class="dp-p"><strong>Tasks:</strong> Long-horizon sequential manipulation decomposed into stages: search (locate object) -> orient (rotate to desired pose) -> grasp (acquire stable grasp) -> insert (place into slot). The full chain executes autonomously with learned transition triggers between sub-policies.</p>
+<p class="dp-p"><strong>Key methodology:</strong> SeqDex decomposes long-horizon dexterous tasks into a sequence of shorter-horizon sub-policies, each independently trained with RL. A key innovation is the automatic chaining mechanism that uses learned binary classifiers to detect when one phase has succeeded and the next should begin, avoiding manual thresholds or state machines. Teacher policies use privileged simulation state; student policies operate from 3D point clouds.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated that chaining independently trained RL sub-policies with learned transition conditions enables long-horizon dexterous manipulation that monolithic policies fail to learn</li>
+<li>Achieved sim-to-real transfer of the full multi-stage pipeline (search-orient-grasp-insert) on an Allegro+Kuka system (real)</li>
+<li>Provided a general framework for decomposing complex dexterous tasks into learnable sub-problems</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Task decomposition is manual and requires domain knowledge to define sub-task boundaries. The approach has been demonstrated on a single task family (object insertion); generalization to diverse long-horizon tasks is untested. No force/tactile sensing is used.</p>
+<p class="dp-p"><strong>Results:</strong> Successfully completed the full search-orient-grasp-insert chain in real-world experiments (real). Code and pretrained weights publicly available.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported. Each sub-policy (MLP) runs in <1ms per forward pass. Phase transition classifiers add negligible overhead. Total pipeline is real-time.</li>
+<li><strong>Deployment hardware:</strong> Allegro Hand (16 DoF) + Kuka arm. Policies trained in IsaacGym; deployed via zero-shot sim-to-real transfer.</li>
+<li><strong>Real-time capable?</strong> Yes. Chained MLP sub-policies support real-time dexterous manipulation on real hardware.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL (PPO) with teacher-student distillation for each sub-policy -- all data generated in simulation.</li>
+<li><strong>Collection method:</strong> Pure RL in IsaacGym. Each sub-policy (search, orient, grasp, insert) trained independently with privileged state (teacher), then distilled to point-cloud-based student via domain randomization. Learned binary classifiers detect phase transitions. Sim-to-real transfer on Allegro + Kuka.</li>
+<li><strong>Data scale:</strong> Standard parallel RL training in IsaacGym per sub-policy.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> Yes -- code and pretrained weights publicly available.</li>
+</ul>

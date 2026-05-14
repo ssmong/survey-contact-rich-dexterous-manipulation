@@ -1,0 +1,87 @@
+<h3 class="dp-h3">DexUMI</h3>
+<p class="dp-p"><strong>Full Title:</strong> DexUMI: Dexterous Universal Manipulation Interface</p>
+<p class="dp-p"><strong>Authors:</strong> Researchers from Stanford et al.</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CoRL 2025 (Best Paper Finalist)</p>
+<p class="dp-p"><strong>Hand Hardware:</strong> XHand and Inspire Hand. DexUMI is designed as a hardware-agnostic interface, supporting multiple dexterous hand platforms for real-world manipulation data collection and policy deployment.</p>
+<p class="dp-p"><strong>Tasks:</strong> Real-world dexterous manipulation tasks. The system focuses on enabling data collection and policy learning for diverse manipulation scenarios using dexterous hands in unstructured real-world environments. Specific tasks span everyday manipulation behaviors.</p>
+<p class="dp-p"><strong>Key Methodology:</strong> DexUMI extends the Universal Manipulation Interface (UMI) paradigm to dexterous multi-finger hands. The approach provides a portable, low-cost data collection framework that maps human hand motions to dexterous robot hands for in-the-wild demonstration collection. Unlike most dexterous manipulation works that rely on simulation, DexUMI operates entirely in the real world, using human demonstrations collected via the interface to train imitation learning policies. The emphasis is on practical deployability and broad task coverage with minimal setup overhead.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Imitation learning policies trained from real-world demonstrations collected via the DexUMI hardware interface. The specific policy architecture follows the UMI framework adapted for higher-dimensional dexterous hand action spaces.</p>
+<p class="dp-p"><strong>Sim Platform:</strong> Real-world only -- no simulation is used. The entire pipeline (data collection, training, deployment) operates on physical hardware.</p>
+<p class="dp-p"><strong>Main Contributions:</strong></p>
+<ul class="dp-list">
+<li>Extends the UMI framework to dexterous hands, providing a portable and accessible data collection interface for multi-finger manipulation -- prior dexterous hand teleoperation systems required expensive motion capture setups or custom glove hardware, whereas DexUMI uses a low-cost portable device.</li>
+<li>Demonstrates real-world-only dexterous manipulation learning without any simulation, in contrast to the sim-to-real paradigm dominant in the field -- this shows that real-world imitation learning is viable for high-DoF hands, not just parallel-jaw grippers.</li>
+<li>CoRL 2025 Best Paper Finalist.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li><strong>Force/impedance awareness:</strong> No. No force/torque sensing or impedance control is incorporated. The imitation learning policies learn position trajectories from demonstrations, without explicit force regulation. For tasks requiring precise contact force control (e.g., inserting fragile objects, controlled tool application), the position-only control scheme may be insufficient.</li>
+<li><strong>VLA/language conditioning:</strong> No. The pipeline uses demonstration-based imitation learning with no language conditioning or VLA backbone. Task specification is via physical demonstrations, not language instructions.</li>
+<li><strong>Sim-to-real:</strong> Not applicable. The system operates entirely in the real world with no simulation component. This eliminates the sim-to-real gap but limits scalability of data collection compared to simulation-based approaches.</li>
+<li><strong>Code/weights availability:</strong> Not publicly documented at time of review.</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> Average success rate of 86% across tasks, evaluated on both underactuated (Inspire Hand, 6 active DoFs) and fully-actuated (XHand, 12 active DoFs) platforms. Best configuration uses relative finger actions, tactile sensing, and inpainting-based visual adaptation.</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>Hand</th>
+<th>Success Rate</th>
+</tr></thead><tbody>
+<tr>
+<td>Cube Picking</td>
+<td>Inspire Hand</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>Egg Carton Opening</td>
+<td>Inspire Hand</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>Tea Picking (tool)</td>
+<td>Inspire Hand</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>Tea Picking (leaf)</td>
+<td>Inspire Hand</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>Kitchen - Knob</td>
+<td>XHand</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>Kitchen - Pan</td>
+<td>XHand</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>Kitchen - Salt</td>
+<td>XHand</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td>Kitchen - Overall</td>
+<td>XHand</td>
+<td>0.75</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Data collection is 3.2x more efficient than traditional teleoperation methods (within 15-minute collection sessions).</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Policy executes at <strong>10 Hz</strong>. The UR5 arm executes commands at 125 Hz, the Inspire Hand at 10 Hz, and the XHand at 60 Hz. The policy predicts 16 future action steps, executes only the first 8, at 10 Hz.</li>
+<li><strong>Deployment hardware:</strong> UR5 robotic arm + XHand or Inspire Hand. Uses pretrained DINO-V2 for visual feature extraction. Inference GPU not specified.</li>
+<li><strong>Real-time capable?</strong> Yes, at 10 Hz policy frequency. The system compensates for sensor latency through temporal alignment (tcapture = treceive - lsensor). The 10 Hz rate is suitable for arm-level manipulation but slower than the XHand's native 60 Hz capability.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom real-world demonstrations collected via the DexUMI hardware interface. No named benchmark dataset.</li>
+<li><strong>Collection method:</strong> In-the-wild human demonstrations collected via the DexUMI portable handheld device, which maps human hand motions to dexterous robot hands (XHand, Inspire Hand). The system is designed for low-cost, portable data collection without motion capture or VR setups.</li>
+<li><strong>Data scale:</strong> Not reported in public materials. The paper should be consulted for the number of demonstrations collected per task.</li>
+<li><strong>Teleop equipment:</strong> DexUMI handheld device -- a portable, low-cost interface extending the Universal Manipulation Interface (UMI) paradigm to multi-finger dexterous hands. No expensive gloves, exoskeletons, or MoCap required.</li>
+<li><strong>Data format:</strong> Not reported. Follows the UMI framework adapted for higher-dimensional dexterous hand action spaces.</li>
+<li><strong>Publicly available?</strong> Not publicly documented at time of review.</li>
+</ul>
+<blockquote class="dp-quote">*Results verified from arXiv:2505.21864. Per-task success rates extracted from Table 1. Average 86% success rate confirmed.*</blockquote>
+<hr>

@@ -1,0 +1,61 @@
+<h3 class="dp-h3">7.1 UniDexGrasp++</h3>
+<p class="dp-p"><strong>Full title:</strong> UniDexGrasp++: Improving Dexterous Grasping Policy Learning via Geometry-aware Curriculum and Iterative Generalist-Specialist Learning</p>
+<p class="dp-p"><strong>Authors:</strong> Weikang Wan, Haoran Geng, Yun Liu, Zikang Yan, Yaodong Yang, He Wang</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICCV 2023</p>
+<p class="dp-p"><strong>PKU-EPIC lineage:</strong> Improves UniDexGrasp from ~60% to 85.4% via iterative generalist-specialist learning. The geometry-aware curriculum and iterative specialist training specifically address the long-tail failure cases of UniDexGrasp.</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with DAgger distillation; geometry-aware curriculum learning combined with iterative generalist-specialist training</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Shadow Hand (24 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No</p>
+<p class="dp-p"><strong>Object count:</strong> 3000+ objects; 85.4% state-based success rate (sim), 78.2% vision-based (sim)</p>
+<p class="dp-p"><strong>Tasks:</strong> Universal dexterous grasping -- grasping arbitrary objects from a tabletop given goal grasp poses</p>
+<p class="dp-p"><strong>Key methodology:</strong> Proposes a two-phase training pipeline. First, a geometry-aware curriculum orders training objects by grasping difficulty (estimated from contact geometry). Second, an iterative generalist-specialist loop trains specialist policies on hard object clusters, then distills them back into a generalist. This iteratively improves performance on the long tail of difficult objects.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Geometry-aware curriculum that significantly accelerates training convergence</li>
+<li>Iterative generalist-specialist learning scheme that improves long-tail performance from ~60% (UniDexGrasp) to 85.4%</li>
+<li>Vision-based policy achieving 78.2% across 3000+ objects using point cloud input</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>State-based success rate</td>
+<td>85.4% (sim)</td>
+</tr>
+<tr>
+<td>Vision-based success rate</td>
+<td>78.2% (sim)</td>
+</tr>
+<tr>
+<td>UniDexGrasp baseline</td>
+<td>~60% (sim)</td>
+</tr>
+<tr>
+<td>Improvement over predecessor</td>
+<td>+25.4 pp</td>
+</tr>
+<tr>
+<td>Object set size</td>
+<td>3000+</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Simulation-only; requires pre-computed goal grasp poses (from contact map estimation); Shadow Hand only; gap between state-based and vision-based performance (~7%) suggests visual perception remains a bottleneck</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The distilled generalist MLP policy runs in <1ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacGym). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, for the policy itself. However, only simulation evaluation was performed.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected demonstration dataset. Iterative generalist-specialist RL training with geometry-aware curriculum in IsaacGym.</li>
+<li><strong>Collection method:</strong> Pure RL (PPO) with DAgger distillation in IsaacGym. Geometry-aware curriculum orders 3,000+ objects by grasping difficulty. Iterative generalist-specialist loop trains specialists on hard object clusters, distills back into generalist. Both state-based and vision-based (point cloud) policies.</li>
+<li><strong>Data scale:</strong> 3,000+ objects. State-based: 85.4% success. Vision-based: 78.2% success (sim).</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> Dataset/code release status not reported.</li>
+</ul>

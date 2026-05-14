@@ -1,0 +1,54 @@
+<h3 class="dp-h3">ACT / ALOHA: Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware</h3>
+<p class="dp-p"><strong>Full title:</strong> Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware</p>
+<p class="dp-p"><strong>Authors:</strong> Tony Z. Zhao, Vikash Kumar, Sergey Levine, Chelsea Finn (Stanford University)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2023</p>
+<p class="dp-p"><strong>Architecture:</strong> Action Chunking with Transformers (ACT) is a CVAE (conditional variational autoencoder) policy with a transformer encoder-decoder architecture. The encoder processes visual observations from multiple cameras (wrist and overhead) via ResNet-18 backbones, combined with joint position proprioception. A style variable z (sampled from a learned prior during inference) is concatenated to enable multi-modal action generation. The transformer decoder autoregressively generates a chunk of future joint-space actions. Total model size is approximately 40-80M parameters.</p>
+<p class="dp-p"><strong>Action space:</strong> 14D for bimanual ALOHA: two 6-DoF ViperX 300s arms (joint positions) + 2 gripper widths. ACT predicts action chunks of 50-100 future timesteps at 50 Hz, executing k steps before replanning (temporal ensembling with exponential weighting for smooth transitions).</p>
+<p class="dp-p"><strong>Dex hand support?</strong> ✗ --- Designed for the ALOHA bimanual gripper system. The joint-space action representation could extend to dexterous hands if appropriately trained, but this has not been demonstrated. Subsequent works have adapted ACT-like architectures for dexterous systems (e.g., Comp-ACT).</p>
+<p class="dp-p"><strong>Force/impedance output?</strong> ✗ --- Joint position targets only, tracked by the robot's internal PD controller. Comp-ACT (IROS 2024) later extended ACT to output variable impedance parameters.</p>
+<p class="dp-p"><strong>Key methodology:</strong> ACT combines two key ideas: (1) action chunking with temporal ensembling, where the policy predicts a long horizon of future actions but only executes a few steps before replanning, and (2) a CVAE training framework where a "style variable" z captures the multi-modality in human demonstrations (e.g., different strategies for the same task). During training, the encoder infers z from the full action sequence; during inference, z is sampled from the learned prior. ACT is co-developed with the ALOHA hardware platform, a low-cost (~$20K) bimanual teleoperation and robot system using off-the-shelf ViperX arms.</p>
+<p class="dp-p"><strong>Training data:</strong> Task-specific demonstration data collected via the ALOHA teleoperation system. Typically 50-500 teleoperated demonstrations per task at 50 Hz. Tasks include bimanual threading, stacking, transferring, and precision placement.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Introduced action chunking with temporal ensembling as a principled approach to multi-step action prediction, enabling fine-grained manipulation from a modest number of demonstrations.</li>
+<li>Co-developed the ALOHA low-cost bimanual teleoperation platform, dramatically lowering the barrier to bimanual manipulation research.</li>
+<li>Demonstrated that a relatively simple imitation learning approach can solve fine-grained bimanual tasks (e.g., threading a zip tie) that were previously considered too difficult for IL.</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>ACT</th>
+<th>BC Baseline</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>*(Consult the RSS 2023 paper for per-task success rates on ALOHA bimanual manipulation tasks including threading, stacking, and transfer.)*</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Joint-space action representation limits cross-embodiment transfer.</li>
+<li>The CVAE style variable can collapse during training, reducing multi-modality coverage.</li>
+<li>No language conditioning (task-specific models only).</li>
+<li>No force/compliance output; relies on the robot's built-in PD controller for contact handling.</li>
+</ul>
+<p class="dp-p"><strong>Open weights/code:</strong> ✅ Code: <a href="https://github.com/tonyzhaozh/act" target="_blank" rel="noopener">GitHub</a>. ✗ No pre-trained weights (task-specific training required).</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> ACT runs at 50 Hz control frequency, matching the ALOHA hardware's native rate. The lightweight transformer decoder (~40-80M parameters) with CVAE inference requires only a single forward pass per action chunk (no iterative denoising). Inference latency is approximately 5-10ms per forward pass on a desktop GPU.</li>
+<li><strong>Deployment hardware:</strong> Desktop GPU for policy inference (specific model not reported, but the ~40-80M parameter model is lightweight). The ALOHA hardware platform (dual ViperX 300s arms) is low-cost (~$20K).</li>
+<li><strong>Real-time capable?</strong> Yes. ACT operates at 50 Hz with action chunking (predicting 50-100 future steps), executing k steps before replanning with temporal ensembling. The single-pass CVAE inference (no iterative denoising) makes ACT significantly faster than diffusion-based alternatives.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom teleoperation demonstrations collected via the ALOHA bimanual hardware platform for each task.</li>
+<li><strong>Collection method:</strong> Leader-follower teleoperation using the ALOHA system (low-cost ~$20K bimanual setup with dual ViperX 300s arms). Human demonstrator controls the leader arms while follower arms replicate motions at 50 Hz. Data includes joint positions from all joints + gripper widths + multi-view camera images (wrist-mounted and overhead).</li>
+<li><strong>Data scale:</strong> 50-500 demonstrations per task at 50 Hz. Tasks include bimanual threading, stacking, transferring, and precision placement.</li>
+<li><strong>Teleop equipment:</strong> ALOHA leader-follower system: dual ViperX 300s 6-DoF arms with parallel-jaw grippers. Low-cost, open-source teleoperation hardware.</li>
+<li><strong>Data format:</strong> HDF5 files containing joint positions, gripper states, and camera images.</li>
+<li><strong>Publicly available?</strong> Code at https://github.com/tonyzhaozh/act. ALOHA hardware designs are open-source. Task-specific demonstration datasets are not centrally released (users collect their own).</li>
+</ul>
+<hr>

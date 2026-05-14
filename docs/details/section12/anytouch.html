@@ -1,0 +1,62 @@
+<p class="dp-p"># 12.3 AnyTouch</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> AnyTouch: Learning Unified Tactile Representations Across Multiple Sensors</li>
+<li><strong>Authors:</strong> GeWu Lab (Renmin University of China)</li>
+<li><strong>Venue/Year:</strong> ICLR 2025</li>
+<li><strong>Sensors supported:</strong> 4+ tactile sensor types (TacQuad dataset)</li>
+<li><strong>Pretraining method:</strong> Cross-sensor self-supervised learning</li>
+<li><strong>Dataset:</strong> TacQuad -- 4-sensor paired tactile dataset</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">AnyTouch extends the cross-sensor paradigm by pretraining on TacQuad, a dataset containing paired tactile readings from four different sensor types on the same objects/contacts. This paired data enables direct cross-sensor contrastive learning: the model learns representations that are invariant to sensor-specific visual artifacts while preserving contact-relevant information. The resulting encoder can process tactile data from any of the four sensor types and produce compatible representations, enabling transfer of tactile skills across sensor platforms.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>TacQuad dataset: first large-scale paired multi-sensor tactile dataset (4 sensor types, same contacts)</li>
+<li>Cross-sensor SSL that explicitly learns sensor-invariant representations through paired data contrastive learning</li>
+<li>Demonstrated transfer of tactile representations across sensor types without fine-tuning</li>
+<li>Strongest cross-sensor generalization results among tactile foundation models</li>
+</ul>
+<h2 class="dp-h2">Quantitative results (cross-sensor transfer)</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Evaluation</th>
+<th>AnyTouch</th>
+<th>Sparsh</th>
+<th>Single-sensor baseline</th>
+</tr></thead><tbody>
+<tr>
+<td>Within-sensor performance</td>
+<td>Competitive</td>
+<td>Competitive</td>
+<td>Best (trained on target sensor)</td>
+</tr>
+<tr>
+<td>Cross-sensor transfer (seen sensors)</td>
+<td>Best</td>
+<td>Moderate degradation</td>
+<td>Not applicable</td>
+</tr>
+<tr>
+<td>Cross-sensor transfer (unseen sensors)</td>
+<td>Degraded but functional</td>
+<td>Significant degradation</td>
+<td>Not applicable</td>
+</tr>
+<tr>
+<td>Number of sensors supported</td>
+<td>4+</td>
+<td>2 (DIGIT, GelSight)</td>
+<td>1</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">*Note: AnyTouch's paired-data contrastive learning produces stronger cross-sensor generalization than Sparsh's unpaired SSL, but both degrade relative to within-sensor training. Performance on sensor types not seen during pretraining remains a limitation.*</p>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>TacQuad dataset collection requires physically contacting the same surfaces with multiple sensors, which is labor-intensive and limits dataset scale</li>
+<li>4 sensor types, while more than Sparsh (2), still covers only a fraction of the tactile sensor ecosystem</li>
+<li>Like Sparsh and UniTouch, does not demonstrate integration into closed-loop manipulation policies</li>
+<li>Representation quality degrades for sensor types not seen during pretraining</li>
+</ul>
+<h2 class="dp-h2">Shared limitation</h2>
+<p class="dp-p">Like all tactile representation models in this section, AnyTouch does not demonstrate integration into closed-loop manipulation policies. See <a href="sparsh.md#shared-limitation-no-closed-loop-policy-integration" target="_blank" rel="noopener">Sparsh</a> for a detailed discussion of this shared limitation.</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source (code + pretrained weights). GitHub: <a href="https://github.com/GeWu-Lab/AnyTouch" target="_blank" rel="noopener">GeWu-Lab/AnyTouch</a></p>

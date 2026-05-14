@@ -1,0 +1,33 @@
+<h3 class="dp-h3">7.2 DeXtreme</h3>
+<p class="dp-p"><strong>Full title:</strong> DeXtreme: Transfer of Agile In-Hand Manipulation from Simulation to Reality</p>
+<p class="dp-p"><strong>Authors:</strong> Ankur Handa, Arthur Allshire, Viktor Makoviychuk, Aleksei Petrenko, Ritvik Singh, Jingzhou Liu, Denys Makoviichuk, Karl Van Wyk, Alexander Zook, Yashraj Narang, Jean-Francois Lafleche, Dieter Fox, Gavriel State</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICRA 2023 (arXiv 2022)</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO (large-scale parallel training in IsaacGym); uses automatic domain randomization (ADR) that dynamically expands randomization ranges during training</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Allegro Hand (16 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes; automatic domain randomization (ADR) for sim-to-real transfer (real). ADR adaptively increases randomization ranges during training when policy performance is sufficient, pushing the policy toward broader robustness. Complemented by randomized visual observations</p>
+<p class="dp-p"><strong>Object count:</strong> Cube and other simple objects; focus on transfer quality rather than object diversity</p>
+<p class="dp-p"><strong>Tasks:</strong> In-hand cube rotation to target orientations (building on the OpenAI Rubik's cube lineage)</p>
+<p class="dp-p"><strong>Key methodology:</strong> Extends NVIDIA's IsaacGym-based training to Allegro Hand with Automatic Domain Randomization (ADR). ADR starts with narrow randomization ranges and progressively widens them as the policy learns, avoiding the issue of overly-challenging initial randomization that prevents learning. The system trains at massive scale (thousands of parallel environments) and achieves robust sim-to-real transfer without manual domain randomization tuning.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Automatic Domain Randomization (ADR) that eliminates manual tuning of randomization ranges</li>
+<li>First demonstration of sim-to-real in-hand manipulation on Allegro Hand (real) (prior work used Shadow Hand)</li>
+<li>Massive-scale parallel training infrastructure enabling rapid policy iteration</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Limited to simple objects (primarily cubes); Allegro Hand only; no tactile sensing; ADR training is computationally expensive; limited to reorientation tasks without translation or functional manipulation goals</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported. The MLP policy runs in <1ms per forward pass, enabling high-frequency control.</li>
+<li><strong>Deployment hardware:</strong> Allegro Hand (16 DoF). Policy trained in IsaacGym at massive scale; deployed via zero-shot sim-to-real transfer with ADR.</li>
+<li><strong>Real-time capable?</strong> Yes. MLP-based RL policies are trivially fast for real-time dexterous control. Demonstrated on real Allegro Hand.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL (PPO) with Automatic Domain Randomization (ADR) -- all data generated in simulation.</li>
+<li><strong>Collection method:</strong> Pure RL in IsaacGym at massive scale (thousands of parallel environments). ADR adaptively widens randomization ranges as policy performance improves. No demonstrations. Zero-shot sim-to-real transfer on Allegro Hand.</li>
+<li><strong>Data scale:</strong> Massive-scale parallel training. Cube and simple objects for training/evaluation.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> Code release status not reported.</li>
+</ul>

@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.3 AnyTeleop</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> AnyTeleop: A General Vision-Based Dexterous Robot Hand-Arm Teleoperation System</li>
+<li><strong>Authors:</strong> Yuzhe Qin, Wei Yang, Binghao Huang, Karl Van Wyk, Hao Su, Xiaolong Wang, Dieter Fox (UCSD, NVIDIA)</li>
+<li><strong>Venue/Year:</strong> RSS 2023</li>
+<li><strong>Input modality:</strong> Single RGB camera (vision-based hand pose estimation)</li>
+<li><strong>Target hand:</strong> Multiple dexterous hands (Allegro, Shadow, and others via modular retargeting)</li>
+<li><strong>Force feedback:</strong> None</li>
+<li><strong>Cost:</strong> Very low (requires only a webcam)</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">AnyTeleop uses vision-based hand pose estimation from a single RGB camera to drive dexterous robot hands. The system decouples hand pose estimation from robot-specific retargeting, using a modular retargeting module that maps detected human hand poses to any supported robot hand. This design enables teleoperation across diverse hand platforms without hardware-specific sensors or gloves. The vision-only approach minimizes setup cost and complexity.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Camera-only teleoperation requiring no wearable sensors, gloves, or VR hardware</li>
+<li>Modular retargeting architecture supporting multiple robot hand platforms from a single input pipeline</li>
+<li>Lowest-cost entry point for dexterous teleoperation (webcam only)</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Vision-based hand tracking is less accurate than sensor-based approaches, especially for occluded or fast-moving fingers</li>
+<li>No force feedback, making contact-rich tasks difficult for operators</li>
+<li>Single-camera setup limits depth perception and can introduce tracking jitter</li>
+<li>Latency from vision processing pipeline may affect real-time control quality</li>
+</ul>
+<h2 class="dp-h2">Data quality impact</h2>
+<p class="dp-p">Demonstrations lack force information and have lower positional accuracy than sensor-based systems, producing policies with poor force regulation. The single-camera tracking introduces jitter and occasional tracking loss during fast finger motions or occlusions, which manifests as noise in the demonstration trajectories. Policies trained on this data inherit both the force blindness and the positional noise, leading to imprecise finger placement and no learned contact force modulation. For tasks requiring controlled contact (e.g., insertion, pivoting, surface following), AnyTeleop demonstrations are insufficient to learn the necessary force-position coordination.</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Project page available. Code partially released.</p>

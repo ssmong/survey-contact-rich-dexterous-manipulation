@@ -1,0 +1,38 @@
+<p class="dp-p"># 8.4.2 DROID</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset</li>
+<li><strong>Authors:</strong> Alexander Khazatsky, Karl Pertsch, Suraj Nair, Ashwin Balakrishna, Sudeep Dasari, and 95+ contributors; senior advisors Sergey Levine (UC Berkeley) and Chelsea Finn (Stanford)</li>
+<li><strong>Venue/Year:</strong> arXiv 2024 (submitted March 2024; revised April 2025)</li>
+<li><strong>Scale:</strong> 76,000 demonstration trajectories, 350 hours of interaction data, 564 distinct scenes, 84 tasks, 50 data collectors across 12 months</li>
+<li><strong>Geographic diversity:</strong> Collectors across North America, Asia, and Europe</li>
+<li><strong>Robot:</strong> Franka Emika Panda with parallel-jaw gripper (standardized hardware setup)</li>
+<li><strong>Data format:</strong> Includes stereo RGB, wrist camera, proprioception, end-effector poses, language annotations</li>
+<li><strong>Collection method:</strong> Distributed in-the-wild teleoperation across diverse real-world environments with standardized hardware</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">DROID addresses a critical bottleneck in robot learning: existing datasets are collected in a small number of controlled lab environments, limiting policy generalization to new scenes. DROID tackles this by distributing data collection across 50 operators in diverse real-world settings (homes, offices, kitchens, labs) using a standardized Franka Panda hardware setup. The emphasis is on scene and environment diversity rather than task diversity. Each trajectory includes multi-view stereo RGB, wrist camera, full proprioception, and natural language task descriptions. The authors provide the full dataset, policy learning code, and a detailed hardware reproduction guide.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Largest single-embodiment "in-the-wild" manipulation dataset with 564 distinct real-world scenes</li>
+<li>Demonstrated that scene diversity is as important as scale: policies trained on DROID generalize significantly better to unseen environments</li>
+<li>Standardized, reproducible hardware setup enabling distributed data collection at scale</li>
+<li>Comprehensive data modalities (stereo RGB, wrist cam, proprioception, language) in a consistent format</li>
+</ul>
+<h2 class="dp-h2">Downstream usage in surveyed works</h2>
+<p class="dp-p">DROID is used as pretraining or co-training data by several systems in this survey:</p>
+<ul class="dp-list">
+<li><strong>pi0</strong> (§6): incorporates DROID in pretraining mixture</li>
+<li><strong>GR00T N1</strong> (§6): uses DROID as part of cross-embodiment pretraining</li>
+<li><strong>OpenVLA</strong> (§6): DROID included in fine-tuning experiments</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Single embodiment (Franka Panda with parallel-jaw gripper): no dexterous hand data, limiting direct applicability to multi-finger manipulation</li>
+<li>No force/torque or tactile sensing data despite the Franka Panda having built-in joint torque sensors and a wrist F/T sensor that require no additional hardware to record — a notable missed opportunity for contact-rich research</li>
+<li>84 tasks is relatively limited compared to OXE's 527 skills; emphasis is on scene diversity over task diversity</li>
+<li>Franka-specific: policies pretrained on DROID require embodiment adaptation for non-Franka robots</li>
+<li>Collection across 50 operators introduces variability in demonstration quality and style</li>
+<li>Hardware cost (~$30K+ for Franka setup) limits reproduction to well-funded labs</li>
+</ul>
+<h2 class="dp-h2">Availability</h2>
+<p class="dp-p">Open-source under CC BY 4.0. Full dataset, policy code, and hardware guide available at <a href="https://droid-dataset.github.io/" target="_blank" rel="noopener">droid-dataset.github.io</a>.</p>

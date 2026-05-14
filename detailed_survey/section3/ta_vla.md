@@ -1,0 +1,51 @@
+## 3.10 TA-VLA
+
+- **Full title:** TA-VLA: Torque-Aware Vision-Language-Action Model for Contact-Rich Manipulation
+- **Authors:** Tsinghua AIR (Academy of AI Research) et al.
+- **Venue/Year:** CoRL 2025
+- **arXiv:** https://arxiv.org/abs/2509.07962
+
+**Force/tactile input type:** Joint torque readings derived from motor current sensing. Unlike external F/T sensors, this approach uses the robot's own joint torque measurements as a proxy for contact forces, requiring no additional hardware.
+
+**Force/impedance output:** Auxiliary torque prediction head. The model predicts expected joint torques as an auxiliary task during training, which serves as a regularizer that improves the primary action prediction. At inference, the torque prediction can optionally be used for anomaly detection.
+
+**Robot platform:** Cobot Magic ALOHA bimanual platform.
+
+> **Limitation (gripper-only):** Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.
+
+**Tasks:** 10 contact-rich manipulation tasks including button pressing, charger insertion, USB insertion, and other tasks requiring contact awareness.
+
+**Key methodology:** TA-VLA uses joint torque as a force modality that requires no additional sensors -- it leverages the motor current readings already available on most collaborative robots. Joint torques are tokenized and fed into the VLA alongside visual and language tokens. An auxiliary torque prediction head is trained jointly with the action prediction head through multi-task learning. The torque prediction task acts as a self-supervised regularizer, forcing the model's internal representations to encode contact-relevant features. This multi-task training improves the primary action prediction even when torque prediction is not used at inference.
+
+**Architecture/Parameters:** VLA backbone with torque tokenizer and auxiliary torque prediction head. The multi-task training setup includes a primary action loss and an auxiliary torque prediction loss. Evaluated on the Cobot Magic ALOHA platform with 10 tasks.
+
+**Main contributions:**
+- Demonstrates that joint torque (from motor current) can serve as an effective force modality for VLAs, eliminating the need for external F/T or tactile sensors.
+- Introduces auxiliary torque prediction as a training regularizer that improves action prediction quality, even when torque is not used at inference.
+- Evaluates on 10 diverse contact-rich tasks, providing one of the broadest task evaluations among force-aware VLAs.
+
+**Limitations/Gaps:** No code or weights released. Joint torque from motor current is noisier and lower resolution than dedicated F/T sensors, limiting the approach's applicability to very precise force-sensitive tasks. The auxiliary torque prediction head adds training complexity. Evaluated on a single bimanual platform (Cobot Magic ALOHA).
+
+**Results:**
+
+| Metric | Value |
+|--------|-------|
+| Improvement over vision-only VLA | Gains across 10 tasks, largest on contact-rich tasks (button pressing, insertion) |
+| Auxiliary torque prediction benefit | 5--15% improvement even when torque input is ablated at inference |
+
+## Inference / Deployment
+
+- **Inference latency:** ~94 ms per action generation (93.96 ms for the full model with torque integration, vs. 90.70 ms for the baseline pi-zero model). The torque integration overhead is minimal (~3.26 ms). Action horizon of 50 steps with 10 denoising integration steps.
+- **Deployment hardware:** NVIDIA RTX 4090 GPU for inference. Cobot Magic ALOHA bimanual platform for real-world deployment.
+- **Real-time capable?** Yes, with caveats. The ~94 ms inference time corresponds to roughly 10 Hz effective planning rate. With the 50-step action horizon, the effective control rate depends on action execution duration. Suitable for contact-rich manipulation tasks at moderate control frequencies.
+
+## Dataset / Data Collection
+
+- **Dataset used:** Custom demonstration dataset for 10 contact-rich manipulation tasks on the Cobot Magic ALOHA bimanual platform. No named benchmark.
+- **Collection method:** Teleoperated demonstrations on Cobot Magic ALOHA with joint torque readings derived from motor current sensing (no external F/T sensor required).
+- **Data scale:** Not reported. 10 tasks evaluated including button pressing, charger insertion, USB insertion.
+- **Teleop equipment:** Cobot Magic ALOHA leader arms (bilateral teleoperation).
+- **Data format:** Not reported.
+- **Publicly available?** No. No code or weights released.
+
+> *Dataset details from training knowledge, not verified from source -- the arXiv abstract did not disclose data specifics.*

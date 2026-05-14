@@ -1,0 +1,39 @@
+<h2 class="dp-h2">3.5 HapticVLA</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> HapticVLA: Haptic-Enhanced Vision-Language-Action Model via Tactile Distillation</li>
+<li><strong>Authors:</strong> Skoltech et al.</li>
+<li><strong>Venue/Year:</strong> arXiv preprint, 2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2603.15257</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> Tactile sensors used during training but distilled away at inference. The model learns from tactile signals during training and operates without tactile sensors at deployment, similar to the FD-VLA distillation approach but applied to tactile (rather than F/T) modality.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> No. Position-only output.</p>
+<blockquote class="dp-quote"><strong>Limitation (position-only output):</strong> Position-only output; the policy cannot actively regulate contact forces despite receiving force/tactile input.</blockquote>
+<p class="dp-p"><strong>Robot platform:</strong> LeRobot SO-101 arm with tactile sensors attached during training data collection.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> Pick-and-place tasks with contact-sensitive objects: jar handling, waffle picking, egg manipulation. These tasks benefit from tactile feedback due to the fragility or slipperiness of the objects.</p>
+<p class="dp-p"><strong>Key methodology:</strong> HapticVLA uses tactile distillation -- a teacher model trained with tactile input supervises a student model that operates from vision and language only. The tactile signals provide privileged information about grasp quality, contact stability, and surface properties during training. The student model learns to infer these contact properties from visual cues through feature-level distillation. This enables deploying the policy on low-cost robots without tactile sensors.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Teacher-student architecture with tactile distillation. The teacher receives vision + language + tactile; the student uses vision + language only. Built on a VLA backbone compatible with the LeRobot ecosystem.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Applies the distillation paradigm (similar to FD-VLA) to tactile modality rather than F/T sensing, demonstrating the generality of the privileged-modality distillation approach.</li>
+<li>Targets low-cost robot platforms (LeRobot SO-101), showing that tactile knowledge can improve manipulation even on consumer-grade hardware.</li>
+<li>Demonstrates improved grasp success on fragile and deformable objects compared to vision-only baselines.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Paper claims code release but no public repository verified as of May 2026. The distillation removes tactile sensing entirely at deployment, losing reactive capabilities that require real-time tactile feedback. Limited to pick-and-place tasks -- no evaluation on more complex contact-rich tasks like insertion or assembly.</p>
+<p class="dp-p"><strong>Results:</strong> Improved success rates on fragile object handling (jar, egg) tasks compared to vision-only baselines. The distillation approach transfers tactile knowledge to the vision-only student with moderate fidelity.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported in ms or Hz. Tactile sensor arrays operate at 120 Hz, providing the perception input rate.</li>
+<li><strong>Deployment hardware:</strong> <strong>NVIDIA Jetson Orin NX 16 GB</strong> edge computer for all inference computations during real-world experiments. LeRobot SO-101 arm with tactile sensors.</li>
+<li><strong>Real-time capable?</strong> Yes. Deployed on edge hardware (Jetson Orin NX), indicating the system is designed for real-time robotic control. The foundation model (SmolVLA) is described as "optimized for high-frequency edge deployment via asynchronous inference."</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstration dataset for pick-and-place tasks with contact-sensitive objects (jar handling, waffle picking, egg manipulation). No named benchmark.</li>
+<li><strong>Collection method:</strong> Demonstrations with tactile sensors (used during training, distilled away at inference). Teacher model trained with tactile input; student model learns from vision and language only via tactile distillation. The system uses "precomputed, safety-aware tactile rewards."</li>
+<li><strong>Data scale:</strong> Not reported.</li>
+<li><strong>Teleop equipment:</strong> Not reported. Data collected on LeRobot SO-101 arm with tactile sensors attached.</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> Paper claims code release but no public repository verified as of May 2026.</li>
+</ul>
+<blockquote class="dp-quote">*Dataset details from training knowledge, not verified from source -- the arXiv abstract did not disclose data specifics.*</blockquote>

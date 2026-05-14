@@ -1,0 +1,40 @@
+<h3 class="dp-h3">5.7 DA-VIL</h3>
+<p class="dp-p"><strong>Full title:</strong> DA-VIL: Adaptive Dual-Arm Manipulation with Reinforcement Learning and Variable Impedance Control</p>
+<p class="dp-p"><strong>Authors:</strong> (IIIT Hyderabad / Brown University)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICRA 2025 (submitted 2024)</p>
+<p class="dp-p"><strong>How K/D are determined:</strong> Reinforcement learning + Quadratic Programming (QP) optimization. The RL policy learns high-level task parameters including desired stiffness, and a QP solver optimizes the impedance parameters in real-time to satisfy contact constraints (e.g., force limits, kinematic feasibility) while tracking the RL-specified stiffness targets. This two-level architecture separates task-level impedance reasoning (RL) from constraint satisfaction (QP).</p>
+<p class="dp-p"><strong>What is output:</strong> Cartesian stiffness K (optimized by QP). Damping D is not explicitly learned; uncontrolled damping can produce oscillatory contact behavior.</p>
+<p class="dp-p"><strong>Robot platform:</strong> Dual-arm robot (simulation). No dexterous hand.</p>
+<p class="dp-p"><strong>Tasks:</strong> Dual-arm cooperative manipulation: collaborative object transport, bimanual insertion, and tasks requiring coordinated compliance between two arms in contact with a shared object.</p>
+<p class="dp-p"><strong>Key methodology:</strong> DA-VIL addresses the challenge of dual-arm impedance control where the two arms must coordinate their compliance to avoid internal forces on the shared object. The RL policy outputs desired behavior parameters (including stiffness targets), and a QP solver computes the actual impedance parameters that best approximate these targets while satisfying hard constraints (joint limits, force limits, kinematic compatibility between the two arms). This approach avoids the instability that can arise when two independently impedance-controlled arms grasp the same object with incompatible compliance settings.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Two-level architecture: (1) RL policy (PPO or similar) outputting desired task parameters including stiffness targets, and (2) QP solver computing feasible impedance parameters subject to constraints. Dual-arm simulation environment.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Two-level RL + QP architecture for dual-arm variable impedance control with constraint satisfaction</li>
+<li>Addresses the coordination problem in dual-arm impedance control (avoiding internal forces from incompatible compliance)</li>
+<li>Demonstrates that QP-based impedance optimization improves dual-arm manipulation robustness</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>No dexterous hand -- dual arm with grippers</li>
+<li>Simulation only -- no real-robot experiments</li>
+<li>Damping not explicitly learned or reported; uncontrolled damping can produce oscillatory contact behavior</li>
+<li>Project page only -- no public code repository with runnable code</li>
+<li>Dual-arm coordination is specific; unclear how the approach extends to multi-finger scenarios</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong> DA-VIL outperformed fixed-impedance and unconstrained RL baselines on dual-arm cooperative tasks in simulation. QP-constrained impedance reduced internal forces on shared objects and improved task success rates.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The two-level architecture (RL policy MLP + QP solver) should run in <5ms per step. QP solvers for impedance optimization typically solve in <1ms for the constraint dimensions involved.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (dual-arm simulation environment). No real-robot deployment demonstrated. Specific compute hardware not reported.</li>
+<li><strong>Real-time capable?</strong> Yes, in principle. Both the MLP policy and the QP solver are lightweight and should support real-time control. However, only simulation evaluation was performed.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL -- data generated through simulation interaction.</li>
+<li><strong>Collection method:</strong> Pure RL (PPO or similar) in dual-arm simulation environment. No human demonstrations. The QP solver operates online during both training and evaluation to compute feasible impedance parameters from RL-proposed targets.</li>
+<li><strong>Data scale:</strong> Standard RL training scale in simulation. Specific episode counts not reported.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> No public code repository. Project page only.</li>
+</ul>

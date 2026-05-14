@@ -1,0 +1,74 @@
+<p class="dp-p"># 9.8 Isaac Lab</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Isaac Lab (formerly Orbit): A Unified and Modular Framework for Robot Learning</li>
+<li><strong>Developer:</strong> NVIDIA (Isaac Sim team); evolved from Orbit (Mittal et al., IEEE RA-L 2023) and supersedes the deprecated IsaacGym (Preview 4)</li>
+<li><strong>Venue/Year:</strong> IEEE RA-L 2023 (Orbit paper); Isaac Lab rebrand and major update 2024</li>
+<li><strong>Sim platform:</strong> Built on NVIDIA Isaac Sim, powered by PhysX 5 (GPU-accelerated)</li>
+<li><strong>Dexterous support:</strong> Allegro Hand, Shadow Hand, and any URDF/MJCF-based hand; supports articulated hand environments out of the box</li>
+<li><strong>Physics engine:</strong> PhysX 5 with GPU-parallel rigid and deformable body simulation</li>
+<li><strong>Performance:</strong> Thousands of parallel environments on a single GPU; comparable to IsaacGym speeds with improved API design</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">Isaac Lab is NVIDIA's unified robot learning framework, built on top of Isaac Sim and designed as the successor to both IsaacGym (deprecated after Preview 4) and the earlier Orbit framework. It provides a modular, extensible API for creating GPU-parallelized robot learning environments. The framework supports RL, imitation learning, and sim-to-real transfer workflows. Unlike IsaacGym's standalone Python API, Isaac Lab integrates with the full Isaac Sim ecosystem, providing access to photorealistic rendering (RTX ray tracing), domain randomization, sensor simulation (cameras, LiDAR), and asset management. The environment API follows a gymnasium-compatible interface with support for vectorized (parallel) execution.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>Replaces the deprecated IsaacGym (Preview 4) as NVIDIA's maintained simulation framework for robot learning</li>
+<li>GPU-parallel environment execution via PhysX 5 enabling thousands of simultaneous environments on one GPU</li>
+<li>Modular design: interchangeable robots, sensors, tasks, and reward functions through configuration</li>
+<li>Photorealistic rendering via RTX for visual sim-to-real transfer</li>
+<li>Built-in support for dexterous hand platforms (Allegro, Shadow) with pre-configured environments</li>
+<li>Compatible with major RL libraries (rl_games, RSL-rl, SKRL, Stable Baselines3)</li>
+</ul>
+<h2 class="dp-h2">Usage in surveyed works</h2>
+<p class="dp-p">Isaac Lab (or its predecessor Isaac Sim / IsaacGym) is the simulation platform for multiple systems in this survey:</p>
+<ul class="dp-list">
+<li><strong>GR00T-Dexterity</strong> (§7): Allegro Hand RL training in Isaac Lab</li>
+<li><strong>DextrAH-G/RGB</strong> (§7): Allegro Hand + Kuka with geometric fabrics in Isaac Lab</li>
+<li><strong>CHIP</strong> (§5): Humanoid impedance policy training in Isaac Sim</li>
+<li><strong>GR00T N1</strong> (§6): policy evaluation and sim-to-real in Isaac Lab</li>
+<li><strong>TeleOpBench</strong> (§9): teleoperation benchmark built on Isaac Sim</li>
+</ul>
+<h2 class="dp-h2">Relationship to IsaacGym</h2>
+<p class="dp-p">IsaacGym (Preview 1-4) was NVIDIA's standalone GPU-parallel RL simulation library, widely used for dexterous manipulation research (in-hand rotation, DexPBT, HORA, etc.). IsaacGym is now deprecated and no longer maintained. Isaac Lab replaces it with a more modular architecture built on the full Isaac Sim platform. Key differences:</p>
+<ul class="dp-list">
+<li>IsaacGym: standalone Python library, limited rendering, no sensor simulation</li>
+<li>Isaac Lab: full Isaac Sim integration, RTX rendering, camera/LiDAR simulation, domain randomization</li>
+<li>Migration: most IsaacGym environments can be ported to Isaac Lab with API changes; NVIDIA provides migration guides</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Requires NVIDIA GPU (no AMD/Intel support); tied to NVIDIA's proprietary Isaac Sim platform</li>
+<li>Heavier installation footprint than MuJoCo or Genesis (requires Isaac Sim, which is multi-GB)</li>
+<li>Closed-source physics engine (PhysX): not differentiable through contacts (unlike Genesis or DiffTactile)</li>
+<li>No built-in tactile sensor simulation (external plugins required)</li>
+<li>Learning curve: more complex API than IsaacGym's simple standalone interface</li>
+<li>Linux-only for full functionality (Windows support is partial)</li>
+</ul>
+<h2 class="dp-h2">Coverage gaps</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Criterion</th>
+<th>Covered?</th>
+</tr></thead><tbody>
+<tr>
+<td>Force/torque evaluation metrics</td>
+<td>No (force sensing available but no standardized force evaluation)</td>
+</tr>
+<tr>
+<td>Deformable object tasks</td>
+<td>Yes (PhysX 5 supports soft bodies)</td>
+</tr>
+<tr>
+<td>Tactile sensing</td>
+<td>No (no built-in tactile simulation; requires external plugins)</td>
+</tr>
+<tr>
+<td>Multi-stage / long-horizon tasks</td>
+<td>Partial (manager-based task API supports multi-stage, but few pre-built examples)</td>
+</tr>
+<tr>
+<td>Multi-hand coordination</td>
+<td>Partial (bimanual setups possible but not extensively benchmarked)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source under BSD-3-Clause license. Install via <code>pip install isaaclab</code> (requires Isaac Sim). GitHub: <a href="https://github.com/isaac-sim/IsaacLab" target="_blank" rel="noopener">isaac-sim/IsaacLab</a>. Documentation: <a href="https://isaac-sim.github.io/IsaacLab/" target="_blank" rel="noopener">isaac-sim.github.io/IsaacLab</a></p>

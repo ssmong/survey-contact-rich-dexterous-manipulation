@@ -1,0 +1,54 @@
+<h3 class="dp-h3">DP3: 3D Diffusion Policy --- Generalizable Visuomotor Policy Learning via Simple 3D Representations</h3>
+<p class="dp-p"><strong>Full title:</strong> 3D Diffusion Policy: Generalizable Visuomotor Policy Learning via Simple 3D Representations</p>
+<p class="dp-p"><strong>Authors:</strong> Yanjie Ze, Gu Zhang, Kangning Zhang, Chenyuan Hu, Muhan Wang, Huazhe Xu (Tsinghua University)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2024</p>
+<p class="dp-p"><strong>Architecture:</strong> DP3 extends Diffusion Policy to operate on 3D point cloud observations instead of 2D images. The visual encoder processes depth-camera point clouds via a lightweight 3D encoder (PointNet++ or sparse 3D convolutions, ~5M parameters), producing per-point features that are aggregated into a global 3D scene representation. This 3D representation conditions a diffusion-based action decoder (similar to Diffusion Policy's 1D convolutional architecture). Total model size is ~30M parameters.</p>
+<p class="dp-p"><strong>Action space:</strong> Continuous, variable dimensionality. Evaluated on up to 22-DoF action spaces in simulation (Adroit dexterous hand tasks: 24-DoF Shadow hand). Supports both EEF and joint-space actions. Action chunking inherited from Diffusion Policy.</p>
+<p class="dp-p"><strong>Dex hand support?</strong> Partial (simulation only) --- Evaluated on Adroit hand manipulation benchmarks (door, pen, hammer) using a 24-DoF Shadow hand in MuJoCo. One of the first diffusion policies demonstrated on high-DoF dexterous hands, across 72 simulated tasks total. No real-robot dexterous hand deployment has been demonstrated.</p>
+<p class="dp-p"><strong>Force/impedance output?</strong> ✗ --- Position targets only.</p>
+<p class="dp-p"><strong>Key methodology:</strong> DP3 argues that 3D point cloud observations provide superior spatial reasoning and viewpoint generalization compared to 2D images for manipulation. By lifting observations to 3D, the policy becomes invariant to camera viewpoint changes and can reason about spatial relationships (e.g., relative positions of fingers and objects) that are ambiguous in 2D. The 3D encoder is deliberately kept lightweight to enable real-time inference. Combined with the diffusion action decoder, DP3 achieves strong performance across 72 simulation tasks spanning both gripper and dexterous hand manipulation.</p>
+<p class="dp-p"><strong>Training data:</strong> Task-specific demonstration datasets. In simulation, demonstrations generated via scripted policies or RL-trained experts. Typically 100-200 demonstrations per task.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated that simple 3D point cloud representations significantly improve policy generalization and sample efficiency compared to 2D image-based policies.</li>
+<li>Among the first diffusion policies evaluated on high-DoF dexterous hand tasks in simulation (Adroit benchmarks).</li>
+<li>Showed that a lightweight 3D encoder (~5M parameters) suffices for effective 3D policy learning, enabling real-time inference.</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>DP3</th>
+<th>Diffusion Policy (2D)</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>*(Consult the RSS 2024 paper for per-task success rates across 72 simulation tasks including Adroit dexterous hand benchmarks and gripper manipulation tasks.)*</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Requires depth cameras for point cloud generation, which are not always available or reliable in real-world settings.</li>
+<li>Simulation-only evaluation for dexterous hand tasks; no real-robot dexterous hand results.</li>
+<li>Point cloud processing can be noisy with real sensors, requiring additional filtering and processing.</li>
+<li>No language conditioning.</li>
+</ul>
+<p class="dp-p"><strong>Open weights/code:</strong> ✅ Code: <a href="https://github.com/YanjieZe/3D-Diffusion-Policy" target="_blank" rel="noopener">GitHub</a>. ✗ No pre-trained weights (task-specific training).</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> The lightweight 3D encoder (~5M parameters) and small diffusion action head (~25M total) enable fast inference. With DDIM acceleration, estimated ~10-20 Hz on a desktop GPU. Point cloud preprocessing (downsampling, normalization) adds minor overhead (~1-5ms).</li>
+<li><strong>Deployment hardware:</strong> Desktop GPU for inference. The ~30M parameter total model is lightweight, comparable to Diffusion Policy. Requires depth cameras for point cloud input.</li>
+<li><strong>Real-time capable?</strong> Yes, with DDIM acceleration. The lightweight 3D encoder was deliberately kept small to enable real-time inference. Comparable inference speed to Diffusion Policy (~10-20 Hz) with the added benefit of 3D spatial reasoning.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Task-specific demonstration datasets across 72 simulated tasks. Includes Adroit dexterous hand benchmarks (door, pen, hammer with 24-DoF Shadow hand in MuJoCo) and gripper manipulation tasks.</li>
+<li><strong>Collection method:</strong> Simulation demonstrations generated via scripted policies or RL-trained experts. Point cloud observations from simulated depth cameras. No real-robot dexterous hand data.</li>
+<li><strong>Data scale:</strong> 100-200 demonstrations per task across 72 simulation tasks.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (simulation demonstrations from scripted/RL-expert policies).</li>
+<li><strong>Data format:</strong> Point cloud observations (3D) + joint positions. Task-specific datasets.</li>
+<li><strong>Publicly available?</strong> Code at https://github.com/YanjieZe/3D-Diffusion-Policy. Simulation environments are standard (Adroit/MuJoCo).</li>
+</ul>
+<hr>

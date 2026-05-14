@@ -1,0 +1,72 @@
+<p class="dp-p"># 11.7 Ability Hand</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Ability Hand</li>
+<li><strong>Manufacturer:</strong> PSYONIC Inc. (Champaign, IL, USA)</li>
+<li><strong>Year:</strong> Commercially available (FDA 510(k) cleared; first commercial prosthetic with touch feedback)</li>
+<li><strong>DoF:</strong> 6 actuated (5 independent finger flexion/extension + wrist rotation in prosthetic version; robotics version may differ)</li>
+<li><strong>Cost:</strong> Commercial pricing (not publicly disclosed; prosthetic versions covered by insurance/VA in the US)</li>
+<li><strong>Tactile sensing:</strong> Integrated touch sensors in each fingertip (pressure-sensitive; provides sensory feedback in prosthetic application)</li>
+<li><strong>Actuation:</strong> High-speed DC motors; advertised as fastest prosthetic hand on the market</li>
+<li><strong>Certification:</strong> FDA 510(k) cleared for prosthetic use</li>
+</ul>
+<h2 class="dp-h2">Quantitative specs</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Spec</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Finger closing speed</td>
+<td><500 ms full close (among fastest commercially available)</td>
+</tr>
+<tr>
+<td>Grip force</td>
+<td>Sufficient for daily living tasks (specific N not publicly listed)</td>
+</tr>
+<tr>
+<td>Weight</td>
+<td>~450g (hand only, prosthetic version)</td>
+</tr>
+<tr>
+<td>Fingers</td>
+<td>5 independently actuated fingers</td>
+</tr>
+<tr>
+<td>Touch sensors</td>
+<td>Pressure sensors in all 5 fingertips</td>
+</tr>
+<tr>
+<td>Waterproofing</td>
+<td>IP rating for daily use (prosthetic version)</td>
+</tr>
+<tr>
+<td>Control interface</td>
+<td>sEMG (prosthetic); serial/API (research)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">The Ability Hand is a commercially manufactured dexterous hand originally designed as a prosthetic device. It features 6 DoF (5 independent finger actuations + wrist rotation), integrated fingertip touch sensors, and high-speed actuation. Unlike the research-oriented open-source hands in this section (LEAP, ORCA, ISyHand, RUKA, FAIVE), the Ability Hand is a mass-produced commercial product with FDA clearance and professional build quality. For robotics research, it provides a robust, sensor-equipped platform that does not require assembly or calibration.</p>
+<h2 class="dp-h2">Usage in surveyed works</h2>
+<p class="dp-p">The Ability Hand appears in this survey through:</p>
+<ul class="dp-list">
+<li><strong>UniDex-VLA</strong> (§2): one of 8 hands supported via the FAAS (Fingertip Action-Agnostic Space) framework, alongside Allegro, LEAP, Shadow, Inspire, Wuji, Oymotion, and XHand</li>
+<li><strong>Dex1B</strong> (§8): included as one of the embodiments in the 1B-demo grasp dataset</li>
+</ul>
+<h2 class="dp-h2">Main contributions (as a research platform)</h2>
+<ul class="dp-list">
+<li>Only commercially manufactured, FDA-cleared hand used in recent dexterous manipulation research</li>
+<li>Integrated fingertip touch sensors providing tactile feedback without aftermarket modification</li>
+<li>Professional build quality and reliability exceeding 3D-printed or lab-assembled alternatives</li>
+<li>Proven compatibility with VLA frameworks (UniDex-VLA FAAS)</li>
+<li>High actuation speed enabling dynamic manipulation tasks</li>
+</ul>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Commercial pricing makes it significantly more expensive than open-source alternatives (LEAP ~$3K, FAIVE ~$500-800)</li>
+<li>Closed-source hardware: no CAD files, firmware, or design modifications possible</li>
+<li>6 DoF is substantially lower than LEAP (16), ORCA (17), or ISyHand (18), limiting fine dexterity</li>
+<li>Originally designed for prosthetics, not robotics: control interface and form factor may not be optimized for research use</li>
+<li>Limited sim model availability: no official URDF/MJCF models for standard simulators, making sim-to-real pipelines harder to establish</li>
+<li>Touch sensor data format and API may not be standardized for robotics research workflows</li>
+</ul>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Closed-source commercial product. Available for purchase from <a href="https://www.psyonic.io/ability-hand" target="_blank" rel="noopener">psyonic.io</a>. No open-source design files.</p>

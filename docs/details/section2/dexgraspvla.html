@@ -1,0 +1,66 @@
+<h3 class="dp-h3">2.2 DexGraspVLA</h3>
+<p class="dp-p"><strong>Full title:</strong> DexGraspVLA: A Vision-Language-Action Framework for Dexterous Grasping</p>
+<p class="dp-p"><strong>Authors:</strong> Psi-Robot team et al.</p>
+<p class="dp-p"><strong>Venue/Year:</strong> AAAI 2026</p>
+<p class="dp-p"><strong>arXiv:</strong> <a href="https://arxiv.org/abs/2502.08142" target="_blank" rel="noopener">2502.08142</a></p>
+<p class="dp-p"><strong>Hand hardware:</strong> Custom dexterous hand (specific model and DoF count not publicly detailed at the abstracted level; the system is designed for multi-finger grasping)</p>
+<p class="dp-p"><strong>Tasks:</strong></p>
+<ul class="dp-list">
+<li>Dexterous grasping in cluttered environments</li>
+<li>Language-specified grasping (e.g., "grasp the red mug by its handle")</li>
+<li>Grasping under occlusion and varying object arrangements</li>
+</ul>
+<p class="dp-p"><strong>Key methodology:</strong> DexGraspVLA employs a two-stage architecture that separates high-level planning from low-level dexterous control. A large vision-language model (Qwen2.5-VL-72B) serves as the semantic planner, interpreting language instructions and visual scenes to determine grasp intent and target object. A diffusion-based controller then generates fine-grained dexterous grasp actions conditioned on the planner's output. Language is used both for task specification and for grounding object references in cluttered scenes.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong></p>
+<ul class="dp-list">
+<li>Planner: Qwen2.5-VL-72B (72 billion parameter vision-language model)</li>
+<li>Controller: diffusion-based action generation model</li>
+<li>The two-stage design keeps the large VLM frozen for planning while training a smaller diffusion controller for dexterous actions</li>
+<li>Controller checkpoint publicly available (Google Drive)</li>
+</ul>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated that very large VLMs (72B) can serve as effective planners for dexterous grasping when combined with a dedicated diffusion controller</li>
+<li>Two-stage architecture that decouples semantic understanding (VLM) from motor control (diffusion), allowing each component to be optimized independently</li>
+<li>Language-conditioned dexterous grasping in cluttered real-world scenarios, moving beyond single-object or isolated grasping settings</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Relies on an extremely large VLM (72B parameters), raising questions about inference latency and deployment feasibility for real-time control</li>
+<li>Grasping-only: does not address post-grasp manipulation, in-hand reorientation, or tool use</li>
+<li>No force or tactile feedback integration; grasps are planned purely from vision and language</li>
+<li>Limited to a single hand hardware platform; no cross-embodiment evaluation</li>
+</ul>
+<p class="dp-p"><strong>Results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Grasping success rate</td>
+<td>"90%+" (approximate, as reported)</td>
+<td>Cluttered environments</td>
+</tr>
+</tbody></table></div>
+<blockquote class="dp-quote"><strong>[EDITORIAL NOTE -- precision needed]:</strong> The "90%+" figure is an approximate claim from the original entry. The exact success rate, the number of objects tested, the number of evaluation trials, and the specific clutter conditions must be extracted from the full paper (arXiv 2502.08142). Without these details, the claim cannot be properly contextualized. Key questions: (1) What is the exact percentage? (2) Over how many objects and trials? (3) What defines "cluttered" -- how many distractor objects? (4) Is this real-world or simulation?</blockquote>
+<ul class="dp-list">
+<li>Outperforms prior language-conditioned grasping baselines (specific baseline names and margins should be extracted from the paper)</li>
+<li>Controller checkpoint released (Google Drive)</li>
+<li>Code released at <a href="https://github.com/Psi-Robot/DexGraspVLA" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The use of a 72B-parameter VLM (Qwen2.5-VL-72B) as the planner raises significant latency concerns, though the VLM may operate at a slower planning frequency while the diffusion controller runs at a higher action frequency.</li>
+<li><strong>Deployment hardware:</strong> Not specified. Training hardware uses 8 NVIDIA H100 GPUs. The 72B VLM inference requires substantial GPU memory (likely multi-GPU or quantized deployment).</li>
+<li><strong>Real-time capable?</strong> Likely constrained by the 72B VLM inference. The two-stage architecture (VLM planner + diffusion controller) may mitigate this if the VLM plans at a lower frequency, but specific latency figures are not publicly available.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom human demonstration dataset. A small example dataset (51 samples) is provided for training understanding.</li>
+<li><strong>Collection method:</strong> Human demonstrations. Specific teleoperation equipment details are not disclosed due to intellectual property constraints ("Due to intellectual property constraints, we are unable to open-source the hardware-related code").</li>
+<li><strong>Data scale:</strong> Example dataset contains 51 demonstration samples. Full training dataset scale not disclosed.</li>
+<li><strong>Teleop equipment:</strong> Not disclosed (IP-restricted).</li>
+<li><strong>Data format:</strong> Zarr format. Each sample contains: action data (13 DoF -- robotic arm and hand), state data (13 DoF), third-view head camera images (RGB + binary mask, 4 channels), first-view wrist camera images (RGB, 3 channels), and episode segmentation metadata.</li>
+<li><strong>Publicly available?</strong> Example dataset (51 demos) available via Google Drive. Controller checkpoint available on Google Drive. Full training dataset availability not confirmed. Code at <a href="https://github.com/Psi-Robot/DexGraspVLA" target="_blank" rel="noopener">GitHub</a>.</li>
+</ul>

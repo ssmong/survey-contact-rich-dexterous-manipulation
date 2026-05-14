@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.4 DemoStart</h3>
+<p class="dp-p"><strong>Full title:</strong> DemoStart: Demonstration-Bootstrapped Autonomous Reinforcement Learning for Dexterous Manipulation</p>
+<p class="dp-p"><strong>Authors:</strong> Nick Heppert, Constantinos Chamzas, et al. (Google DeepMind)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> ICRA 2025 (submitted 2024)</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2409.06613</p>
+<p class="dp-p"><strong>RL algorithm:</strong> Demonstration-bootstrapped autonomous RL. Uses a small number of teleoperated demonstrations to initialize the replay buffer, then continues training with autonomous RL (SAC-based). Automatic reset mechanisms enable continuous real-world training.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> DEX-EE (3-finger dexterous end-effector, custom Google DeepMind hardware)</p>
+<p class="dp-p"><strong>Sim platform:</strong> MuJoCo (for initial prototyping); primary training done on real hardware</p>
+<p class="dp-p"><strong>Sim2Real?</strong> Yes -- but the emphasis is on real-world RL rather than sim-to-real transfer. Demonstrations bootstrap real-world learning, and the robot trains autonomously in the real world with automatic resets (real).</p>
+<p class="dp-p"><strong>Tasks:</strong> (1) Plug insertion -- grasping a plug and inserting it into a socket (contact-rich, tight tolerances); (2) Cube reorientation -- in-hand rotation of a cube to target orientations. Both tasks require precise dexterous control.</p>
+<p class="dp-p"><strong>Key methodology:</strong> DemoStart addresses the sample efficiency problem of real-world RL for dexterous manipulation. Instead of sim-to-real transfer (which introduces a reality gap), DemoStart bootstraps learning with a handful of teleoperated demonstrations, then lets the robot train autonomously in the real world. Automatic reset mechanisms (scripted return-to-home behaviors) enable hours of unattended training. This approach avoids the sim-to-real gap entirely while using demonstrations to overcome the initial exploration challenge.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated autonomous real-world RL for dexterous manipulation, avoiding the sim-to-real gap entirely (real)</li>
+<li>Showed that a small number of demonstrations (5-10) can bootstrap effective exploration for contact-rich tasks</li>
+<li>Achieved high success rates on plug insertion and cube reorientation through real-world training (real)</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Requires custom hardware (DEX-EE) with automatic resets -- not easily reproducible. Real-world training is slow (hours of robot time per task). Limited to 2 tasks. The DEX-EE is a 3-finger hand with fewer DoF than full dexterous hands (Shadow, Allegro). Code not publicly available.</p>
+<p class="dp-p"><strong>Results:</strong> Achieved high success rates on both tasks after autonomous real-world training (real). Demonstrated that demo-bootstrapped real-world RL is competitive with sim-to-real approaches on these tasks.</p>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Small set of teleoperated demonstrations (5-10 per task) to bootstrap autonomous RL. No large pre-collected dataset.</li>
+<li><strong>Collection method:</strong> RL + human demos (DAPG-style, but real-world). A small number of teleoperated demonstrations (5-10) initialize the replay buffer, then autonomous RL (SAC-based) continues training in the real world with automatic resets. Primarily trained on real hardware (DEX-EE 3-finger hand), not sim-to-real transfer. MuJoCo used for initial prototyping only.</li>
+<li><strong>Data scale:</strong> 5-10 demonstrations per task for bootstrapping. Hours of autonomous real-world RL training per task. 2 tasks (plug insertion, cube reorientation).</li>
+<li><strong>Teleop equipment:</strong> Teleoperation interface for DEX-EE (specific device not reported; Google DeepMind custom hardware).</li>
+<li><strong>Data format:</strong> Real-world replay buffer (states, actions, rewards) from autonomous RL training.</li>
+<li><strong>Publicly available?</strong> No. Code not publicly available. Custom Google DeepMind hardware (DEX-EE) limits reproducibility.</li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not explicitly reported. The SAC-based policy (MLP) runs in <1ms per forward pass. Primary training is on real hardware (not sim-to-real).</li>
+<li><strong>Deployment hardware:</strong> DEX-EE (3-finger dexterous end-effector, custom Google DeepMind hardware). Trained primarily on real hardware with autonomous RL and automatic resets.</li>
+<li><strong>Real-time capable?</strong> Yes. Real-world RL training and deployment both require real-time policy execution. Demonstrated on real DEX-EE hardware.</li>
+</ul>

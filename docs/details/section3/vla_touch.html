@@ -1,0 +1,38 @@
+<h2 class="dp-h2">3.12 VLA-Touch</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> VLA-Touch: Vision-Language-Action Model with Tactile Sensing for Contact-Rich Manipulation</li>
+<li><strong>Authors:</strong> National University of Singapore (NUS) et al.</li>
+<li><strong>Venue/Year:</strong> arXiv preprint, 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2507.17294</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> GelSight vision-based tactile sensor providing high-resolution contact images.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> No direct force output. Uses a residual correction mechanism -- the tactile signal drives a learned residual that corrects the base VLA's position-only action output. This provides implicit force-reactive behavior without explicit force targets.</p>
+<blockquote class="dp-quote"><strong>Limitation (position-only output):</strong> Position-only output; the policy cannot actively regulate contact forces despite receiving force/tactile input.</blockquote>
+<p class="dp-p"><strong>Robot platform:</strong> Robotic arm + parallel-jaw gripper equipped with GelSight sensors.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> Contact-rich manipulation tasks requiring tactile feedback for success.</p>
+<p class="dp-p"><strong>Key methodology:</strong> VLA-Touch uses a two-stage architecture: a pretrained VLA generates base position actions from vision and language, and a tactile residual module corrects these actions based on GelSight tactile images. The residual module is a lightweight network trained on contact-rich task data. The key insight is that the pretrained VLA provides good coarse motion plans from visual understanding, while the tactile residual provides fine-grained corrections during contact phases. This separation allows the system to leverage large-scale VLA pretraining without requiring tactile data during pretraining.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Two-stage: pretrained VLA (frozen or fine-tuned) + tactile residual correction network. The residual network is a lightweight CNN that processes GelSight images and outputs a position correction (delta) that is added to the VLA's base action.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposes a tactile residual correction approach that adds tactile reactivity to any pretrained VLA without modifying the VLA architecture or requiring tactile data during VLA pretraining.</li>
+<li>Releases code and model checkpoints (available on GitHub and HuggingFace), making it one of the most reproducible tactile VLA approaches.</li>
+<li>Demonstrates that a lightweight residual module can effectively bridge the gap between coarse VLA actions and fine-grained contact-rich requirements.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> The residual correction is applied in position space, not force space -- the system cannot explicitly command desired forces. The two-stage design may introduce latency compared to end-to-end approaches. Limited to GelSight tactile sensors; generalization to other tactile modalities is not demonstrated.</p>
+<p class="dp-p"><strong>Results:</strong> VLA-Touch improves success rates on contact-rich tasks compared to the base VLA without tactile input. Code and checkpoints are publicly available on GitHub and HuggingFace.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The two-stage design (pretrained VLA + tactile residual) may introduce additional latency compared to end-to-end approaches, but no specific latency figures are provided.</li>
+<li><strong>Deployment hardware:</strong> Robotic arm + parallel-jaw gripper with GelSight sensors. Inference hardware not specified.</li>
+<li><strong>Real-time capable?</strong> Not verified. The lightweight tactile residual network (CNN) should add minimal overhead to the base VLA inference, but no quantitative latency benchmarks are provided.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom contact-rich manipulation task demonstrations with GelSight tactile data. The paper notes "the absence of large multi-modal datasets" as a challenge and designs an approach that does not require tactile data during VLA pretraining.</li>
+<li><strong>Collection method:</strong> Demonstrations collected with GelSight vision-based tactile sensors for the tactile residual module training. The base VLA is pretrained on standard vision-language-action data.</li>
+<li><strong>Data scale:</strong> Not reported.</li>
+<li><strong>Teleop equipment:</strong> Not reported.</li>
+<li><strong>Data format:</strong> Not reported.</li>
+<li><strong>Publicly available?</strong> Yes. Code and model checkpoints released on GitHub and HuggingFace.</li>
+</ul>

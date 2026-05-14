@@ -1,0 +1,56 @@
+<h3 class="dp-h3">7.1 DexGrasp Anything</h3>
+<p class="dp-p"><strong>Full title:</strong> DexGrasp Anything: Learning Universal Dexterous Grasping with Diffusion Models</p>
+<p class="dp-p"><strong>Authors:</strong> Jiayi Chen, Yubin Ke, Renxin Zhong, Shilong Mu, Hao-Shu Fang, Cewu Lu</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CVPR 2025 (Highlight)</p>
+<p class="dp-p"><strong>RL algorithm:</strong> Diffusion model (denoising diffusion probabilistic model for grasp pose generation); not standard RL but a generative approach</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Shadow Hand (24 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No</p>
+<p class="dp-p"><strong>Object count:</strong> 15,000+ objects; 3.4 million generated grasps across the dataset</p>
+<p class="dp-p"><strong>Tasks:</strong> Universal dexterous grasp synthesis for arbitrary objects, including challenging thin, small, and articulated objects</p>
+<p class="dp-p"><strong>Key methodology:</strong> Trains a diffusion model to generate dexterous grasp poses conditioned on object point clouds. The model learns the distribution of successful grasps from a large-scale simulated dataset, then generates diverse grasp proposals at inference via iterative denoising. A physics-based discriminator filters generated grasps for feasibility and stability.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Diffusion-based grasp generation enabling diverse, multi-modal grasp sampling for each object</li>
+<li>Largest dexterous grasping dataset at time of publication (3.4M grasps, 15K+ objects)</li>
+<li>Handles challenging object categories (thin, small, articulated) where optimization-based methods struggle</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Object set size</td>
+<td>15,000+</td>
+</tr>
+<tr>
+<td>Generated grasps</td>
+<td>3.4M</td>
+</tr>
+<tr>
+<td>Hand</td>
+<td>Shadow (24 DoF)</td>
+</tr>
+<tr>
+<td>Evaluation</td>
+<td>Simulation only (sim)</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Simulation-only; Shadow Hand only; open-loop grasp generation without execution policy; diffusion sampling speed may limit real-time deployment; no demonstration of closed-loop grasping with the generated poses</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Diffusion-based grasp pose generation requires multiple denoising steps (50-500ms per grasp on a modern GPU). This is offline grasp generation, not real-time control.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacGym). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> No, for grasp generation (diffusion sampling is offline). The generated grasp poses could be executed by a real-time controller, but the full pipeline was not demonstrated in real-time.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom large-scale simulated dexterous grasping dataset. 3.4 million generated grasps across 15,000+ objects.</li>
+<li><strong>Collection method:</strong> Diffusion model trained on simulated grasp data. Grasps generated in IsaacGym via simulation rollouts with physics-based discriminator filtering for feasibility and stability. Shadow Hand (24 DoF).</li>
+<li><strong>Data scale:</strong> 3.4 million grasps, 15,000+ objects. Largest dexterous grasping dataset at time of publication.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (simulated grasp generation, no demonstrations).</li>
+<li><strong>Data format:</strong> Object point clouds + grasp poses. Specific file format not reported.</li>
+<li><strong>Publicly available?</strong> Dataset release status not reported.</li>
+</ul>

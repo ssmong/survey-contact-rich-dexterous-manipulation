@@ -1,0 +1,37 @@
+<h3 class="dp-h3">7.3 ComFree-Sim</h3>
+<h3 class="dp-h3">Model-Based MPC (not RL)</h3>
+<p class="dp-p"><strong>Note: Model-based trajectory optimization/MPC, not RL.</strong></p>
+<p class="dp-p"><strong>Full title:</strong> Complementarity-Free Dexterous Manipulation on GPU (ComFree-Sim)</p>
+<p class="dp-p"><strong>Authors:</strong> Not fully verified (2026 preprint)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv 2026</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2603.12185</p>
+<p class="dp-p"><strong>Method:</strong> GPU-parallel complementarity-free contact simulation for trajectory optimization and MPC. Extends the complementarity-free approach to run on NVIDIA Warp for massively parallel contact computation.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> LEAP Hand (16 DoF)</p>
+<p class="dp-p"><strong>Sim platform:</strong> Custom simulator built on NVIDIA Warp</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No. Simulation-only.</p>
+<p class="dp-p"><strong>Tasks:</strong> Multi-finger contact-rich manipulation with the LEAP Hand. Contact-mode-switching tasks similar to the complementarity-free line of work but parallelized across thousands of environments.</p>
+<p class="dp-p"><strong>Key methodology:</strong> ComFree-Sim takes the complementarity-free differentiable contact model and implements it on GPU using NVIDIA Warp, enabling thousands of parallel contact simulations. This bridges the gap between the physical accuracy of contact-implicit optimization and the parallelism of RL simulation platforms like IsaacGym. The GPU backend enables both massively parallel MPC rollouts and potential integration with RL training loops.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Ported complementarity-free contact simulation to GPU (NVIDIA Warp), achieving large-scale parallelism</li>
+<li>Enabled thousands of parallel contact-rich manipulation simulations, previously limited to single-environment CPU computation</li>
+<li>Demonstrated the LEAP Hand as a target platform, broadening applicability beyond Drake/Allegro setups</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Very recent preprint (2026) with limited external validation. No sim-to-real results. Code not publicly available as of survey date. The NVIDIA Warp ecosystem is less mature than IsaacGym/MuJoCo for full RL workflows.</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<p class="dp-p"><strong>Results:</strong> Achieved GPU-parallel contact simulation for LEAP Hand manipulation (sim). Specific quantitative results pending further publication.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> GPU-parallel complementarity-free simulation enables massively parallel contact computation. Specific Hz for single-instance MPC not reported, but GPU parallelism is designed for real-time or faster-than-real-time operation.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (NVIDIA Warp). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Designed for real-time GPU-parallel MPC, but real-hardware deployment not demonstrated.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No dataset. GPU-parallel complementarity-free contact simulation for trajectory optimization/MPC.</li>
+<li><strong>Collection method:</strong> Not applicable. Extends the complementarity-free differentiable contact model to NVIDIA Warp for massively parallel contact computation. No training data -- model-based approach. Enables both parallel MPC rollouts and potential integration with RL training.</li>
+<li><strong>Data scale:</strong> Not applicable (model-based simulation framework).</li>
+<li><strong>Teleop equipment:</strong> Not applicable.</li>
+<li><strong>Data format:</strong> Not applicable.</li>
+<li><strong>Publicly available?</strong> Code not publicly available as of survey date (2026 preprint).</li>
+</ul>

@@ -1,0 +1,60 @@
+<p class="dp-p"># 12.2 UniTouch</p>
+<ul class="dp-list">
+<li><strong>Full title:</strong> UniTouch: Universal Touch Representation for Robot Manipulation</li>
+<li><strong>Authors:</strong> Che Fang and collaborators (UCSD)</li>
+<li><strong>Venue/Year:</strong> CVPR 2024</li>
+<li><strong>Sensors supported:</strong> Multiple vision-based tactile sensors</li>
+<li><strong>Alignment:</strong> Touch-vision-language-sound multimodal alignment</li>
+<li><strong>Pretraining method:</strong> Contrastive learning aligning tactile representations with vision, language, and audio modalities</li>
+</ul>
+<h2 class="dp-h2">Key methodology/design</h2>
+<p class="dp-p">UniTouch learns a unified tactile representation by aligning touch signals with three other modalities: vision, language, and sound. Using contrastive learning (CLIP-style), UniTouch maps tactile images into a shared embedding space with visual images, text descriptions, and audio recordings of contact events. This multimodal alignment enables zero-shot transfer: a tactile representation can be queried with language ("rough surface") or matched to visual appearance without tactile-specific labels. The approach draws on the insight that touch, vision, language, and sound provide complementary descriptions of physical contact.</p>
+<h2 class="dp-h2">Main contributions</h2>
+<ul class="dp-list">
+<li>First touch-vision-language-sound alignment model, enabling cross-modal queries (e.g., "find the texture that feels like sandpaper" from vision or language)</li>
+<li>Zero-shot tactile classification through language-tactile alignment without task-specific training</li>
+<li>Unified representation space enabling tactile data to benefit from the rich semantics of language and vision encoders</li>
+<li>Demonstrated on multiple downstream tasks including material classification and contact property estimation</li>
+</ul>
+<h2 class="dp-h2">Quantitative results</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Task</th>
+<th>Metric</th>
+<th>UniTouch</th>
+<th>Vision-only baseline</th>
+<th>Touch-only baseline</th>
+</tr></thead><tbody>
+<tr>
+<td>Material classification (zero-shot)</td>
+<td>Accuracy (%)</td>
+<td>Enabled via language alignment</td>
+<td>Not applicable</td>
+<td>Not applicable (requires labels)</td>
+</tr>
+<tr>
+<td>Cross-modal retrieval (touch-to-vision)</td>
+<td>Recall@K</td>
+<td>Demonstrated</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Contact property estimation</td>
+<td>Regression error</td>
+<td>Competitive with supervised</td>
+<td>Vision-only worse for contact properties</td>
+<td>Better for contact-specific tasks</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">*Note: UniTouch's primary advantage is enabling zero-shot and cross-modal capabilities that single-modality models cannot perform. Direct accuracy comparisons with supervised baselines are task-dependent.*</p>
+<h2 class="dp-h2">Limitations/Gaps</h2>
+<ul class="dp-list">
+<li>Multimodal alignment quality depends heavily on the availability and quality of paired touch-vision-language-sound data, which is scarce</li>
+<li>Sound modality is useful for impact/contact events but less informative for quasi-static manipulation (grasping, sliding)</li>
+<li>Representation is optimized for classification/retrieval tasks; utility for closed-loop manipulation policy learning is not demonstrated</li>
+<li>Limited to vision-based tactile sensors; non-visual tactile modalities are not supported</li>
+</ul>
+<h2 class="dp-h2">Shared limitation</h2>
+<p class="dp-p">Like all tactile representation models in this section, UniTouch does not demonstrate integration into closed-loop manipulation policies. See <a href="sparsh.md#shared-limitation-no-closed-loop-policy-integration" target="_blank" rel="noopener">Sparsh</a> for a detailed discussion of this shared limitation.</p>
+<h2 class="dp-h2">Open-source status</h2>
+<p class="dp-p">Open-source (code + pretrained weights). GitHub: <a href="https://github.com/cfeng16/UniTouch" target="_blank" rel="noopener">cfeng16/UniTouch</a></p>

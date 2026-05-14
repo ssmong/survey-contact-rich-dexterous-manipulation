@@ -1,0 +1,55 @@
+<h3 class="dp-h3">OpenVLA-OFT: Open Vision-Language-Action Model with Optimal Fine-Tuning</h3>
+<p class="dp-p"><strong>Full title:</strong> Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success</p>
+<p class="dp-p"><strong>Authors:</strong> Moo Jin Kim, Karl Pertsch, Siddharth Karamcheti, Suraj Nair, Ashwin Balakrishna, Sergey Levine, Percy Liang, Chelsea Finn</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2025</p>
+<p class="dp-p"><strong>Architecture:</strong> Built on OpenVLA 7B with three key modifications: (1) parallel action decoding replacing sequential autoregressive generation, (2) continuous action outputs replacing discrete token bins, and (3) a lightweight FiLM-conditioned action head appended after the VLM backbone. The VLM backbone remains Prismatic (SigLIP + DinoV2 + Llama 2 7B).</p>
+<p class="dp-p"><strong>Action space:</strong> 7D or 14D (for bimanual ALOHA: dual 6-DoF arms + 2 grippers), now decoded as continuous values in parallel rather than as sequential discrete tokens. Supports action chunking (multiple future timesteps per forward pass).</p>
+<p class="dp-p"><strong>Dex hand support?</strong> ✗ --- Designed for single-arm gripper and bimanual ALOHA gripper setups.</p>
+<p class="dp-p"><strong>Force/impedance output?</strong> ✗ --- Position targets only.</p>
+<p class="dp-p"><strong>Key methodology:</strong> OpenVLA-OFT addresses the inference speed bottleneck of autoregressive VLAs by replacing sequential token decoding with parallel continuous action prediction. A FiLM-conditioned action head processes the VLM's output embeddings to produce all action dimensions simultaneously. Combined with action chunking and fine-tuning recipe optimizations (learning rate scheduling, data augmentation), this achieves 26x faster inference than OpenVLA while improving task success rates. The work demonstrates that the autoregressive action tokenization used by RT-2 and OpenVLA is suboptimal.</p>
+<p class="dp-p"><strong>Training data:</strong> Same OXE pretraining as OpenVLA. Fine-tuning evaluated on Bridge V2 and ALOHA bimanual tasks.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Achieved 26x faster inference over OpenVLA by eliminating sequential action decoding.</li>
+<li>Demonstrated that continuous parallel action outputs outperform discrete tokenized actions in both speed and accuracy.</li>
+<li>Provided a systematic study of fine-tuning recipes for VLAs, identifying optimal learning rates, augmentation strategies, and action representation choices.</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>OpenVLA-OFT</th>
+<th>OpenVLA</th>
+<th>Speedup</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>*(Results not independently verified --- consult the RSS 2025 paper for per-task success rates on Bridge V2 and ALOHA bimanual benchmarks. The paper reports 26x inference speedup with improved success rates.)*</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Still limited to gripper-based systems; the 7/14D action space does not extend to dexterous hands.</li>
+<li>Relies on the same Prismatic VLM backbone, inheriting its single-view limitation.</li>
+<li>No force/compliance awareness.</li>
+</ul>
+<p class="dp-p"><strong>Open weights/code:</strong> ✅ Fully open. <a href="https://github.com/moojink/openvla-oft" target="_blank" rel="noopener">GitHub</a>, <a href="https://huggingface.co/openvla/openvla-7b-oft" target="_blank" rel="noopener">HuggingFace</a>.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> OpenVLA-OFT achieves 26x faster inference than OpenVLA by replacing sequential autoregressive decoding with parallel continuous action prediction. This corresponds to approximately 100-150 Hz for action head decoding (though total system throughput depends on image encoding). With action chunking, the effective control rate is substantially higher than the per-inference frequency.</li>
+<li><strong>Deployment hardware:</strong> Same 7B parameter VLM backbone as OpenVLA, requiring a GPU (A100 or consumer RTX 4090 class) for inference. The parallel action head is lightweight (FiLM-conditioned MLP), so the speedup comes from eliminating sequential token decoding, not from model size reduction.</li>
+<li><strong>Real-time capable?</strong> Yes. The 26x speedup over OpenVLA brings inference to a level suitable for real-time manipulation control. Combined with action chunking, the system can maintain smooth control at manipulation-appropriate frequencies. This is a critical improvement for practical VLA deployment.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Same OXE pretraining as OpenVLA (970K episodes, 22 embodiments). Fine-tuning evaluated on Bridge V2 and ALOHA bimanual tasks.</li>
+<li><strong>Collection method:</strong> Same as OpenVLA -- aggregated cross-embodiment teleoperation data from OXE. Fine-tuning demonstrations collected via respective teleoperation systems (SpaceMouse for Bridge V2, leader-follower for ALOHA).</li>
+<li><strong>Data scale:</strong> 970K episodes (pretraining, inherited from OpenVLA). Fine-tuning scale varies by task.</li>
+<li><strong>Teleop equipment:</strong> Inherited from OXE constituent datasets.</li>
+<li><strong>Data format:</strong> RLDS (TensorFlow Datasets) for OXE pretraining data.</li>
+<li><strong>Publicly available?</strong> Yes. Same as OpenVLA -- OXE is public. OFT weights at https://huggingface.co/openvla/openvla-7b-oft.</li>
+</ul>
+<hr>

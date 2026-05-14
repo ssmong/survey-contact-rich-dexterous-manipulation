@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.3 DexArt</h3>
+<p class="dp-p"><strong>Full title:</strong> DexArt: Benchmarking Generalizable Dexterous Manipulation with Articulated Objects</p>
+<p class="dp-p"><strong>Authors:</strong> Chen Bao, Helin Xu, Yuzhe Qin, Xiaolong Wang</p>
+<p class="dp-p"><strong>Venue/Year:</strong> CVPR 2023</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2305.05706</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with point-cloud observations. Trains with domain randomization over articulated object instances to achieve generalization.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Allegro Hand (16 DoF) mounted on a floating base (no arm)</p>
+<p class="dp-p"><strong>Sim platform:</strong> SAPIEN (PhysX backend)</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No. Simulation-only benchmark.</p>
+<p class="dp-p"><strong>Tasks:</strong> 4 articulated object manipulation tasks: (1) faucet turning -- rotate faucet handles of varying geometry; (2) laptop opening -- open laptop lids with different hinge configurations; (3) bucket lifting -- grasp and lift buckets by handles; (4) toilet lid -- open/close toilet seats. Each task includes multiple object instances with varying geometry for generalization evaluation.</p>
+<p class="dp-p"><strong>Key methodology:</strong> DexArt addresses dexterous manipulation of articulated objects, which requires understanding joint constraints and contact dynamics beyond rigid-body grasping. The benchmark uses point-cloud observations and trains across diverse object instances within each category, evaluating both in-distribution and out-of-distribution generalization. The approach reveals that naive RL struggles with articulated objects due to the combinatorial complexity of multi-finger contact with articulated joints.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Introduced the first benchmark specifically for dexterous manipulation of articulated objects with generalization evaluation</li>
+<li>Demonstrated that point-cloud-based RL policies can generalize across object instances within a category</li>
+<li>Identified key challenges: contact-rich articulated manipulation requires understanding of joint constraints that simple reward shaping does not capture</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Sim-only, no real-world validation. Floating hand (no arm) simplifies the problem. Limited to 4 task categories. Performance degrades significantly on out-of-distribution object instances.</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<p class="dp-p"><strong>Results:</strong> Achieved reasonable success rates on in-distribution objects but showed substantial drops on novel instances, highlighting the generalization challenge (sim). Code and pretrained weights publicly available.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The MLP policy with point cloud encoder runs in <5ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (SAPIEN). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, for the policy itself. However, only simulation evaluation was performed.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> No pre-collected dataset. Pure RL (PPO) with point-cloud observations in SAPIEN simulator.</li>
+<li><strong>Collection method:</strong> Pure RL in SAPIEN (PhysX backend). Domain randomization over articulated object instances within each category. 4 task categories: faucet turning, laptop opening, bucket lifting, toilet lid. Each category includes multiple object instances with varying geometry.</li>
+<li><strong>Data scale:</strong> Multiple articulated object instances per category for training and out-of-distribution generalization evaluation.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>Publicly available?</strong> Yes -- code and pretrained weights publicly available.</li>
+</ul>

@@ -1,0 +1,85 @@
+<h3 class="dp-h3">SpatialVLA: Exploring Spatial Representations for Visual-Language-Action Model</h3>
+<p class="dp-p"><strong>Full title:</strong> SpatialVLA: Exploring Spatial Representations for Visual-Language-Action Model</p>
+<p class="dp-p"><strong>Authors:</strong> Delin Qu, Haoming Song, Qizhi Chen, Yuanqi Yao, Xinyi Ye, Yan Ding, Zhigang Wang, JiaYuan Gu, Bin Zhao, Dong Wang, Xuelong Li (Shanghai AI Laboratory, Fudan University, Shanghai Jiao Tong University, Zhejiang University, ShanghaiTech University, Northwestern Polytechnical University)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> RSS 2025</p>
+<p class="dp-p"><strong>Architecture:</strong> 3.5B parameter VLA built on the PaliGemma2 VLM backbone. The vision encoder is SigLIP, and the language model is Gemma 2. SpatialVLA introduces two spatial modules on top of this backbone: (1) Ego3D Position Encoding, which integrates monocular depth (from ZoeDepth) with 2D semantic features via camera back-projection and sinusoidal encoding + learnable MLPs, injecting 3D spatial awareness into visual tokens; and (2) Adaptive Action Grids, which discretize continuous 7D actions into 3 spatial tokens (translation + rotation + gripper) using a Gaussian-fitted non-uniform grid with 8,194 vocabulary entries, replacing the standard 7-token-per-step linear binning.</p>
+<p class="dp-p"><strong>Action space:</strong> 7D (3D translation + 3D rotation + gripper), discretized into 3 spatial tokens per step via Adaptive Action Grids. The grid partitions are fitted to per-dimension Gaussian action distributions, concentrating resolution where actions are dense. During fine-tuning, grids can be re-adapted via trilinear interpolation of token embeddings.</p>
+<p class="dp-p"><strong>Dex hand support?</strong> ✗ --- Gripper-only (single-arm) evaluation.</p>
+<p class="dp-p"><strong>Force/impedance output?</strong> ✗ --- Position targets only.</p>
+<p class="dp-p"><strong>Key methodology:</strong> SpatialVLA addresses the observation that standard VLAs lack explicit 3D spatial understanding, which limits precise manipulation. Ego3D Position Encoding injects egocentric 3D coordinates into visual tokens without requiring external 3D sensors --- only RGB + monocular depth estimation. Adaptive Action Grids reduce the number of action tokens from 7 to 3 per step while preserving precision by concentrating discretization bins where actions are statistically dense, improving both inference speed and action quality. The model is pretrained on 1.1M real-world robot episodes and supports zero-shot transfer and LoRA fine-tuning.</p>
+<p class="dp-p"><strong>Training data:</strong> Pretrained on 1.1M real-world robot episodes from a mixture of Open X-Embodiment (OXE) subsets and RH20T. Fine-tuned on downstream tasks including Google Fractal, BridgeData V2, and LIBERO (50 demonstrations per task). Training: 10 days on 64 A100 GPUs, batch size 2,048.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Introduced Ego3D Position Encoding to inject monocular-depth-derived 3D spatial information into VLA visual tokens, improving spatial reasoning without requiring depth sensors at test time.</li>
+<li>Proposed Adaptive Action Grids that reduce action tokens from 7 to 3 per step while maintaining precision via distribution-aware non-uniform discretization, enabling ~20 Hz inference.</li>
+<li>Achieved the highest reported zero-shot and fine-tuned scores on SimplerEnv benchmarks among models at or below 3.5B parameters (as of RSS 2025), competitive with models 15x larger (RT-2-X 55B).</li>
+</ul>
+<p class="dp-p"><strong>Quantitative results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>SpatialVLA (zero-shot)</th>
+<th>SpatialVLA (fine-tuned)</th>
+<th>OpenVLA</th>
+<th>Octo</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>SimplerEnv Google Robot (visual matching)</td>
+<td>71.9%</td>
+<td>75.1%</td>
+<td>~49%</td>
+<td>—</td>
+<td>+15.6% over RoboVLM zero-shot</td>
+</tr>
+<tr>
+<td>SimplerEnv Google Robot (variant agg.)</td>
+<td>68.8%</td>
+<td>70.7%</td>
+<td>—</td>
+<td>—</td>
+<td></td>
+</tr>
+<tr>
+<td>SimplerEnv WidowX (zero-shot)</td>
+<td>34.4%</td>
+<td>42.7%</td>
+<td>—</td>
+<td>—</td>
+<td>100% on eggplant task after FT</td>
+</tr>
+<tr>
+<td>LIBERO average (fine-tuned)</td>
+<td>—</td>
+<td>78.1%</td>
+<td>76.5%</td>
+<td>75.1%</td>
+<td>Ranked 1st; LIBERO-Spatial: 88.2%</td>
+</tr>
+<tr>
+<td>Inference speed</td>
+<td>~20 Hz (RTX 4090, 8.5 GB)</td>
+<td></td>
+<td>~5 Hz</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Limitations/Gaps:</strong></p>
+<ul class="dp-list">
+<li>Gaussian fitting for action grids is suboptimal for distributions with extreme single-axis motions, which can cause grid clustering and capability loss.</li>
+<li>Autoregressive decoding is inherently slower than diffusion-based action heads for high-frequency control.</li>
+<li>No history/temporal context mechanism; relies on single-frame observations, limiting long-horizon task performance (struggles on LIBERO-Long).</li>
+<li>Variable quality in the OXE dataset hinders training efficiency; data curation/distillation is needed.</li>
+<li>Gripper-only; no dexterous hand or force-aware evaluation.</li>
+</ul>
+<p class="dp-p"><strong>Open weights/code:</strong> ✅ Code and weights: <a href="https://spatialvla.github.io/" target="_blank" rel="noopener">project page</a>. Authors state all code and details are open-sourced.</p>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Open X-Embodiment (OXE) subsets + RH20T for pretraining. BridgeData V2, Google Fractal, LIBERO for fine-tuning.</li>
+<li><strong>Collection method:</strong> Aggregated cross-embodiment data from OXE. Fine-tuning demonstrations from standard benchmarks.</li>
+<li><strong>Data scale:</strong> 1.1M real-world robot episodes for pretraining. Fine-tuning: 50 demonstrations per task (LIBERO), 6 episodes (Fractal).</li>
+<li><strong>Teleop equipment:</strong> Varies by OXE constituent dataset.</li>
+<li><strong>Data format:</strong> RLDS (OXE standard).</li>
+<li><strong>Publicly available?</strong> OXE and RH20T are public. Model weights available via project page.</li>
+</ul>
+<hr>

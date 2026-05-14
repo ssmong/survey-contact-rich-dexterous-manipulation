@@ -1,0 +1,36 @@
+<h3 class="dp-h3">7.4 DexDrummer</h3>
+<p class="dp-p"><strong>Full title:</strong> DexDrummer: Dexterous Drumming via Reinforcement Learning</p>
+<p class="dp-p"><strong>Authors:</strong> Hao-Chun Fang, Kenneth Shaw, Deepak Pathak, et al. (Stanford)</p>
+<p class="dp-p"><strong>Venue/Year:</strong> arXiv 2026</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2603.22263</p>
+<p class="dp-p"><strong>Musical instrument differentiation:</strong> Distinguished by tool grasping (drumstick) and impact force control. Unlike piano playing (RoboPianist, HandelBot) where fingers directly contact keys, drumming requires holding tools and generating controlled impact forces on drum surfaces -- combining grasp stability with dynamic striking. Sim-only.</p>
+<p class="dp-p"><strong>RL algorithm:</strong> PPO with musical-score-conditioned rewards. Similar framework to HandelBot but adapted for percussion. Requires learning to generate impact forces on drum surfaces.</p>
+<p class="dp-p"><strong>Hand hardware:</strong> Bimanual dexterous hands (holding drumsticks)</p>
+<p class="dp-p"><strong>Sim platform:</strong> IsaacGym / MuJoCo</p>
+<p class="dp-p"><strong>Sim2Real?</strong> No (simulation results; real-world transfer not reported in initial preprint).</p>
+<p class="dp-p"><strong>Tasks:</strong> Drumming -- striking drum surfaces at correct times with correct intensity according to musical scores. Involves holding drumsticks (tool use), rapid contact-rich impacts, bimanual coordination, and dynamic force control.</p>
+<p class="dp-p"><strong>Key methodology:</strong> DexDrummer extends musical instrument playing to percussion, which introduces additional challenges beyond piano: the agent must hold tools (drumsticks), generate controlled impact forces (not just key presses), and coordinate rapid bimanual alternating strikes. The contact dynamics of stick-on-drum impacts are more violent and dynamic than piano key presses, requiring robust contact handling in simulation.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Extended dexterous musical manipulation to percussion/drumming, requiring tool-use and impact force control</li>
+<li>Demonstrated that RL can learn dynamic striking motions with held tools, combining grasping stability with impact generation</li>
+<li>Addressed bimanual coordination for alternating and simultaneous strikes</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> No real-world transfer demonstrated. Drumstick grasping stability during rapid striking is a significant sim-to-real challenge. Limited rhythmic complexity in evaluation.</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> Evaluated in simulation only; no sim-to-real transfer demonstrated, real-world viability unvalidated.</p>
+<p class="dp-p"><strong>Results:</strong> Achieved successful drumming in simulation with correct timing and force patterns (sim). Code publicly available.</p>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Musical scores for percussion as task specifications. No pre-collected robot demonstration dataset.</li>
+<li><strong>Collection method:</strong> Pure RL (PPO) with musical-score-conditioned rewards in IsaacGym/MuJoCo. Bimanual dexterous hands holding drumsticks. Agent learns tool grasping, impact force generation, and timing from reward feedback. Simulation only.</li>
+<li><strong>Data scale:</strong> Musical scores of varying difficulty. Standard parallel RL training.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>Data format:</strong> Musical scores (percussion note sequences with timing).</li>
+<li><strong>Publicly available?</strong> Code publicly available.</li>
+</ul>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Not reported. The MLP policy runs in <1ms per forward pass.</li>
+<li><strong>Deployment hardware:</strong> Simulation only (IsaacGym/MuJoCo). No real-robot deployment demonstrated.</li>
+<li><strong>Real-time capable?</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>

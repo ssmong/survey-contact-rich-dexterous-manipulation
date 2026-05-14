@@ -1,0 +1,38 @@
+<h2 class="dp-h2">3.16 Reactive Diffusion Policy</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> Reactive Diffusion Policy: Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation</li>
+<li><strong>Authors:</strong> xiaoxiaoxh et al.</li>
+<li><strong>Venue/Year:</strong> RSS 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2503.02881</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> GelSight Mini vision-based tactile sensor providing high-resolution contact images at each fingertip of the gripper.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> No explicit force/impedance output, but the policy learns "impedance-like" reactive behavior. The diffusion policy generates position actions that implicitly encode compliant behavior conditioned on tactile feedback, producing motions that adapt to contact states as an impedance controller would.</p>
+<blockquote class="dp-quote"><strong>Limitation (position-only output):</strong> Position-only output; the policy cannot actively regulate contact forces despite receiving force/tactile input.</blockquote>
+<p class="dp-p"><strong>Robot platform:</strong> Flexiv Rizon 4 robotic arm + parallel-jaw gripper equipped with GelSight Mini sensors.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> 3 contact-rich manipulation tasks that require reactive tactile behavior.</p>
+<p class="dp-p"><strong>Key methodology:</strong> Reactive Diffusion Policy introduces a slow-fast architecture for visual-tactile policy learning. The "slow" pathway processes visual observations through a diffusion policy to generate coarse action plans. The "fast" pathway processes tactile (GelSight Mini) images at high frequency to generate reactive corrections to the slow plan. The fast pathway acts like a learned impedance controller -- it adjusts the robot's motion in response to contact events detected through tactile images, without explicitly computing or commanding forces. The diffusion policy framework enables multi-modal action distributions, allowing the policy to represent diverse reactive strategies.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Dual-speed diffusion policy: slow visual pathway (standard diffusion policy inference rate) + fast tactile pathway (higher-frequency reactive corrections). The tactile pathway is a lightweight network that processes GelSight Mini images and outputs position corrections.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposes a slow-fast architecture that separates visual planning (slow) from tactile reaction (fast), matching the natural timescales of visual and tactile perception.</li>
+<li>Demonstrates that the fast tactile pathway learns impedance-like reactive behavior without explicit force control, providing compliance through learned position corrections.</li>
+<li>Releases code and checkpoints publicly (GitHub and HuggingFace), supporting reproducibility.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Position-only output despite the impedance-like behavior. The learned reactive corrections may not generalize to force ranges outside the training distribution. Limited to 3 tasks. Requires GelSight Mini sensors, which add cost and fragility.</p>
+<p class="dp-p"><strong>Results:</strong> The slow-fast architecture outperforms both tactile-unaware diffusion policies and single-speed tactile diffusion policies across 3 contact-rich tasks. Code and model checkpoints available at GitHub (github.com/xiaoxiaoxh/reactive_diffusion_policy) and HuggingFace.</p>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Fast policy (Asymmetric Tokenizer): <strong><1 ms</strong> per step (theoretical >300 Hz). Slow policy (Latent Diffusion Policy): <strong>~100 ms</strong> per step (~1--2 Hz for high-level planning). Combined system operates at <strong>24 FPS</strong> during experiments (matching tactile sensor constraints).</li>
+<li><strong>Deployment hardware:</strong> NVIDIA RTX 4090 GPU + Intel Core i9-14900K CPU. Flexiv Rizon 4 arm + parallel-jaw gripper with GelSight Mini sensors.</li>
+<li><strong>Real-time capable?</strong> Yes. The hierarchical slow-fast design enables genuine closed-loop reactivity: the fast network provides sub-millisecond tactile/force feedback control while the slow network handles complex trajectory modeling at lower frequency. This is one of the fastest reactive systems in the surveyed literature.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom demonstration dataset for 3 contact-rich tasks. No named benchmark.</li>
+<li><strong>Collection method:</strong> Teleoperated demonstrations collected via TactAR, a VR-based teleoperation system using the Meta Quest 3 headset that provides real-time tactile feedback through augmented reality. Multi-sensor data recorded at 24 fps across visual and tactile modalities.</li>
+<li><strong>Data scale:</strong> Example dataset contains 25,710 timesteps (publicly released on HuggingFace). Full training dataset scale not explicitly reported.</li>
+<li><strong>Teleop equipment:</strong> TactAR system with Meta Quest 3 VR headset, two robot arms (Flexiv Rizon 4 or Franka Research 3), RealSense D435/D415 cameras, and optional GelSight Mini tactile sensors.</li>
+<li><strong>Data format:</strong> Zarr format. Contains: action, RGB images, tactile embeddings, gripper state, TCP poses/velocities, forces, and timestamps organized hierarchically by sensor/robot.</li>
+<li><strong>Publicly available?</strong> Yes. Dataset on HuggingFace (<a href="https://huggingface.co/datasets/WendiChen/reactive_diffusion_policy_dataset" target="_blank" rel="noopener">WendiChen/reactive_diffusion_policy_dataset</a>). Model checkpoints on HuggingFace (<a href="https://huggingface.co/WendiChen/reactive_diffusion_policy_model" target="_blank" rel="noopener">WendiChen/reactive_diffusion_policy_model</a>). Code at <a href="https://github.com/xiaoxiaoxh/reactive_diffusion_policy" target="_blank" rel="noopener">GitHub</a>.</li>
+</ul>

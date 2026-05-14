@@ -1,0 +1,50 @@
+<h2 class="dp-h2">3.18 TacDiffusion</h2>
+<ul class="dp-list">
+<li><strong>Full title:</strong> TacDiffusion: Environment-Aware Tactile-Conditioned Diffusion Policy for Contact-Rich Manipulation</li>
+<li><strong>Authors:</strong> popnut123 et al. (TU Munich MIRMI)</li>
+<li><strong>Venue/Year:</strong> ICRA 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2409.11047</li>
+</ul>
+<p class="dp-p"><strong>Force/tactile input type:</strong> Tactile sensor providing contact information for grasp and manipulation feedback.</p>
+<p class="dp-p"><strong>Force/impedance output:</strong> Yes -- 6D wrench output. The diffusion policy generates desired 6D wrenches (3 forces + 3 torques) as the action representation, operating in force space rather than position space. <strong>Force output type: full wrench (6D).</strong></p>
+<p class="dp-p"><strong>Robot platform:</strong> Gripper with integrated tactile sensor.</p>
+<blockquote class="dp-quote"><strong>Limitation (gripper-only):</strong> Evaluated only on parallel-jaw grippers; not validated on multi-finger dexterous hands.</blockquote>
+<p class="dp-p"><strong>Tasks:</strong> Contact-rich manipulation tasks evaluated in a force-domain diffusion framework.</p>
+<p class="dp-p"><strong>Key methodology:</strong> TacDiffusion is a diffusion policy that operates in the force/wrench domain rather than the position domain. The model generates 6D wrench targets conditioned on tactile observations and environmental context. This force-domain formulation is naturally suited for contact-rich tasks where the desired behavior is better described in terms of forces (e.g., "apply 5N downward while sliding laterally") rather than positions. The diffusion model generates multi-modal wrench distributions, allowing the policy to represent diverse force interaction strategies. An environment-aware conditioning mechanism adjusts the force policy based on the estimated contact geometry and surface properties.</p>
+<p class="dp-p"><strong>Architecture/Parameters:</strong> Diffusion policy with force/wrench action space (6D output). The model is conditioned on tactile observations and environmental context. The diffusion process generates wrench trajectories.</p>
+<p class="dp-p"><strong>Main contributions:</strong></p>
+<ul class="dp-list">
+<li>Proposes diffusion policy in force space, a fundamental shift from position-based diffusion policies that better represents contact-rich manipulation.</li>
+<li>Achieves 95.7% zero-shot transfer success rate, demonstrating that force-domain policies can generalize to novel scenarios.</li>
+<li>Introduces environment-aware conditioning that adapts force generation based on estimated contact geometry.</li>
+</ul>
+<p class="dp-p"><strong>Limitations/Gaps:</strong> Code released (GitHub) but no pretrained weights. The force-domain formulation requires a robot with accurate force control capabilities. Evaluated primarily on gripper-based tasks -- no dexterous hand experiments. The 6D wrench output assumes a single contact point; multi-contact scenarios (as in dexterous manipulation) would require per-finger wrench generation.</p>
+<p class="dp-p"><strong>Results:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Zero-shot transfer success rate</td>
+<td>95.7%</td>
+</tr>
+<tr>
+<td>vs. position-domain diffusion policies</td>
+<td>Force-domain formulation outperforms on tasks requiring precise force interaction</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">Inference / Deployment</h2>
+<ul class="dp-list">
+<li><strong>Inference latency:</strong> Depends on model size. DF1 (128 neurons): 503.8 Hz; DF2 (256 neurons): 297.5 Hz; <strong>DF3 (512 neurons, selected): 141.8 Hz</strong>; DF4 (1024 neurons): 51.2 Hz. The robot control loop operates at 1000 Hz, requiring a dynamic system-based filter to interpolate predictions and bridge the frequency gap.</li>
+<li><strong>Deployment hardware:</strong> NVIDIA RTX 3090 GPU with PyTorch and ONNX optimization for inference. Real-time control PC with Intel i9-10900K CPU running Ubuntu 20.04 with real-time kernel.</li>
+<li><strong>Real-time capable?</strong> Yes. The selected model (DF3) achieves 141.8 Hz inference, though below the 1000 Hz robot control loop -- bridged by a dynamic system-based filter for interpolation. This is among the fastest inference rates in the surveyed literature, enabled by the relatively small diffusion model operating in force space.</li>
+</ul>
+<h2 class="dp-h2">Dataset / Data Collection</h2>
+<ul class="dp-list">
+<li><strong>Dataset used:</strong> Custom dataset for peg-in-hole assembly tasks with tactile feedback. Expert policies with primitive-switching logic generate the training data.</li>
+<li><strong>Collection method:</strong> Expert policy rollouts for high-precision assembly tasks. Data generated from expert policies containing primitive-switching logic, not from human teleoperation.</li>
+<li><strong>Data scale:</strong> Not explicitly reported.</li>
+<li><strong>Teleop equipment:</strong> Not applicable (expert policy rollouts, not teleoperation).</li>
+<li><strong>Data format:</strong> Stored in <code>$TacDiffusion_ROOT/dataset/</code> directory. Specific file format not documented.</li>
+<li><strong>Publicly available?</strong> Yes. Dataset available on Google Drive (<a href="https://drive.google.com/drive/folders/10Ix8utcx51R8NejvGRF-ujWEGy5MK05R" target="_blank" rel="noopener">TacDiffusion Dataset</a>). Code at GitHub. Note: "No commercial use!" license restriction.</li>
+</ul>
