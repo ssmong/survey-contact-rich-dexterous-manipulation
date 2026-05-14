@@ -1,0 +1,60 @@
+<h3 class="dp-h3">7.1 DexPoint</h3>
+<p class="dp-p"><strong>전체 제목:</strong> DexPoint: Generalizable Point Cloud Reinforcement Learning for Sim-to-Real Dexterous Manipulation</p>
+<p class="dp-p"><strong>저자:</strong> Yuzhe Qin, Binghao Huang, Zhao-Heng Yin, Hao Su, Xiaolong Wang</p>
+<p class="dp-p"><strong>학회/연도:</strong> CoRL 2022</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2211.09423</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO with point cloud observations. Uses imagined hand point clouds as augmented inputs and contact-based reward shaping for efficient learning.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Allegro Hand (16 DoF) for real-world experiments</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym (NVIDIA GPU-accelerated simulation)</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes. Zero-shot sim-to-real transfer on Allegro Hand. Key sim-to-real innovations: (1) point cloud representation is more transferable than RGB images across sim-to-real gap, (2) imagined hand point clouds provide a geometry-aware representation invariant to visual domain shift, (3) contact-based rewards encourage physically meaningful grasping behaviors.</p>
+<p class="dp-p"><strong>객체 수:</strong> Multiple objects within categories; demonstrated generalization to novel objects of the same category in real world.</p>
+<p class="dp-p"><strong>작업:</strong> Dexterous grasping of diverse objects. Demonstrated category-level generalization: policies trained on a set of objects generalize to novel objects within the same category in the real world.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Proposes using point cloud observations for dexterous manipulation RL, addressing the sim-to-real gap that plagues image-based approaches. Two key innovations: (1) Augments the object point cloud with "imagined hand point clouds" -- synthetic point clouds of the robot hand generated from proprioceptive state -- providing geometric awareness of hand-object spatial relationships without relying on visual rendering. (2) Contact-based reward functions encourage the policy to learn physically meaningful interactions rather than exploiting simulator artifacts. The point cloud representation is naturally more sim-to-real transferable than RGB images since it captures geometry directly.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>First RL-based policy achieving category-level generalization for dexterous grasping with sim-to-real transfer</li>
+<li>Introduced imagined hand point clouds as an augmented representation bridging sim-to-real for dexterous hands</li>
+<li>Contact-based reward design for physically meaningful grasping behaviors</li>
+<li>Demonstrated zero-shot sim-to-real transfer on Allegro Hand across diverse objects</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Novel object generalization</td>
+<td>Category-level (first for dexterous policy learning)</td>
+</tr>
+<tr>
+<td>Real-world hand</td>
+<td>Allegro Hand (16 DoF)</td>
+</tr>
+<tr>
+<td>Sim2Real</td>
+<td>Zero-shot transfer</td>
+</tr>
+<tr>
+<td>Observation</td>
+<td>Point cloud (object + imagined hand)</td>
+</tr>
+<tr>
+<td>Sim platform</td>
+<td>IsaacGym</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li><strong>Force control:</strong> No force sensing or impedance control; position-based grasping only</li>
+<li><strong>VLA/Language:</strong> No language conditioning or VLA integration</li>
+<li><strong>Sim2Real:</strong> Point clouds require depth camera; depth sensing quality affects real-world performance</li>
+<li><strong>Code:</strong> <a href="https://github.com/yzqin/dexpoint-release" target="_blank" rel="noopener">GitHub</a> available</li>
+<li><strong>Task scope:</strong> Limited to grasping; does not address in-hand manipulation, tool use, or multi-stage tasks</li>
+<li><strong>Object diversity:</strong> Category-level generalization shown but within limited categories; not tested on thousands of objects like UniDexGrasp</li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not explicitly reported. The MLP policy with point cloud (imagined hand) input runs in <5ms per forward pass.</li>
+<li><strong>배포 하드웨어:</strong> Allegro Hand (16 DoF) for real-world deployment. Policy trained in IsaacGym; deployed via zero-shot sim-to-real transfer with point cloud observations.</li>
+<li><strong>실시간 가능 여부:</strong> Yes. Lightweight policy with point cloud encoder supports real-time dexterous grasping on real Allegro Hand.</li>
+</ul>

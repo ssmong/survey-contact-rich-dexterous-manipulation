@@ -1,0 +1,82 @@
+<h3 class="dp-h3">2.1 UniDex-VLA</h3>
+<p class="dp-p"><strong>全称：</strong> UniDex-VLA: A Universal Dexterous Manipulation Framework with Vision-Language-Action Model</p>
+<p class="dp-p"><strong>作者：</strong> Chen, Y. et al. (UniDex-AI)</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CVPR 2026</p>
+<p class="dp-p"><strong>arXiv：</strong> <a href="https://arxiv.org/abs/2603.22264" target="_blank" rel="noopener">2603.22264</a></p>
+<p class="dp-p"><strong>手部硬件：</strong> 通过指尖对齐动作空间（FAAS）支持8种灵巧机器人手：Allegro（16自由度）、LEAP（16自由度）、Shadow（24自由度）、Inspire（12自由度）、Wuji、Oymotion、Ability 和 Xhand。FAAS 将任意手部运动学投影到统一的指尖中心表征中，使单一策略能够控制所有八种手而无需逐本体微调。</p>
+<p class="dp-p"><strong>任务：</strong></p>
+<ul class="dp-list">
+<li>工具使用（锤子、螺丝刀、锅铲）</li>
+<li>物体抓取与重定向</li>
+<li>抓取-放置操作</li>
+<li>铰接物体操作</li>
+</ul>
+<p class="dp-p"><strong>核心方法：</strong> UniDex-VLA 将3D VLA 骨干网络与流匹配动作头相结合。核心创新是 FAAS（指尖对齐动作空间），一种跨本体动作表征，将异构手部关节空间映射到共享的指尖中心坐标系。语言指令通过 VLA 的语言编码器对策略进行条件化，实现通过自然语言指定任务。3D 表征为精确的手指-物体交互提供空间锚定。</p>
+<p class="dp-p"><strong>架构/参数：</strong></p>
+<ul class="dp-list">
+<li>VLA 骨干：3D 视觉-语言模型（截至调研日期，具体骨干规模未公开）</li>
+<li>动作头：流匹配生成模型</li>
+<li>动作空间：跨8种手本体的 FAAS 统一表征</li>
+<li>训练数据：900万帧、5万+轨迹，覆盖8种手型（UniDex 数据集）</li>
+</ul>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>FAAS（指尖对齐动作空间）：一种新颖的跨本体动作表征，将8种不同灵巧手统一为单一策略，免除逐手型微调的需要</li>
+<li>首批展示跨手型泛化的 VLA 之一（8个平台，据作者声称），在8种物理结构不同的手平台上实现81%的任务进度</li>
+<li>发布 UniDex 数据集（900万帧、5万+轨迹）和预训练模型权重（HuggingFace 上的3轮和32轮检查点）</li>
+</ul>
+<p class="dp-p"><strong>局限性/不足：</strong></p>
+<ul class="dp-list">
+<li>仅输出位置目标；尽管针对接触密集型工具使用任务，但无力或阻抗输出</li>
+<li>FAAS 将多样化的手部运动学简化为指尖位姿，可能丧失需要特定关节配置的任务（如力量抓取、手指步态）中的指内灵巧性</li>
+<li>主要在仿真环境中评估；未展示在所有8种手上的真实世界部署</li>
+<li>未集成触觉或力/力矩传感</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td>平均任务进度</td>
+<td>81%</td>
+<td>跨8种灵巧手本体</td>
+</tr>
+<tr>
+<td>评估手型数</td>
+<td>8</td>
+<td>自由度范围：12（Inspire）至24（Shadow）</td>
+</tr>
+<tr>
+<td>训练数据</td>
+<td>900万帧、5万+轨迹</td>
+<td>UniDex 数据集</td>
+</tr>
+<tr>
+<td>跨手型迁移</td>
+<td>零样本</td>
+<td>单一训练策略控制所有8种手</td>
+</tr>
+</tbody></table></div>
+<blockquote class="dp-quote"><strong>[编辑注 -- 指标歧义]：</strong> 所报告的"81%任务进度"指标存在歧义。尚不清楚这是二值任务成功率（完成任务的比例）还是连续进度指标（各回合中任务完成百分比的平均值，其中部分完成按比例贡献）。应直接查阅论文以澄清此区别，因为两种解读意味着截然不同的性能水平。如果是连续进度指标，实际的二值成功率可能显著偏低。</blockquote>
+<ul class="dp-list">
+<li>预训练权重已公开（HuggingFace 上的3轮和32轮检查点）</li>
+<li>代码发布于 <a href="https://github.com/unidex-ai/UniDex" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<blockquote class="dp-quote"><strong>[编辑注 -- 需验证结果]：</strong> 81%数据的逐任务和逐手型分解未能从摘要中提取。应查阅完整论文获取按任务类型和手本体分类的详细结果。</blockquote>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。论文未公开每步推理延迟或控制频率。</li>
+<li><strong>部署硬件：</strong> 训练使用8块 NVIDIA H800 GPU（预训练总批大小128；后训练每任务使用2块 H800 GPU）。真实世界设置使用7自由度 Franka 机械臂搭配三种灵巧末端执行器及 Intel RealSense L515 用于自我中心 RGB-D 采集。推理 GPU 未指定。</li>
+<li><strong>是否支持实时？</strong> 未验证。训练硬件（H800）已公开，但推理硬件和延迟未报告，无法从公开信息评估实时能力。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> UniDex-Dataset（为本工作构建的自定义机器人中心数据集）。另使用 UniDex-Cap——一种便携式采集设备，支持人-机器人数据联合训练。</li>
+<li><strong>采集方法：</strong> 基于自我中心人类视频数据集的人在环重定向。研究人员采用重定向流程对齐指尖轨迹，同时保留合理的手-物体接触。在3D点云上操作，遮蔽人手以缩小人类与机器人数据之间的运动学和视觉差距。</li>
+<li><strong>数据规模：</strong> 900万帧、5万+轨迹，覆盖8种灵巧手型（自由度范围：12至24）。</li>
+<li><strong>遥操作设备：</strong> UniDex-Cap 便携式采集设备（详见论文）。源数据来自自我中心人类视频，重定向至机器人本体。</li>
+<li><strong>数据格式：</strong> 同步的 RGB-D 数据流和人手位姿，通过 FAAS（指尖对齐动作空间）转换为机器人可执行轨迹。</li>
+<li><strong>是否公开可用？</strong> 预训练权重（3轮和32轮检查点）在 HuggingFace 上公开。代码位于 <a href="https://github.com/unidex-ai/UniDex" target="_blank" rel="noopener">GitHub</a>。UniDex-Dataset 本身是否公开发布在现有材料中未确认。</li>
+</ul>

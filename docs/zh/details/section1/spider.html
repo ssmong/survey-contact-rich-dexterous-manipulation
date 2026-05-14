@@ -1,0 +1,99 @@
+<h3 class="dp-h3">SPIDER</h3>
+<p class="dp-p"><strong>全称：</strong> SPIDER: Sim-to-Real Policy Adaptation for Dexterous Manipulation via Embodiment Retargeting</p>
+<p class="dp-p"><strong>作者：</strong> Meta FAIR / UC Berkeley等研究人员</p>
+<p class="dp-p"><strong>会议/年份：</strong> arXiv预印本，2025</p>
+<p class="dp-p"><strong>手部硬件：</strong> 评估了9种不同的人形形态。SPIDER旨在解决将人类演示重定向到多种人形机器人形态的广泛挑战，涵盖了各种手臂运动学配置。</p>
+<p class="dp-p"><strong>任务：</strong> 重定向的人类演示任务。系统接收通过运动捕捉采集的人类运动数据，并为不同的人形形态生成物理可执行的策略。任务涵盖从人类演示中捕获的各种操作行为。</p>
+<p class="dp-p"><strong>核心方法：</strong> SPIDER通过形态重定向解决仿真到真实的策略适应问题。该方法接收通过运动捕捉采集的人类演示，并使用MuJoCo仿真中的基于物理的优化将其重定向到目标人形形态。重定向在保持原始人类运动的功能意图的同时，遵守每个目标形态的运动学和动力学约束。该方法专注于生成物理上合理的运动，可作为进一步基于强化学习的策略优化的初始化。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 重定向流程使用基于优化的运动适配结合物理仿真来确保动力学可行性。具体网络架构取决于下游策略学习方法。</p>
+<p class="dp-p"><strong>仿真平台：</strong> MuJoCo。已展示仿真到真实迁移——论文将重定向的轨迹部署在物理Franka Emika Panda + Allegro Hand系统上，完成四个灵巧任务（旋转灯泡、操作勺子、弹吉他、拔充电器）。轨迹从单张RGB视频输入进行重定向，并直接在物理机器人上执行。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出了覆盖9种人形形态的重定向框架——这是本综述文献中最广泛的形态覆盖——而此前的重定向工作（DexMachina: 4种, ManipTrans: 6种）覆盖的目标更少且形态多样性更低。</li>
+<li>证明了MuJoCo中基于物理的重定向可以跨形态多样的机器人保持操作意图，生成满足动力学可行性约束的运动，而非仅满足运动学对应关系。</li>
+<li>开源了框架（<a href="https://github.com/facebookresearch/spider" target="_blank" rel="noopener">GitHub</a>），便于社区扩展到新的形态。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。未引入力传感或阻抗控制。重定向针对运动学和动力学可行性进行优化，但未显式推理接触力分布。需要精确力调节的任务（如插入、抛光）需要在SPIDER提供之外增加额外的力感知策略层。</li>
+<li><strong>VLA/语言条件化：</strong> 无。流程基于运动捕捉演示操作，无语言输入或视觉语言集成。</li>
+<li><strong>仿真到真实：</strong> 是。已在Franka Emika Panda + Allegro Hand上展示真实机器人部署，完成四个灵巧任务。从单张RGB视频重定向的轨迹直接在物理硬件上执行。</li>
+<li><strong>代码/权重可用性：</strong> 代码已发布（<a href="https://github.com/facebookresearch/spider" target="_blank" rel="noopener">GitHub</a>）。预训练权重取决于具体的下游策略。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 在9种形态上进行了评估（5种灵巧手：Allegro、XHand、Inspire、Ability、Schunk；4种人形机器人：Unitree G1、Unitree H1-2、Fourier N1、Booster T1），使用多个数据集。</p>
+<p class="dp-p">表1 -- 消融实验成功率（完整方法比仅退火采样提升约18%，范围0.54--1.00）。</p>
+<p class="dp-p">表2 -- 完整数据集成功率：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>数据集</th>
+<th>Inspire</th>
+<th>Allegro</th>
+<th>XHand</th>
+<th>Ability</th>
+<th>Schunk</th>
+</tr></thead><tbody>
+<tr>
+<td>Oakink</td>
+<td>0.479（最高）</td>
+<td>0.413--0.459范围</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td>GigaHands</td>
+<td>0.879（最高）</td>
+<td>0.706--0.812范围</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">表3 -- 与强化学习基线的对比：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>方法</th>
+<th>数据集</th>
+<th>成功率</th>
+<th>速度</th>
+</tr></thead><tbody>
+<tr>
+<td>SPIDER</td>
+<td>Oakink（1022条轨迹）</td>
+<td>47.9%</td>
+<td>2.5 FPS</td>
+</tr>
+<tr>
+<td>ManipTrans</td>
+<td>Oakink</td>
+<td>39.5%</td>
+<td>0.1 FPS</td>
+</tr>
+<tr>
+<td>SPIDER</td>
+<td>ARCTIC</td>
+<td>42.0%</td>
+<td>1.5 FPS</td>
+</tr>
+<tr>
+<td>DexMachina</td>
+<td>ARCTIC</td>
+<td>67.1%</td>
+<td>0.05 FPS</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">SPIDER比强化学习基线快10倍。生成了240万帧动力学可行的机器人数据。真实机器人部署已在Franka Emika Panda + Allegro Hand上确认，完成4个灵巧任务（旋转灯泡、操作勺子、弹吉他、拔充电器）。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 灵巧操作的轨迹生成速度为2.5 FPS（Oakink数据集），人形任务为19.6--23.1 FPS。在50 Hz物理仿真控制频率下，灵巧操作未达到实时。</li>
+<li><strong>部署硬件：</strong> RTX 4090 GPU用于消融实验/速度测试；H100 GPU用于大规模数据集生成。真实机器人部署在Franka Emika Panda + Allegro Hand上使用直接轨迹执行（执行时无需GPU）。</li>
+<li><strong>是否实时：</strong> 灵巧操作生成非实时（2.5 FPS vs. 50 Hz目标）。人形任务接近实时（19.6--23.1 FPS）。系统比强化学习基线快10倍，但主要设计用于离线轨迹生成而非闭环实时控制。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> 多个现有人类手-物体交互数据集，包括Gigahands、Hot3D、OakInk等。SPIDER集成并处理这些公开数据集，而非收集新数据。ManipTrans数据也有引用。</li>
+<li><strong>收集方法：</strong> 来自上述数据集的人类视频/运动捕捉数据，通过SPIDER重定向流程处理，为9种人形形态生成机器人可执行轨迹。</li>
+<li><strong>数据规模：</strong> 未以单一数字报告；取决于所使用的源数据集。示例数据通过HuggingFace（<code>retarget/retarget_example</code>）提供。</li>
+<li><strong>遥操作设备：</strong> 不适用（源数据为人类视频/运动捕捉，非机器人遥操作）。</li>
+<li><strong>数据格式：</strong> 通过多阶段流程处理（原始数据 -> 预处理 -> 运动学轨迹 -> 重定向输出）。示例数据在HuggingFace上。</li>
+<li><strong>是否公开：</strong> 是。代码已发布（<a href="https://github.com/facebookresearch/spider" target="_blank" rel="noopener">GitHub</a>）。重定向示例数据集可在HuggingFace上获取。</li>
+</ul>
+<hr>

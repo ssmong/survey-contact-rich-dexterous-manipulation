@@ -1,0 +1,44 @@
+<h3 class="dp-h3">7.3 VTDexManip</h3>
+<p class="dp-p"><strong>完整标题：</strong> VTDexManip: A Vision-Tactile Dataset for Dexterous Manipulation</p>
+<p class="dp-p"><strong>作者：</strong> Qiang Luo, Xudong Han, Haoran Li, Ao Li, Boyang Gao, Shaowei Liu等</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> ICLR 2025</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2501.01370</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 多模态观测（视觉 + 二值触觉）。框架训练使用特权状态的教师策略，然后蒸馏为使用视觉和触觉输入的学生策略。</p>
+<p class="dp-p"><strong>手部硬件：</strong> 多指灵巧手（仿真），指尖建模有二值触觉传感器阵列</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否。仅仿真基准和数据集。</p>
+<p class="dp-p"><strong>任务：</strong> 6个复杂灵巧任务：(1) 瓶盖开关；(2) 水龙头旋转；(3) 物体重定向；(4) 转笔；(5) 阀门旋转；(6) 盖子操作。任务涉及与物体的持续多指接触，需要精确协调。</p>
+<p class="dp-p"><strong>核心方法论：</strong> VTDexManip提供基准和大规模数据集（56.5万帧，182个物体）用于视觉-触觉灵巧操作。每个指尖的二值触觉接触信号与视觉观测一起用于学习接触感知策略。数据集捕捉视觉物体状态、触觉接触模式和成功操作策略之间的关联，支持RL训练和模仿学习方法。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>创建灵巧操作的大规模视觉-触觉数据集（56.5万帧，182个物体，6个任务）</li>
+<li>展示融入触觉反馈相比仅视觉基线在接触丰富任务上提高策略性能</li>
+<li>发布18个跨不同任务-传感器组合的预训练模型用于社区基准测试</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 二值触觉传感相比真实触觉传感器（如GelSight）提供丰富空间力分布是显著简化。仅仿真无真实世界验证。模拟与真实触觉信号的差距未解决。</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<p class="dp-p"><strong>结果：</strong> 视觉+触觉策略在6个任务中5个上优于仅视觉基线（仿真）。发布18个预训练模型检查点。数据集和代码公开可用。</p>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 定制大规模视觉-触觉灵巧操作数据集（VTDexManip）。56.5万帧，182个物体，6个任务。</li>
+<li><strong>收集方法：</strong> 在IsaacGym仿真中生成。PPO训练的教师策略使用特权状态生成轨迹；记录视觉 + 二值触觉观测。6个任务：瓶盖、水龙头、重定向、转笔、阀门、盖子操作。</li>
+<li><strong>数据规模：</strong> 56.5万帧，182个物体，6个任务。发布18个预训练模型。</li>
+<li><strong>遥操作设备：</strong> 不适用（仿真生成数据）。</li>
+<li><strong>数据格式：</strong> 视觉帧 + 二值触觉接触信号 + 本体感觉状态。具体文件格式未报告。</li>
+<li><strong>是否公开？</strong> 是——数据集、18个预训练模型和代码公开可用。</li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 不适用（仿真基准/数据集）。策略推理取决于所用算法；PPO训练的MLP策略 <1ms运行。</li>
+<li><strong>部署硬件：</strong> 仅仿真（IsaacGym）。无真实机器人部署。</li>
+<li><strong>支持实时？</strong> 不适用（仿真基准；无真实机器人部署）。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审 <span class="dp-review-score-badge">5.5</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">平均分: <strong>5.5</strong> · 4 条评审 · ICLR 2025 Poster · <a href="https://openreview.net/forum?id=jf7C7EGw21" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 5</span> <span class="dp-review-text">The author introduces a unique dataset for visual-tactile with 10 daily tasks.  A new benchmark with six complex dexterous manipulation tasks is proposed, using a reinforcement learning-based vision-t…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 6</span> <span class="dp-review-text">This paper introduces a new visual-tactile dataset for training and benchmarking dexterous manipulation skills. It includes 10 tasks with 182 objects collected by human operators and provides a compre…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 5</span> <span class="dp-review-text">This paper proposes a vision-tactile dataset and a novel benchmark for evaluating the vision-tactile pre-training methods. The experiments show that the tactile signals can provide guidance for the de…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 6</span> <span class="dp-review-text">This paper introduces a dataset and benchmark to address the limitations in current robotic manipulation learning frameworks by incorporating both vision and tactile modalities. It collects human mani…</span></div>
+</div>
+</details>

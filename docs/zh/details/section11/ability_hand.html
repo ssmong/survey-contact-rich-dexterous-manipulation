@@ -1,0 +1,72 @@
+<p class="dp-p"># 11.7 Ability Hand</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> Ability Hand</li>
+<li><strong>制造商：</strong> PSYONIC Inc.（美国伊利诺伊州尚佩恩）</li>
+<li><strong>年份：</strong> 已商业化销售（FDA 510(k)认证通过；首款具有触觉反馈的商用假肢手）</li>
+<li><strong>自由度：</strong> 6个驱动自由度（5个独立手指屈伸 + 假肢版本含腕旋转；机器人版本可能有所不同）</li>
+<li><strong>成本：</strong> 商业定价（未公开；美国假肢版本可通过保险/退伍军人事务部报销）</li>
+<li><strong>触觉传感：</strong> 每个指尖集成触觉传感器（压力敏感；在假肢应用中提供感觉反馈）</li>
+<li><strong>驱动方式：</strong> 高速直流电机；号称市场上最快的假肢手</li>
+<li><strong>认证：</strong> FDA 510(k)假肢用途认证通过</li>
+</ul>
+<h2 class="dp-h2">定量参数</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>参数</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>手指闭合速度</td>
+<td><500 ms完全闭合（商用产品中最快之一）</td>
+</tr>
+<tr>
+<td>抓握力</td>
+<td>满足日常生活任务需求（具体牛顿值未公开）</td>
+</tr>
+<tr>
+<td>重量</td>
+<td>~450g（仅手部，假肢版本）</td>
+</tr>
+<tr>
+<td>手指</td>
+<td>5个独立驱动手指</td>
+</tr>
+<tr>
+<td>触觉传感器</td>
+<td>全部5个指尖均有压力传感器</td>
+</tr>
+<tr>
+<td>防水等级</td>
+<td>日常使用IP等级（假肢版本）</td>
+</tr>
+<tr>
+<td>控制接口</td>
+<td>sEMG（假肢）；串口/API（研究用）</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">Ability Hand是一款商业量产的灵巧手，最初设计为假肢设备。具备6自由度（5个独立手指驱动 + 腕旋转）、集成指尖触觉传感器和高速驱动。与本节中面向研究的开源灵巧手（LEAP、ORCA、ISyHand、RUKA、FAIVE）不同，Ability Hand是经FDA认证的量产商业产品，具有专业级制造质量。对于机器人研究而言，它提供了一个无需组装或校准的鲁棒、带传感器的平台。</p>
+<h2 class="dp-h2">在本综述中的使用情况</h2>
+<p class="dp-p">Ability Hand在本综述中的出现：</p>
+<ul class="dp-list">
+<li><strong>UniDex-VLA</strong>（第2节）：通过FAAS（Fingertip Action-Agnostic Space）框架支持的8款手之一，与Allegro、LEAP、Shadow、Inspire、Wuji、Oymotion和XHand并列</li>
+<li><strong>Dex1B</strong>（第8节）：1B规模演示抓取数据集中的一种本体形态</li>
+</ul>
+<h2 class="dp-h2">主要贡献（作为研究平台）</h2>
+<ul class="dp-list">
+<li>近期灵巧操作研究中唯一使用的商业量产、FDA认证灵巧手</li>
+<li>集成指尖触觉传感器，无需第三方改装即可提供触觉反馈</li>
+<li>专业级制造质量和可靠性，优于3D打印或实验室组装的替代品</li>
+<li>已验证与VLA框架（UniDex-VLA FAAS）的兼容性</li>
+<li>高驱动速度，支持动态操作任务</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>商业定价使其显著贵于开源替代品（LEAP ~$3K，FAIVE ~$500-800）</li>
+<li>闭源硬件：无CAD文件、固件或设计修改的可能性</li>
+<li>6自由度远低于LEAP（16）、ORCA（17）或ISyHand（18），限制了精细灵巧性</li>
+<li>最初为假肢设计，非为机器人研究：控制接口和外形可能未针对研究用途优化</li>
+<li>仿真模型可用性有限：标准仿真器无官方URDF/MJCF模型，使仿真到真实流程更难建立</li>
+<li>触觉传感器数据格式和API可能未针对机器人研究工作流程标准化</li>
+</ul>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">闭源商业产品。可从 <a href="https://www.psyonic.io/ability-hand" target="_blank" rel="noopener">psyonic.io</a> 购买。无开源设计文件。</p>

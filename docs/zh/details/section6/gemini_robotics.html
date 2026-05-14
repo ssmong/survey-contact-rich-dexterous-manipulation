@@ -1,0 +1,208 @@
+<p class="dp-p"># Gemini Robotics系列</p>
+<blockquote class="dp-quote">Google DeepMind基于Gemini 2.0构建的VLA模型系列，从云端向设备端部署演进。</blockquote>
+<hr>
+<h2 class="dp-h2">版本历史</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>版本</th>
+<th>日期</th>
+<th>VLM骨干网络</th>
+<th>灵巧手</th>
+<th>力输出</th>
+<th>可用性</th>
+<th>关键进展</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Gemini Robotics</strong></td>
+<td>2025年3月</td>
+<td>Gemini 2.0</td>
+<td>✗（夹爪）</td>
+<td>✗</td>
+<td>封闭（受信测试者）</td>
+<td>首个基于Gemini的VLA；泛化基准2倍提升</td>
+</tr>
+<tr>
+<td><strong>Gemini Robotics-ER</strong></td>
+<td>2025年3月</td>
+<td>Gemini 2.0</td>
+<td>不适用（仅推理）</td>
+<td>不适用</td>
+<td>封闭</td>
+<td>具身推理：空间理解、抓取预测</td>
+</tr>
+<tr>
+<td><strong>Gemini Robotics On-Device</strong></td>
+<td>2025年7月</td>
+<td>Gemini 2.0（蒸馏版）</td>
+<td>✗</td>
+<td>✗</td>
+<td>SDK（受信测试者）</td>
+<td>设备端推理，无需网络；50-100个演示即可微调</td>
+</tr>
+<tr>
+<td><strong>Gemini Robotics 1.5</strong></td>
+<td>2026年</td>
+<td>Gemini（升级版）</td>
+<td>✗</td>
+<td>✗</td>
+<td>受信测试者；ER 1.5通过API</td>
+<td>VLA + 推理；15个学术基准</td>
+</tr>
+<tr>
+<td><strong>Gemini Robotics-ER 1.6</strong></td>
+<td>2026年4月</td>
+<td>Gemini（升级版）</td>
+<td>不适用</td>
+<td>不适用</td>
+<td>通过API</td>
+<td>增强的空间推理，多视角理解</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 class="dp-h2">完整标题</h2>
+<p class="dp-p">"Gemini Robotics: Bringing AI into the Physical World"</p>
+<p class="dp-p"><strong>作者：</strong> Gemini Robotics Team, Google DeepMind (Saminda Abeyruwan, Joshua Ainslie等；117+位作者)</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> arXiv 2503.20020，2025年3月（后续版本通过博客文章发布）</p>
+<h2 class="dp-h2">架构</h2>
+<ul class="dp-list">
+<li><strong>VLM骨干网络：</strong> Gemini 2.0基础模型，将物理动作作为新的输出模态添加</li>
+<li><strong>参数量：</strong> 未披露</li>
+<li><strong>动作空间：</strong> 从视觉输入+语言指令直接生成电机命令；维度未公开记录</li>
+<li><strong>推理速度：</strong> 所有版本均未披露。On-Device版本在本地运行无需网络依赖，暗示优化的延迟，但未发布Hz数据。</li>
+</ul>
+<h2 class="dp-h2">机器人平台</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>平台</th>
+<th>类型</th>
+<th>配置</th>
+</tr></thead><tbody>
+<tr>
+<td>ALOHA 2</td>
+<td>双臂固定式</td>
+<td>主要训练平台</td>
+</tr>
+<tr>
+<td>Franka FR3</td>
+<td>双臂协作式</td>
+<td>跨具身评估</td>
+</tr>
+<tr>
+<td>Apptronik Apollo</td>
+<td>人形机器人</td>
+<td>合作展示</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">任务</h2>
+<p class="dp-p">展示的能力包括：</p>
+<ul class="dp-list">
+<li>折纸</li>
+<li>将物品装入密封袋</li>
+<li>打开袋子拉链</li>
+<li>折叠衣物</li>
+<li>工业皮带组装</li>
+<li>开放词汇指令执行</li>
+<li>长时域灵巧序列</li>
+</ul>
+<p class="dp-p">具体任务数量和逐任务成功率未公开报告。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>基于Gemini 2.0构建，成为首个将物理动作作为原生输出模态（与文本、代码和图像并列）的主要基础模型</li>
+<li>报告在综合泛化基准上性能为其他SOTA VLA的2倍（具体基准和数据未完全披露）</li>
+<li>Gemini Robotics-ER引入具身空间推理（物体检测、轨迹预测、抓取预测、多视角对应）作为直接控制的补充能力</li>
+<li>On-Device变体实现无需云端依赖的部署，仅需50-100个演示即可微调</li>
+</ul>
+<h2 class="dp-h2">局限性/差距</h2>
+<ul class="dp-list">
+<li><strong>无灵巧手支持。</strong> 所有展示平台使用平行爪夹爪（ALOHA, Franka）或人形集成手（Apollo）。无独立多指灵巧手评估。</li>
+<li><strong>无力/力矩输出。</strong> 任何版本均未提及力感知、阻抗控制或柔顺性。</li>
+<li><strong>完全封闭。</strong> 无开放权重、无开放代码（除On-Device的有限SDK）。无法被社区复现、微调或独立基准测试。与RT-2相比（同样封闭但至少在同行评审会议上发表了详细结果），这是更严格的访问模式。</li>
+<li><strong>定量不透明。</strong> "2倍SOTA"声明缺乏具体信息：哪个基准、哪些基线、什么指标。单个任务的成功率未发布。</li>
+<li><strong>推理延迟未知。</strong> 对实时灵巧操作至关重要；所有版本均未披露。</li>
+<li><strong>参数量未披露。</strong> 使得无法评估计算需求或与开源VLA进行效率比较。</li>
+</ul>
+<h2 class="dp-h2">与其他主要VLA系列的比较</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>维度</th>
+<th>Gemini Robotics</th>
+<th>pi0~0.7</th>
+<th>GR00T N1~1.7</th>
+</tr></thead><tbody>
+<tr>
+<td>开放权重</td>
+<td>✗</td>
+<td>✅ (pi0/0.5)</td>
+<td>✅（全部）</td>
+</tr>
+<tr>
+<td>灵巧手</td>
+<td>✗</td>
+<td>✗</td>
+<td>人形集成</td>
+</tr>
+<tr>
+<td>力输出</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>设备端</td>
+<td>✅ (On-Device)</td>
+<td>✗</td>
+<td>✅ (Jetson Orin)</td>
+</tr>
+<tr>
+<td>跨具身</td>
+<td>3个平台</td>
+<td>1个平台</td>
+<td>以人形为中心</td>
+</tr>
+<tr>
+<td>参数量</td>
+<td>未披露</td>
+<td>约3.3-5B</td>
+<td>2.2-3B</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">结果</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+<th>背景</th>
+</tr></thead><tbody>
+<tr>
+<td>泛化基准</td>
+<td>对比SOTA VLA的2倍</td>
+<td>基准身份未披露</td>
+</tr>
+<tr>
+<td>ER端到端控制</td>
+<td>对比Gemini 2.0基础的2-3倍</td>
+<td>在ER特定空间任务上</td>
+</tr>
+<tr>
+<td>微调效率</td>
+<td>50-100个演示</td>
+<td>On-Device变体</td>
+</tr>
+<tr>
+<td>逐任务成功率</td>
+<td>未披露</td>
+<td>—</td>
+</tr>
+</tbody></table></div>
+<blockquote class="dp-quote"><strong>编辑说明：</strong> 由于模型完全封闭且基准缺乏具体性，这些定量声明难以独立评估。在独立复现或同行评审期刊发表之前，"2倍SOTA"声明应谨慎对待。</blockquote>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 所有版本均未披露。On-Device变体在本地运行无需网络依赖，暗示针对边缘部署的优化延迟，但未发布Hz数据。云端Gemini Robotics版本由于网络往返推测具有更高延迟。</li>
+<li><strong>部署硬件：</strong> On-Device变体面向嵌入式/边缘硬件（具体设备未披露）。云端版本运行在Google TPU基础设施上。参数量未披露，使计算需求无法评估。</li>
+<li><strong>可实时运行？</strong> 未知。On-Device变体设计用于无需网络依赖的实时控制，但未发布控制频率或延迟数据。鉴于推理速度对灵巧操作部署至关重要，这是一个关键差距。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 未披露。由于模型完全封闭，训练数据详情未公开报告。</li>
+<li><strong>收集方法：</strong> 未披露。主要训练平台为ALOHA 2（双臂），跨具身评估在Franka FR3和Apptronik Apollo人形机器人上。On-Device变体支持从50-100个演示进行微调。</li>
+<li><strong>数据规模：</strong> 未披露。Google DeepMind内部机器人数据的规模未知。</li>
+<li><strong>遥操作设备：</strong> 未披露。ALOHA 2使用主从式遥操作。</li>
+<li><strong>数据格式：</strong> 未披露。</li>
+<li><strong>是否公开？</strong> 否。完全封闭——无权重、代码、训练数据或数据集详情发布。仅受信测试者可获得On-Device变体的有限SDK访问。</li>
+</ul>

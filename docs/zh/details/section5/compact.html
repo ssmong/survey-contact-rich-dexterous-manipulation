@@ -1,0 +1,40 @@
+<h3 class="dp-h3">5.1 Comp-ACT</h3>
+<p class="dp-p"><strong>完整标题:</strong> Compliance-Aware Action Chunking with Transformers for Contact-Rich Manipulation</p>
+<p class="dp-p"><strong>作者:</strong> Tatsuya Kamijo, Kei Ota, Devesh K. Jha, Masayoshi Tomizuka (OMRON SINIC X / University of Tokyo)</p>
+<p class="dp-p"><strong>发表venue/年份:</strong> IROS 2024</p>
+<p class="dp-p"><strong>K/D如何确定:</strong> 通过ACT风格的Transformer策略进行模仿学习(IL)，基于VR遥操作示教训练。策略学习从示教数据中同时预测位置轨迹和刚度参数。刚度通过Cholesky分解参数化，以确保预测的刚度矩阵始终是对称正定的。不预测阻尼——阻尼通过固定阻尼比从刚度导出。</p>
+<p class="dp-p"><strong>输出内容:</strong> 12D刚度输出：6x6笛卡尔刚度矩阵K参数化为下三角Cholesky因子(6D笛卡尔空间的12个独立元素，确保K = L L^T为SPD)。策略同时输出位置动作块(遵循ACT框架)。阻尼D不独立预测。</p>
+<p class="dp-p"><strong>机器人平台:</strong> 双UR5e机械臂 + 平行夹爪。无灵巧手。</p>
+<p class="dp-p"><strong>任务:</strong> Robosuite/MuJoCo仿真中的双手接触丰富装配和操作：轴孔插入、齿轮啮合、带柔顺的物体传递以及需要变化刚度曲线的多步装配序列。</p>
+<p class="dp-p"><strong>核心方法:</strong> Comp-ACT通过添加柔顺预测头扩展了Action Chunking with Transformers (ACT)框架。Transformer编码器-解码器处理视觉观测和本体感觉，解码器输出动作块(时间范围内的位置轨迹)和刚度矩阵。Cholesky参数化至关重要：通过预测下三角因子L而非直接预测K，系统保证得到的刚度矩阵K = L L^T始终是对称正定的，这是稳定阻抗控制的物理要求。VR遥操作示教捕获位置轨迹和用户的意图柔顺性(从遥操作者的行为中推断)。</p>
+<p class="dp-p"><strong>架构/参数:</strong> ACT架构(CVAE + Transformer编码器-解码器)。视觉编码器(ResNet-18或类似)用于图像观测。动作块大小遵循ACT惯例(~100步)。额外线性头用于12D Cholesky因子预测。基于Robosuite中采集的VR示教数据集训练。</p>
+<p class="dp-p"><strong>主要贡献:</strong></p>
+<ul class="dp-list">
+<li>将学习型可变刚度预测集成到ACT模仿学习框架中</li>
+<li>Cholesky参数化保证物理有效(SPD)的刚度矩阵，避免退化或不稳定的阻抗预测</li>
+<li>证明从示教中协同学习位置和刚度比仅位置ACT或固定刚度基线提高了接触丰富任务成功率</li>
+</ul>
+<p class="dp-p"><strong>局限/空白:</strong></p>
+<ul class="dp-list">
+<li>无灵巧手——仅双UR5e配夹爪</li>
+<li>阻尼不独立学习；通过固定比率从刚度导出</li>
+<li>主要在仿真(Robosuite)中评估；真实机器人验证有限</li>
+<li>VR遥操作示教可能无法捕获真实期望刚度——"意图柔顺性"是推断的，非直接测量</li>
+<li>不扩展到高自由度系统(如多指手)</li>
+</ul>
+<p class="dp-p"><strong>实验结果:</strong> Comp-ACT在Robosuite的接触丰富装配任务上优于仅位置ACT和固定刚度ACT基线。学习到的刚度曲线显示出定性合理的模式(如搜索/对准阶段较低刚度，插入阶段较高刚度)。代码见github.com/omron-sinicx/CompACT。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟:</strong> 未明确报告。架构遵循ACT (Action Chunking with Transformers)，额外线性头用于12D Cholesky因子预测，在标准ACT推理基础上增加的开销可忽略。ACT风格策略通常在桌面GPU上以10-50 Hz运行。</li>
+<li><strong>部署硬件:</strong> 双UR5e臂。在Robosuite/MuJoCo仿真中训练和评估。策略推理的具体GPU未报告。</li>
+<li><strong>可实时运行?</strong> 是，可能。轻量级ACT架构(ResNet-18编码器 + Transformer解码器)加上小型柔顺头应支持在典型操作频率(10-50 Hz)下的实时控制。动作分块进一步降低了推理频率要求。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集:</strong> 在仿真(Robosuite/MuJoCo)中为双手任务采集的自定义遥操作示教，以及在双UR5e上采集的真实世界单臂和双手任务示教。</li>
+<li><strong>采集方法:</strong> 使用HTC Vive Cosmos Elite控制器进行VR遥操作，配触觉反馈(振动触觉力反馈映射到控制器振动)。PyOpenVR以90 Hz进行位姿跟踪。机器人腕部力/力矩传感器测量提供触觉反馈。每次示教捕获笛卡尔轨迹、力/力矩传感器数据、柔顺参数(刚度值)、相机图像和夹爪指令。</li>
+<li><strong>数据规模:</strong> 每个任务20-30次示教。仿真(双手擦拭)：30次示教。真实世界单臂和双手任务：各20-30次示教。共6个任务(1个仿真，5个真实世界)。</li>
+<li><strong>遥操作设备:</strong> HTC Vive Cosmos Elite VR控制器配振动触觉反馈。</li>
+<li><strong>数据格式:</strong> 未明确指定。包含笛卡尔末端执行器位姿、夹爪指令和每时间步期望柔顺度。</li>
+<li><strong>公开可用?</strong> 代码见https://github.com/omron-sinicx/CompACT。示教数据集未明确发布。</li>
+</ul>

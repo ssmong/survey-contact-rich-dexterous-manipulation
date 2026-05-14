@@ -1,0 +1,235 @@
+<h3 class="dp-h3">2.3 DexVLA</h3>
+<p class="dp-p"><strong>전체 제목:</strong> DexVLA: Vision-Language Model with Plug-In Diffusion Expert for Dexterous Manipulation</p>
+<p class="dp-p"><strong>저자:</strong> Junjie Wen, Yichen Zhu, Jinming Li, Zhibin Tang, Chaomin Shen, Feifei Feng</p>
+<p class="dp-p"><strong>학회/연도:</strong> CoRL 2025</p>
+<p class="dp-p"><strong>arXiv:</strong> <a href="https://arxiv.org/abs/2502.05855" target="_blank" rel="noopener">2502.05855</a></p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Franka Emika 로봇 팔에 장착된 Inspired Dexterous Hand (6 DoF 핸드 관절). 행동 공간은 12차원: SE(3) 엔드이펙터 자세(3D 위치 + 3D 방향) + 6D 핸드 관절 공간. 교차 구현체 평가는 단일 팔 그리퍼와 양팔 UR5e 설정도 포함.</p>
+<p class="dp-p"><strong>작업:</strong></p>
+<ul class="dp-list">
+<li>커리큘럼을 통한 정교한 기술 학습</li>
+<li>다지 조작 작업</li>
+<li>정교한 핸드를 사용한 집기-놓기</li>
+<li>인핸드 조작</li>
+</ul>
+<p class="dp-p"><strong>핵심 방법론:</strong> DexVLA는 동결된 비전-언어 모델에 10억 파라미터 확산 전문가를 부착하는 플러그인 아키텍처를 도입한다. VLM 백본은 정교한 훈련 중 동결 상태를 유지하면서 시각적 이해와 언어 그라운딩을 제공한다. 확산 전문가는 VLM의 잠재 표현에 조건부되어 고차원 정교한 핸드 행동을 생성한다. 이 설계는 정밀한 정교한 제어를 가능하게 하면서 VLM의 사전 훈련된 지식의 파괴적 망각을 방지한다. 커리큘럼 학습 전략은 작업 난이도를 점진적으로 증가시킨다.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong></p>
+<ul class="dp-list">
+<li>VLM 백본: 동결된 사전 훈련 비전-언어 모델 (요약 수준에서 백본 크기 미공개)</li>
+<li>행동 헤드: ScaleDP (Scalable Diffusion Policy), 두 변형 제공:</li>
+<li>ScaleDP-H (대형 변형)</li>
+<li>ScaleDP-L (경량 변형)</li>
+<li>확산 전문가에 약 1B 파라미터</li>
+<li>ScaleDP-H와 ScaleDP-L 체크포인트가 HuggingFace에 공개</li>
+</ul>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>플러그인 확산 전문가 아키텍처: 동결된 VLM에 부착되어 VLM의 사전 훈련 능력을 저하시키지 않으면서 정교한 조작을 가능하게 하는 1B 파라미터 확산 모델 (이 주장은 항목에서 독립적으로 검증되지 않음)</li>
+<li>ScaleDP (Scalable Diffusion Policy): 고차원 정교한 행동 공간을 위해 설계된 확장 가능한 확산 기반 행동 생성 모듈, 대형(H)과 경량(L) 변형 모두 제공</li>
+<li>정교한 작업 복잡성을 점진적으로 증가시키는 커리큘럼 기반 훈련 전략으로 샘플 효율성과 최종 성능 향상</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>위치 목표만 출력; 힘, 임피던스 또는 유연성 출력 없음</li>
+<li>1B 확산 전문가는 동결된 VLM 위에 상당한 계산 오버헤드 추가</li>
+<li>UniDex-VLA의 8종 핸드 평가와 달리 서로 다른 정교한 핸드 유형 간 교차 구현체 평가가 주요 초점 아님</li>
+<li>촉각이나 힘/토크 센서 통합 없음</li>
+<li>시뮬레이션 대비 실세계 평가 범위가 좁음</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong></p>
+<p class="dp-p"><strong>LIBERO 벤치마크 (Spatial / Object / Goal 모음 평균):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>방법</th>
+<th>Spatial</th>
+<th>Object</th>
+<th>Goal</th>
+<th>평균</th>
+</tr></thead><tbody>
+<tr>
+<td>Diffusion Policy</td>
+<td>78.3</td>
+<td>92.5</td>
+<td>68.3</td>
+<td>79.7</td>
+</tr>
+<tr>
+<td>OpenVLA</td>
+<td>84.7</td>
+<td>88.4</td>
+<td>79.2</td>
+<td>84.1</td>
+</tr>
+<tr>
+<td>pi0-FAST</td>
+<td>96.4</td>
+<td>96.8</td>
+<td>88.6</td>
+<td>93.9</td>
+</tr>
+<tr>
+<td>pi0</td>
+<td>96.8</td>
+<td>98.8</td>
+<td>95.8</td>
+<td>97.1</td>
+</tr>
+<tr>
+<td><strong>DexVLA</strong></td>
+<td><strong>97.2</strong></td>
+<td><strong>99.1</strong></td>
+<td><strong>95.6</strong></td>
+<td><strong>97.3</strong></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>실세계 작업 (작업별 적응 없이):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>작업</th>
+<th>DexVLA</th>
+<th>OpenVLA</th>
+<th>Octo</th>
+<th>Diffusion Policy</th>
+</tr></thead><tbody>
+<tr>
+<td>셔츠 접기</td>
+<td>0.92</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>쉬운 물건 분류</td>
+<td>~0.85</td>
+<td>~0.15</td>
+<td>~0.10</td>
+<td>~0.20</td>
+</tr>
+<tr>
+<td>쉬운 테이블 정리</td>
+<td>~0.80</td>
+<td>~0.25</td>
+<td>~0.15</td>
+<td>~0.30</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>새로운 구현체 학습 (100개 시연):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>작업</th>
+<th>DexVLA</th>
+<th>OpenVLA</th>
+<th>Octo</th>
+<th>Diffusion Policy</th>
+</tr></thead><tbody>
+<tr>
+<td>음료 붓기 (Inspired Dexterous Hand)</td>
+<td>0.90</td>
+<td>~0.10</td>
+<td>~0.05</td>
+<td>~0.70</td>
+</tr>
+<tr>
+<td>포장 (양팔 UR5e)</td>
+<td>0.90</td>
+<td>~0.20</td>
+<td>~0.15</td>
+<td>~0.65</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>장기 지평 작업:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>작업</th>
+<th>DexVLA</th>
+<th>pi0</th>
+</tr></thead><tbody>
+<tr>
+<td>세탁물 접기</td>
+<td>0.40</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>테이블 정리 (어려움)</td>
+<td>0.70</td>
+<td>0.62</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>3단계 커리큘럼 절제:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>1단계</th>
+<th>2단계</th>
+<th>3단계</th>
+<th>셔츠 접기</th>
+<th>세탁물 접기</th>
+</tr></thead><tbody>
+<tr>
+<td>예</td>
+<td>--</td>
+<td>--</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>--</td>
+<td>예</td>
+<td>--</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>예</td>
+<td>예</td>
+<td>--</td>
+<td>0.92</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>예</td>
+<td>예</td>
+<td>예</td>
+<td>0.92</td>
+<td>0.40</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">3단계(장기 지평 미세 조정)는 세탁물 접기 같은 복잡한 작업에 필수적; 1+2단계만으로 셔츠 접기 같은 단순 작업에는 충분.</p>
+<p class="dp-p"><strong>확산 전문가 규모 절제 (셔츠 접기):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>모델</th>
+<th>파라미터</th>
+<th>성공률</th>
+</tr></thead><tbody>
+<tr>
+<td>UNet</td>
+<td>93M</td>
+<td>0.17</td>
+</tr>
+<tr>
+<td>ScaleDP (중형)</td>
+<td>410M</td>
+<td>0.63</td>
+</tr>
+<tr>
+<td>ScaleDP (대형)</td>
+<td>1B</td>
+<td>0.92</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>훈련 효율성:</strong> 확산 전문가만 훈련 시 0.89 에포크/시간 vs. 전체 VLA 0.32 에포크/시간 (2.78배 속도 향상).</p>
+<p class="dp-p"><strong>제로샷 교차 구현체 전이:</strong> 그리퍼-정교한 핸드 물건 분류에서 60% 성공률 vs. 원래 그리퍼 구현체 67%.</p>
+<ul class="dp-list">
+<li>ScaleDP-H 및 ScaleDP-L 가중치가 HuggingFace에 공개</li>
+<li>코드 공개: <a href="https://github.com/juruobenruo/DexVLA" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 단일 NVIDIA A6000 GPU에서 <strong>60 Hz</strong>로 실행. 조사된 문헌에서 보고된 가장 빠른 VLA 추론 속도 중 하나.</li>
+<li><strong>배포 하드웨어:</strong> 추론용 단일 NVIDIA A6000 GPU. 확산 전문가를 10억 파라미터로 확장함에도 비용 효율적 훈련과 빠른 추론 달성.</li>
+<li><strong>실시간 가능 여부:</strong> 예. 단일 A6000에서 60 Hz는 실시간 정교한 조작 제어에 충분하며, 대부분의 VLA 기반 시스템의 일반적 제어 주파수인 10-30 Hz를 초과.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> 단일 팔, 양팔, 정교한 핸드 로봇을 포괄하는 교차 구현체 훈련 데이터. 단일 명명된 벤치마크 없음; 데이터 소스 조합 사용.</li>
+<li><strong>수집 방법:</strong> 교차 구현체 데이터 수집. 구체적 수집 방법론(원격 조작 장치, 시뮬레이션 등)은 공개 자료에 상세히 기술되지 않음.</li>
+<li><strong>데이터 규모:</strong> 이용 가능한 요약에 보고되지 않음. 구현체별 데이터셋 크기는 논문을 참조해야 함.</li>
+<li><strong>원격 조작 장비:</strong> 보고되지 않음.</li>
+<li><strong>데이터 포맷:</strong> 보고되지 않음.</li>
+<li><strong>공개 여부:</strong> ScaleDP-H 및 ScaleDP-L 가중치가 HuggingFace에 공개. 코드: <a href="https://github.com/juruobenruo/DexVLA" target="_blank" rel="noopener">GitHub</a>. 훈련 데이터 공개 여부 미확인.</li>
+</ul>
+<blockquote class="dp-quote"><em>데이터셋 세부 사항 일부는 훈련 지식에서 -- 프로젝트 페이지(dex-vla.github.io)는 리뷰 시점에 접근 불가.</em></blockquote>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=xzXIzvXXkO" target="_blank" rel="noopener">OpenReview</a></p></div></details>

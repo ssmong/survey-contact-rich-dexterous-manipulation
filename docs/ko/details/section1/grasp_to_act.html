@@ -1,0 +1,78 @@
+<h3 class="dp-h3">Grasp-to-Act</h3>
+<p class="dp-p"><strong>전체 제목:</strong> Grasp-to-Act: Dynamic Tool Use via Dexterous Grasping</p>
+<p class="dp-p"><strong>저자:</strong> UIUC RoboTouch lab et al. 연구팀</p>
+<p class="dp-p"><strong>학회/연도:</strong> arXiv 프리프린트, 2026</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> UR5 로봇 팔에 장착된 LEAP Hand (16 DoF). (참고: 이 항목의 이전 버전에서는 Allegro Hand로 잘못 기재; 논문에는 "6-DoF UR5 로봇 팔에 장착된 16-DoF LEAP hand"로 명시.)</p>
+<p class="dp-p"><strong>작업:</strong> 5가지 동적 도구 사용 작업: (1) 망치로 못 박기, (2) 톱질, (3) 가위/칼로 자르기, (4) 숟가락으로 젓기, (5) 주걱으로 뜨기. 이 작업들은 도구와 환경 사이의 동적 상호작용 힘을 요구하며, 준정적 집기-놓기를 넘어선다.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Grasp-to-Act은 정교한 도구 사용을 두 단계로 분해한다: 먼저 도구에 대한 기능적 파지를 확립하고, 그 다음 작업별 조작 행동을 실행한다. 이 접근법은 파지 계획과 행동 실행을 결합하여, LEAP Hand가 접촉이 풍부한 작업에서 도구를 동적으로 사용할 수 있게 한다. 시뮬레이션 기반 훈련과 실세계 검증을 통합한다.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong> 공개적으로 상세히 기술되지 않음. 정책 아키텍처는 파지 획득에서 동적 도구 조작으로의 전환을 연속 제어 문제로 처리한다.</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> 시뮬레이션 환경에서 훈련하며, 물리적 LEAP Hand에서 sim-to-real 전이가 시연된다. 구체적 시뮬레이터 세부 사항은 완전히 공개되지 않았다.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>기능적 파지 계획과 작업 실행을 분리하는 파지-행동 분해를 도입하며, 이전 정교한 도구 사용 방법은 파지와 조작을 공동으로 학습해야 하는 단일 정책을 훈련했다.</li>
+<li>16-DoF 정교한 핸드에서 동적 도구 사용 작업(해머링, 톱질)을 시연하며, 도구 작동 중 지속적 접촉 힘이 필요하다 -- 대부분의 이전 LEAP Hand 연구의 준정적 파지 초점을 넘어선다.</li>
+<li>질적으로 다른 조작 전략(충격, 왕복, 회전, 뜨기 동작)을 요구하는 5가지 도구 사용 작업에 걸쳐 검증한다.</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li><strong>힘/임피던스 인식:</strong> 없음. 도구 사용 작업의 동적 특성에도 불구하고 명시적 힘/임피던스 제어가 포함되지 않음. 해머링, 톱질, 자르기 중 접촉 힘은 명시적으로 조절되지 않으며, 적절한 도구-환경 상호작용 힘을 생성하기 위해 학습된 위치 궤적과 하드웨어 유연성에 의존한다.</li>
+<li><strong>VLA/언어 조건부:</strong> 없음. 정책은 언어나 비전-언어 백본 없이 작업별로 구성된다.</li>
+<li><strong>Sim-to-real:</strong> 예. 물리적 LEAP Hand에서 sim-to-real 전이가 시연되었으나, 시뮬레이터 세부 사항은 완전히 공개되지 않았다.</li>
+<li><strong>코드/데이터 공개:</strong> 코드나 모델 가중치 공개 없음.</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong> 시뮬레이션 결과 (논문 Table I)와 LEAP Hand에서의 실세계 검증:</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>작업</th>
+<th>성공률 (시뮬)</th>
+<th>병진 미끄러짐 (cm)</th>
+<th>회전 미끄러짐 (deg)</th>
+</tr></thead><tbody>
+<tr>
+<td>망치</td>
+<td>100.0%</td>
+<td>0.69</td>
+<td>1.35</td>
+</tr>
+<tr>
+<td>톱</td>
+<td>100.0%</td>
+<td>1.06</td>
+<td>3.13</td>
+</tr>
+<tr>
+<td>자르기</td>
+<td>100.0%</td>
+<td>0.48</td>
+<td>2.23</td>
+</tr>
+<tr>
+<td>젓기</td>
+<td>100.0%</td>
+<td>0.24</td>
+<td>2.08</td>
+</tr>
+<tr>
+<td>뜨기</td>
+<td>100.0%</td>
+<td>0.17</td>
+<td>1.25</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">G2A는 5가지 작업 모두에서 성공률과 미끄러짐 지표 모두에서 모든 기준선(분석적 방법, RL 기본, 접촉 보상 포함 RL, 사전 파지 자세 포함 RL, 고유파지 포함 RL, 적응 없는 G2A)을 능가한다. 실세계 시행에서도 G2A의 최저 미끄러짐과 최고 작업 완료율로 우수성이 확인되었다.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 논문이나 프로젝트 페이지에 명시적으로 보고되지 않음.</li>
+<li><strong>배포 하드웨어:</strong> 16-DoF LEAP Hand가 UR5 로봇 팔에 장착 + Intel RealSense D435 RGB-D 카메라. NVIDIA RTX 4070 Ti Super GPU에서 RL 정책 훈련 (~15분 수렴). 추론 GPU 미명시.</li>
+<li><strong>실시간 가능 여부:</strong> 시스템이 <strong>30 Hz 제어 주파수</strong>로 작동 (손목 궤적과 손가락 관절 조정이 30 Hz에서 동기적으로 업데이트). 단계별 추론 지연은 정량화되지 않았으나, 30 Hz 실시간 제어가 시연되었다.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> 맞춤 데이터셋; 보고된 표준 벤치마크 이름 없음.</li>
+<li><strong>수집 방법:</strong> sim-to-real 전이를 포함한 시뮬레이션 기반 훈련. 시연 수집 방법(예: 스크립트 궤적 vs. 원격 조작)에 대한 구체적 세부 사항은 공개되지 않았다.</li>
+<li><strong>데이터 규모:</strong> 보고되지 않음.</li>
+<li><strong>원격 조작 장비:</strong> 보고되지 않음.</li>
+<li><strong>데이터 포맷:</strong> 보고되지 않음.</li>
+<li><strong>공개 여부:</strong> 아니오. 코드, 데이터 또는 모델 가중치 공개 없음.</li>
+</ul>
+<blockquote class="dp-quote"><em>arXiv:2602.20466에서 결과 검증. 하드웨어가 LEAP Hand(이전에 기재된 Allegro Hand가 아님)로 확인됨.</em></blockquote>
+<hr>

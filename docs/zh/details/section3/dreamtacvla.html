@@ -1,0 +1,51 @@
+<h2 class="dp-h2">3.6 DreamTacVLA</h2>
+<ul class="dp-list">
+<li><strong>全称:</strong> Learning to Feel the Future: Tactile World Model for Contact-Rich VLA Policy</li>
+<li><strong>作者:</strong> 西北大学等</li>
+<li><strong>发表平台/年份:</strong> arXiv预印本，2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2512.23864</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 视觉触觉传感器。触觉图像通过V-JEPA2（自监督视觉编码器）处理以提取触觉潜在表示，而非直接使用原始触觉图像。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 否。仅位置动作输出。但模型内部预测未来的触觉潜在状态（触觉世界模型），用于优化动作预测。</p>
+<blockquote class="dp-quote"><strong>局限性（仅位置输出）：</strong> 仅位置输出；尽管接收了力/触觉输入，策略无法主动调节接触力。</blockquote>
+<p class="dp-p"><strong>机器人平台：</strong> Dobot Xtrainer机械臂 + 夹爪 + 视觉触觉传感器。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 4项需要触觉反馈才能成功的接触丰富操作任务。这些任务旨在评估预测未来触觉状态是否能改善操作性能。</p>
+<p class="dp-p"><strong>关键方法：</strong> DreamTacVLA引入了一个触觉世界模型，基于当前状态和计划的动作预测未来的触觉潜在表示。V-JEPA2编码器将原始触觉图像处理为紧凑的潜在向量。世界模型模块（基于Transformer）学习预测给定候选动作序列下触觉潜在状态的演变。这个预测的未来触觉状态随后用于优化动作预测——有效地让策略"感受未来"并避免会导致不良接触状态（如过度力、滑动）的动作。</p>
+<p class="dp-p"><strong>架构/参数：</strong> VLA主干网络 + V-JEPA2触觉编码器 + 基于Transformer的触觉世界模型。V-JEPA2编码器在大规模视觉数据上预训练，并在触觉图像上微调。世界模型预测未来的触觉潜在状态，反馈给动作解码器进行优化。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入触觉世界模型来预测未来的接触状态，实现主动（而非反应式）接触丰富操作。</li>
+<li>使用V-JEPA2作为触觉编码器，证明预训练的视觉自监督学习模型能有效编码触觉图像信息。</li>
+<li>展示预测未来触觉状态并据此条件化动作，相比触觉无关和仅反应式触觉方法都能提高接触丰富任务的成功率。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 未发布模型权重（仅GitHub仓库代码）。触觉世界模型增加了推理的计算开销。仅限4项任务，在单一机器人平台上评估。V-JEPA2编码器为自然图像设计，可能无法最优编码触觉信号。该方法假设使用视觉触觉传感器（如GelSight类），不泛化到其他触觉传感器模态。</p>
+<p class="dp-p"><strong>结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>最佳成功率</td>
+<td>4项接触丰富任务高达95%</td>
+</tr>
+<tr>
+<td>相对仅反应式触觉的提升</td>
+<td>10--20%</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 控制循环以<strong>50 Hz</strong>运行（与数据收集频率一致）。Think-Dream-Act流水线增加了推理开销；作者承认这一点并建议"策略蒸馏和自适应想象以实现更快的单程推理"作为未来工作。</li>
+<li><strong>部署硬件：</strong> 在单块NVIDIA GPU上训练（型号未指定；20K步约需8-12小时）。Dobot Xtrainer机械臂 + 夹爪 + 视觉触觉传感器。推理GPU未单独指定。</li>
+<li><strong>是否支持实时？</strong> 部分支持。50 Hz控制频率得以维持，但两阶段流水线（世界模型预测 + 动作生成）引入了计算开销。作者明确将推理速度标记为一个局限性。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 结合高保真数字孪生仿真数据和真实世界实验数据的混合大规模数据集。构建目的是缓解触觉数据稀缺和触觉传感器易磨损的问题。</li>
+<li><strong>收集方法：</strong> 混合方法：（1）数字孪生仿真生成合成触觉数据，和（2）使用视觉触觉传感器（GelSight类）的真实世界实验。数据以50 Hz收集。</li>
+<li><strong>数据规模：</strong> 未明确报告。</li>
+<li><strong>遥操作设备：</strong> 未报告。在Dobot Xtrainer机械臂上使用夹爪和视觉触觉传感器收集数据。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开可用？</strong> 代码可用（引用GitHub仓库）。未发布模型权重。数据集可用性未确认。</li>
+</ul>

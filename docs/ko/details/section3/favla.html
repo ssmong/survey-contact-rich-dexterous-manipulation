@@ -1,0 +1,35 @@
+<h2 class="dp-h2">3.4 FAVLA</h2>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> FAVLA: Force-Aware Vision-Language-Action Model for Contact-Rich Bimanual Manipulation</li>
+<li><strong>저자:</strong> USTC (University of Science and Technology of China) et al.</li>
+<li><strong>학회/연도:</strong> arXiv 프리프린트, 2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2602.23648</li>
+</ul>
+<blockquote class="dp-quote"><strong>아키텍처 참고:</strong> ForceVLA(F/T 토큰화, 교차 어텐션, 위치 출력)와 구조적으로 유사; 주요 차별점은 양팔 확장.</blockquote>
+<p class="dp-p"><strong>힘/촉각 입력 유형:</strong> 양팔 시스템 양팔에 장착된 6축 F/T 센서(고주파).</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> 없음. 양팔 모두 위치 전용 행동 출력.</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> X-ARM 로봇 팔을 갖춘 Monte 양팔 시스템.</p>
+<p class="dp-p"><strong>작업:</strong> 4가지 접촉이 풍부한 양팔 조작 작업: USB 삽입, 기어 맞물림, 표면 닦기, 커넥터 삽입. 양팔 간 조율된 힘 제어가 필요한 작업.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> FAVLA는 힘 인식 VLA 패러다임을 양팔 환경으로 확장한다. 양팔의 고주파 F/T 신호가 별도 시간 인코더를 통해 처리된 후 교차 어텐션을 통해 시각 토큰과 융합된다. 모델은 양 엔드이펙터의 접촉 상태를 동시에 고려하는 조율된 양팔 행동 청크를 생성한다. 힘 인식 어텐션 메커니즘은 한 팔의 행동을 다른 팔의 힘 판독에 조건부할 수 있게 하여 반응적 양팔 조율을 가능하게 한다.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong> 이중 힘 인코더를 갖춘 양팔 VLA. 행동 공간은 양팔 포괄(14D: 2 x 6-DoF + 2 그리퍼). 양팔의 힘 입력이 독립적으로 인코딩되어 교차 어텐션 레이어를 통해 융합.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>양팔 간 조율된 힘 센싱이 중요한 양팔 조작으로 힘 인식 VLA를 확장</li>
+<li>교차 팔 힘 어텐션(한 팔의 행동을 다른 팔의 힘에 조건부)이 양팔 삽입 같은 작업에서 조율을 개선함을 시연</li>
+<li>양팔 동시 힘 조절이 필요한 작업(예: 한 팔로 물체를 잡고 다른 팔로 삽입)에서 평가</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> 코드 또는 가중치 공개 없음. 힘 입력에도 불구하고 위치 전용 출력. 단일 양팔 플랫폼에서 4개 작업으로 제한.</p>
+<p class="dp-p"><strong>결과:</strong> FAVLA가 4개 작업 모두에서 단일 팔 힘 인식 VLA와 비전 전용 양팔 기준선을 능가. USB 삽입과 기어 맞물림 작업이 양팔 힘 인식에서 가장 큰 개선.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 명시적으로 보고되지 않음. VLM은 "고정 저주파"에서 실행, 행동 전문가는 예측된 힘 분산에 기반한 적응적 주파수 스케줄링을 통해 "가변 고주파"에서 실행. 구체적 Hz/ms 수치 미공개.</li>
+<li><strong>배포 하드웨어:</strong> NVIDIA A100 80GB GPU에서 훈련. 실세계 배포를 위한 X-ARM 팔이 장착된 Monte 양팔 시스템. 추론 하드웨어 별도 미명시.</li>
+<li><strong>실시간 가능 여부:</strong> 미검증.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> 4가지 양팔 접촉이 풍부한 작업을 위한 맞춤 시연 데이터셋. 명명된 벤치마크 없음.</li>
+<li><strong>수집 방법:</strong> 양팔의 동기화된 고주파 6축 F/T 녹화를 포함하는 Monte 양팔 시스템(X-ARM 팔)에서의 원격 조작 시연.</li>
+<li><strong>데이터 규모:</strong> 보고되지 않음.</li>
+<li><strong>공개 여부:</strong> 아니오.</li>
+</ul>

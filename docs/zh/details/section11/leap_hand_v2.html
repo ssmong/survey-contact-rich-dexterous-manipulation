@@ -1,0 +1,48 @@
+<p class="dp-p"># 11.1 LEAP Hand V2</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> LEAP Hand V2: Advanced Dexterous Robotic Hand</li>
+<li><strong>作者：</strong> Kenneth Shaw, Deepak Pathak (CMU)</li>
+<li><strong>发表场所/年份：</strong> 2024（V1版：RSS 2023）</li>
+<li><strong>自由度：</strong> 16个驱动自由度 + 可活动掌部</li>
+<li><strong>执行器：</strong> Dynamixel舵机</li>
+<li><strong>成本：</strong> ~$3,000</li>
+<li><strong>重量：</strong> 轻量化（可安装于标准机械臂）</li>
+<li><strong>触觉传感：</strong> 无内置（可加装第三方传感器）</li>
+<li><strong>仿真模型：</strong> MuJoCo, Isaac Lab</li>
+</ul>
+<h2 class="dp-h2">定量参数</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>参数</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>执行器控制带宽</td>
+<td>~50 Hz有效控制频率（受Dynamixel舵机限制）</td>
+</tr>
+<tr>
+<td>最大指尖力</td>
+<td>现有文献未报告</td>
+</tr>
+<tr>
+<td>耐久性</td>
+<td>多个研究组已验证数千次抓取循环（CrossDex、SeqDex、HandelBot、DexCap、ComFree-Sim）</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">LEAP Hand V2在初代LEAP Hand（RSS 2023）基础上进行了改进，包括优化机械设计、更强的执行器以及可活动掌部以增强抓取稳定性。该手使用Dynamixel舵机驱动所有关节，提供位置和电流（力矩近似）反馈。设计强调研究可及性：所有结构件均可3D打印或使用现成组件，物料清单完整公开。V2版新增的可对置掌关节扩大了抓取包络，使操作模式更接近人手。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>研究社区中采用最广泛的低成本灵巧手之一（被CrossDex、SeqDex、HandelBot、DexCap、ComFree-Sim等使用）</li>
+<li>可活动掌部（V2版）扩展了V1固定掌部设计之外的抓取类型</li>
+<li>多个独立研究组已验证从仿真到真实的零样本迁移流程</li>
+<li>鲁棒的机械设计，在研究环境中经受住了数千次抓取循环</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>无集成触觉传感；指尖接触仅依赖位置控制</li>
+<li>Dynamixel舵机带宽有限（~50 Hz有效控制频率），低于定制执行器</li>
+<li>$3,000的成本虽然对灵巧手而言较低，但在本节中最高</li>
+<li>16自由度少于人手（~20-25个功能性自由度），对某些任务限制了操作灵巧性</li>
+</ul>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">完全开源（CAD、固件、软件）。项目主页：<a href="https://v2-adv.leaphand.com/" target="_blank" rel="noopener">v2-adv.leaphand.com</a></p>

@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.2 Hora</h3>
+<p class="dp-p"><strong>전체 제목:</strong> In-Hand Object Rotation via Rapid Motor Adaptation</p>
+<p class="dp-p"><strong>저자:</strong> Haozhi Qi, Ashish Kumar, Roberto Calandra, Yi Ma, Jitendra Malik</p>
+<p class="dp-p"><strong>학회/연도:</strong> CoRL 2022</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO with rapid motor adaptation (RMA); trains a base policy and an online adaptation module that infers environment parameters from recent interaction history</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Allegro Hand (16 DoF)</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym Preview 4</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes; zero-shot sim-to-real transfer using RMA for online adaptation (real). Domain randomization over physical parameters (mass, friction, scale) during training; the adaptation module infers these parameters at deployment from proprioceptive history</p>
+<p class="dp-p"><strong>객체 수:</strong> Multiple objects including cubes, cylinders, and YCB objects; evaluated on ~10+ objects in the real world</p>
+<p class="dp-p"><strong>작업:</strong> Continuous in-hand object rotation around a specified axis (z-axis rotation of objects held in the palm)</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Builds on Rapid Motor Adaptation (RMA) for in-hand manipulation. A base policy is trained with PPO in simulation across randomized environments. An adaptation module (small MLP) is trained to predict latent environment parameters from a short history of proprioceptive observations. At deployment, the adaptation module provides implicit system identification, enabling the policy to adapt to real-world dynamics without explicit calibration.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>First demonstration of rapid motor adaptation for dexterous in-hand rotation on real Allegro Hand (real)</li>
+<li>Online adaptation eliminates the need for manual system identification or hand-tuned domain randomization</li>
+<li>Robust zero-shot transfer across diverse object shapes and sizes on real hardware (real)</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> Limited to single-axis rotation (not arbitrary SE(3) reorientation); relies on proprioception only (no vision or tactile); objects must remain in a palm-up configuration; limited to rigid objects</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not explicitly reported. The MLP policy with RMA adaptation module runs in <1ms per forward pass, enabling high-frequency control.</li>
+<li><strong>배포 하드웨어:</strong> Allegro Hand (16 DoF). Policy trained in IsaacGym; deployed via zero-shot sim-to-real transfer with online RMA adaptation. MLP policy is lightweight enough for any compute platform.</li>
+<li><strong>실시간 가능 여부:</strong> Yes. MLP-based RL policy with lightweight RMA module runs at real-time rates on the Allegro Hand.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> No pre-collected dataset. Pure RL (PPO) with rapid motor adaptation (RMA) -- all data generated in simulation.</li>
+<li><strong>수집 방법:</strong> Pure RL in IsaacGym with domain randomization over physical parameters (mass, friction, scale). Online adaptation module trained from proprioceptive history. Zero-shot sim-to-real transfer. Cubes, cylinders, and YCB objects.</li>
+<li><strong>데이터 규모:</strong> Standard parallel RL training in IsaacGym. ~10+ objects evaluated in real world.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>데이터 포맷:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>공개 여부:</strong> Code release status not reported.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=C5GlmrAI4d" target="_blank" rel="noopener">OpenReview</a></p></div></details>

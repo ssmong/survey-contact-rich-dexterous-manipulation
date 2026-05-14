@@ -1,0 +1,64 @@
+<p class="dp-p"># 9.9 TACTO</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> TACTO: A Fast, Flexible and Open-source Simulator for High-Resolution Vision-based Tactile Sensors</li>
+<li><strong>저자:</strong> Shaoxiong Wang, Mike Lambeta, Po-Wei Chou, Roberto Calandra</li>
+<li><strong>기관:</strong> Meta FAIR (Facebook AI Research)</li>
+<li><strong>학회/연도:</strong> IEEE Robotics and Automation Letters (RA-L) 2022</li>
+<li><strong>시뮬레이션 플랫폼:</strong> PyBullet (물리) + PyRender (tactile 렌더링)</li>
+<li><strong>센서 모델:</strong> DIGIT, OmniTact, GelSight 스타일 비전 기반 tactile 센서</li>
+<li><strong>작업:</strong> tactile 피드백을 활용한 grasping, rolling, 객체 조작</li>
+</ul>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">TACTO는 접촉 기하학에서 합성 tactile 이미지를 렌더링하여 비전 기반 tactile 센서를 시뮬레이션한다. 물리적으로 정확한 접촉 변형 시뮬레이션을 시도하기보다, TACTO는 빠르고 시각적으로 그럴듯한 tactile 이미지 생성에 초점을 맞춘다. 객체가 시뮬레이션된 센서에 접촉하면, TACTO는 적절한 조명 및 gel 표면 속성으로 PyRender를 사용하여 접촉 패치를 렌더링하며, 실제 DIGIT 또는 GelSight 센서와 유사한 RGB tactile 이미지를 생성한다. 물리 시뮬레이션 (rigid body 역학, 충돌 감지)은 PyBullet이 처리하고, TACTO는 tactile 렌더링 파이프라인만 담당한다. 이러한 분리로 TACTO를 모든 PyBullet 기반 조작 환경에 통합할 수 있다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>DIGIT 및 OmniTact 비전 기반 tactile 센서를 위한 고해상도 합성 tactile 이미지를 구체적으로 목표로 하는 최초의 오픈소스 시뮬레이터</li>
+<li>FEM 기반 대안(DiffTactile 등)보다 빠른 렌더링으로 tactile 관측을 활용한 RL 학습 가능</li>
+<li>모듈식 설계: 센서 기하학 및 광학 속성을 YAML 파일로 구성 가능</li>
+<li>얇은 API 레이어를 통한 기존 PyBullet 환경과의 간편한 통합</li>
+<li>서버 측 학습을 위한 headless 렌더링 지원 (EGL/OSMESA)</li>
+</ul>
+<h2 class="dp-h2">서베이 대상 연구에서의 활용</h2>
+<p class="dp-p">TACTO 또는 그 tactile 시뮬레이션 접근법은 본 서베이의 여러 연구에서 참조되었다:</p>
+<ul class="dp-list">
+<li><strong>Sparsh</strong> (§12): 시뮬레이션 및 실제 DIGIT 데이터로 tactile encoder 학습/평가</li>
+<li><strong>RotateIt</strong> (§7): in-hand rotation에 tactile 시뮬레이션 사용</li>
+<li>DIGIT/GelSight를 사용하는 기타 tactile 조작 논문들이 사전학습 또는 augmentation을 위해 TACTO 스타일 시뮬레이션 데이터 활용</li>
+</ul>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>명시적으로 물리적으로 정확하지 않음: "접촉의 물리적으로 정확한 역학(예: 변형, 마찰)을 제공하기 위한 것이 아님" -- 접촉력과 변형은 근사적으로 처리</li>
+<li>PyBullet 백엔드가 GPU 병렬 엔진 (IsaacGym, ManiSkill3)에 비해 시뮬레이션 속도 제한</li>
+<li>미분 가능 렌더링 없음: tactile 이미지 생성을 통해 gradient를 역전파할 수 없음</li>
+<li>비전 기반 tactile 센서 (DIGIT, OmniTact, GelSight)로 제한; resistive, capacitive, barometric tactile 센서 시뮬레이션 불가</li>
+<li>기본 제공되는 multi-finger dexterous hand 환경 없음 (예제는 parallel-jaw gripper에 초점)</li>
+<li>macOS에서 PyBullet과 PyRender 간 일부 시각화 문제</li>
+</ul>
+<h2 class="dp-h2">커버리지 격차</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>기준</th>
+<th>충족 여부</th>
+</tr></thead><tbody>
+<tr>
+<td>Force/torque 평가 지표</td>
+<td>아니오 (tactile 이미지는 시각적이며, 힘 보정되지 않음)</td>
+</tr>
+<tr>
+<td>Deformable 객체 작업</td>
+<td>아니오 (PyBullet을 통한 rigid body 물리만 해당)</td>
+</tr>
+<tr>
+<td>Tactile 센싱</td>
+<td>예 (핵심 기여 -- 합성 tactile 이미지 생성)</td>
+</tr>
+<tr>
+<td>Multi-stage / long-horizon 작업</td>
+<td>아니오</td>
+</tr>
+<tr>
+<td>Multi-hand 협동</td>
+<td>아니오</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">오픈소스 현황</h2>
+<p class="dp-p">MIT 라이선스 오픈소스. <code>pip install tacto</code>로 설치. GitHub: <a href="https://github.com/facebookresearch/tacto" target="_blank" rel="noopener">facebookresearch/tacto</a></p>

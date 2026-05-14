@@ -1,0 +1,85 @@
+<h3 class="dp-h3">SpatialVLA: Exploring Spatial Representations for Visual-Language-Action Model</h3>
+<p class="dp-p"><strong>完整标题：</strong> SpatialVLA: Exploring Spatial Representations for Visual-Language-Action Model</p>
+<p class="dp-p"><strong>作者：</strong> Delin Qu, Haoming Song, Qizhi Chen, Yuanqi Yao, Xinyi Ye, Yan Ding, Zhigang Wang, JiaYuan Gu, Bin Zhao, Dong Wang, Xuelong Li (上海人工智能实验室、复旦大学、上海交通大学、浙江大学、上海科技大学、西北工业大学)</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> RSS 2025</p>
+<p class="dp-p"><strong>架构：</strong> 3.5B参数VLA，基于PaliGemma2 VLM骨干构建。视觉编码器为SigLIP，语言模型为Gemma 2。SpatialVLA在此骨干上引入两个空间模块：(1) Ego3D位置编码，通过相机反投影和正弦编码+可学习MLP将单目深度（来自ZoeDepth）与2D语义特征集成，将3D空间感知注入视觉token；(2) 自适应动作网格，使用高斯拟合非均匀网格（8,194个词汇条目）将连续7D动作离散化为3个空间token（平移+旋转+夹爪），替换标准的每步7token线性分箱。</p>
+<p class="dp-p"><strong>动作空间：</strong> 7D（3D平移 + 3D旋转 + 夹爪），通过自适应动作网格离散化为每步3个空间token。网格分区根据每维高斯动作分布拟合，在动作密集处集中分辨率。微调时，网格可通过token嵌入的三线性插值重新适配。</p>
+<p class="dp-p"><strong>灵巧手支持？</strong> ✗ --- 仅夹爪（单臂）评估。</p>
+<p class="dp-p"><strong>力/阻抗输出？</strong> ✗ --- 仅位置目标。</p>
+<p class="dp-p"><strong>核心方法论：</strong> SpatialVLA解决标准VLA缺乏显式3D空间理解从而限制精确操作的问题。Ego3D位置编码将以自我为中心的3D坐标注入视觉token，无需外部3D传感器——仅需RGB+单目深度估计。自适应动作网格将每步动作token从7个减少到3个，同时通过在动作统计密集处集中离散化分箱来保持精度，改善推理速度和动作质量。模型在1.1M真实世界机器人episode上预训练，支持零样本迁移和LoRA微调。</p>
+<p class="dp-p"><strong>训练数据：</strong> 在来自Open X-Embodiment（OXE）子集和RH20T混合数据的1.1M真实世界机器人episode上预训练。在包括Google Fractal、BridgeData V2和LIBERO（每个任务50个演示）的下游任务上微调。训练：64块A100 GPU上10天，批次大小2,048。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入Ego3D位置编码，将单目深度衍生的3D空间信息注入VLA视觉token，无需测试时使用深度传感器即可改善空间推理。</li>
+<li>提出自适应动作网格，通过分布感知非均匀离散化将动作token从每步7个减少到3个同时保持精度，实现约20 Hz推理。</li>
+<li>在3.5B参数及以下的模型中实现SimplerEnv基准上最高的零样本和微调分数（截至RSS 2025），与15倍更大的模型（RT-2-X 55B）具有竞争力。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>基准/任务</th>
+<th>SpatialVLA（零样本）</th>
+<th>SpatialVLA（微调）</th>
+<th>OpenVLA</th>
+<th>Octo</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td>SimplerEnv Google Robot（视觉匹配）</td>
+<td>71.9%</td>
+<td>75.1%</td>
+<td>约49%</td>
+<td>—</td>
+<td>零样本比RoboVLM高+15.6%</td>
+</tr>
+<tr>
+<td>SimplerEnv Google Robot（变体聚合）</td>
+<td>68.8%</td>
+<td>70.7%</td>
+<td>—</td>
+<td>—</td>
+<td></td>
+</tr>
+<tr>
+<td>SimplerEnv WidowX（零样本）</td>
+<td>34.4%</td>
+<td>42.7%</td>
+<td>—</td>
+<td>—</td>
+<td>微调后茄子任务100%</td>
+</tr>
+<tr>
+<td>LIBERO平均（微调）</td>
+<td>—</td>
+<td>78.1%</td>
+<td>76.5%</td>
+<td>75.1%</td>
+<td>排名第1；LIBERO-Spatial：88.2%</td>
+</tr>
+<tr>
+<td>推理速度</td>
+<td>约20 Hz (RTX 4090, 8.5 GB)</td>
+<td></td>
+<td>约5 Hz</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>动作网格的高斯拟合对具有极端单轴运动的分布次优，可能导致网格聚集和能力丧失。</li>
+<li>自回归解码在高频控制方面本质上比基于扩散的动作头更慢。</li>
+<li>无历史/时间上下文机制；依赖单帧观测，限制长时域任务性能（在LIBERO-Long上表现困难）。</li>
+<li>OXE数据集中质量参差不齐影响训练效率；需要数据整理/蒸馏。</li>
+<li>仅夹爪；无灵巧手或力感知评估。</li>
+</ul>
+<p class="dp-p"><strong>开放权重/代码：</strong> ✅ 代码和权重：<a href="https://spatialvla.github.io/" target="_blank" rel="noopener">项目页面</a>。作者声明所有代码和细节已开源。</p>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> Open X-Embodiment（OXE）子集 + RH20T用于预训练。BridgeData V2、Google Fractal、LIBERO用于微调。</li>
+<li><strong>收集方法：</strong> 从OXE聚合的跨具身数据。微调演示来自标准操作基准。</li>
+<li><strong>数据规模：</strong> 1.1M真实世界机器人episode用于预训练。微调：每个任务50个演示（LIBERO），6个episode（Fractal）。</li>
+<li><strong>遥操作设备：</strong> 因OXE组成数据集而异。</li>
+<li><strong>数据格式：</strong> RLDS（OXE标准）。</li>
+<li><strong>是否公开？</strong> OXE和RH20T公开。模型权重通过项目页面提供。</li>
+</ul>
+<hr>

@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.3 SeqDex</h3>
+<p class="dp-p"><strong>完整标题：</strong> Sequential Dexterity: Chaining Dexterous Policies for Long-Horizon Manipulation</p>
+<p class="dp-p"><strong>作者：</strong> Yuanpei Chen, Chen Wang, Li Fei-Fei, C. Karen Liu</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CoRL 2023</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2309.00987</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 教师-学生蒸馏。每个子策略使用特权状态访问独立训练（教师），然后蒸馏为基于视觉的学生策略。策略通过学习的转换条件链接。</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）安装在Kuka臂上</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym（NVIDIA）</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是。通过域随机化和从特权状态到点云观测的教师-学生蒸馏实现仿真到真实迁移（真实）。</p>
+<p class="dp-p"><strong>任务：</strong> 分解为阶段的长时域顺序操作：搜索（定位物体）-> 定向（旋转到期望姿态）-> 抓取（获取稳定抓取）-> 插入（放入槽中）。完整链通过子策略间学习的转换触发器自主执行。</p>
+<p class="dp-p"><strong>核心方法论：</strong> SeqDex将长时域灵巧任务分解为更短时域的子策略序列，每个独立用RL训练。关键创新是自动链接机制，使用学习的二元分类器检测一个阶段何时成功以及下一个阶段何时应该开始，避免手动阈值或状态机。教师策略使用特权仿真状态；学生策略从3D点云操作。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>展示了通过学习转换条件链接独立训练的RL子策略，实现单体策略无法学习的长时域灵巧操作</li>
+<li>在Allegro+Kuka系统上实现完整多阶段流程（搜索-定向-抓取-插入）的仿真到真实迁移（真实）</li>
+<li>提供将复杂灵巧任务分解为可学习子问题的通用框架</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 任务分解是手动的，需要领域知识来定义子任务边界。方法仅在单一任务族（物体插入）上展示；向多样长时域任务的泛化未测试。未使用力/触觉传感。</p>
+<p class="dp-p"><strong>结果：</strong> 在真实世界实验中成功完成完整搜索-定向-抓取-插入链（真实）。代码和预训练权重公开可用。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。每个子策略（MLP）每次前向传播 <1ms。阶段转换分类器增加可忽略开销。总流程为实时。</li>
+<li><strong>部署硬件：</strong> Allegro Hand（16自由度）+ Kuka臂。策略在IsaacGym中训练；通过零样本仿真到真实迁移部署。</li>
+<li><strong>支持实时？</strong> 是。链式MLP子策略支持真实硬件上的实时灵巧操作。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。每个子策略的纯RL（PPO）+ 教师-学生蒸馏——所有数据在仿真中生成。</li>
+<li><strong>收集方法：</strong> IsaacGym中的纯RL。每个子策略（搜索、定向、抓取、插入）以特权状态独立训练（教师），通过域随机化蒸馏为基于点云的学生。学习的二元分类器检测阶段转换。在Allegro + Kuka上仿真到真实迁移。</li>
+<li><strong>数据规模：</strong> 每个子策略的IsaacGym标准并行RL训练。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 是——代码和预训练权重公开可用。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=A29Y57m07B" target="_blank" rel="noopener">OpenReview</a></p></div></details>

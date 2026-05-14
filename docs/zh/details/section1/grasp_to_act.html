@@ -1,0 +1,78 @@
+<h3 class="dp-h3">Grasp-to-Act</h3>
+<p class="dp-p"><strong>全称：</strong> Grasp-to-Act: Dynamic Tool Use via Dexterous Grasping</p>
+<p class="dp-p"><strong>作者：</strong> UIUC RoboTouch实验室等研究人员</p>
+<p class="dp-p"><strong>会议/年份：</strong> arXiv预印本，2026</p>
+<p class="dp-p"><strong>手部硬件：</strong> LEAP Hand（16自由度），安装在UR5机器人臂上。（注：本条目早期版本错误地标注为Allegro Hand；论文明确指出"16自由度LEAP手安装在6自由度UR5机器人臂上"。）</p>
+<p class="dp-p"><strong>任务：</strong> 5项动态工具使用任务：（1）锤击钉子，（2）锯切，（3）剪刀/刀具切割，（4）勺子搅拌，（5）铲子铲取。这些任务需要工具与环境之间的动态交互力，超越了准静态的抓放操作。</p>
+<p class="dp-p"><strong>核心方法：</strong> Grasp-to-Act将灵巧工具使用分解为两个阶段：首先在工具上建立功能性抓取，然后执行任务特定的操作动作。该方法结合了抓取规划和动作执行，使LEAP Hand能够动态地使用工具完成接触密集型任务。该方法集成了基于仿真的训练和真实世界验证。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 未公开详细信息。策略架构将从抓取获取到动态工具操作的过渡处理为连续控制问题。</p>
+<p class="dp-p"><strong>仿真平台：</strong> 训练使用仿真环境，在物理LEAP Hand上展示了仿真到真实迁移。具体仿真器细节未完全公开。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入了抓取到动作的分解方法，将功能性抓取规划与任务执行分离，而此前的灵巧工具使用方法训练整体策略，需要同时学习抓取和操作。</li>
+<li>在16自由度灵巧手上展示了动态工具使用任务（锤击、锯切），需要工具操作过程中的持续接触力——超越了大多数此前LEAP Hand工作的准静态抓取重点。</li>
+<li>在5个需要质量不同操作策略（冲击、往复、旋转、铲取运动）的工具使用任务上进行了验证。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。尽管工具使用任务具有动态性质，但未引入显式的力/阻抗控制。锤击、锯切和切割过程中的接触力未被显式调节，而是依赖学习到的位置轨迹和硬件柔顺性来产生足够的工具-环境交互力。</li>
+<li><strong>VLA/语言条件化：</strong> 无。策略为任务特定的，无语言或视觉语言主干。</li>
+<li><strong>仿真到真实：</strong> 是。在物理LEAP Hand上展示了仿真到真实迁移，但仿真器细节未完全公开。</li>
+<li><strong>代码/权重可用性：</strong> 未公开发布代码或模型权重。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 仿真结果（论文表I）和在LEAP Hand上的真实世界验证：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>成功率（仿真）</th>
+<th>平移滑移（cm）</th>
+<th>旋转滑移（deg）</th>
+</tr></thead><tbody>
+<tr>
+<td>锤击</td>
+<td>100.0%</td>
+<td>0.69</td>
+<td>1.35</td>
+</tr>
+<tr>
+<td>锯切</td>
+<td>100.0%</td>
+<td>1.06</td>
+<td>3.13</td>
+</tr>
+<tr>
+<td>切割</td>
+<td>100.0%</td>
+<td>0.48</td>
+<td>2.23</td>
+</tr>
+<tr>
+<td>搅拌</td>
+<td>100.0%</td>
+<td>0.24</td>
+<td>2.08</td>
+</tr>
+<tr>
+<td>铲取</td>
+<td>100.0%</td>
+<td>0.17</td>
+<td>1.25</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">G2A在所有五个任务的成功率和滑移指标上均优于所有基线（解析方法、强化学习基础、带接触奖励的强化学习、带预抓取姿态的强化学习、带特征抓取的强化学习以及无适应的G2A）。真实世界试验确认G2A具有最低滑移和最高任务完成率。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 论文或项目页面中未明确报告。</li>
+<li><strong>部署硬件：</strong> 16自由度LEAP Hand安装在UR5机器人臂上 + Intel RealSense D435 RGB-D相机。强化学习策略训练在NVIDIA RTX 4070 Ti Super GPU上（约15分钟收敛）。推理GPU未指定。</li>
+<li><strong>是否实时：</strong> 系统以<strong>30 Hz控制频率</strong>运行（腕部轨迹和手指关节调整均以30 Hz同步更新）。每步推理延迟未量化，但已展示30 Hz实时控制。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> 自定义数据集；未报告标准基准名称。</li>
+<li><strong>收集方法：</strong> 基于仿真的训练，并进行仿真到真实迁移。演示收集方法的具体细节（如脚本化轨迹vs.遥操作）未公开。</li>
+<li><strong>数据规模：</strong> 未报告。</li>
+<li><strong>遥操作设备：</strong> 未报告。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开：</strong> 否。未公开发布代码、数据或模型权重。</li>
+</ul>
+<blockquote class="dp-quote"><em>结果已根据arXiv:2602.20466验证。硬件确认为LEAP Hand（非先前所述的Allegro Hand）。</em></blockquote>
+<hr>

@@ -1,0 +1,33 @@
+<h3 class="dp-h3">7.2 Visual Dexterity</h3>
+<p class="dp-p"><strong>完整标题：</strong> Visual Dexterity: In-Hand Reorientation of Novel Objects Using Depth Sensing</p>
+<p class="dp-p"><strong>作者：</strong> Tao Chen, Megha Tippur, Siyang Wu, Vikash Kumar, Edward Adelson, Pulkit Agrawal</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> Science Robotics 2023（原始arXiv 2022）</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 非对称Actor-Critic；教师使用特权状态，学生使用域随机化和深度图像观测训练</p>
+<p class="dp-p"><strong>手部硬件：</strong> D'Claw手（9-12自由度，取决于配置）；低成本三指手</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym Preview 3</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是；使用域随机化（视觉和物理）的零样本仿真到真实迁移（真实）。仅深度感知通过绕过RGB仿真到真实差距实现鲁棒迁移</p>
+<p class="dp-p"><strong>物体数量：</strong> 在真实世界实验中评估了100+训练期间未见的新颖物体</p>
+<p class="dp-p"><strong>任务：</strong> 到目标姿态的任意手内重定向（SO(3)重定向，不仅是单轴旋转）</p>
+<p class="dp-p"><strong>核心方法论：</strong> 使用腕部安装的RealSense相机的深度图像训练视觉运动策略，用于手内重定向期间的6D物体姿态追踪。关键架构选择是仅深度输入，其仿真到真实差距远小于RGB。非对称Actor-Critic在仿真中使用特权物体姿态训练；部署策略仅使用深度观测。广泛的程序化物体生成创建了多样的训练物体。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>在真实硬件上使用新颖物体实现完整SO(3)手内重定向（不仅是单轴旋转）（真实）</li>
+<li>仅深度感知以实现最小仿真到真实视觉差距</li>
+<li>泛化至100+新颖真实世界物体，包括不在训练分布中的家用物品（真实）</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> D'Claw是三指手，相比五指手灵巧性有限；深度相机对透明/反光物体有局限；仅重定向（无平移控制）；需要腕部安装相机且有清晰物体视野</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。带深度图像输入的MLP策略每次前向传播 <5ms（深度图像编码 + MLP）。</li>
+<li><strong>部署硬件：</strong> D'Claw手（9-12自由度）+ 腕部安装Intel RealSense深度相机。策略在IsaacGym中训练；通过域随机化零样本仿真到真实迁移部署。</li>
+<li><strong>支持实时？</strong> 是。轻量策略支持实时控制。已在真实D'Claw手上使用100+新颖物体验证。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。纯RL（PPO）+ 非对称Actor-Critic——所有数据在仿真中生成。</li>
+<li><strong>收集方法：</strong> IsaacGym中的纯RL，带域随机化（视觉和物理）。教师使用特权物体状态；学生使用腕部RealSense相机的深度图像观测训练。广泛的程序化物体生成创建多样训练物体。零样本仿真到真实迁移。</li>
+<li><strong>数据规模：</strong> 程序化生成训练物体。100+新颖真实世界物体用于评估（训练期间未见）。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 代码发布状态未报告。</li>
+</ul>

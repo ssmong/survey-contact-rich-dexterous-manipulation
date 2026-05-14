@@ -1,0 +1,55 @@
+<p class="dp-p"># 9.7 TeleOpBench</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> TeleOpBench: A Simulator-Centric Benchmark for Dual-Arm Dexterous Teleoperation</li>
+<li><strong>作者：</strong> Hangyu Li, Qin Zhao, Haoran Xu 及合作者</li>
+<li><strong>发表venue/年份：</strong> 2025（arXiv 2505.12748）</li>
+<li><strong>仿真平台：</strong> Isaac Sim</li>
+<li><strong>灵巧手支持：</strong> 3种具有双臂灵巧手的人形体</li>
+<li><strong>遥操作接口：</strong> 基于相机（SMPLerX + MediaPipe）和基于VisionPro（Apple Vision Pro）</li>
+<li><strong>任务：</strong> 30个双臂灵巧操作任务</li>
+<li><strong>评估：</strong> 基准测试了4种遥操作模式</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">TeleOpBench提供了一个标准化基准，用于评估双臂灵巧操作的遥操作系统。它实现了两条动作捕捉流程：基于相机的流程使用SMPLerX和MediaPipe进行网络摄像头人体动作捕捉，以及基于VR的流程使用Apple Vision Pro。基准包括实时逆运动学处理、基于MeshCat的3D可视化和运动数据传输。通过标准化评估环境和指标，可以直接比较不同的遥操作方法。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>首个具有30个标准化任务的双臂灵巧遥操作系统性基准</li>
+<li>支持多种遥操作模式（基于相机和基于VR），可直接比较</li>
+<li>实时逆运动学流程，将人手运动映射到多种机器人体</li>
+<li>标准化的遥操作质量评估指标</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>基准仅限仿真；评估流程不包含真实机器人执行</li>
+<li>仅限两种遥操作输入模式；未覆盖基于手套和外骨骼的接口</li>
+<li>未包含力反馈评估，尽管其与接触丰富操作高度相关</li>
+<li>3种人形体可能无法覆盖真实世界灵巧平台的多样性</li>
+</ul>
+<h2 class="dp-h2">覆盖缺口</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>标准</th>
+<th>是否覆盖？</th>
+</tr></thead><tbody>
+<tr>
+<td>力/力矩评估指标</td>
+<td>否（遥操作质量指标不包含力调节评估）</td>
+</tr>
+<tr>
+<td>可变形物体任务</td>
+<td>否</td>
+</tr>
+<tr>
+<td>触觉传感</td>
+<td>否</td>
+</tr>
+<tr>
+<td>多阶段/长时程任务</td>
+<td>部分（部分任务涉及顺序步骤，但无显式的长时程评估协议）</td>
+</tr>
+<tr>
+<td>多手协调</td>
+<td>是（双臂灵巧操作是核心关注点）</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">开源（Python 98%、C++ 2%）。GitHub: <a href="https://github.com/cyjdlhy/TeleOpBench" target="_blank" rel="noopener">cyjdlhy/TeleOpBench</a></p>

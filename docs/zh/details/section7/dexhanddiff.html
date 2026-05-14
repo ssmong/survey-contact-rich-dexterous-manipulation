@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.2 DexHandDiff</h3>
+<p class="dp-p"><strong>完整标题：</strong> DexHandDiff: Interaction-Aware Diffusion Planning for Adaptive Dexterous Manipulation</p>
+<p class="dp-p"><strong>作者：</strong> Zixuan Liang, Xinyu Zhan, Yisi Hu, Zhehao Cai, Jian Tang, Jianqiang Wang</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CVPR 2025</p>
+<p class="dp-p"><strong>RL算法：</strong> 基于扩散的规划（用于轨迹生成的去噪扩散）；非标准RL，而是通过条件扩散生成完整操作轨迹</p>
+<p class="dp-p"><strong>手部硬件：</strong> Shadow Hand（24自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> Adroit（基于MuJoCo的基准）</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否（仿真基准评估）</p>
+<p class="dp-p"><strong>物体数量：</strong> 标准Adroit基准物体（笔、门、锤子、球等）</p>
+<p class="dp-p"><strong>任务：</strong> 手内笔旋转、开门、使用锤子、球重定位——标准Adroit基准套件加额外操作任务</p>
+<p class="dp-p"><strong>核心方法论：</strong> 使用条件扩散模型生成完整操作轨迹（手部关节配置序列），以当前状态和目标为条件。关键创新是交互感知去噪：扩散过程融入预测的接触信息，引导轨迹生成朝向物理合理的接触丰富运动。这避免了单步RL策略的短视行为，通过规划整个轨迹。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>将接触预测融入轨迹生成的交互感知扩散规划</li>
+<li>灵巧操作的全轨迹规划（vs 单步策略输出）</li>
+<li>在Adroit基准任务上达到最先进结果，超越先前RL和模仿学习方法</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅仿真（Adroit基准）；扩散规划的计算成本可能限制实时部署；仅在MuJoCo中的Shadow Hand上评估；无真实世界验证；仅限标准Adroit任务集</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 基于扩散的轨迹规划需要多步去噪（现代GPU上每条轨迹50-500ms）。非为实时逐步控制设计。</li>
+<li><strong>部署硬件：</strong> 仅仿真（Adroit/MuJoCo）。未展示真实机器人部署。</li>
+<li><strong>支持实时？</strong> 有限。扩散规划离线生成完整轨迹；实时重新规划需要快速去噪（DDIM加速）或缓存。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> Adroit基准演示数据（MuJoCo）用于训练基于扩散的轨迹规划器。</li>
+<li><strong>收集方法：</strong> 基于扩散的规划——非标准RL。条件扩散模型从状态+目标生成完整操作轨迹。在Adroit基准套件的演示轨迹上训练。交互感知去噪融入预测接触信息。</li>
+<li><strong>数据规模：</strong> 标准Adroit基准演示集（笔、门、锤子、球任务）。每任务的具体回合数遵循Adroit惯例。</li>
+<li><strong>遥操作设备：</strong> 不适用（Adroit演示为预收集的脚本/专家数据）。</li>
+<li><strong>数据格式：</strong> Adroit基准格式（MuJoCo状态轨迹）。</li>
+<li><strong>是否公开？</strong> Adroit基准公开可用。DexHandDiff代码发布状态未报告。</li>
+</ul>

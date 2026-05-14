@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.7 Open TeleDex</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> Open TeleDex: Phone-Based Teleoperation for Dexterous Manipulation</li>
+<li><strong>저자:</strong> Omar Rayyan 외</li>
+<li><strong>학회/연도:</strong> arXiv 2510.14771, 2025년 10월</li>
+<li><strong>입력 모달리티:</strong> 스마트폰 기반 핸드 트래킹 (폰 카메라 + 온디바이스 ML)</li>
+<li><strong>대상 hand:</strong> 임의의 팔 + dexterous hand 조합</li>
+<li><strong>Force feedback:</strong> 없음</li>
+<li><strong>비용:</strong> 매우 저렴 (기존 스마트폰 사용)</li>
+</ul>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">Open TeleDex는 스마트폰 카메라와 온디바이스 머신러닝 모델을 활용한 핸드 포즈 추정으로 dexterous 원격조작을 가능하게 한다. 운영자가 폰을 잡거나 위치시켜 손 동작을 캡처하면, 이는 온디바이스에서 처리되어 로봇 컨트롤러로 스트리밍된다. 대부분의 연구자가 이미 소유한 하드웨어를 사용함으로써 모든 전문 입력 디바이스 비용을 제거한다. 시스템은 모듈식 retargeting 레이어를 통해 임의의 팔 + hand 조합을 지원한다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>dexterous 원격조작을 위한 추가 하드웨어 비용 없음 (기존 스마트폰 사용)</li>
+<li>온디바이스 핸드 트래킹으로 포즈 추정을 위한 전용 워크스테이션 불필요</li>
+<li>다양한 팔 + hand 조합을 위한 모듈식 지원</li>
+</ul>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>스마트폰 기반 트래킹이 전용 트래킹 시스템보다 정확도가 낮고 지연이 높음</li>
+<li>단일 시점 카메라가 가려진 손가락의 트래킹 제한</li>
+<li>어떤 종류의 force feedback도 없음</li>
+<li>폰이 운영자의 손에 대한 시선을 유지하도록 위치해야 하여 작업 공간 제약</li>
+</ul>
+<h2 class="dp-h2">데이터 품질 영향</h2>
+<p class="dp-p">스마트폰 기반 트래킹은 본 섹션의 원격조작 시스템 중 가장 높은 위치 노이즈와 지연을 도입한다. 시연은 힘 정보 없이 위치만 포함하며, 제한된 폰 시점(단일 카메라, 잠재적 가림)으로 트래킹 품질이 더욱 저하된다. Open TeleDex 데이터로 학습된 policy는 모든 무피드백 시스템에 공통된 force blindness와 저충실도 트래킹 파이프라인으로 인한 추가 궤적 노이즈를 모두 물려받는다. 이 조합으로 Open TeleDex 데이터는 정밀 contact-rich 작업에 가장 적합하지 않지만, 정확한 손가락 배치와 힘 제어가 덜 중요한 조잡한 grasping 작업에는 적절할 수 있다.</p>
+<h2 class="dp-h2">오픈소스 현황</h2>
+<p class="dp-p">오픈소스. GitHub: <a href="https://github.com/omarrayyann/TeleDex" target="_blank" rel="noopener">omarrayyann/TeleDex</a></p>

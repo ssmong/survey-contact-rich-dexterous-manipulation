@@ -1,0 +1,38 @@
+<p class="dp-p"># 8.4.2 DROID</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset</li>
+<li><strong>저자:</strong> Alexander Khazatsky, Karl Pertsch, Suraj Nair, Ashwin Balakrishna, Sudeep Dasari 외 95명 이상; 수석 자문 Sergey Levine (UC Berkeley), Chelsea Finn (Stanford)</li>
+<li><strong>학회/연도:</strong> arXiv 2024 (2024년 3월 제출; 2025년 4월 개정)</li>
+<li><strong>규모:</strong> 76,000개 시연 궤적, 350시간 상호작용 데이터, 564개 개별 장면, 84개 작업, 12개월간 50명의 데이터 수집자</li>
+<li><strong>지역 다양성:</strong> 북미, 아시아, 유럽 전역의 수집자</li>
+<li><strong>로봇:</strong> Franka Emika Panda, parallel-jaw gripper (표준화된 하드웨어 셋업)</li>
+<li><strong>데이터 형식:</strong> 스테레오 RGB, wrist 카메라, proprioception, end-effector 자세, 자연어 주석 포함</li>
+<li><strong>수집 방법:</strong> 표준화된 하드웨어를 사용하여 다양한 실제 환경에서 분산 in-the-wild 원격조작</li>
+</ul>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">DROID는 로봇 학습의 핵심 병목을 해결한다: 기존 데이터셋은 소수의 통제된 실험실 환경에서 수집되어 새로운 장면에 대한 policy 일반화를 제한한다. DROID는 표준화된 Franka Panda 하드웨어 셋업을 사용하여 다양한 실제 환경(가정, 사무실, 주방, 실험실)에서 50명의 운영자에게 데이터 수집을 분산시킴으로써 이를 해결한다. 작업 다양성보다는 장면 및 환경 다양성에 중점을 둔다. 각 궤적에는 multi-view 스테레오 RGB, wrist 카메라, 전체 proprioception, 자연어 작업 설명이 포함된다. 저자들은 전체 데이터셋, policy 학습 코드, 상세한 하드웨어 재현 가이드를 제공한다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>564개의 개별 실제 장면을 포함하는 최대 규모의 단일 embodiment "in-the-wild" 조작 데이터셋</li>
+<li>장면 다양성이 규모만큼 중요하다는 것을 입증: DROID로 학습된 policy는 미지의 환경에 대해 유의미하게 더 나은 일반화 성능을 보임</li>
+<li>대규모 분산 데이터 수집을 가능하게 하는 표준화되고 재현 가능한 하드웨어 셋업</li>
+<li>일관된 형식의 포괄적 데이터 모달리티 (스테레오 RGB, wrist cam, proprioception, 자연어)</li>
+</ul>
+<h2 class="dp-h2">서베이 대상 연구에서의 활용</h2>
+<p class="dp-p">DROID는 본 서베이의 여러 시스템에서 사전학습 또는 공동학습 데이터로 사용된다:</p>
+<ul class="dp-list">
+<li><strong>pi0</strong> (§6): 사전학습 혼합 데이터에 DROID 포함</li>
+<li><strong>GR00T N1</strong> (§6): cross-embodiment 사전학습의 일부로 DROID 사용</li>
+<li><strong>OpenVLA</strong> (§6): fine-tuning 실험에 DROID 포함</li>
+</ul>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>단일 embodiment (Franka Panda, parallel-jaw gripper): dexterous hand 데이터 없음, multi-finger 조작에 대한 직접 적용 가능성 제한</li>
+<li>Franka Panda가 추가 하드웨어 없이 기록 가능한 내장 관절 토크 센서와 wrist F/T 센서를 갖추고 있음에도 불구하고 force/torque 또는 tactile 센싱 데이터 미포함 -- contact-rich 연구에 대한 주목할 만한 기회 상실</li>
+<li>84개 작업은 OXE의 527개 skill에 비해 상대적으로 제한적; 작업 다양성보다 장면 다양성에 중점</li>
+<li>Franka 특화: DROID로 사전학습된 policy는 비-Franka 로봇에 대한 embodiment 적응 필요</li>
+<li>50명의 운영자에 걸친 수집으로 시연 품질과 스타일의 가변성 발생</li>
+<li>하드웨어 비용 (Franka 셋업 ~$30K 이상)이 재현을 자금이 풍부한 연구실로 제한</li>
+</ul>
+<h2 class="dp-h2">공개 현황</h2>
+<p class="dp-p">CC BY 4.0 오픈소스. 전체 데이터셋, policy 코드, 하드웨어 가이드는 <a href="https://droid-dataset.github.io/" target="_blank" rel="noopener">droid-dataset.github.io</a>에서 이용 가능.</p>

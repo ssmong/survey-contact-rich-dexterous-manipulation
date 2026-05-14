@@ -1,0 +1,38 @@
+<h2 class="dp-h2">3.9 TaF-VLA</h2>
+<ul class="dp-list">
+<li><strong>全称:</strong> TaF-VLA: Tactile and Force Vision-Language-Action Model for Contact-Rich Manipulation</li>
+<li><strong>作者:</strong> 综述表中未指定</li>
+<li><strong>发表平台/年份:</strong> arXiv预印本，2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2601.20321</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 双模态力感知：GelSight视觉触觉传感器 + 六轴F/T传感器。两种模态在VLA框架内进行处理和融合，提供互补的接触信息（GelSight的局部表面接触和F/T传感器的全局力旋量）。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 否。仅位置输出。</p>
+<blockquote class="dp-quote"><strong>局限性（仅位置输出）：</strong> 仅位置输出；尽管接收了力/触觉输入，策略无法主动调节接触力。</blockquote>
+<p class="dp-p"><strong>机器人平台：</strong> Franka FR3机械臂 + 平行夹爪，配备GelSight和F/T传感器。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 8项接触丰富操作任务，涵盖多种接触模态。</p>
+<p class="dp-p"><strong>关键方法：</strong> TaF-VLA在统一VLA框架内融合两种互补的力/触觉模态。GelSight传感器提供高分辨率的局部接触几何信息（表面变形、滑动检测），而六轴F/T传感器提供全局交互力旋量信息。独立的编码器处理每种模态：基于CNN的编码器处理GelSight图像，MLP编码器处理F/T信号。编码后的特征通过与VLM主干中的视觉和语言token的交叉注意力进行融合。双模态设计旨在同时捕获精细接触属性（来自GelSight）和全局力趋势（来自F/T）。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 具有双触觉/力编码器的VLA主干——CNN编码器处理GelSight触觉图像，MLP编码器处理六轴F/T读数。两者都投影到VLM嵌入空间，通过交叉注意力融合。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出在VLA中联合融合视觉触觉和F/T感知，证明两种模态为接触丰富任务提供互补信息。</li>
+<li>在8项多样化接触丰富任务上评估，是力感知VLA论文中最大的任务集。</li>
+<li>消融研究证明双模态（触觉 + F/T）融合优于单一模态。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 未发布代码或权重。尽管有丰富的力/触觉输入但仅位置输出。同时需要GelSight和F/T传感器增加了硬件成本和复杂性。仅在Franka FR3上评估，无跨平台实验。双传感器需求限制了实际适用性。</p>
+<p class="dp-p"><strong>结果：</strong> 双模态（GelSight + F/T）模型在8项任务中均优于单模态变体。局部触觉和全局力信息的互补性在接触几何多样的任务中获益最大。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未以Hz或ms明确报告。作者承认"预测长期未来动作确保轨迹平滑性，[但]本质上限制了闭环修正的频率"，以及"力交互本质上是快速的，凸显了对更快推理架构的需求。"</li>
+<li><strong>部署硬件：</strong> NVIDIA RTX 4090工作站用于推理。Franka FR3机械臂 + 平行夹爪配备GelSight和F/T传感器。</li>
+<li><strong>是否支持实时？</strong> 部分支持。部署在RTX 4090上，但作者明确将实时控制频率确定为未满足的需求，指出策略"在高频动态事件中表现出延迟且容易失败。"后退式动作输出限制了闭环修正频率。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> TaF-Dataset（本工作发布的自定义数据集）。包含同步双模态力/触觉数据。</li>
+<li><strong>收集方法：</strong> 自动化触觉-力数据采集设备（自定义硬件）。系统自动收集同步的GelSight视觉触觉观测、六轴力/力矩读数和矩阵力图。</li>
+<li><strong>数据规模：</strong> 超过1000万个同步触觉观测、六轴F/T读数和矩阵力图。</li>
+<li><strong>遥操作设备：</strong> 不适用（自动化数据采集设备，非遥操作）。</li>
+<li><strong>数据格式：</strong> 同步多模态：GelSight触觉图像 + 六轴F/T信号 + 力图数据。</li>
+<li><strong>是否公开可用？</strong> 未确认。arXiv摘要未指定TaF-Dataset是否公开发布。</li>
+</ul>

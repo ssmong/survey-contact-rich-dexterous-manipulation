@@ -1,0 +1,46 @@
+<p class="dp-p"># 11.3 ISyHand</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> ISyHand: An Intrinsically Soft Dexterous Hand for Contact-Rich Manipulation</li>
+<li><strong>저자:</strong> MPI for Intelligent Systems (MPI-IS), Tubingen</li>
+<li><strong>학회/연도:</strong> 2025</li>
+<li><strong>DoF:</strong> 18 (손가락 12 DoF + palm/wrist 6 DoF)</li>
+<li><strong>비용:</strong> ~$1,300</li>
+<li><strong>Tactile 센싱:</strong> 내장 없음</li>
+<li><strong>구동 방식:</strong> 본질적으로 soft(유연)한 관절을 갖춘 건 구동</li>
+</ul>
+<h2 class="dp-h2">정량 사양</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>사양</th>
+<th>값</th>
+</tr></thead><tbody>
+<tr>
+<td>액추에이터 제어 대역폭</td>
+<td>이용 가능한 문서에 미보고</td>
+</tr>
+<tr>
+<td>최대 손가락 끝 힘</td>
+<td>이용 가능한 문서에 미보고 (유연 관절이 rigid 관절 설계 대비 최대 힘을 제한할 수 있음)</td>
+</tr>
+<tr>
+<td>내구성</td>
+<td>이용 가능한 문서에 미보고 (건 마모가 잠재적 유지보수 우려)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">ISyHand는 LEAP 같은 rigid 관절 hand와 근본적으로 다른 기계적 접근법을 취한다: 본질적으로 soft(유연)한 관절과 건 구동 방식을 사용한다. compliance가 제어를 통해서가 아니라 관절 역학에 내장되어 있다. 이는 hand가 grasping 중 객체 형상에 수동적으로 적응함을 의미하며 -- 명시적 힘 제어가 필요 없는 물리적 형태의 impedance이다. 18-DoF 설계(손가락 12 + palm/wrist 6)는 높은 dexterity를 제공하며, 건 구동 방식으로 모터를 전완에 배치하여 손가락 끝 무게와 관성을 줄인다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>명시적 impedance 제어 없이 수동적 힘 조절을 제공하는 본질적 기계적 compliance</li>
+<li>본 서베이의 $2K 미만 hand 중 최고 DoF 수 (18)</li>
+<li>$1,300으로 최저 비용에서 최고 DoF를 제공하여 강력한 dexterity 대비 비용 효율</li>
+<li>경량 손가락 끝과 낮은 관성을 가능하게 하는 건 구동 방식</li>
+</ul>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>tactile 센싱 없음; 유연 관절이 암묵적 접촉 적응을 제공하나 명시적 접촉 측정 없음</li>
+<li>건 구동 방식이 케이블 라우팅 복잡성과 잠재적 유지보수 문제 (건 마모, 이완) 도입</li>
+<li>건 역학과 관절 compliance를 정확히 모델링하기 어려워 soft/compliant hand의 sim-to-real transfer가 더 도전적</li>
+<li>유연 관절이 rigid 관절 설계 대비 최대 손가락 끝 힘을 제한할 수 있음</li>
+</ul>
+<h2 class="dp-h2">오픈소스 현황</h2>
+<p class="dp-p">프로젝트 페이지: <a href="https://isyhand.is.mpg.de/" target="_blank" rel="noopener">isyhand.is.mpg.de</a>. 설계 파일 이용 가능.</p>

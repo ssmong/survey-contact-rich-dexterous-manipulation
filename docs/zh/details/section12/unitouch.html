@@ -1,0 +1,60 @@
+<p class="dp-p"># 12.2 UniTouch</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> UniTouch: Universal Touch Representation for Robot Manipulation</li>
+<li><strong>作者：</strong> Che Fang及合作者 (UCSD)</li>
+<li><strong>发表场所/年份：</strong> CVPR 2024</li>
+<li><strong>支持的传感器：</strong> 多种视觉触觉传感器</li>
+<li><strong>对齐方式：</strong> 触觉-视觉-语言-声音多模态对齐</li>
+<li><strong>预训练方法：</strong> 对比学习，将触觉表征与视觉、语言和音频模态对齐</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">UniTouch通过将触觉信号与其他三种模态——视觉、语言和声音——对齐来学习统一的触觉表征。使用对比学习（CLIP风格），UniTouch将触觉图像映射到一个与视觉图像、文本描述和接触事件录音共享的嵌入空间中。这种多模态对齐实现了零样本迁移：触觉表征可以用语言查询（"粗糙表面"）或与视觉外观匹配，而无需触觉特定标注。该方法源于触觉、视觉、语言和声音提供物理接触互补描述的洞察。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>首个触觉-视觉-语言-声音对齐模型，实现跨模态查询（如从视觉或语言查询"找到摸起来像砂纸的纹理"）</li>
+<li>通过语言-触觉对齐实现零样本触觉分类，无需任务特定训练</li>
+<li>统一的表征空间使触觉数据能够受益于语言和视觉编码器的丰富语义</li>
+<li>在多个下游任务上进行了验证，包括材料分类和接触属性估计</li>
+</ul>
+<h2 class="dp-h2">定量结果</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>指标</th>
+<th>UniTouch</th>
+<th>纯视觉基线</th>
+<th>纯触觉基线</th>
+</tr></thead><tbody>
+<tr>
+<td>材料分类（零样本）</td>
+<td>准确率 (%)</td>
+<td>通过语言对齐实现</td>
+<td>不适用</td>
+<td>不适用（需要标注）</td>
+</tr>
+<tr>
+<td>跨模态检索（触觉到视觉）</td>
+<td>Recall@K</td>
+<td>已验证</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>接触属性估计</td>
+<td>回归误差</td>
+<td>与监督学习有竞争力</td>
+<td>纯视觉在接触属性上更差</td>
+<td>在接触特定任务上更优</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><em>注：UniTouch的主要优势在于实现了单模态模型无法完成的零样本和跨模态能力。与监督学习基线的直接准确率比较取决于具体任务。</em></p>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>多模态对齐质量严重依赖配对的触觉-视觉-语言-声音数据的可用性和质量，而此类数据稀缺</li>
+<li>声音模态对冲击/接触事件有用，但对准静态操作（抓取、滑动）信息量较少</li>
+<li>表征针对分类/检索任务优化；在闭环操作策略学习中的效用未得到验证</li>
+<li>仅限于视觉触觉传感器；不支持非视觉触觉模态</li>
+</ul>
+<h2 class="dp-h2">共同局限性</h2>
+<p class="dp-p">与本节所有触觉表征模型一样，UniTouch未展示集成到闭环操作策略中的能力。详见<a href="sparsh.md#shared-limitation-no-closed-loop-policy-integration" target="_blank" rel="noopener">Sparsh</a>中对此共同局限性的详细讨论。</p>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">开源（代码 + 预训练权重）。GitHub：<a href="https://github.com/cfeng16/UniTouch" target="_blank" rel="noopener">cfeng16/UniTouch</a></p>

@@ -1,0 +1,60 @@
+<h3 class="dp-h3">7.4 DexMV</h3>
+<p class="dp-p"><strong>전체 제목:</strong> DexMV: Imitation Learning for Dexterous Manipulation from Human Videos</p>
+<p class="dp-p"><strong>저자:</strong> Yuzhe Qin, Yueh-Hua Wu, Shaowei Liu, Hanwen Jiang, Ruihan Yang, Yang Fu, Xiaolong Wang</p>
+<p class="dp-p"><strong>학회/연도:</strong> ECCV 2022</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2108.05877</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> DAPG (Demo Augmented Policy Gradient) -- combines RL (PPO) with demonstrations extracted from human videos. The demonstrations provide initial guidance, and RL fine-tunes beyond demonstration quality.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Adroit Hand (30 DoF, simulated Shadow Hand equivalent) in SAPIEN simulator</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> SAPIEN (for rendering and physics); MuJoCo (for Adroit hand dynamics)</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> No. All experiments are in simulation. The paper focuses on the vision-to-policy pipeline (human video to robot demonstration to RL policy).</p>
+<p class="dp-p"><strong>작업:</strong> Dexterous manipulation tasks including: object relocation, pour (pouring from a container), place (placing objects at target locations). Tasks require coordinated multi-finger manipulation.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Proposes a complete pipeline from human video to dexterous robot policy. (1) Captures human hand manipulation in video. (2) Uses computer vision (hand pose estimation, object tracking) to extract 3D hand and object trajectories from video. (3) Retargets human hand motions to the robot hand (Adroit) via optimization-based retargeting that maps human finger configurations to robot joint angles. (4) Uses the retargeted demonstrations with DAPG to train RL policies that surpass demonstration quality. The key insight is that human videos provide a natural and scalable source of dexterous manipulation demonstrations.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Proposed one of the first end-to-end pipelines from human video to dexterous RL policy, combining hand pose estimation, retargeting, and DAPG</li>
+<li>Demonstrated that RL policies trained with video-extracted demonstrations significantly outperform pure RL on dexterous tasks</li>
+<li>Introduced DexMV platform combining SAPIEN rendering with MuJoCo physics for dexterous manipulation research</li>
+<li>Showed that even noisy, imperfect demonstrations from video are sufficient to accelerate RL training</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Tasks</td>
+<td>Relocate, pour, place (dexterous manipulation)</td>
+</tr>
+<tr>
+<td>DAPG + video demos vs. pure RL</td>
+<td>Significantly higher success rates</td>
+</tr>
+<tr>
+<td>Hand</td>
+<td>Adroit (30 DoF, simulated)</td>
+</tr>
+<tr>
+<td>Video source</td>
+<td>Human hand manipulation recordings</td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>SAPIEN + MuJoCo</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li><strong>Force control:</strong> No force sensing or impedance control; position-based policies only</li>
+<li><strong>VLA/Language:</strong> No language conditioning; task specification is implicit in the demonstration</li>
+<li><strong>Sim2Real:</strong> No real-world experiments; simulation-only evaluation</li>
+<li><strong>Code:</strong> <a href="https://github.com/yzqin/dexmv-sim" target="_blank" rel="noopener">GitHub</a> available</li>
+<li><strong>Retargeting:</strong> Human-to-robot retargeting introduces errors due to kinematic differences; quality depends on hand pose estimation accuracy</li>
+<li><strong>Scalability:</strong> Requires per-task human video capture; not yet demonstrated at scale</li>
+</ul>
+<p class="dp-p"><strong>시뮬레이션 전용 한계:</strong> 시뮬레이션에서만 평가됨; sim-to-real 전이 미입증, 실제 환경 실행 가능성 미검증.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not reported. The MLP policy (DAPG-trained) runs in <1ms per forward pass.</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (SAPIEN/MuJoCo). No real-robot deployment demonstrated.</li>
+<li><strong>실시간 가능 여부:</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>

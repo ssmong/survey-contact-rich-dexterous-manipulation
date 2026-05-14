@@ -1,0 +1,61 @@
+<h3 class="dp-h3">7.1 Dexonomy</h3>
+<p class="dp-p"><strong>完整标题：</strong> Dexonomy: A Taxonomy and a Scalable Generation Pipeline for Dexterous Grasping</p>
+<p class="dp-p"><strong>作者：</strong> Jiayi Chen, Yuxing Chen, C. Karen Liu, He Wang</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> RSS 2025</p>
+<p class="dp-p"><strong>PKU-EPIC谱系：</strong> 在BODex基础上扩展31种抓取类型（vs BODex的无类型）；双层优化核心与BODex共享，但Dexonomy增加了源自人类抓取文献的系统性抓取分类法。基于分类法的接触区域模板是超越BODex的主要贡献。</p>
+<p class="dp-p"><strong>RL算法：</strong> 基于优化（非RL）；使用分类法驱动的抓取生成流程扩展BODex；使用cuRobo进行IK求解</p>
+<p class="dp-p"><strong>手部硬件：</strong> Shadow Hand（24自由度）、Allegro Hand（16自由度）、LEAP Hand（16自由度）、Unitree G1人形手</p>
+<p class="dp-p"><strong>仿真平台：</strong> MuJoCo + cuRobo</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是；82.3%真实世界成功率（真实）</p>
+<p class="dp-p"><strong>物体数量：</strong> 10,700个物体，31种抓取类型；生成950万个抓取</p>
+<p class="dp-p"><strong>任务：</strong> 分类法引导的灵巧抓取生成，31种不同抓取类型（精密、力量、侧向等）</p>
+<p class="dp-p"><strong>核心方法论：</strong> 引入源自人类抓取文献的31类抓取分类法，然后构建可扩展流程为任意物体生成特定类型的抓取。对每种抓取类型，接触区域模板指定手部哪些表面接触物体哪些表面。优化流程将这些模板与物体几何匹配，求解可行的手部配置。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>首个应用于机器人灵巧抓取生成的系统性抓取分类法（31种类型）</li>
+<li>可扩展流程在10.7K物体和4种手部构型上生成950万个抓取</li>
+<li>跨构型泛化覆盖Shadow、Allegro、LEAP和Unitree G1手</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>真实世界成功率</td>
+<td>82.3%（真实）</td>
+</tr>
+<tr>
+<td>物体集大小</td>
+<td>10,700</td>
+</tr>
+<tr>
+<td>抓取类型</td>
+<td>31</td>
+</tr>
+<tr>
+<td>生成抓取数</td>
+<td>950万</td>
+</tr>
+<tr>
+<td>支持的手部</td>
+<td>Shadow、Allegro、LEAP、Unitree G1</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong> 分类法是静态的，可能未捕捉任务特定的抓取需求；基于优化（无学习闭环策略）；真实世界验证仅限于部分抓取类型；假设已知物体几何</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 基于优化的抓取计算为离线。cuRobo加速的IK求解。部署时开环执行预计算抓取。</li>
+<li><strong>部署硬件：</strong> 在多个手部平台（Shadow、Allegro、LEAP、Unitree G1）上进行真实部署。82.3%真实世界成功率。</li>
+<li><strong>支持实时？</strong> 是，在部署端（预计算抓取开环执行）。无在线推理瓶颈。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 程序化生成的分类法驱动抓取数据集。10,700个物体，31种抓取类型，总计950万个抓取。</li>
+<li><strong>收集方法：</strong> 基于优化（扩展BODex流程加分类法驱动的接触区域模板）。cuRobo用于IK求解。跨构型：Shadow、Allegro、LEAP、Unitree G1手。无RL，无演示。</li>
+<li><strong>数据规模：</strong> 10,700个物体和4种手部构型上的950万个生成抓取。31种抓取类型（精密、力量、侧向等）。</li>
+<li><strong>遥操作设备：</strong> 不适用（基于优化，无演示）。</li>
+<li><strong>数据格式：</strong> 按物体、手部和抓取类型索引的抓取配置。</li>
+<li><strong>是否公开？</strong> 数据集发布状态未报告。CAD和代码可用性未说明。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=no55YX03LT" target="_blank" rel="noopener">OpenReview</a></p></div></details>

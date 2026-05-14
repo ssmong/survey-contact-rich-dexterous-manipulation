@@ -1,0 +1,48 @@
+<p class="dp-p"># 11.1 LEAP Hand V2</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> LEAP Hand V2: Advanced Dexterous Robotic Hand</li>
+<li><strong>저자:</strong> Kenneth Shaw, Deepak Pathak (CMU)</li>
+<li><strong>학회/연도:</strong> 2024 (V1: RSS 2023)</li>
+<li><strong>DoF:</strong> 16 구동 + articulated palm</li>
+<li><strong>액추에이터:</strong> Dynamixel 서보</li>
+<li><strong>비용:</strong> ~$3,000</li>
+<li><strong>무게:</strong> 경량 (표준 로봇 팔에 장착 가능)</li>
+<li><strong>Tactile 센싱:</strong> 내장 없음 (애프터마켓 통합 가능)</li>
+<li><strong>시뮬레이션 모델:</strong> MuJoCo, Isaac Lab</li>
+</ul>
+<h2 class="dp-h2">정량 사양</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>사양</th>
+<th>값</th>
+</tr></thead><tbody>
+<tr>
+<td>액추에이터 제어 대역폭</td>
+<td>~50 Hz 유효 제어율 (Dynamixel 서보 제한)</td>
+</tr>
+<tr>
+<td>최대 손가락 끝 힘</td>
+<td>이용 가능한 문서에 미보고</td>
+</tr>
+<tr>
+<td>내구성</td>
+<td>여러 연구 그룹에서 수천 회 grasp 사이클 입증 (CrossDex, SeqDex, HandelBot, DexCap, ComFree-Sim)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">LEAP Hand V2는 원래 LEAP Hand (RSS 2023)를 기반으로 개선된 기계적 설계, 더 강한 액추에이터, grasp 안정성을 향상시키기 위한 articulated palm을 갖추었다. hand는 모든 관절에 Dynamixel 서보 모터를 사용하여 위치 및 전류(토크 프록시) 피드백을 제공한다. 설계는 연구 접근성을 강조한다: 모든 구조 부품이 3D 프린트 가능하거나 시판 부품을 사용하며, 부품 목록이 완전히 문서화되어 있다. V2는 grasp 범위를 넓히고 더 인간에 가까운 조작 패턴을 가능하게 하는 대향 가능한 palm 관절을 추가한다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>연구 커뮤니티에서 가장 널리 채택된 저비용 dexterous hand 중 하나 (CrossDex, SeqDex, HandelBot, DexCap, ComFree-Sim 등에서 사용)</li>
+<li>V1의 고정 palm 설계를 넘어 grasp 유형을 확장하는 articulated palm (V2)</li>
+<li>여러 독립 연구 그룹에서 zero-shot transfer가 시연된 검증된 sim-to-real 파이프라인</li>
+<li>연구 환경에서 수천 회 grasp 사이클을 견디는 견고한 기계적 설계</li>
+</ul>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>통합 tactile 센싱 없음; 손가락 끝 접촉이 위치 제어만으로 이루어짐</li>
+<li>Dynamixel 서보가 커스텀 액추에이터 대비 제한된 대역폭 (~50 Hz 유효 제어율)</li>
+<li>$3,000 비용은 dexterous hand로서는 저렴하지만 본 섹션에서 가장 높음</li>
+<li>16 DoF는 인간 손(~20-25 기능적 DoF)보다 적어 일부 작업에서 조작 dexterity 제한</li>
+</ul>
+<h2 class="dp-h2">오픈소스 현황</h2>
+<p class="dp-p">완전 오픈소스 (CAD, 펌웨어, 소프트웨어). 프로젝트 페이지: <a href="https://v2-adv.leaphand.com/" target="_blank" rel="noopener">v2-adv.leaphand.com</a></p>

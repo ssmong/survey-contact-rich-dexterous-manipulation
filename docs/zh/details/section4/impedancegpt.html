@@ -1,0 +1,41 @@
+<h3 class="dp-h3">4.5 ImpedanceGPT</h3>
+<p class="dp-p"><strong>完整标题：</strong> ImpedanceGPT: VLM-Based Impedance Control of Swarm Drones for Safe Physical Human-Drone Interaction</p>
+<p class="dp-p"><strong>作者：</strong> Faryal Batool 等</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> IROS 2025</p>
+<p class="dp-p"><strong>注意：本文涉及无人机集群编队控制，而非机器人操作。仅作为方法论对比纳入。</strong></p>
+<p class="dp-p"><strong>K/D如何确定：</strong> VLM (Molmo，开放权重) + RAG检索。VLM接收视觉场景信息（包括人类存在和接近程度），并从知识库中检索适当的阻抗参数。系统生成虚拟阻抗参数，控制无人机集群相对于与其进行物理交互的人类的集体柔顺行为。</p>
+<p class="dp-p"><strong>输出内容：</strong> 用于基于阻抗的无人机集群编队控制的虚拟刚度K和阻尼D参数。这些不是物理关节阻抗，而是控制集群如何集体响应外部力（例如人类推动无人机）的虚拟阻抗参数。</p>
+<p class="dp-p"><strong>机器人平台：</strong> 无人机集群（非操作机器人）。灵巧手不适用。本文纳入综述是因为它展示了VLM引导阻抗控制范式，尽管应用于航空而非操作系统。</p>
+<p class="dp-p"><strong>任务：</strong> 物理人机-无人机交互（pHDI）：人类与集群中的单个无人机进行物理交互（推动、引导），集群调整其集体柔顺性以确保安全并维持编队。</p>
+<p class="dp-p"><strong>核心方法：</strong> ImpedanceGPT将VLM引导阻抗控制范式应用于无人机集群编队控制。VLM处理人机-无人机交互场景的视觉输入，推理集群编队控制器的适当虚拟阻抗。从先前交互场景数据库的RAG检索改善了参数选择。虚拟阻抗控制单个无人机在保持集群凝聚力的同时如何响应物理扰动，类似于笛卡尔阻抗控制机械臂对接触力的响应方式。</p>
+<p class="dp-p"><strong>架构/参数：</strong> Molmo（开放权重VLM）用于场景理解。RAG数据库用于阻抗检索。无人机集群的虚拟阻抗编队控制器。系统处理摄像头feed，通过VLM + RAG生成阻抗参数，并将其应用于集群的分布式控制器。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>将VLM引导阻抗控制扩展到无人机集群，展示了该范式超越操作领域的通用性</li>
+<li>应用RAG增强的VLM推理实现物理人机-无人机交互安全</li>
+<li>开源实现发布于GitHub</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>非操作系统——无人机集群应用，无机械臂或手</li>
+<li>虚拟阻抗（编队刚度/阻尼）与操作中的物理关节/笛卡尔阻抗在概念上不同</li>
+<li>与灵巧操作的相关性有限；纳入主要用于VLM引导阻抗方法的方法论对比</li>
+<li>无人机动力学和接触物理与操作接触有本质区别</li>
+<li>VLM推理延迟（约100ms-1s）将阻抗更新限制在约1-10 Hz，比实时阻抗控制器所需的100-1000 Hz低三个数量级。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 展示了使用VLM生成的阻抗参数适配不同交互上下文的安全物理人机-无人机交互。集群在响应人类推动时保持柔顺性的同时维持了编队完整性。代码发布于 github.com/Faryal-Batool/ImpedanceGPT。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确进行基准测试。VLM（Molmo）推理加RAG检索以约1-10 Hz提供阻抗更新。导航速度调整范围为0.6-1.4 m/s，取决于障碍物类型。</li>
+<li><strong>部署硬件：</strong> 迷你无人机集群平台。VLM推理硬件未指定。最优光照条件下障碍物检测和检索准确率报告为80%。</li>
+<li><strong>是否支持实时？</strong> 部分支持。无人机导航以实时运行，但VLM阻抗参数更新限制在约1-10 Hz。对于无人机编队控制（较慢的动力学）来说这比操作接触控制更可接受。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 用于无人机集群阻抗场景的自定义RAG知识库。无标准操作基准测试。</li>
+<li><strong>采集方法：</strong> VLM驱动的障碍物检测结合从先前导航场景的RAG检索。在包含静态和动态（人类）障碍物的动态环境中进行实验评估。最优光照条件下障碍物检测和检索准确率报告为80%。</li>
+<li><strong>数据规模：</strong> 未报告。episode/试验数量和RAG数据库大小在可用材料中未指定。</li>
+<li><strong>遥操作设备：</strong> 不适用（无人机集群系统，非操作）。</li>
+<li><strong>数据格式：</strong> 包含场景描述和虚拟阻抗参数的RAG数据库条目。</li>
+<li><strong>是否公开可用？</strong> 是——代码发布于 https://github.com/Faryal-Batool/ImpedanceGPT</li>
+</ul>

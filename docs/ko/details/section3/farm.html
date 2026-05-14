@@ -1,0 +1,39 @@
+<h2 class="dp-h2">3.19 FARM</h2>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> FARM: Force-Aware Robotic Manipulation with Tactile Feedback</li>
+<li><strong>저자:</strong> TU Munich MIRMI et al.</li>
+<li><strong>학회/연도:</strong> arXiv 프리프린트, 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2510.13324</li>
+</ul>
+<p class="dp-p"><strong>힘/촉각 입력 유형:</strong> 변형 UMI 그리퍼에 통합된 GelSight Mini 비전 기반 촉각 센서.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> 예 -- 파지 힘 예측. 엔드이펙터 위치와 파지 힘을 공동 예측하여 촉각 피드백에 기반한 폐루프 파지 힘 제어 가능. <strong>힘 출력 유형: 부분 (파지 힘만, 전체 6D 렌치 아님).</strong></p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> GelSight Mini가 통합된 변형 UMI (Universal Manipulation Interface) 그리퍼.</p>
+<p class="dp-p"><strong>작업:</strong> 조율된 위치 및 파지 힘 제어가 필요한 조작 작업. 관절 위치와 파지 힘 궤적을 공동 예측.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> FARM은 UMI 그리퍼에 GelSight Mini 촉각 센서를 통합하고 위치와 파지 힘을 공동 예측하는 정책을 학습. GelSight 이미지가 접촉 특징을 추출하는 CNN 인코더를 통해 처리. 파지 힘 예측은 과도한 파지 힘이 손상을 유발할 수 있는 깨지기 쉬운 물체나 변형 가능 물체에 특히 중요.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>널리 사용되는 UMI 조작 프레임워크를 촉각 센싱(GelSight Mini)과 파지 힘 예측으로 확장</li>
+<li>공동 위치 + 힘 예측이 힘에 민감한 물체 조작에서 위치 전용 UMI 정책 대비 향상 시연</li>
+<li>기존의 널리 사용되는 조작 프레임워크(UMI)에 비전 기반 촉각 센싱의 실용적 통합 제공</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> 코드/가중치 미공개. 파지 힘 예측은 그리퍼 닫힘 힘으로 제한 -- 전체 6D 렌치 제어 미제공.</p>
+<p class="dp-p"><strong>결과:</strong> 구체적 성공률 미공개. 힘에 민감한 작업에서 표준 UMI(위치 전용) 대비 향상 보고.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 확산 정책 <strong>7 Hz</strong> (~143 ms). 저수준 힘 컨트롤러 25 Hz (GelSight Mini와 동기), 그리퍼 액추에이터 ~50 Hz.</li>
+<li><strong>배포 하드웨어:</strong> Franka Research 3 로봇 + GelSight Mini가 통합된 Actuated UMI 그리퍼.</li>
+<li><strong>실시간 가능 여부:</strong> 예, 계층적 제어. 7 Hz 정책이 25-50 Hz 저수준 컨트롤러가 실행하는 목표 제공.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>수집 방법:</strong> GelSight Mini가 통합된 변형 UMI 핸드헬드 그리퍼를 사용한 인간 시연.</li>
+<li><strong>공개 여부:</strong> 코드베이스 및 설계 파일 오픈 소스: <a href="https://tactile-farm.github.io" target="_blank" rel="noopener">tactile-farm.github.io</a>. 사전 훈련 가중치 미공개.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰 <span class="dp-review-score-badge">6.7</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">평균: <strong>6.7</strong> · 3 개 리뷰 · <a href="https://openreview.net/forum?id=ZRMAhpZ3ED" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 8</span> <span class="dp-review-text">Besides the clarity of the paper, the strength lies in the development of the simulator for a topic of high interest. Moreover, various variants of the components of the benchmarking tool are possible…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 6</span> <span class="dp-review-text">WFCRL provides a wide range of wind farm layouts and wind condition scenarios, allowing researchers to test algorithms under various realistic conditions. The inclusion of both static (FLORIS) and dyn…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 6</span> <span class="dp-review-text">- The paper addresses a challenge in wind energy optimization, presenting a novel benchmark suite that can facilitate advancements in wind farm control using MARL.</span></div>
+</div>
+</details>

@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.1 DexCap</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation</li>
+<li><strong>作者：</strong> Chen Wang, Haochen Shi, Weizhuo Wang, Ruohan Zhang, Li Fei-Fei, C. Karen Liu (Stanford)</li>
+<li><strong>发表venue/年份：</strong> RSS 2024 (arXiv 2403.07788, 2024年3月)</li>
+<li><strong>输入模态：</strong> 基于SLAM的手部追踪 + 电磁手指传感器（StretchSense手套）</li>
+<li><strong>目标手：</strong> LEAP Hand（16自由度）</li>
+<li><strong>力反馈：</strong> 无</li>
+<li><strong>成本：</strong> ~$2,000（手套+传感器）</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">DexCap使用附着在每根手指上的电磁追踪传感器捕捉人手运动，并结合基于SLAM的手腕追踪实现全局定位。系统通过基于优化的重定向管线将捕捉到的人手运动映射到LEAP Hand的关节空间。便携式设计无需外部动作捕捉基础设施，可在多样化的真实环境中进行数据采集，而不局限于实验室。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>便携式、无基础设施的灵巧运动捕捉系统，仅需穿戴传感器（无需外部相机或标记物）</li>
+<li>基于优化的重定向管线，在运动学可行性约束下将人手运动映射到LEAP Hand</li>
+<li>展示了用于灵巧操作策略模仿学习的可扩展数据采集</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>无力/触觉反馈给操作者，限制了接触丰富任务的表现（操作者无法感受抓取力）</li>
+<li>电磁传感器在金属环境中可能受到干扰</li>
+<li>当人手和机器人手运动学差异显著时，重定向会引入运动伪影</li>
+<li>主要在LEAP Hand上验证；适配其他手平台需重新标定</li>
+</ul>
+<h2 class="dp-h2">数据质量影响</h2>
+<p class="dp-p">示教数据捕捉手指关节轨迹但缺乏任何力或接触信息。基于DexCap数据训练的策略学习的是基于位置的抓取策略，缺乏力调节，导致抓取脆弱——在转移到真实硬件时要么施加过大的力（压碎）要么力不足（掉落）。力反馈的缺失也意味着操作者在采集过程中无法调节抓取力，因此示教数据不包含接触丰富任务（如插入或负载下的手内重定向）所需的力曲线。</p>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">开源。GitHub: <a href="https://github.com/j96w/DexCap" target="_blank" rel="noopener">j96w/DexCap</a></p>

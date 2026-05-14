@@ -1,0 +1,42 @@
+<h3 class="dp-h3">4.3 HumanoidVLM</h3>
+<p class="dp-p"><strong>完整标题：</strong> VLM-based Impedance Control for Safe Physical Human-Robot Interaction with Humanoid Robots</p>
+<p class="dp-p"><strong>作者：</strong> （多位作者，可能与SafeHumanoid团队有重叠）</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> HRI 2026</p>
+<p class="dp-p"><strong>K/D如何确定：</strong> VLM (Molmo-7B，开放权重) + 基于FAISS的RAG检索。系统使用按任务上下文和视觉场景特征索引的先前阻抗配置向量数据库。给定新的交互场景，VLM从FAISS数据库中检索相似的先前配置并将其适配到当前上下文。Molmo-7B（70亿参数的开放权重VLM）执行推理，避免对商业API的依赖。</p>
+<p class="dp-p"><strong>输出内容：</strong> 检索并适配的笛卡尔刚度K和阻尼D参数，用于人形机器人的末端执行器阻抗控制器。参数控制人形机器人手臂在物理人机交互过程中的柔顺性。</p>
+<p class="dp-p"><strong>机器人平台：</strong> Unitree G1人形机器人。无独立灵巧手（使用G1集成的Dex3-1夹爪，每只手7自由度）。</p>
+<p class="dp-p"><strong>任务：</strong> 物理人机交互（pHRI）场景：协作物体交接、引导操作、物理辅助任务。重点是安全关键的交互，人形机器人必须具有柔顺性以避免伤害人类伙伴。</p>
+<p class="dp-p"><strong>核心方法：</strong> 系统将用于交互上下文语义理解的VLM与基于RAG的适当阻抗参数检索相结合。Molmo-7B处理视觉场景（包括人类伙伴的姿态和意图线索），并从FAISS数据库中检索在类似先前交互中成功的阻抗配置。检索到的K/D值应用于人形机器人的笛卡尔阻抗控制器，实现安全和自适应的物理交互。使用开放权重VLM（Molmo-7B）而非商业API是其区别于CompliantVLA-adaptor和OmniVIC的特点。</p>
+<p class="dp-p"><strong>架构/参数：</strong> Molmo-7B（开放权重VLM，约70亿参数）用于场景理解和阻抗推理。FAISS向量数据库用于阻抗配置的最近邻检索。Unitree G1上的笛卡尔阻抗控制器。流水线处理相机输入，生成场景嵌入，检索匹配的阻抗配置文件，并将其应用于底层控制器。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>将VLM引导的阻抗控制应用于人形机器人的物理人机交互</li>
+<li>使用开放权重VLM（Molmo-7B）而非商业API，实现设备端部署</li>
+<li>展示了基于RAG的阻抗检索在全人形平台上安全关键pHRI场景中的应用</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>无独立灵巧手——依赖G1集成的简单夹爪</li>
+<li>阻抗参数在任务级别检索/适配，不在接触过程中连续调制</li>
+<li>仅限于G1人形平台；未展示对其他人形机器人的泛化能力</li>
+<li>RAG数据库需要手动填充初始阻抗配置</li>
+<li>未涉及多指接触力分配</li>
+<li>安全验证主要基于实验而非正式保证</li>
+<li>VLM推理延迟（约100ms-1s）将阻抗更新限制在约1-10 Hz，比实时阻抗控制器所需的100-1000 Hz低三个数量级。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 在Unitree G1人形机器人上展示了安全的物理交互，VLM引导的阻抗控制器为不同交互类型产生了适当的柔顺性水平。与固定阻抗基线相比，在交接和协作操作任务中降低了峰值交互力。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确进行基准测试。Molmo-7B推理（开放权重，设备端）在现代GPU上可能需要每次查询约200-500ms，加上FAISS检索时间（<10ms）。阻抗参数按任务阶段设定。</li>
+<li><strong>部署硬件：</strong> Unitree G1人形机器人。VLM推理（Molmo-7B）可在本地GPU上运行（具体型号未报告），避免云API依赖。FAISS检索在本地运行。</li>
+<li><strong>是否支持实时？</strong> 阻抗自适应不支持实时。G1上的底层阻抗控制器以实时速率运行，但VLM阻抗更新限制在约1-10 Hz。使用开放权重模型（Molmo-7B）实现了设备端部署，但未实现实时连续阻抗调制。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 自定义的基于FAISS的pHRI场景阻抗配置RAG数据库。未使用标准基准数据集。</li>
+<li><strong>采集方法：</strong> RAG数据库手动填充来自Unitree G1上先前pHRI试验的初始阻抗配置。与人类交互伙伴进行真实世界实验。无遥操作——阻抗参数由VLM（Molmo-7B）推理生成，而非从演示中学习。</li>
+<li><strong>数据规模：</strong> 未报告。RAG数据库大小和评估试验数量在可用材料中未指定。</li>
+<li><strong>遥操作设备：</strong> 不适用（基于VLM的阻抗推理系统，非模仿学习）。</li>
+<li><strong>数据格式：</strong> 包含场景嵌入和关联阻抗参数配置文件的FAISS向量数据库条目。</li>
+<li><strong>是否公开可用？</strong> 未报告。论文venue为HRI 2026；公开发布状态未知。</li>
+</ul>

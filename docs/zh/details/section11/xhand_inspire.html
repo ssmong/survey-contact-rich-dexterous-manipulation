@@ -1,0 +1,77 @@
+<p class="dp-p"># 11.8 XHand / Inspire Hand</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> XHand（亦称X-Hand）和Inspire Hand（亦称Inspire-Robots灵巧手）</li>
+<li><strong>制造商：</strong> 中国机器人制造商（Inspire-Robots生产Inspire Hand；多家制造商生产XHand变体）</li>
+<li><strong>年份：</strong> 约2023年起上市；2024-2025年在研究中的采纳率快速增长</li>
+<li><strong>自由度：</strong> Inspire Hand：~12个驱动自由度（5指，独立屈伸 + 部分内收/外展）；XHand：~12-16自由度（因版本而异）</li>
+<li><strong>成本：</strong> 显著低于西方制造的替代品（估计$1,000-3,000范围；具体价格因供应商和配置而异）</li>
+<li><strong>触觉传感：</strong> 无标配（部分版本支持可选触觉模块）</li>
+<li><strong>驱动方式：</strong> 直流电机配齿轮减速；位置控制</li>
+</ul>
+<h2 class="dp-h2">定量参数</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>参数</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>手指</td>
+<td>5个（仿人布局）</td>
+</tr>
+<tr>
+<td>驱动自由度（Inspire）</td>
+<td>~12（独立手指屈伸 + 拇指对置）</td>
+</tr>
+<tr>
+<td>驱动自由度（XHand）</td>
+<td>~12-16（因版本而异）</td>
+</tr>
+<tr>
+<td>重量</td>
+<td>~500-800g（因版本而异）</td>
+</tr>
+<tr>
+<td>抓握力</td>
+<td>中等（满足典型操作任务需求）</td>
+</tr>
+<tr>
+<td>控制接口</td>
+<td>串口/CAN总线；部分版本提供ROS驱动</td>
+</tr>
+<tr>
+<td>仿真模型</td>
+<td>MuJoCo, IsaacGym（社区贡献的URDF模型）</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">XHand和Inspire Hand是中国制造的灵巧手，凭借合理的成本、足够的自由度和商业可获取性在机器人研究社区获得了广泛采纳。与开源研究手（LEAP、ORCA、ISyHand、RUKA、FAIVE）不同，这些是具有专业级制造水准的商业量产产品。它们填补了一个实际需求空间：比Shadow Hand（~$100K+）或Allegro Hand（~$15K+）更经济，无需组装即可商业购买，且具备足够的自由度（12-16）进行有意义的灵巧操作研究。在文献中Inspire Hand和XHand有时被互换使用，但它们来自不同制造商且有不同的规格。</p>
+<h2 class="dp-h2">在本综述中的使用情况</h2>
+<p class="dp-p">这些手频繁出现在本综述各处，尽管此前没有专门的硬件条目：</p>
+<ul class="dp-list">
+<li><strong>DexMachina</strong>（第1节）：Inspire Hand和XHand均用作双臂操作的目标本体形态</li>
+<li><strong>ManipTrans</strong>（第1节）：Inspire Hand和XHand在6款手中用于跨本体形态运动迁移</li>
+<li><strong>DexUMI</strong>（第1节）：XHand和Inspire Hand用于真实世界灵巧操作（CoRL 2025最佳论文入围）</li>
+<li><strong>UniDex-VLA</strong>（第2节）：Inspire和XHand均纳入8手FAAS框架</li>
+<li><strong>iDP3</strong>（第6节）：Inspire Hand（25自由度配置）搭载于Fourier GR1人形机器人</li>
+<li><strong>Dex1B</strong>（第8节）：Inspire Hand纳入1B规模演示数据集</li>
+</ul>
+<h2 class="dp-h2">主要贡献（作为研究平台）</h2>
+<ul class="dp-list">
+<li>近期研究中采纳最广泛的商用灵巧手之一，尤其在中国机器人研究社区</li>
+<li>Shadow/Allegro之外的高性价比替代方案，适合需要多指操作硬件的实验室</li>
+<li>已验证的跨本体形态兼容性：成功集成到重定向框架（ManipTrans、UniDex-VLA FAAS）中，与Shadow、Allegro和LEAP并用</li>
+<li>商业可获取性消除了组装时间和校准工作</li>
+<li>社区贡献的URDF/MJCF仿真模型生态持续增长</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>论文间的规格报告不一致：自由度计数不同（"Inspire Hand"报告为12到25不等，取决于被动关节的计数方式），使直接比较困难</li>
+<li>无标准化仿真模型：URDF/MJCF文件为社区贡献，可能与实际硬件不完全匹配</li>
+<li>闭源硬件：无CAD文件或固件修改的可能性</li>
+<li>标准配置无集成触觉传感</li>
+<li>文档和技术支持主要为中文；英文文档可能有限</li>
+<li>多家制造商和版本造成混淆："XHand"和"Inspire Hand"有时被混为一谈，尽管是不同产品</li>
+<li>不同生产批次和供应商之间的制造质量和一致性可能有差异</li>
+<li>执行器参数（带宽、力、重复性）缺乏独立基准测试</li>
+</ul>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">闭源商业产品。Inspire Hand可从 <a href="https://www.inspire-robots.com/" target="_blank" rel="noopener">inspire-robots.com</a> 购买。XHand可从多家中国机器人供应商购买。部分研究仓库（ManipTrans、DexMachina）提供社区贡献的URDF模型。</p>

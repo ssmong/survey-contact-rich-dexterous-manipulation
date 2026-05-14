@@ -1,0 +1,92 @@
+<h3 class="dp-h3">ArtiGrasp</h3>
+<p class="dp-p"><strong>全称：</strong> ArtiGrasp: Physically Plausible Synthesis of Bi-Manual Dexterous Grasping and Articulation</p>
+<p class="dp-p"><strong>作者：</strong> Zijian Dong et al. (ETH Zurich)</p>
+<p class="dp-p"><strong>会议/年份：</strong> 3DV 2024</p>
+<p class="dp-p"><strong>手部硬件：</strong> MANO手模型（人手代理）。ArtiGrasp使用参数化MANO人手表示，将其作为基于物理的代理，在仿真中研究双手灵巧抓取和铰接操作。</p>
+<p class="dp-p"><strong>任务：</strong> 来自类ARCTIC数据集的8个双手抓取+铰接操作环境（排除了3个物体：剪刀、扭蛋机、手机）。任务要求双手同时抓取铰接物体并操作其自由度（如打开笔记本电脑、操作订书机）。任务将稳定的双手抓取与铰接物体状态变化相结合。所有物体共生成了745个手部姿态参考。</p>
+<p class="dp-p"><strong>核心方法：</strong> ArtiGrasp使用物理仿真中的强化学习合成物理上合理的双手抓取和铰接操作运动。该方法训练策略控制两只MANO手对铰接物体进行协调的双手操作，通过接触感知仿真确保物理合理性。RaiSim物理引擎为手-物体交互提供精确的接触动力学。该方法学习同时优化抓取稳定性和铰接操作进度。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 使用PPO训练的强化学习策略。预训练模型权重已公开发布。策略以物体状态和手部本体感知作为输入，输出双手MANO手的关节角度目标。</p>
+<p class="dp-p"><strong>仿真平台：</strong> RaiSim物理引擎。未展示仿真到真实迁移——工作使用MANO人手模型而非特定机器人手，专注于运动合成而非机器人部署。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>在单一策略中联合合成双手抓取和铰接操作，而此前的工作通常将抓取和铰接物体操作作为独立问题处理——这是首次同时优化抓取稳定性和铰接操作进度。</li>
+<li>使用RaiSim中的基于物理的强化学习在8个铰接物体上展示了物理上合理的双手运动，生成的运动遵守接触动力学和关节限制，而非依赖运动学插值。</li>
+<li>发布了预训练模型和代码（<a href="https://github.com/zdchan/artigrasp" target="_blank" rel="noopener">GitHub</a>），保证了可复现性。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。除RaiSim物理引擎计算的隐式接触力外，无显式力传感或阻抗控制。策略输出关节位置目标；接触力来源于仿真的接触求解器而非显式控制。这意味着系统无法调节抓取力大小（如避免压碎易碎物体）或铰接操作力（如检测关节限制）。</li>
+<li><strong>VLA/语言条件化：</strong> 无。无语言条件化或视觉语言集成。</li>
+<li><strong>仿真到真实：</strong> 当前形式下不适用。工作使用MANO人手模型而非特定机器人手，使直接机器人部署非平凡——需要从MANO重定向到物理机器人手并解决额外的仿真到真实差距。</li>
+<li><strong>代码/权重可用性：</strong> 代码和预训练模型权重已发布（<a href="https://github.com/zdchan/artigrasp" target="_blank" rel="noopener">GitHub</a>）。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 在8个铰接物体上进行了评估（745个手部姿态参考）。指标包括铰接操作成功率、位移（物体底座移动）、位置误差和铰接角度误差。结果跨物体聚合。</p>
+<p class="dp-p">表2 -- 抓取和铰接操作（联合，跨物体聚合）：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>ArtiGrasp（本文）</th>
+<th>D-Grasp（基线）</th>
+</tr></thead><tbody>
+<tr>
+<td>铰接操作成功率</td>
+<td>0.55</td>
+<td>0.22</td>
+</tr>
+<tr>
+<td>物体底座位移</td>
+<td>0.01 m</td>
+<td>0.49 m</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">表3 -- 动态物体抓取和铰接操作：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>ArtiGrasp（本文）</th>
+<th>D-Grasp（基线）</th>
+</tr></thead><tbody>
+<tr>
+<td>任务成功率</td>
+<td>0.50</td>
+<td>0.11</td>
+</tr>
+<tr>
+<td>位置误差</td>
+<td>0.03 m</td>
+<td>0.05 m</td>
+</tr>
+<tr>
+<td>铰接角度误差</td>
+<td>0.41 rad</td>
+<td>0.66 rad</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">表4 -- 对噪声手部姿态估计的鲁棒性（基于图像输入）：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>运动捕捉输入</th>
+<th>噪声输入（基于图像）</th>
+</tr></thead><tbody>
+<tr>
+<td>抓取成功率</td>
+<td>0.67</td>
+<td>0.64</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">ArtiGrasp相比D-Grasp实现了2.5倍的铰接操作成功率和4.5倍的动态任务成功率，物体位移接近零（0.01m vs. 0.49m）。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。工作使用RaiSim仿真中的MANO人手模型；无物理机器人部署。</li>
+<li><strong>部署硬件：</strong> 仅仿真（RaiSim物理引擎）。无真实世界部署硬件。</li>
+<li><strong>是否实时：</strong> 不适用（仅限仿真，MANO手模型而非物理机器人手）。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> 无外部数据集。训练数据通过RaiSim中跨6个铰接物体环境的强化学习仿真试验生成。手部姿态参考用于引导策略。</li>
+<li><strong>收集方法：</strong> 在RaiSim物理引擎中使用PPO的强化学习仿真试验。策略通过基于物理的强化学习从头学习双手抓取和铰接操作。现成回归器的基于图像的手-物体姿态估计用于评估。</li>
+<li><strong>数据规模：</strong> 未报告（在线策略强化学习训练；数据实时生成）。</li>
+<li><strong>遥操作设备：</strong> 不适用（强化学习训练，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线策略强化学习训练）。预训练模型权重已发布。</li>
+<li><strong>是否公开：</strong> 是。代码和预训练模型权重已发布（<a href="https://github.com/zdchan/artigrasp" target="_blank" rel="noopener">GitHub</a>）。</li>
+</ul>
+<hr>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=rFKPSfDvUv" target="_blank" rel="noopener">OpenReview</a></p></div></details>

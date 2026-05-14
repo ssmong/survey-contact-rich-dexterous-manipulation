@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.4 Maniwhere</h3>
+<p class="dp-p"><strong>完整标题：</strong> Maniwhere: Learning to Manipulate Anywhere with RL and Visual Generalization</p>
+<p class="dp-p"><strong>作者：</strong> Zhecheng Yuan等（Shanghai AI Lab / Tsinghua）</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CoRL 2024</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2407.15815</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 视觉表征学习。教师-学生框架，教师使用特权状态，学生使用视觉观测。视觉域随机化和数据增强用于跨环境泛化。</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）安装在机器人臂上</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是。展示了带视觉泛化到新环境的仿真到真实迁移（真实）。</p>
+<p class="dp-p"><strong>任务：</strong> 8个灵巧操作任务包括手内重定向、物体拾放和功能性操作。关键评估维度是视觉泛化：策略必须在不同背景、光照条件和干扰物体下工作。</p>
+<p class="dp-p"><strong>核心方法论：</strong> Maniwhere解决灵巧RL中的一个关键差距：在仿真中或特定真实世界设置中工作但在视觉环境变化时失败的策略。方法结合RL训练与激进视觉域随机化，学习对背景、光照和干扰变化不变的视觉表征。教师-学生框架分离操作技能（使用特权状态学习）和视觉感知（通过视觉观测蒸馏学习）。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>展示视觉可泛化的灵巧操作——策略跨不同视觉环境迁移，不仅是仿真到真实（真实）</li>
+<li>证明视觉域随机化结合表征学习支持多样设置中的鲁棒灵巧策略</li>
+<li>在8个任务上使用Allegro Hand评估，跨抓取、重定向和功能性操作（真实）</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 视觉泛化评估针对背景/光照变化，非物体形状泛化。仅测试Allegro Hand。8个任务为中等评估规模。</p>
+<p class="dp-p"><strong>结果：</strong> 在8个任务上实现带视觉泛化跨新环境的成功仿真到真实迁移（真实）。代码公开可用。</p>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。纯RL（PPO）+ 视觉域随机化——所有数据在仿真中生成。</li>
+<li><strong>收集方法：</strong> IsaacGym中的纯RL。教师-学生框架：教师使用特权状态训练，学生使用视觉观测。激进视觉域随机化（背景、光照、干扰物）用于视觉泛化。在Allegro Hand + 机器人臂上仿真到真实迁移。</li>
+<li><strong>数据规模：</strong> IsaacGym中标准并行RL训练。8个灵巧操作任务用于评估。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 代码公开可用。</li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。视觉学生策略（CNN编码器 + MLP）每次前向传播 <5ms。</li>
+<li><strong>部署硬件：</strong> Allegro Hand（16自由度）安装在机器人臂上。策略在IsaacGym中训练；通过仿真到真实迁移部署，具有视觉泛化至新环境。</li>
+<li><strong>支持实时？</strong> 是。在真实Allegro Hand上跨不同环境展示了实时灵巧操作。</li>
+</ul>

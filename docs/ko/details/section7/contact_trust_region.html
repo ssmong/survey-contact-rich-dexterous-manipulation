@@ -1,0 +1,38 @@
+<h3 class="dp-h3">7.3 Contact Trust Region</h3>
+<h3 class="dp-h3">Model-Based MPC (not RL)</h3>
+<p class="dp-p"><strong>Note: Model-based trajectory optimization/MPC, not RL.</strong></p>
+<p class="dp-p"><strong>전체 제목:</strong> A Contact-Implicit Model Predictive Control Framework for Dexterous In-Hand Manipulation (Contact Trust Region)</p>
+<p class="dp-p"><strong>저자:</strong> Aykut Onol, Russ Tedrake, et al. (MIT CSAIL / Toyota Research Institute)</p>
+<p class="dp-p"><strong>학회/연도:</strong> IJRR 2025</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2505.02291</p>
+<p class="dp-p"><strong>Method:</strong> Contact-implicit model predictive control (CI-MPC). Uses trajectory optimization with complementarity constraints to reason about contact mode switches. Trust regions stabilize the optimization over the non-smooth contact landscape.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Allegro Hand (16 DoF)</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> Drake (MIT)</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> No. Simulation-only results reported.</p>
+<p class="dp-p"><strong>작업:</strong> Contact-rich dexterous manipulation tasks requiring deliberate making and breaking of contact. In-hand reorientation and finger-gaiting where the controller must plan through contact mode transitions (e.g., lifting a finger and re-placing it at a new contact location).</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Rather than learning a policy via RL, this work formulates dexterous manipulation as a contact-implicit trajectory optimization problem. The key challenge is that contact dynamics are non-smooth (complementarity constraints), making standard gradient-based optimization unreliable. The trust region approach constrains each optimization step to remain in a region where the local contact model is valid, enabling stable MPC through contact transitions. This produces physically consistent plans that respect friction cones, contact normals, and complementarity.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Proposed a trust-region stabilization for contact-implicit MPC that handles the non-smoothness of contact dynamics</li>
+<li>Demonstrated real-time-capable MPC for multi-finger contact-rich manipulation in Drake</li>
+<li>Provided a principled alternative to RL for contact-rich tasks where physical consistency and constraint satisfaction are critical</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> Requires an accurate dynamics model (no sim-to-real). Computational cost limits to moderate-complexity contact scenarios. Not demonstrated on real hardware. Limited object complexity compared to RL-based approaches that can handle diverse objects.</p>
+<p class="dp-p"><strong>시뮬레이션 전용 한계:</strong> 시뮬레이션에서만 평가됨; sim-to-real 전이 미입증, 실제 환경 실행 가능성 미검증.</p>
+<p class="dp-p"><strong>결과:</strong> Achieved stable contact-implicit MPC for Allegro Hand manipulation tasks with contact mode transitions (sim). Published in IJRR 2025.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Contact-implicit MPC solving speed depends on the number of contact modes and planning horizon. Specific Hz not reported; typical contact-implicit MPC runs at 10-50 Hz for moderate-complexity problems.</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (Drake). No real-robot deployment demonstrated.</li>
+<li><strong>실시간 가능 여부:</strong> Potentially, for simple contact scenarios. Contact-implicit optimization is computationally expensive due to combinatorial contact modes; real-time feasibility depends on problem complexity.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> No dataset. Model-based trajectory optimization/MPC (not learning-based).</li>
+<li><strong>수집 방법:</strong> Not applicable. Contact-implicit MPC uses an analytical dynamics model (Drake) with complementarity constraints. No training data, no demonstrations, no RL. Trust regions stabilize optimization over non-smooth contact landscape.</li>
+<li><strong>데이터 규모:</strong> Not applicable (model-based, no training data).</li>
+<li><strong>원격 조작 장비:</strong> Not applicable.</li>
+<li><strong>데이터 포맷:</strong> Not applicable.</li>
+<li><strong>공개 여부:</strong> Drake simulator is open-source. Paper-specific code release status not reported.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=1FkgX44cJW" target="_blank" rel="noopener">OpenReview</a></p></div></details>

@@ -1,0 +1,51 @@
+<p class="dp-p"># 11.5 Digit 360</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> Digit 360: A Multimodal Tactile Fingertip Sensor</li>
+<li><strong>저자:</strong> Meta FAIR</li>
+<li><strong>학회/연도:</strong> 2024</li>
+<li><strong>유형:</strong> Tactile 센서 (손가락 끝 모듈), 완전한 hand 아님</li>
+<li><strong>센싱 모달리티:</strong> 법선력/전단력, 진동, 온도, 근접, 고해상도 tactile 이미지 등 18개 이상 모달리티</li>
+<li><strong>비용:</strong> 미공개</li>
+<li><strong>통합 대상:</strong> 임의의 dexterous hand 플랫폼 (모듈식 손가락 끝으로 설계)</li>
+</ul>
+<h2 class="dp-h2">정량 사양</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>사양</th>
+<th>값</th>
+</tr></thead><tbody>
+<tr>
+<td>센싱 모달리티</td>
+<td>18개 이상 동시 (법선력, 전단력, 진동, 온도, 근접, tactile 이미지 등)</td>
+</tr>
+<tr>
+<td>형태</td>
+<td>손가락 끝 크기, 기존 hand에 직접 교체 가능하도록 설계</td>
+</tr>
+<tr>
+<td>계산 오버헤드</td>
+<td>상당함 -- 18개 이상 모달리티의 병렬 데이터 처리 필요</td>
+</tr>
+<tr>
+<td>가용성</td>
+<td>아직 공개적으로 이용 불가 (서베이 시점 기준 오픈소스 공개 계획)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">Digit 360은 hand가 아니라 dexterous hand에 통합되도록 설계된 멀티모달 tactile 손가락 끝 센서이다. Meta의 DIGIT 계열 비전 기반 tactile 센서를 확장하여, 단일 카메라 기반 tactile 이미지에서 공간적으로 분산된 법선력 및 전단력, 고주파 진동, 온도, 근접 센싱을 포함하는 18개 이상 동시 모달리티로 센싱 모달리티를 극적으로 확장한다. 센서는 기존 dexterous hand의 표준 손가락 끝을 교체하도록 설계된 소형 형태를 사용한다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>18개 이상 동시 센싱 모달리티를 갖춘 가장 포괄적인 tactile 손가락 끝 센서 중 하나</li>
+<li>단일 손가락 끝 크기 패키지에 멀티모달 센싱(힘, 진동, 온도, 근접)</li>
+<li>모듈식 업그레이드로 기존 dexterous hand 플랫폼에 통합되도록 설계</li>
+<li>현재 저비용 hand(LEAP, RUKA, ISyHand 모두 tactile 부재)의 센싱 격차 해소</li>
+</ul>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>완전한 hand가 아님; 기존 hand 플랫폼에 통합 필요</li>
+<li>비용 미공개; hand 자체보다 상당히 비쌀 가능성</li>
+<li>아직 연구 커뮤니티에 널리 이용 가능하지 않음 (오픈소스 공개 예정)</li>
+<li>18개 이상 모달리티의 동시 데이터 처리에 계산 오버헤드 발생</li>
+<li>tactile 장착 hand를 위한 기존 sim-to-real 파이프라인과의 통합이 아직 시연되지 않음</li>
+</ul>
+<h2 class="dp-h2">오픈소스 현황</h2>
+<p class="dp-p">오픈소스 공개 예정 (서베이 시점 기준 아직 공개적으로 이용 불가).</p>

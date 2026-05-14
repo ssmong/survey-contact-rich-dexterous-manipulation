@@ -1,0 +1,56 @@
+<h3 class="dp-h3">CogACT: A Foundational Vision-Language-Action Model for Synergizing Cognition and Action in Robotic Manipulation</h3>
+<p class="dp-p"><strong>完整标题：</strong> CogACT: A Foundational Vision-Language-Action Model for Synergizing Cognition and Action in Robotic Manipulation</p>
+<p class="dp-p"><strong>作者：</strong> Qixiu Li, Yaobo Liang, Zeyu Wang, Lin Luo, Xi Chen, Mozheng Liao, Fangyun Wei, Yu Deng, Sicheng Xu, Yizhong Zhang, Xiaofan Wang, Bei Liu, Jianlong Fu, Jianmin Bao, Dong Chen, Yuanchun Shi, Jiaolong Yang, Baining Guo (Microsoft Research)</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> arXiv 2024</p>
+<p class="dp-p"><strong>架构：</strong> CogACT将VLA显式分为认知和动作阶段。认知模块是VLM（InternVL2，基于InternViT-300M + InternLM2-1.8B），处理视觉观测和语言指令以产生潜在"认知计划"。动作模块是基于扩散的解码器，将认知计划转换为连续机器人动作。这种分离允许每个模块独立优化，并支持动作生成的迭代细化。</p>
+<p class="dp-p"><strong>动作空间：</strong> 7D（6自由度EEF增量 + 夹爪），通过扩散解码加动作块化生成连续值。</p>
+<p class="dp-p"><strong>灵巧手支持？</strong> ✗ --- 仅夹爪评估。</p>
+<p class="dp-p"><strong>力/阻抗输出？</strong> ✗ --- 仅位置目标。</p>
+<p class="dp-p"><strong>核心方法论：</strong> CogACT论证现有VLA将两个根本不同的任务——语义理解和精确运动控制——混合在单一自回归解码过程中，这降低了两者的质量。通过显式分离认知（VLM推理）和动作（扩散生成），每个模块可以使用最适合其任务的架构。认知计划作为扩散动作头的压缩、语义丰富的条件信号，避免token化动作的信息瓶颈。</p>
+<p class="dp-p"><strong>训练数据：</strong> 在OXE跨具身数据上预训练。在SimplerEnv和真实机器人操作任务上微调。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出*在单一端到端VLA架构内*显式的认知-动作分离，VLM生成潜在计划，扩散头生成精确动作。（注：之前的工作如SayCan以不同方式分离推理和动作执行——在系统层面，语言模型从固定的预训练技能集中选择。CogACT的贡献在于将两个阶段集成到单一可微架构中，认知计划是学习的潜在表示，而非离散技能选择。）</li>
+<li>证明这种分离相比整体式VLA改善了语言理解和动作精度。</li>
+<li>在发表时达到SimplerEnv基准的最高报告结果。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>基准/任务</th>
+<th>CogACT</th>
+<th>OpenVLA</th>
+<th>RT-2-X</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td><em>（请查阅arXiv论文获取SimplerEnv和真实机器人评估的逐任务结果。论文报告发表时SimplerEnv最高性能。）</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>两阶段架构增加整体模型复杂性，可能在认知和动作之间引入延迟。</li>
+<li>仅在7D动作的基于夹爪的系统上评估。</li>
+<li>无力/柔顺感知。</li>
+<li>预训练权重未公开发布。</li>
+</ul>
+<p class="dp-p"><strong>开放权重/代码：</strong> ✅ 代码：<a href="https://github.com/microsoft/CogACT" target="_blank" rel="noopener">GitHub</a>。✗ 模型权重未公开。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确基准测试。两阶段架构（VLM认知 + 扩散动作）两个阶段都引入延迟：InternVL2 VLM（约2B参数）处理视觉/语言输入，然后扩散解码器在多个去噪步骤中生成动作。估计约5-15 Hz，取决于扩散步数和硬件。</li>
+<li><strong>部署硬件：</strong> 未报告。约2B参数的VLM骨干需要GPU用于实时推理（如A100或RTX 4090级别）。</li>
+<li><strong>可实时运行？</strong> 有限。两阶段流水线相比整体式VLA增加延迟。扩散动作头需要多个去噪步骤。适合中速操作但对高频灵巧控制可能太慢。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> Open X-Embodiment（OXE）用于跨具身预训练。在SimplerEnv和真实机器人操作任务上微调。</li>
+<li><strong>收集方法：</strong> 从OXE聚合的跨具身数据。微调演示来自标准操作基准。</li>
+<li><strong>数据规模：</strong> OXE预训练规模（与OpenVLA相当）。微调任务特定演示数量未报告。</li>
+<li><strong>遥操作设备：</strong> 因OXE组成数据集而异。</li>
+<li><strong>数据格式：</strong> RLDS（OXE标准）。</li>
+<li><strong>是否公开？</strong> OXE数据公开。CogACT模型权重未发布。</li>
+</ul>
+<hr>

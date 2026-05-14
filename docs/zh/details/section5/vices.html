@@ -1,0 +1,41 @@
+<h3 class="dp-h3">5.3 VICES</h3>
+<p class="dp-p"><strong>完整标题:</strong> Variable Impedance Control in End-Effector Space: An Action Space for Reinforcement Learning in Contact-Rich Tasks</p>
+<p class="dp-p"><strong>作者:</strong> Roberto Martin-Martin, Michelle A. Lee, Rachel Gardner, Silvio Savarese, Jeannette Bohg, Animesh Garg (Stanford / NVIDIA)</p>
+<p class="dp-p"><strong>发表venue/年份:</strong> IROS 2019</p>
+<p class="dp-p"><strong>K/D如何确定:</strong> 强化学习(策略梯度方法)。RL策略将阻抗参数作为动作空间的一部分直接输出。核心洞察是：将动作空间参数化为笛卡尔末端执行器空间中的可变阻抗(而非关节力矩或位置目标)可以显著提高接触丰富操作中RL的样本效率和任务成功率。</p>
+<p class="dp-p"><strong>输出内容:</strong> 笛卡尔末端执行器刚度K(对角)和阻尼D(对角)，以及期望的末端执行器位姿。完整动作为(期望位姿, K, D)，由笛卡尔阻抗控制器执行。策略输出各轴的刚度和阻尼值。</p>
+<p class="dp-p"><strong>机器人平台:</strong> 仿真中的Franka Emika Panda / Sawyer + 平行夹爪。无灵巧手。</p>
+<p class="dp-p"><strong>任务:</strong> Robosuite(MuJoCo)中的接触丰富操作：开门、轴孔插入、螺母穿线和带接触约束的提放。这些任务需要在不同接触阶段调节柔顺性。</p>
+<p class="dp-p"><strong>核心方法:</strong> VICES提出将末端执行器空间中的可变阻抗控制(VICES)作为RL的动作空间。RL智能体不再学习关节力矩或位置目标，而是输出期望的笛卡尔位姿 + 对角K和D矩阵。笛卡尔阻抗控制器将这些转换为关节力矩。该动作空间编码了阻抗控制的物理结构，使RL更容易发现接触丰富的策略：智能体可以学习在推动时保持刚性、在对准时保持柔顺。论文证明该动作空间在所有测试的接触丰富任务中优于关节力矩、关节位置和末端执行器位置动作空间。</p>
+<p class="dp-p"><strong>架构/参数:</strong> 标准RL策略网络(MLP，~256-256隐藏单元)。策略梯度算法(PPO或SAC)。动作空间：6D期望位姿 + 6D对角K + 6D对角D = 共18D。笛卡尔阻抗控制器作为底层执行器。在Robosuite/MuJoCo中训练。</p>
+<p class="dp-p"><strong>主要贡献:</strong></p>
+<ul class="dp-list">
+<li>确立末端执行器空间中的可变阻抗作为接触丰富操作的优越RL动作空间，优于位置、速度和力矩动作空间</li>
+<li>证明在动作空间中编码阻抗结构可提高接触丰富任务中RL的样本效率和最终性能</li>
+<li>提供接触丰富RL动作空间选择的系统比较，对后续工作产生了影响</li>
+</ul>
+<p class="dp-p"><strong>局限/空白:</strong></p>
+<ul class="dp-list">
+<li>无灵巧手——仅夹爪(Franka/Sawyer)</li>
+<li>仅仿真(Robosuite/MuJoCo)——无真实机器人验证</li>
+<li>仅对角K和D——未学习完整(非对角)阻抗矩阵</li>
+<li>RL样本效率虽优于力矩空间，但仍然较高</li>
+<li>2019年论文；RL算法和仿真保真度此后已有显著进步</li>
+</ul>
+<p class="dp-p"><strong>实验结果:</strong> VICES动作空间在Robosuite的全部四个接触丰富任务中比关节力矩、关节位置和笛卡尔位置动作空间实现了更高的成功率和更快的收敛速度。开门：~90% vs. ~50%(位置空间)。轴孔插入：~85% vs. ~30%(力矩空间)。学习到的阻抗曲线显示出可解释的模式(例如插入搜索时横向刚度较低)。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟:</strong> 未报告。策略是标准MLP(~256-256隐藏单元)，在任何现代硬件上每次前向传播<1ms。瓶颈是仿真步进而非策略推理。</li>
+<li><strong>部署硬件:</strong> 仅仿真(Robosuite/MuJoCo)。无真实机器人部署。策略推理使用标准MLP，可部署在任何硬件上。</li>
+<li><strong>可实时运行?</strong> 策略本身可以。MLP推理极快(<1ms)。但系统仅在仿真中评估；未在物理硬件上演示实时部署。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集:</strong> 无预采集数据集。纯RL——通过与仿真环境的在线交互生成数据。</li>
+<li><strong>采集方法:</strong> Robosuite/MuJoCo仿真中的纯RL(PPO或SAC)。无人类示教。智能体完全从奖励驱动的探索中学习仿真接触丰富任务(路径跟随、开门、表面擦拭、轴孔插入)。</li>
+<li><strong>数据规模:</strong> 标准RL训练规模(跨并行环境的数百万仿真步)。未报告具体回合数。</li>
+<li><strong>遥操作设备:</strong> 不适用(纯RL，无示教)。</li>
+<li><strong>数据格式:</strong> 不适用(在线RL，无离线数据集)。</li>
+<li><strong>公开可用?</strong> 仿真环境为标准Robosuite任务。无单独数据集发布(纯RL)。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=7qejm7ptpw" target="_blank" rel="noopener">OpenReview</a></p></div></details>

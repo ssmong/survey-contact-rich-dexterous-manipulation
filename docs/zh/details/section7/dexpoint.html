@@ -1,0 +1,60 @@
+<h3 class="dp-h3">7.1 DexPoint</h3>
+<p class="dp-p"><strong>完整标题：</strong> DexPoint: Generalizable Point Cloud Reinforcement Learning for Sim-to-Real Dexterous Manipulation</p>
+<p class="dp-p"><strong>作者：</strong> Yuzhe Qin, Binghao Huang, Zhao-Heng Yin, Hao Su, Xiaolong Wang</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CoRL 2022</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2211.09423</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 点云观测。使用想象手部点云作为增强输入，基于接触的奖励整形用于高效学习。</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）用于真实世界实验</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym（NVIDIA GPU加速仿真）</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是。Allegro Hand上零样本仿真到真实迁移。关键仿真到真实创新：(1) 点云表示比RGB图像在仿真到真实差距上更具可迁移性，(2) 想象手部点云提供对视觉域偏移不变的几何感知表示，(3) 基于接触的奖励鼓励物理有意义的抓取行为。</p>
+<p class="dp-p"><strong>物体数量：</strong> 类别内多个物体；在真实世界中展示同类别新颖物体的泛化。</p>
+<p class="dp-p"><strong>任务：</strong> 多样物体的灵巧抓取。展示类别级泛化：在一组物体上训练的策略泛化至真实世界中同类别新颖物体。</p>
+<p class="dp-p"><strong>核心方法论：</strong> 提出使用点云观测进行灵巧操作RL，解决困扰基于图像方法的仿真到真实差距。两个关键创新：(1) 用"想象手部点云"增强物体点云——从本体感觉状态生成的机器人手合成点云——提供手-物体空间关系的几何感知而不依赖视觉渲染。(2) 基于接触的奖励函数鼓励策略学习物理有意义的交互，而非利用仿真器伪影。点云表示自然比RGB图像更具仿真到真实可迁移性，因为它直接捕捉几何。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>首个基于RL的策略实现灵巧抓取的类别级泛化并带仿真到真实迁移</li>
+<li>引入想象手部点云作为桥接灵巧手仿真到真实的增强表示</li>
+<li>物理有意义抓取行为的基于接触的奖励设计</li>
+<li>在Allegro Hand上跨多样物体展示零样本仿真到真实迁移</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>新颖物体泛化</td>
+<td>类别级（灵巧策略学习首次）</td>
+</tr>
+<tr>
+<td>真实世界手部</td>
+<td>Allegro Hand（16自由度）</td>
+</tr>
+<tr>
+<td>仿真到真实</td>
+<td>零样本迁移</td>
+</tr>
+<tr>
+<td>观测</td>
+<td>点云（物体 + 想象手部）</td>
+</tr>
+<tr>
+<td>仿真平台</td>
+<td>IsaacGym</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li><strong>力控：</strong> 无力传感或阻抗控制；仅位置抓取</li>
+<li><strong>VLA/语言：</strong> 无语言条件或VLA集成</li>
+<li><strong>仿真到真实：</strong> 点云需要深度相机；深度传感质量影响真实世界性能</li>
+<li><strong>代码：</strong> <a href="https://github.com/yzqin/dexpoint-release" target="_blank" rel="noopener">GitHub</a> 可用</li>
+<li><strong>任务范围：</strong> 仅限抓取；不涉及手内操作、工具使用或多阶段任务</li>
+<li><strong>物体多样性：</strong> 展示了类别级泛化但限于有限类别；未在UniDexGrasp那样的数千物体上测试</li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。带点云（想象手部）输入的MLP策略每次前向传播 <5ms。</li>
+<li><strong>部署硬件：</strong> Allegro Hand（16自由度）用于真实世界部署。策略在IsaacGym中训练；通过点云观测零样本仿真到真实迁移部署。</li>
+<li><strong>支持实时？</strong> 是。带点云编码器的轻量策略支持真实Allegro Hand上的实时灵巧抓取。</li>
+</ul>

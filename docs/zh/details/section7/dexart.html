@@ -1,0 +1,36 @@
+<h3 class="dp-h3">7.3 DexArt</h3>
+<p class="dp-p"><strong>完整标题：</strong> DexArt: Benchmarking Generalizable Dexterous Manipulation with Articulated Objects</p>
+<p class="dp-p"><strong>作者：</strong> Chen Bao, Helin Xu, Yuzhe Qin, Xiaolong Wang</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CVPR 2023</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2305.05706</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 点云观测。使用铰接物体实例的域随机化训练以实现泛化。</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度），安装在浮动底座上（无臂）</p>
+<p class="dp-p"><strong>仿真平台：</strong> SAPIEN（PhysX后端）</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否。仅仿真基准。</p>
+<p class="dp-p"><strong>任务：</strong> 4个铰接物体操作任务：(1) 水龙头旋转——旋转不同几何形状的水龙头手柄；(2) 笔记本电脑打开——打开不同铰链配置的笔记本电脑盖子；(3) 水桶提升——通过手柄抓取和提升水桶；(4) 马桶盖——打开/关闭马桶座圈。每个任务包含不同几何形状的多个物体实例用于泛化评估。</p>
+<p class="dp-p"><strong>核心方法论：</strong> DexArt解决铰接物体的灵巧操作，这需要理解超越刚体抓取的关节约束和接触动力学。基准使用点云观测并跨每个类别的多样物体实例训练，评估分布内和分布外泛化。该方法揭示了朴素RL在铰接物体上的困难，因为多指接触与铰接关节的组合复杂性使得简单奖励整形不足。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入首个专门针对灵巧操作铰接物体并带有泛化评估的基准</li>
+<li>展示基于点云的RL策略可跨类别内的物体实例泛化</li>
+<li>识别关键挑战：接触丰富的铰接操作需要理解简单奖励整形未捕捉的关节约束</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅仿真，无真实世界验证。浮动手（无臂）简化了问题。仅限4个任务类别。在分布外物体实例上性能显著下降。</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<p class="dp-p"><strong>结果：</strong> 在分布内物体上达到合理成功率，但在新颖实例上显著下降，突出了泛化挑战（仿真）。代码和预训练权重公开可用。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。带点云编码器的MLP策略每次前向传播 <5ms。</li>
+<li><strong>部署硬件：</strong> 仅仿真（SAPIEN）。未展示真实机器人部署。</li>
+<li><strong>支持实时？</strong> 是，就策略本身而言。但仅进行了仿真评估。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。SAPIEN仿真器中的纯RL（PPO）+ 点云观测。</li>
+<li><strong>收集方法：</strong> SAPIEN（PhysX后端）中的纯RL。跨每个类别铰接物体实例的域随机化。4个任务类别：水龙头旋转、笔记本电脑打开、水桶提升、马桶盖。每个类别包含不同几何形状的多个物体实例。</li>
+<li><strong>数据规模：</strong> 每个类别多个铰接物体实例用于训练和分布外泛化评估。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 是——代码和预训练权重公开可用。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=seQjCvbj3h" target="_blank" rel="noopener">OpenReview</a></p></div></details>

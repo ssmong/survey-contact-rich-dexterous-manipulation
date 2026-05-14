@@ -1,0 +1,95 @@
+<h3 class="dp-h3">DexterityGen</h3>
+<p class="dp-p"><strong>全称：</strong> DexterityGen: Foundation Controller for Unprecedented Dexterity</p>
+<p class="dp-p"><strong>作者：</strong> UC Berkeley / Meta等研究人员</p>
+<p class="dp-p"><strong>会议/年份：</strong> RSS 2025</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度），安装在机器人臂上。Allegro Hand作为工具使用灵巧性的主要评估平台。</p>
+<p class="dp-p"><strong>任务：</strong> 灵巧工具使用任务，包括笔操作（书写/绘画）、螺丝刀操作和注射器操作。这些任务需要精确的指尖控制和协调的多指运动来完成工具介导的动作。</p>
+<p class="dp-p"><strong>核心方法：</strong> DexterityGen训练一个灵巧操作的基础控制器（演示了3种工具），可泛化到不同的工具使用任务。该方法使用IsaacGym中的强化学习开发通用灵巧控制器，可适应特定的工具使用场景。基础控制器概念旨在提供具备足够手指协调能力的基础策略，可快速专门化到新的工具和任务，减少逐任务的训练负担。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 在IsaacGym中使用大规模并行环境训练的基于强化学习的策略。基础控制器架构支持向新工具使用任务的迁移。未公开发布代码或权重。</p>
+<p class="dp-p"><strong>仿真平台：</strong> NVIDIA IsaacGym。已展示仿真到真实迁移——论文展示了在仿真中训练的策略成功部署到真实世界。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入了"基础控制器"概念（演示了3种工具：笔、螺丝刀、注射器），提供了可跨工具使用任务迁移的可复用基础策略，相比从头训练每个工具使用策略减少了逐任务训练时间。</li>
+<li>在Allegro Hand上展示了需要精确且多样指尖控制策略的灵巧工具使用——笔书写需要精细的尖端控制，螺丝刀旋转需要产生扭矩的手指协调，注射器操作需要线性推动运动。</li>
+<li>实现了工具使用任务的仿真到真实迁移，证明了基础控制器概念在物理Allegro Hand系统上能够跨越仿真到真实的差距。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。未使用力/阻抗控制。工具-环境接触力（如笔在纸上的压力、螺丝刀插入扭矩）未被显式调节。系统依赖学习到的位置轨迹和隐式柔顺性来产生足够的接触力，这可能限制对需要精确力调节任务的适用性。</li>
+<li><strong>VLA/语言条件化：</strong> 无。无语言条件化或VLA集成。基础控制器通过强化学习微调适应新工具，而非通过语言指定的任务描述。</li>
+<li><strong>仿真到真实：</strong> 是。在IsaacGym中训练的策略成功部署到物理Allegro Hand上。</li>
+<li><strong>代码/权重可用性：</strong> 未发布代码或权重。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 在原子灵巧技能和长期工具使用任务上进行了评估。原始遥操作基线在大多数任务上完全失败；DexterityGen同时实现了稳定性和成功。</p>
+<p class="dp-p">表I -- 真实世界原子技能性能（成功率和倒下时间）：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>指标</th>
+<th>说明</th>
+</tr></thead><tbody>
+<tr>
+<td>重定向大物体（上/下）</td>
+<td>已报告成功率</td>
+<td>原始遥操作失败；DexGen成功</td>
+</tr>
+<tr>
+<td>重定向小物体（上/下）</td>
+<td>已报告成功率</td>
+<td>原始遥操作失败；DexGen成功</td>
+</tr>
+<tr>
+<td>功能性抓取（正常/水平）</td>
+<td>已报告成功率</td>
+<td>DexGen实现稳定的功能性抓取</td>
+</tr>
+<tr>
+<td>重新抓取（球/圆柱）</td>
+<td>已报告成功率</td>
+<td>DexGen实现稳定的重新抓取</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">表II -- 长期工具使用任务分解（逐阶段成功率，每个N=20次试验）：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>重定向</th>
+<th>重新抓取</th>
+<th>对齐</th>
+<th>使用</th>
+<th>说明</th>
+</tr></thead><tbody>
+<tr>
+<td>螺丝刀</td>
+<td>16/20 (80%)</td>
+<td>11/20 (55%)</td>
+<td>5/20 (25%)</td>
+<td>3/20 (15%)</td>
+<td>顺序阶段；每个阶段需要前一阶段成功</td>
+</tr>
+<tr>
+<td>注射器</td>
+<td>15/20 (75%)</td>
+<td>9/20 (45%)</td>
+<td>--</td>
+<td>4/20 (20%)</td>
+<td>三阶段流程</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">由于顺序串联的难度，长期任务的成功率在每个阶段逐步下降。基础控制器提供了可跨工具类型泛化的可复用灵巧原语。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 在NVIDIA RTX 4090上约27毫秒每推理周期（37 Hz）。测试了8和12个DDIM采样步骤，在动作精度和延迟之间存在权衡。</li>
+<li><strong>部署硬件：</strong> NVIDIA RTX 4090 GPU，Lambda工作站。Allegro Hand（16自由度）安装在机器人臂上用于真实世界部署。</li>
+<li><strong>是否实时：</strong> 是。扩散采样以37 Hz运行；实际机器人控制以10 Hz运行。人类遥操作通过独立的重定向方法以300 Hz运行。10 Hz控制频率对手臂级别的工具使用足够，但低于高速灵巧手指控制所需的频率。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> 无外部数据集；训练数据通过IsaacGym中的强化学习仿真试验生成，并辅以人类遥操作演示用于模仿学习。</li>
+<li><strong>收集方法：</strong> IsaacGym中的强化学习仿真试验用于基础控制器预训练；通过重定向方法以300 Hz进行人类遥操作用于物理Allegro Hand上的演示收集。</li>
+<li><strong>数据规模：</strong> 未报告（强化学习训练实时生成数据；遥操作演示数量未指定）。</li>
+<li><strong>遥操作设备：</strong> 以300 Hz运行的人手重定向系统，用于真实世界演示收集。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开：</strong> 否。未发布代码、数据或模型权重。</li>
+</ul>
+<blockquote class="dp-quote"><em>结果已根据arXiv:2502.04307验证。逐阶段成功率从表II提取。</em></blockquote>
+<hr>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=LP2NjYyoch" target="_blank" rel="noopener">OpenReview</a></p></div></details>

@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.2 DexPBT</h3>
+<p class="dp-p"><strong>完整标题：</strong> DexPBT: Scaling up Dexterous Manipulation for Hand-Arm Systems with Population Based Training</p>
+<p class="dp-p"><strong>作者：</strong> Aleksei Petrenko, Arthur Allshire, Gavriel State, Ankur Handa, Viktor Makoviychuk</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> RSS 2023</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 基于种群训练（PBT）；维护一组具有不同超参数的策略种群，周期性地用顶级执行者的变异副本替换表现不佳者</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）+ Kuka臂</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否（仅仿真评估）</p>
+<p class="dp-p"><strong>物体数量：</strong> 多个物体；在立方体重定向和其他操作任务上评估</p>
+<p class="dp-p"><strong>任务：</strong> 协调臂手操作，包括手内重定向、重新抓取和物体交接；跨多样操作目标的多任务训练</p>
+<p class="dp-p"><strong>核心方法论：</strong> 将基于种群训练应用于灵巧臂手操作，自动调节奖励权重、学习率和域随机化参数。PBT在臂手系统的高维动作空间（16 + 7 = 23自由度）中实现高效超参数搜索。种群向平衡多任务目标的策略演化，无需手动奖励整形。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>首次将PBT应用于灵巧臂手操作，自动化超参数和奖励调优</li>
+<li>处理多样操作目标的多任务训练框架，使用单一种群</li>
+<li>展示PBT在臂手任务上显著优于固定超参数PPO</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅仿真（无仿真到真实）；PBT需要大量计算（并行策略种群）；物体多样性有限；演化的超参数可能无法跨任务或构型迁移</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。MLP策略每次前向传播 <1ms。</li>
+<li><strong>部署硬件：</strong> 仅仿真（IsaacGym）。未展示真实机器人部署。</li>
+<li><strong>支持实时？</strong> 是，就策略本身而言（MLP推理速度极快）。但仅进行了仿真评估。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。纯RL（PPO）+ 基于种群训练（PBT）——所有数据在仿真中生成。</li>
+<li><strong>收集方法：</strong> IsaacGym中的纯RL。PBT维护具有不同超参数的策略种群，自动调节奖励权重、学习率和域随机化。跨多样臂手操作目标的多任务训练。</li>
+<li><strong>数据规模：</strong> IsaacGym中标准并行RL训练。立方体重定向和其他任务的多个物体。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 代码发布状态未报告。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=DKR5vZBBW5" target="_blank" rel="noopener">OpenReview</a></p></div></details>

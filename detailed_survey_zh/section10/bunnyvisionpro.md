@@ -1,0 +1,35 @@
+# 10.2 BunnyVisionPro
+
+- **全称：** BunnyVisionPro: Real-Time Bimanual Dexterous Teleoperation for Imitation Learning
+- **作者：** Runyu Ding, Yuzhe Qin, Jiyue Zhu, Chengzhe Jia, Xiaolong Wang (HKU, UCSD)
+- **发表venue/年份：** arXiv 2407.03162, 2024年7月
+- **输入模态：** Apple Vision Pro手部追踪（无标记，内置相机）
+- **目标手：** 双臂灵巧设置（双臂+灵巧手）
+- **力反馈：** 低成本触觉反馈模块（可选）
+- **成本：** ~$3,500+（Apple Vision Pro硬件成本）
+
+## 核心方法/设计
+
+BunnyVisionPro将Apple Vision Pro的内置手部追踪功能重新用于实时双臂灵巧遥操作。系统通过局域网将手部姿态数据从Vision Pro头显流式传输到机器人控制器，并通过实时逆运动学将人手姿态映射到机器人关节命令。可选的低成本触觉反馈模块为操作者提供基本的接触反馈。VR头显的高质量手部追踪消除了对手套或外部传感器的需求。
+
+## 主要贡献
+
+- 利用消费级VR硬件（Apple Vision Pro）实现研究级双臂灵巧遥操作
+- 通过局域网实现低延迟手部姿态传输的实时流式管线
+- 可选触觉反馈集成，改善接触丰富任务表现
+- 展示了基于采集示教数据的模仿学习
+
+## 局限性/不足
+
+- 硬件成本高（仅Vision Pro即需$3,500），限制了可及性
+- 手部追踪精度取决于光照条件和手部对头显相机的可见性
+- 触觉反馈相比专用力反馈手套较为简陋
+- Vision Pro的手指级追踪分辨率可能不足以完成精细运动任务
+
+## 数据质量影响
+
+可选触觉模块提供初步的二值接触反馈，但缺乏力的大小或方向信息。未使用触觉模块采集的示教数据纯粹基于位置，产生与纯相机系统相同的力盲数据质量问题。即使启用触觉模块，粗糙的接触信号也不允许操作者精确调节抓取力，导致示教数据编码的是近似手指轨迹，而缺乏精细操作任务（如处理易碎物体、受控滑动）所需的力曲线。
+
+## 开源状态
+
+开源。GitHub: [Dingry/BunnyVisionPro](https://github.com/Dingry/BunnyVisionPro)

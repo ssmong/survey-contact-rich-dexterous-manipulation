@@ -1,0 +1,54 @@
+<p class="dp-p"># 9.4 Adroit</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> Learning Complex Dexterous Manipulation with Deep Reinforcement Learning and Demonstrations</li>
+<li><strong>作者：</strong> Aravind Rajeswaran, Vikash Kumar, Abhishek Gupta, Giulia Vezzani, John Schulman, Emanuel Todorov, Sergey Levine</li>
+<li><strong>发表venue/年份：</strong> RSS 2018</li>
+<li><strong>仿真平台：</strong> MuJoCo</li>
+<li><strong>灵巧手支持：</strong> Shadow Hand（24自由度）仿真模型（称为ADROIT手）</li>
+<li><strong>任务：</strong> 4个经典任务——笔旋转、开门、锤击、球体转移</li>
+<li><strong>演示数据：</strong> 每个任务25个通过CyberGlove收集的人类演示</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">Adroit提出了DAPG（Demo Augmented Policy Gradient，演示增强策略梯度）算法，将少量人类演示与强化学习微调相结合，解决复杂的灵巧操作任务。MuJoCo中的Shadow Hand模型成为灵巧强化学习基准测试的事实标准。人类演示通过CyberGlove遥操作接口收集，用于初始化策略，克服了高维灵巧动作空间的探索挑战。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>建立了灵巧强化学习的经典基准，包含4个至今广泛使用的任务（笔、门、锤子、球）</li>
+<li>DAPG算法证明少量人类演示可显著加速高自由度手部的强化学习</li>
+<li>开源的MuJoCo 24自由度Shadow Hand模型，成为社区标准</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>仅4个任务且接触模式相对简单；未覆盖多阶段或工具使用操作</li>
+<li>Shadow Hand模型缺少触觉传感仿真</li>
+<li>当时MuJoCo仅支持CPU；现已被GPU加速替代方案超越用于大规模训练，但仍是标准评估目标</li>
+<li>原始工作未解决仿真到真实的差距问题</li>
+</ul>
+<h2 class="dp-h2">覆盖缺口</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>标准</th>
+<th>是否覆盖？</th>
+</tr></thead><tbody>
+<tr>
+<td>力/力矩评估指标</td>
+<td>否</td>
+</tr>
+<tr>
+<td>可变形物体任务</td>
+<td>否</td>
+</tr>
+<tr>
+<td>触觉传感</td>
+<td>否</td>
+</tr>
+<tr>
+<td>多阶段/长时程任务</td>
+<td>否（每个任务为单阶段目标）</td>
+</tr>
+<tr>
+<td>多手协调</td>
+<td>否</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">完全开源。通过 <code>pip install gymnasium-robotics</code> 获取（Gymnasium-Robotics提供维护的Adroit环境）。原始代码：<a href="https://github.com/aravindr93/hand_dapg" target="_blank" rel="noopener">GitHub</a></p>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=iiDu422mKs" target="_blank" rel="noopener">OpenReview</a></p></div></details>

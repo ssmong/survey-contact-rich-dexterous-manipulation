@@ -1,0 +1,99 @@
+<h3 class="dp-h3">SPIDER</h3>
+<p class="dp-p"><strong>전체 제목:</strong> SPIDER: Sim-to-Real Policy Adaptation for Dexterous Manipulation via Embodiment Retargeting</p>
+<p class="dp-p"><strong>저자:</strong> Meta FAIR / UC Berkeley et al. 연구팀</p>
+<p class="dp-p"><strong>학회/연도:</strong> arXiv 프리프린트, 2025</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> 9종 서로 다른 휴머노이드 구현체 평가. SPIDER는 인간 시연을 다양한 휴머노이드 로봇 형태로 리타게팅하는 광범위한 도전을 다루며, 다양한 핸드-팔 운동학적 구성을 포괄한다.</p>
+<p class="dp-p"><strong>작업:</strong> 리타게팅된 인간 시연 작업. 시스템은 모션 캡처로 캡처된 인간 동작을 받아 다른 휴머노이드 구현체에 대한 물리적으로 실행 가능한 정책을 생성한다. 작업은 인간 시연에서 캡처된 조작 행동을 포괄한다.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> SPIDER는 구현체 리타게팅을 통한 sim-to-real 정책 적응을 다룬다. 모션 캡처로 캡처된 인간 시연을 받아 MuJoCo 시뮬레이션에서 물리 기반 최적화를 사용하여 목표 휴머노이드 구현체에 리타게팅한다. 리타게팅은 각 목표 구현체의 운동학적 및 동역학적 제약을 준수하면서 원래 인간 동작의 기능적 의도를 보존한다. 이 방법은 추가 RL 기반 정책 개선을 위한 초기화로 사용할 수 있는 물리적으로 타당한 동작을 생성하는 데 초점을 맞춘다.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong> 리타게팅 파이프라인은 물리 시뮬레이션과 결합된 최적화 기반 동작 적응을 사용하여 동역학적 실행 가능성을 보장한다. 구체적 네트워크 아키텍처 세부 사항은 하류 정책 학습 접근법에 따라 다르다.</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> MuJoCo. Sim-to-real 전이가 시연됨 -- 논문은 4가지 정교한 작업(전구 회전, 숟가락 조작, 기타 연주, 충전기 빼기)에 대해 물리적 Franka Emika Panda + Allegro Hand 시스템에 리타게팅된 궤적을 배포한다. 궤적은 단일 RGB 비디오 입력에서 리타게팅되어 물리 로봇에서 직접 실행된다.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>9종 휴머노이드 구현체를 포괄하는 리타게팅 프레임워크 제안 -- 조사된 문헌에서 가장 넓은 구현체 커버리지 -- 이전 리타게팅 연구(DexMachina: 4종, ManipTrans: 6종)는 더 적고 형태적으로 덜 다양한 대상을 다루었다.</li>
+<li>MuJoCo에서의 물리 기반 리타게팅이 형태적으로 다양한 로봇에 걸쳐 조작 의도를 보존하여, 운동학적 대응만이 아닌 동역학적 실행 가능성 제약을 만족하는 동작을 생성함을 시연한다.</li>
+<li>프레임워크를 오픈 소스로 공개하여 (<a href="https://github.com/facebookresearch/spider" target="_blank" rel="noopener">GitHub</a>) 새로운 구현체로의 커뮤니티 확장을 가능하게 한다.</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li><strong>힘/임피던스 인식:</strong> 없음. 힘 센싱이나 임피던스 제어가 포함되지 않음. 리타게팅은 운동학적 및 동역학적 실행 가능성을 최적화하나 접촉 힘 프로파일에 대해 명시적으로 추론하지 않는다. 정밀한 힘 조절이 필요한 작업(예: 삽입, 연마)은 SPIDER가 제공하는 것 이상의 추가적 힘 인식 정책 레이어가 필요하다.</li>
+<li><strong>VLA/언어 조건부:</strong> 없음. 파이프라인은 언어 입력이나 비전-언어 통합 없이 모션 캡처 시연에서 작동한다.</li>
+<li><strong>Sim-to-real:</strong> 예. 4가지 정교한 작업에 대해 Franka Emika Panda + Allegro Hand에서 실제 로봇 배포가 시연됨. 단일 RGB 비디오에서 리타게팅된 궤적이 물리 하드웨어에서 직접 실행됨.</li>
+<li><strong>코드/데이터 공개:</strong> 코드 공개 (<a href="https://github.com/facebookresearch/spider" target="_blank" rel="noopener">GitHub</a>). 사전 훈련된 가중치는 구체적 하류 정책에 따라 다르다.</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong> 여러 데이터셋을 사용하여 9종 구현체(5종 정교한 핸드: Allegro, XHand, Inspire, Ability, Schunk; 4종 휴머노이드 로봇: Unitree G1, Unitree H1-2, Fourier N1, Booster T1)에서 평가.</p>
+<p class="dp-p">Table 1 -- 절제 연구 성공률 (전체 방법이 어닐링 샘플링 단독 대비 ~18% 개선, 범위 0.54--1.00).</p>
+<p class="dp-p">Table 2 -- 전체 데이터셋 성공률:</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>데이터셋</th>
+<th>Inspire</th>
+<th>Allegro</th>
+<th>XHand</th>
+<th>Ability</th>
+<th>Schunk</th>
+</tr></thead><tbody>
+<tr>
+<td>Oakink</td>
+<td>0.479 (최고)</td>
+<td>0.413--0.459 범위</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td>GigaHands</td>
+<td>0.879 (최고)</td>
+<td>0.706--0.812 범위</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Table 3 -- RL 기준선과의 비교:</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>방법</th>
+<th>데이터셋</th>
+<th>성공률</th>
+<th>속도</th>
+</tr></thead><tbody>
+<tr>
+<td>SPIDER</td>
+<td>Oakink (1022 궤적)</td>
+<td>47.9%</td>
+<td>2.5 FPS</td>
+</tr>
+<tr>
+<td>ManipTrans</td>
+<td>Oakink</td>
+<td>39.5%</td>
+<td>0.1 FPS</td>
+</tr>
+<tr>
+<td>SPIDER</td>
+<td>ARCTIC</td>
+<td>42.0%</td>
+<td>1.5 FPS</td>
+</tr>
+<tr>
+<td>DexMachina</td>
+<td>ARCTIC</td>
+<td>67.1%</td>
+<td>0.05 FPS</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">SPIDER는 RL 기준선보다 10배 빠르다. 240만 프레임의 동역학적으로 실행 가능한 로봇 데이터 생성. 4가지 정교한 작업(전구 회전, 숟가락 조작, 기타 연주, 충전기 빼기)에 대한 Franka Emika Panda + Allegro Hand에서의 실제 로봇 배포 확인.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 정교한 조작(Oakink 데이터셋)에서 궤적 생성이 2.5 FPS, 휴머노이드 작업에서 19.6--23.1 FPS로 실행. 물리 시뮬레이션에서 사용되는 50 Hz 제어 주파수에서 정교한 조작의 실시간 달성은 안 됨.</li>
+<li><strong>배포 하드웨어:</strong> 절제/속도 테스트용 RTX 4090 GPU; 대규모 데이터셋 생성용 H100 GPU. Franka Emika Panda + Allegro Hand에서의 실제 로봇 배포는 직접 궤적 실행을 사용(실행 시 GPU 불필요).</li>
+<li><strong>실시간 가능 여부:</strong> 정교한 조작 생성에서는 아니오 (2.5 FPS vs. 50 Hz 목표). 휴머노이드 작업에서는 실시간에 근접 (19.6--23.1 FPS). 시스템은 RL 기준선보다 10배 빠르나, 폐루프 실시간 제어보다는 주로 오프라인 궤적 생성을 위해 설계되었다.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> Gigahands, Hot3D, OakInk 등 여러 기존 인간 손-물체 상호작용 데이터셋. SPIDER는 새 데이터를 수집하지 않고 이러한 공개 데이터셋을 통합 처리한다. ManipTrans 데이터도 참조됨.</li>
+<li><strong>수집 방법:</strong> 위 데이터셋의 인간 비디오/모션 캡처 데이터를 SPIDER 리타게팅 파이프라인을 통해 처리하여 9종 휴머노이드 구현체의 로봇 실행 가능 궤적을 생성한다.</li>
+<li><strong>데이터 규모:</strong> 단일 수치로 보고되지 않음; 사용된 소스 데이터셋에 따라 다름. HuggingFace를 통해 예시 데이터 제공 (<code>retarget/retarget_example</code>).</li>
+<li><strong>원격 조작 장비:</strong> 해당 없음 (소스 데이터는 로봇 원격 조작이 아닌 인간 비디오/MoCap).</li>
+<li><strong>데이터 포맷:</strong> 다단계 파이프라인(원시 데이터 -> 전처리 -> 운동학적 궤적 -> 리타게팅된 출력)을 통해 처리. HuggingFace에 예시 데이터.</li>
+<li><strong>공개 여부:</strong> 예. 코드 공개 (<a href="https://github.com/facebookresearch/spider" target="_blank" rel="noopener">GitHub</a>). 리타게팅된 예시 데이터셋이 HuggingFace에서 이용 가능.</li>
+</ul>
+<hr>

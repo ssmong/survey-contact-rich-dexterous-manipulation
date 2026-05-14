@@ -48,7 +48,7 @@
 <td>1</td>
 </tr>
 </tbody></table></div>
-<p class="dp-p">*Note: AnyTouch's paired-data contrastive learning produces stronger cross-sensor generalization than Sparsh's unpaired SSL, but both degrade relative to within-sensor training. Performance on sensor types not seen during pretraining remains a limitation.*</p>
+<p class="dp-p"><em>Note: AnyTouch's paired-data contrastive learning produces stronger cross-sensor generalization than Sparsh's unpaired SSL, but both degrade relative to within-sensor training. Performance on sensor types not seen during pretraining remains a limitation.</em></p>
 <h2 class="dp-h2">Limitations/Gaps</h2>
 <ul class="dp-list">
 <li>TacQuad dataset collection requires physically contacting the same surfaces with multiple sensors, which is labor-intensive and limits dataset scale</li>
@@ -60,3 +60,12 @@
 <p class="dp-p">Like all tactile representation models in this section, AnyTouch does not demonstrate integration into closed-loop manipulation policies. See <a href="sparsh.md#shared-limitation-no-closed-loop-policy-integration" target="_blank" rel="noopener">Sparsh</a> for a detailed discussion of this shared limitation.</p>
 <h2 class="dp-h2">Open-source status</h2>
 <p class="dp-p">Open-source (code + pretrained weights). GitHub: <a href="https://github.com/GeWu-Lab/AnyTouch" target="_blank" rel="noopener">GeWu-Lab/AnyTouch</a></p>
+<details class="dp-reviews"><summary>Peer Reviews <span class="dp-review-score-badge">7.0</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">Average: <strong>7.0</strong> · 4 reviews · ICLR 2025 Poster · <a href="https://openreview.net/forum?id=XToAemis1h" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 6</span> <span class="dp-review-text">The author introduces an aligned multi-sensor tactile dataset to unify tactile data. The data across four optical-based sensors. Also, the author proposes a unified static-dynamic multi-sensor represe…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 8</span> <span class="dp-review-text">This paper proposes UltraTouch, a model that learns unified static-dynamic representations for multiple tactile sensors with different architectures. To train UltraTouch, a dataset called TacQuad is i…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 6</span> <span class="dp-review-text">This paper presents a novel and comprehensive representation learning framework for tactile data that addresses (1) V-T-L modalities alignment, (2) capturing dynamic information in tactile modality, a…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 8</span> <span class="dp-review-text">This paper present a novel framework called UltraTouch and a large dataset TacQuad collected using 4 different tactile sensors. The UltraTouch framework has a multi-stage training in pixel level and s…</span></div>
+</div>
+</details>

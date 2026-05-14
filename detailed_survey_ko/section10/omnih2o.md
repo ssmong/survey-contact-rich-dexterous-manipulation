@@ -1,0 +1,34 @@
+# 10.8 OmniH2O
+
+- **전체 제목:** OmniH2O: Universal and Dexterous Human-to-Humanoid Whole-Body Teleoperation and Learning
+- **저자:** Tairan He, Zhengyi Luo, Xialin He, Wenli Xiao, Chong Zhang, Weinan Zhang, Kris Kitani, Changliu Liu, Guanya Shi (CMU LeCAR Lab)
+- **학회/연도:** CoRL 2024 (arXiv 2406.08858, 2024년 6월)
+- **입력 모달리티:** 멀티모달 -- VR 컨트롤러, 음성 명령, 또는 RGB 카메라
+- **대상 hand:** Humanoid 전신 (hand 포함)
+- **Force feedback:** 없음
+- **비용:** 입력 모달리티에 따라 다양 (RGB 카메라는 무료; VR 셋업은 헤드셋 필요)
+
+## 핵심 방법론/설계
+
+OmniH2O는 VR 컨트롤러, 음성 명령, 또는 일반 RGB 비디오 등 다양한 입력 모달리티를 수용하여 dexterous hand 동작을 포함한 전신 humanoid 제어에 매핑하는 범용 humanoid 원격조작 프레임워크를 제공한다. 시스템은 입력 모달리티 간에 일반화되는 시뮬레이션에서 학습된 모션 retargeting policy를 사용한다. 이 멀티모달 접근법으로 운영자가 셋업과 작업에 가장 편리한 입력 방법을 선택할 수 있다.
+
+## 주요 기여
+
+- 배포 시나리오의 유연성을 제공하는 humanoid 원격조작을 위한 멀티모달 입력 지원 (VR/음성/RGB)
+- 모달리티별 엔지니어링 없이 입력 모달리티 간에 일반화되는 학습된 retargeting policy
+- 보행과 dexterous 조작을 통합 프레임워크에서 수행하는 전신 제어
+
+## 한계점
+
+- dexterous hand 제어 충실도가 전용 hand 전용 원격조작 시스템보다 낮음
+- 어떤 입력 모달리티에서도 force/haptic feedback 없음
+- 전신 초점으로 인해 hand 조작 품질이 hand 전용 시스템 대비 저하될 수 있음
+- RGB 전용 입력 모드가 가장 낮은 정확도이나 가장 넓은 접근성
+
+## 데이터 품질 영향
+
+전신 원격조작 초점으로 인해 hand 조작 시연이 전용 hand 전용 시스템보다 낮은 충실도를 가진다. 학습된 retargeting policy가 운영자 의도와 로봇 동작 사이에 미세한 손가락 동작을 평활화하는 추상화 레이어를 도입한다. RGB 전용 모달리티로 수집된 시연이 가장 낮은 hand 제어 충실도를 가지며(AnyTeleop과 비슷), VR 컨트롤러 입력은 더 나은 wrist 수준 제어를 제공하지만 독립적 손가락 구동이 제한된다. 어떤 입력 모달리티도 force feedback을 제공하지 않아 모든 수집된 시연에 힘 정보가 부족하다. OmniH2O 데이터로 학습된 policy는 조잡한 hand 제어로 충분한 전신 작업(예: 양팔 객체 운반)에 가장 적합하며, 정밀 dexterous 조작에는 적합하지 않다.
+
+## 오픈소스 현황
+
+오픈소스. GitHub: [LeCAR-Lab/human2humanoid](https://github.com/LeCAR-Lab/human2humanoid)

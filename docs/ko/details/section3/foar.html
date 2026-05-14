@@ -1,0 +1,33 @@
+<h2 class="dp-h2">3.13 FoAR</h2>
+<blockquote class="dp-quote"><strong>참고:</strong> VLA 아님 (언어 조건부 없음). 힘 인식 조작 정책 설계에 직접 관련되는 힘 출력 방법론을 위해 Section 3에 포함.</blockquote>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> FoAR: Force-Aware Reactive Policy for Contact-Rich Robotic Manipulation</li>
+<li><strong>저자:</strong> Alan Heoooh et al. (SJTU)</li>
+<li><strong>학회/연도:</strong> RA-L / IROS 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2411.15753</li>
+</ul>
+<p class="dp-p"><strong>힘/촉각 입력 유형:</strong> 손목 장착 6축 F/T 센서 (Flexiv Rizon 내장 센서).</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> 없음. 위치 전용 출력. 힘은 반응 행동을 위한 입력으로 사용되나 위치 명령 실행.</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> Flexiv Rizon 로봇 팔 + 병렬 조 그리퍼.</p>
+<p class="dp-p"><strong>작업:</strong> 표면 닦기 및 테이프/야채 벗기기 -- 이동하면서 표면과 접촉 유지가 필요한 작업.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> FoAR는 실시간 F/T 피드백을 사용하여 반응적 위치 조정을 생성하는 힘 인식 반응 정책. 힘 조건부 행동 표현에서 F/T 신호가 게이팅 메커니즘을 통해 행동 출력을 조절 -- 접촉 힘이 허용 범위 내면 공칭 궤적을 따르고, 힘이 벗어나면 보정 동작 생성.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>F/T 피드백에 기반한 실시간 보정 동작 생성으로 강건한 접촉 유지를 가능하게 하는 힘 조건부 반응 정책 도입</li>
+<li>표면 기하학에 걸쳐 일반화되는 효과적 닦기 및 벗기기 행동 시연</li>
+<li>코드 공개 (GitHub), 재현성 보장</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> 완전한 VLA 아님 -- 언어 조건부 미포함. 위치 전용 출력. 2가지 작업 유형에서만 평가.</p>
+<p class="dp-p"><strong>결과:</strong> 닦기 및 벗기기 작업에서 비전 전용 기준선을 유의하게 능가. 코드: GitHub (github.com/Alan-Heoooh/FoAR).</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 행동 예측에 약 <strong>10 Hz</strong> (행동 지평 20단계). F/T 데이터 100 Hz 샘플링. 확산 모델 20 DDIM 반복.</li>
+<li><strong>배포 하드웨어:</strong> 훈련 2x NVIDIA A100. 추론/배포 Intel Core i9-10900K CPU + NVIDIA RTX 3090 GPU. Flexiv Rizon 팔.</li>
+<li><strong>실시간 가능 여부:</strong> 예, 10 Hz에서 시간 앙상블 버퍼링.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>수집 방법:</strong> 동기화된 6축 F/T 녹화(100 Hz)와 시각 관측을 포함한 원격 조작 시연.</li>
+<li><strong>공개 여부:</strong> 코드 공개: <a href="https://github.com/Alan-Heoooh/FoAR" target="_blank" rel="noopener">GitHub</a>. 프로젝트 페이지: tonyfang.net/FoAR/.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=cbjluXVaJz" target="_blank" rel="noopener">OpenReview</a></p></div></details>

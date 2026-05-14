@@ -1,0 +1,36 @@
+<h3 class="dp-h3">7.4 RoboPianist</h3>
+<p class="dp-p"><strong>전체 제목:</strong> RoboPianist: Dexterous Piano Playing with Deep Reinforcement Learning</p>
+<p class="dp-p"><strong>저자:</strong> Kevin Zakka, Philipp Wu, Laura Smith, Nimrod Gileadi, Taylor Howell, Xue Bin Peng, Sumeet Singh, Yuval Tassa, Pete Florence, Andy Zeng, Pieter Abbeel</p>
+<p class="dp-p"><strong>학회/연도:</strong> CoRL 2023</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2304.04150</p>
+<p class="dp-p"><strong>Musical instrument differentiation:</strong> Contribution is the benchmark (150 pieces, quantifiable metrics), not piano playing per se. The value lies in providing a standardized, diverse evaluation suite for high-DoF contact-rich RL with natural success metrics (note accuracy, timing). Sim-only.</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> Model-free RL (MPO -- Maximum a Posteriori Policy Optimization, from DeepMind) with a musical-score-conditioned reward. Multi-objective reward balancing note accuracy, timing, and energy efficiency.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Anthropomorphic bimanual hands (simulated, based on human hand anatomy, ~46 DoF total)</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> MuJoCo (DeepMind)</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> No. Simulation-only benchmark.</p>
+<p class="dp-p"><strong>작업:</strong> Piano playing of 150 classical pieces from the PIG dataset. The agent must play multi-voice piano pieces requiring independent finger control, bimanual coordination, and precise timing. Pieces range from simple scales to complex Chopin etudes.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> RoboPianist formulates piano playing as a high-dimensional RL problem with ~46 DoF anthropomorphic hands. The observation includes the upcoming musical score (notes, timing), current hand proprioception, and key states. The reward penalizes missed notes, wrong notes, and timing errors while encouraging energy-efficient motions. The benchmark provides a standardized evaluation suite across 150 pieces of varying difficulty, enabling systematic comparison of RL algorithms for contact-rich coordination tasks.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Created a standardized benchmark for dexterous piano playing with 150 pieces, enabling reproducible evaluation of high-DoF RL</li>
+<li>Demonstrated that model-free RL can learn complex bimanual finger coordination for musical performance</li>
+<li>Open-sourced a high-quality MuJoCo piano environment with realistic key mechanics and a diverse repertoire</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> Simulation-only; no real-world piano playing demonstrated. Anthropomorphic hand model does not correspond to any commercially available robot hand. MPO algorithm from DeepMind is not as widely used as PPO.</p>
+<p class="dp-p"><strong>시뮬레이션 전용 한계:</strong> 시뮬레이션에서만 평가됨; sim-to-real 전이 미입증, 실제 환경 실행 가능성 미검증.</p>
+<p class="dp-p"><strong>결과:</strong> Successfully learned to play pieces of moderate difficulty (sim). Performance degraded on complex pieces requiring wide hand spans or rapid passages. Code and environments publicly available.</p>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> PIG dataset (Piano Informatics for Genomics) -- 150 classical piano pieces providing musical scores as task specifications.</li>
+<li><strong>수집 방법:</strong> Pure RL (MPO) in MuJoCo simulation. No demonstrations. Musical scores from PIG dataset define the target note sequences and timing. Agent learns from reward feedback (note accuracy, timing, energy efficiency). ~46 DoF anthropomorphic bimanual hands.</li>
+<li><strong>데이터 규모:</strong> 150 classical pieces of varying difficulty (simple scales to complex Chopin etudes).</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>데이터 포맷:</strong> Musical scores (MIDI-like note sequences with timing). MuJoCo simulation environments.</li>
+<li><strong>공개 여부:</strong> Yes -- MuJoCo piano environment, PIG dataset, and code publicly available.</li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not applicable (simulation benchmark). Policy inference (MLP/LSTM) runs in <1ms per forward pass.</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (MuJoCo). No real-robot deployment.</li>
+<li><strong>실시간 가능 여부:</strong> Not applicable (simulation benchmark; no real-robot deployment).</li>
+</ul>

@@ -1,0 +1,148 @@
+<h3 class="dp-h3">2.5 Grasp as You Say</h3>
+<p class="dp-p"><strong>전체 제목:</strong> Grasp as You Say: Language-Guided Dexterous Grasp Generation</p>
+<p class="dp-p"><strong>저자:</strong> Yi-Lin Wei, Jian-Jian Jiang, Chengyi Xing, Xian-Tuo Tan, Xiao-Ming Wu, Hao Li, Mark Cutkosky, Wei-Shi Zheng (Sun Yat-sen University, iSEE Laboratory)</p>
+<p class="dp-p"><strong>학회/연도:</strong> NeurIPS 2024</p>
+<p class="dp-p"><strong>arXiv:</strong> <a href="https://arxiv.org/abs/2405.19291" target="_blank" rel="noopener">2405.19291</a></p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Shadow Dexterous Hand (시뮬레이션); Allegro Hand (28 DoF) + Flexiv Rizon 4 팔 (실세계 배포)</p>
+<p class="dp-p"><strong>작업:</strong></p>
+<ul class="dp-list">
+<li>언어 안내 정교한 파지 생성 (예: "머그잔을 손잡이로 잡아라", "병을 위에서 집어라")</li>
+<li>부위 인식 파지: 언어로 지정된 특정 물체 영역을 목표로 하는 파지 생성</li>
+<li>다양한 파지 의도를 가진 여러 물체 범주에서의 평가</li>
+</ul>
+<p class="dp-p"><strong>핵심 방법론:</strong> Grasp as You Say는 물체를 어떻게 잡아야 하는지 설명하는 자연어 설명에 조건부된 정교한 파지 자세를 생성한다. 시스템은 3D 물체 표현(포인트 클라우드 또는 메시)과 원하는 파지를 설명하는 언어 지시(예: 잡을 부위, 파지 스타일)를 입력으로 받는다. 언어 인코더가 지시를 처리하여 조건부 벡터를 생성하고, 이것이 설명된 파지를 실현하는 Shadow Hand 관절 구성과 손목 자세를 생성하는 생성 모델을 안내한다. 이 접근법은 (언어로 표현되는) 의미적 파지 의도와 정교한 핸드의 고차원 구성 공간 사이의 격차를 메운다.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong></p>
+<ul class="dp-list">
+<li>언어 인코더: 지시 인코딩을 위한 사전 훈련된 언어 모델</li>
+<li>파지 생성: 정교한 핸드 구성 공간에 대한 조건부 생성 모델 (시뮬레이션: Shadow Hand; 실세계: Allegro Hand 28 DoF + 손목 자세)</li>
+<li>조건부 메커니즘: 언어 임베딩이 파지 생성 과정을 조절</li>
+<li>구체적 모델 크기/파라미터 수는 요약 수준에서 공개되지 않음</li>
+</ul>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>이전에 다루어지지 않은 문제(저자 주장)인 언어 조건부 정교한 파지 생성을 제안하여, 24-DoF 핸드에 대한 파지 의도(부위, 스타일)의 의미적 지정을 가능하게 함</li>
+<li>자연어가 고차원 정교한 파지 합성을 효과적으로 조건부할 수 있음을 시연하여, 언어 설명과 일치하는 물리적으로 타당한 파지를 생성</li>
+<li>부위 인식 파지 능력: 시스템이 "머그잔을 손잡이로 잡아라" vs. "머그잔을 몸통으로 잡아라"를 구분하여 각각에 대해 구별되는 핸드 구성을 생성</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>파지 생성만 가능: 정적 파지 자세만 생성하며, 완전한 조작 궤적이나 파지 후 행동은 다루지 않음</li>
+<li>시뮬레이션은 Shadow Hand 사용; 실세계 배포는 Allegro Hand (28 DoF) 사용 -- 이 쌍 이외의 교차 구현체 평가 없음</li>
+<li>힘이나 촉각 피드백 없음; 파지가 기하학적으로 그리고 시뮬레이션에서 평가되며, 실세계 접촉 역학은 아님</li>
+<li>언어로 표현된 파지 의도에 제한; 다단계 작업 지시나 초기 파지 이후의 조작은 처리하지 않음</li>
+<li>생성된 파지에 대한 sim-to-real 전이는 시연되지 않음</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong></p>
+<p class="dp-p"><strong>데이터셋 규모:</strong> 1,800개 가정용 물체 범주에 걸쳐 50,000개 파지-지시 쌍.</p>
+<p class="dp-p"><strong>파지 성공률 (시뮬레이션, Isaac Gym):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>방법</th>
+<th>성공률</th>
+<th>Q1 파지 품질</th>
+</tr></thead><tbody>
+<tr>
+<td>GraspCVAE</td>
+<td>29.12%</td>
+<td>0.054</td>
+</tr>
+<tr>
+<td>GraspTTA</td>
+<td>43.46%</td>
+<td>0.071</td>
+</tr>
+<tr>
+<td>DGTR</td>
+<td>51.91%</td>
+<td>0.078</td>
+</tr>
+<tr>
+<td>SceneDiffuser</td>
+<td>62.24%</td>
+<td>0.083</td>
+</tr>
+<tr>
+<td><strong>DexGYSGrasp (본 연구)</strong></td>
+<td><strong>63.31%</strong></td>
+<td><strong>0.083</strong></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>의도 일관성 (FID 기반, 낮을수록 좋음):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>방법</th>
+<th>FID</th>
+<th>P-FID</th>
+<th>Chamfer Distance</th>
+</tr></thead><tbody>
+<tr>
+<td>GraspCVAE</td>
+<td>31.26</td>
+<td>29.02</td>
+<td>3.138</td>
+</tr>
+<tr>
+<td>DGTR</td>
+<td>23.31</td>
+<td>15.77</td>
+<td>2.895</td>
+</tr>
+<tr>
+<td>SceneDiffuser</td>
+<td>20.44</td>
+<td>7.932</td>
+<td>1.679</td>
+</tr>
+<tr>
+<td><strong>DexGYSGrasp (본 연구)</strong></td>
+<td><strong>6.538</strong></td>
+<td><strong>5.595</strong></td>
+<td><strong>1.198</strong></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>파지 다양성 (조건당 8개 샘플):</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>지표</th>
+<th>DexGYSGrasp</th>
+<th>DGTR</th>
+<th>SceneDiffuser</th>
+</tr></thead><tbody>
+<tr>
+<td>병진 표준편차 (delta_t)</td>
+<td>6.118</td>
+<td>2.037</td>
+<td>0.346</td>
+</tr>
+<tr>
+<td>회전 표준편차 (delta_r)</td>
+<td>55.68</td>
+<td>14.01</td>
+<td>3.455</td>
+</tr>
+<tr>
+<td>관절 각도 표준편차 (delta_q)</td>
+<td>6.118</td>
+<td>4.299</td>
+<td>0.387</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>관통 깊이:</strong> 0.223 cm (DexGYSGrasp) vs. 0.163 cm (DGTR).</p>
+<ul class="dp-list">
+<li>50,000개 파지-지시 쌍으로 1,800개 물체 범주에서 평가</li>
+<li>실세계 배포는 Allegro Hand (28 DoF) + Flexiv Rizon 4 팔 + Intel RealSense D415 사용</li>
+<li>코드 공개: <a href="https://github.com/iSEE-Laboratory/Grasp-as-You-Say" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 보고되지 않음. 논문에서 파지 생성 시간이나 추론 지연을 공개하지 않음.</li>
+<li><strong>배포 하드웨어:</strong> 단일 RTX 4090 GPU에서 훈련. 실세계 실험은 Allegro Hand + Flexiv Rizon 4 팔 + Intel RealSense D415 카메라 사용. 추론 GPU 별도 미명시.</li>
+<li><strong>실시간 가능 여부:</strong> 일반적 의미에서 해당 없음 -- 시스템은 (폐루프 제어가 아닌) 정적 파지 자세를 생성한다. 파지 생성 속도는 특성화되지 않음. 시스템은 연속 제어 정책이 아닌 단일 파지 구성을 생성한다.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> DexGYS (본 연구와 함께 공개된 맞춤 데이터셋). OakInk 3D 물체 메시와 PKU의 Shadow Hand MJCF 모델도 활용.</li>
+<li><strong>수집 방법:</strong> 비용 효율적 파지 주석을 위한 손-물체 상호작용 리타게팅 전략, 자연어 파지 설명 생성을 위한 LLM 보조 언어 안내 주석 시스템과 결합.</li>
+<li><strong>데이터 규모:</strong> 명시적으로 보고되지 않음. 훈련 및 테스트 분할 이용 가능 (train_with_guide_v2.1.json, test_with_guide_v2.1.json).</li>
+<li><strong>원격 조작 장비:</strong> 해당 없음 (원격 조작이 아닌 리타게팅과 LLM 기반 주석을 통해 생성된 파지 주석).</li>
+<li><strong>데이터 포맷:</strong> JSON 파일 (언어 안내가 포함된 훈련/테스트 분할). 3D 물체 메시(OakInk에서), Shadow Hand MJCF 모델, 매칭된 파지 결과 포함.</li>
+<li><strong>공개 여부:</strong> 예. 데이터셋이 HuggingFace에 공개 (<a href="https://huggingface.co/datasets/wyl2077/DexGYS/tree/main" target="_blank" rel="noopener">datasets/wyl2077/DexGYS</a>). 코드: <a href="https://github.com/iSEE-Laboratory/Grasp-as-You-Say" target="_blank" rel="noopener">GitHub</a>.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=NR0oaKbqtF" target="_blank" rel="noopener">OpenReview</a></p></div></details>

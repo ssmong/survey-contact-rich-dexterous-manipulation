@@ -1,0 +1,78 @@
+<h3 class="dp-h3">DexDeform</h3>
+<p class="dp-p"><strong>全称：</strong> DexDeform: Dexterous Deformable Object Manipulation with Human Demonstrations and Differentiable Physics</p>
+<p class="dp-p"><strong>作者：</strong> Sizhe Li et al. (MIT-IBM Watson AI Lab)</p>
+<p class="dp-p"><strong>会议/年份：</strong> ICLR 2023</p>
+<p class="dp-p"><strong>手部硬件：</strong> 仿真中的多指手。手部模型在PlasticineLab可微物理环境中运行，该环境为可变形物体操作提供软体接触动力学。</p>
+<p class="dp-p"><strong>任务：</strong> 6项可变形物体操作任务，模拟黏土/橡皮泥操作场景。任务包括塑形、捏制、按压和将可变形材料成型为目标构型。由于可变形状态空间的高维度性，这些任务在灵巧操作中具有独特的挑战。</p>
+<p class="dp-p"><strong>核心方法：</strong> DexDeform将人类演示与可微物理仿真相结合，用于可变形物体操作。该方法使用PlasticineLab——一个可微软体仿真器——通过操作过程提供梯度信息。人类演示引导初始策略，然后利用可微物理梯度进行优化以达到目标形状。这种混合方法利用了基于梯度优化的高效性，同时使用人类演示在复杂的可变形操作环境中提供合理的初始化。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 策略网络将当前可变形物体状态映射到多指手动作。PlasticineLab的可微物理梯度支持通过仿真动力学的反向传播。具体模型规模未详细记录。</p>
+<p class="dp-p"><strong>仿真平台：</strong> PlasticineLab（可微软体仿真器）。无仿真到真实迁移——工作完全在仿真中进行，独特挑战在于可变形物体物理而非刚体接触。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>解决了灵巧可变形物体操作问题，该领域需要与刚体操作根本不同的接触推理——此前的灵巧操作工作几乎完全关注刚体物体，使可变形操作未被充分探索。</li>
+<li>将人类演示与可微物理梯度相结合，实现了高维可变形状态空间中的高效策略优化——这种混合方法是创新的，因为此前的可变形操作要么使用纯强化学习（采样效率低），要么使用纯轨迹优化（在缺乏演示初始化时容易陷入局部最小值）。</li>
+<li>为多指手的可变形物体操作引入了6个基准任务，填补了灵巧操作评估中此前不存在标准化可变形任务的空白。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。未使用显式的力/阻抗控制。虽然可变形物体操作本质上涉及力介导的形状变化，但系统通过位置目标控制手部，并依赖可微物理梯度隐式学习适当的施力方式。没有显式的力反馈回路或阻抗调节。</li>
+<li><strong>VLA/语言条件化：</strong> 无。无语言条件化或视觉语言集成。任务通过目标形状配置指定，而非语言描述。</li>
+<li><strong>仿真到真实：</strong> 无。工作完全在仿真中进行。可变形操作的仿真到真实迁移尤其具有挑战性，因为在仿真中准确建模真实世界可变形材料特性（刚度、塑性、摩擦）非常困难。</li>
+<li><strong>代码/权重可用性：</strong> 代码已发布，但未附预训练权重。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 在6项灵巧可变形物体操作任务套件上进行了评估。DexDeform在最终形状精度（Chamfer距离）上优于强化学习基线（PPO、SAC）和纯演示回放。该方法使用人类演示进行初始化，并通过可微物理梯度进行优化，实现了对初始演示中未见的新目标形状的更好探索和泛化。</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标/发现</th>
+<th>数值</th>
+<th>说明</th>
+</tr></thead><tbody>
+<tr>
+<td>评估的任务数</td>
+<td>6</td>
+<td>PlasticineLab中的可变形物体塑形/捏制任务</td>
+</tr>
+<tr>
+<td>主要指标</td>
+<td>Chamfer距离（CD）</td>
+<td>衡量与目标构型的形状精度</td>
+</tr>
+<tr>
+<td>vs. PPO</td>
+<td>更低的CD</td>
+<td>DexDeform实现更好的最终形状精度</td>
+</tr>
+<tr>
+<td>vs. SAC</td>
+<td>更低的CD</td>
+<td>DexDeform实现更好的最终形状精度</td>
+</tr>
+<tr>
+<td>vs. 演示回放</td>
+<td>更低的CD</td>
+<td>通过可微物理的优化改进了原始演示</td>
+</tr>
+<tr>
+<td>关键优势</td>
+<td>泛化能力</td>
+<td>对初始演示中未见的新目标有更好的探索</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">注：具体的逐任务Chamfer距离数值在论文的结果表中报告，但无法从arXiv页面提取（此2023年论文无HTML版本）。应查阅论文PDF以获取每个任务和方法的精确数值。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。工作完全在仿真中进行（PlasticineLab可微物理仿真器）。</li>
+<li><strong>部署硬件：</strong> 仅仿真。无真实世界部署。</li>
+<li><strong>是否实时：</strong> 不适用（仅限仿真）。可微物理优化本质上是离线的，不适用于实时控制。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> PlasticineLab中6项可变形物体操作任务的自定义演示。无命名基准数据集。</li>
+<li><strong>收集方法：</strong> 在PlasticineLab可微仿真器中收集人类演示。演示引导初始策略，然后通过可微物理梯度进行优化。</li>
+<li><strong>数据规模：</strong> 未报告。每个任务的人类演示数量未在公开材料中指定。</li>
+<li><strong>遥操作设备：</strong> 未报告。PlasticineLab中人类演示的收集方法（如键盘、脚本化轨迹）未详述。</li>
+<li><strong>数据格式：</strong> 未报告。代码已发布但未附预训练权重。</li>
+<li><strong>是否公开：</strong> 代码已发布（未附预训练权重）。演示数据是否包含在代码发布中未确认。</li>
+</ul>
+<blockquote class="dp-quote"><em>arXiv ID 2304.03223确认为DexDeform（ICLR 2023）。arXiv上无HTML版本；逐任务Chamfer距离数值在论文PDF表格中。</em></blockquote>
+<hr>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=N9FQ1besOs" target="_blank" rel="noopener">OpenReview</a></p></div></details>

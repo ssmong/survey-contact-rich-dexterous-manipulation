@@ -1,0 +1,56 @@
+<h3 class="dp-h3">7.1 RobustDexGrasp</h3>
+<p class="dp-p"><strong>完整标题：</strong> RobustDexGrasp: Robust Dexterous Grasping of General Objects from Single-view Point Clouds</p>
+<p class="dp-p"><strong>作者：</strong> Zhaole Sun, Kai Chen, Martin Pfanne, Yao Guo, Guang-Zhong Yang</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CoRL 2025</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 教师-学生蒸馏；教师使用特权状态信息，学生从单视角点云学习</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）+ UR5臂</p>
+<p class="dp-p"><strong>仿真平台：</strong> RaiSim</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是；94.6%真实世界成功率（真实），在512个真实物体上</p>
+<p class="dp-p"><strong>物体数量：</strong> 仿真中247,000个物体；512个真实物体用于评估</p>
+<p class="dp-p"><strong>任务：</strong> 从单视角部分点云进行鲁棒灵巧抓取，配合臂手协调</p>
+<p class="dp-p"><strong>核心方法论：</strong> 使用PPO以特权完整状态信息训练教师策略，然后蒸馏为从单视角点云操作的学生策略。教师-学生框架弥合了仿真中可用信息（完整状态）和真实世界可观测信息（部分视角）之间的差距。广泛的域随机化（物体几何、质量、摩擦、传感器噪声）实现鲁棒零样本仿真到真实迁移。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>发表时最先进的仿真到真实灵巧抓取成功率（94.6%真实）</li>
+<li>单视角点云输入，无需完整物体重建即可实用部署</li>
+<li>在Allegro + UR5系统上使用512个多样真实物体进行验证，为灵巧抓取文献中最大的真实世界评估</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>真实世界成功率</td>
+<td>94.6%（真实）</td>
+</tr>
+<tr>
+<td>真实评估物体数</td>
+<td>512</td>
+</tr>
+<tr>
+<td>仿真训练物体</td>
+<td>247,000</td>
+</tr>
+<tr>
+<td>手部</td>
+<td>Allegro（16自由度）+ UR5</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅抓取（无后续操作）；使用RaiSim，社区比IsaacGym/MuJoCo小；教师-学生差距可能限制高度新颖几何体的性能；无触觉反馈</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。蒸馏后学生策略（MLP + 点云编码器）每次前向传播 <5ms。</li>
+<li><strong>部署硬件：</strong> Allegro Hand（16自由度）+ UR5臂。策略在RaiSim中训练；通过零样本仿真到真实迁移部署。94.6%真实世界成功率，512个物体。</li>
+<li><strong>支持实时？</strong> 是。轻量蒸馏策略支持真实硬件上的实时抓取控制。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。RaiSim中的纯RL（PPO）+ 教师-学生蒸馏。</li>
+<li><strong>收集方法：</strong> RaiSim仿真中的纯RL。教师以特权完整状态信息训练；学生蒸馏为单视角点云观测。广泛的域随机化（物体几何、质量、摩擦、传感器噪声）。247,000个仿真物体用于训练。</li>
+<li><strong>数据规模：</strong> 247,000个仿真训练物体。512个真实物体用于评估。真实世界成功率：94.6%。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 数据集/代码发布状态未报告。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=x6W3wkFrPb" target="_blank" rel="noopener">OpenReview</a></p></div></details>

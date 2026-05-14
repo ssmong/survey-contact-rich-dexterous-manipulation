@@ -1,0 +1,44 @@
+<h3 class="dp-h3">7.4 DexTrack</h3>
+<p class="dp-p"><strong>完整标题：</strong> DexTrack: Towards Generalizable Neural Tracking Control for Dexterous Manipulation from Human References</p>
+<p class="dp-p"><strong>作者：</strong> Yuzhe Qin, Meowuu7（笔名）, Hao Su, Xiaolong Wang等（PKU / Shanghai AI Lab）</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> ICLR 2025</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2501.15760</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 运动跟踪奖励。策略学习在机器人手上跟踪重定向的人手动作捕捉轨迹。使用特权训练加蒸馏。</p>
+<p class="dp-p"><strong>手部硬件：</strong> Shadow Hand（24自由度）、Allegro Hand（16自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym（推断）</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否。仅仿真。</p>
+<p class="dp-p"><strong>任务：</strong> 动作捕捉跟踪：机器人手必须再现从动作捕捉数据重定向的人手运动轨迹。任务跨越抓取、手内操作和灵巧协调，均来自人类演示。</p>
+<p class="dp-p"><strong>核心方法论：</strong> DexTrack训练可泛化的神经控制器，能跟踪重定向到机器人手的任意人手运动。不是每任务训练一个策略，而是以目标轨迹为条件，使单一策略处理多样操作行为。方法使用跟踪奖励惩罚与参考关节角度和指尖位置的偏差，结合接触感知奖励鼓励物理合理的交互。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>训练单一可泛化策略，能在机器人手上跟踪多样人手运动，而非逐任务策略</li>
+<li>展示跨构型跟踪：同一框架适用于Shadow（24自由度）和Allegro（16自由度）手</li>
+<li>提供从人类演示到机器人执行的路径，通过运动重定向 + 神经跟踪</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅仿真；真实世界跟踪未展示。从人到机器人手的重定向引入运动学不匹配。跟踪不保证任务成功（忠实再现运动不考虑物体动力学）。部分代码发布。</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<p class="dp-p"><strong>结果：</strong> 在Shadow和Allegro手上跨多样运动轨迹达到高跟踪精度（仿真）。代码部分可用。</p>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 重定向到机器人手的人手动作捕捉数据。IsaacGym中RL训练。</li>
+<li><strong>收集方法：</strong> RL + 人类动作捕捉演示。PPO + 运动跟踪奖励。人手动作捕捉轨迹重定向到Shadow（24自由度）和Allegro（16自由度）手。策略以目标轨迹为条件实现可泛化跟踪。特权训练加蒸馏。</li>
+<li><strong>数据规模：</strong> 跨抓取、手内操作和灵巧协调的多样动作捕捉轨迹。具体轨迹数未报告。</li>
+<li><strong>遥操作设备：</strong> 不适用（动作捕捉数据，非实时遥操作）。</li>
+<li><strong>数据格式：</strong> 重定向的动作捕捉轨迹（机器人手的关节角度序列）。</li>
+<li><strong>是否公开？</strong> 代码部分可用。</li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。蒸馏的学生MLP策略每次前向传播 <1ms。</li>
+<li><strong>部署硬件：</strong> 仅仿真（IsaacGym）。在仿真中的Shadow Hand（24自由度）和Allegro Hand（16自由度）上评估。未展示真实机器人部署。</li>
+<li><strong>支持实时？</strong> 是，就策略本身而言（MLP推理速度极快）。但仅进行了仿真评估。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审 <span class="dp-review-score-badge">6.8</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">平均分: <strong>6.8</strong> · 4 条评审 · ICLR 2025 Poster · <a href="https://openreview.net/forum?id=ajSmXqgS24" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 8</span> <span class="dp-review-text">This paper proposes an approach for training generalizable neural tracking controllers from human reference trajectories for dexterous manipulation tasks with robot hands. The approach consists of thr…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 5</span> <span class="dp-review-text">The authors propose a neural IK controller for controlling dexterous robot hands. The results are validated in both simulated environments and the real world. The authors claim the proposed IK control…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 6</span> <span class="dp-review-text">This paper presents DexTrack, a generalizable neural tracking controller for dexterous manipulation, trained on large-scale robot tracking demonstrations based on human-object interactions. The method…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 8</span> <span class="dp-review-text">The authors proposed a neural tracking controller that integrates the reinforcement learning and imitation learning by iteratively improving the controller and generating demonstrations in simulation.…</span></div>
+</div>
+</details>

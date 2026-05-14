@@ -5,8 +5,8 @@
 <p class="dp-p"><strong>Hand Hardware:</strong> Allegro Hand (16 DoF) mounted on a KUKA robotic arm. The real-world setup uses a right-hand Allegro configuration with 16 joint command dimensions.</p>
 <p class="dp-p"><strong>Tasks:</strong></p>
 <ul class="dp-list">
-<li>*Simulation (8 tasks):* apple grasping, bottle manipulation, hammer use, drawer opening/closing, fridge interaction, sponge manipulation, pliers operation, scissors use.</li>
-<li>*Real-world (3 tasks):* box manipulation with arm (box_arm), bottle manipulation with arm (bottle_arm), hammer use with arm (hammer_arm).</li>
+<li><em>Simulation (8 tasks):</em> apple grasping, bottle manipulation, hammer use, drawer opening/closing, fridge interaction, sponge manipulation, pliers operation, scissors use.</li>
+<li><em>Real-world (3 tasks):</em> box manipulation with arm (box_arm), bottle manipulation with arm (bottle_arm), hammer use with arm (hammer_arm).</li>
 </ul>
 <p class="dp-p"><strong>Key Methodology:</strong> The framework uses a Vision-Language Model (Gemini 2.5 Flash Thinking) to scaffold the generation of dexterous manipulation demonstrations, which are then used to train RL policies. The pipeline has two stages: (1) VLM-guided dataset generation, where Gemini produces manipulation waypoints (experiments with 3, 5, 10, and 40 waypoints), few-shot demonstrations, and scripted baselines; (2) RL training on these VLM-generated datasets. This approach eliminates the need for human teleoperation demonstrations, using the VLM's spatial reasoning to bootstrap dexterous manipulation policies.</p>
 <p class="dp-p"><strong>Architecture/Parameters:</strong> Uses Gemini 2.5 Flash Thinking as the VLM backbone. RL policies are trained on VLM-generated data. The real-world deployment stack integrates ROS, ZED camera, FoundationPose for object pose estimation, Segment Anything 2 for segmentation, and keypoint tracking.</p>
@@ -107,3 +107,4 @@
 <li><strong>Publicly available?</strong> No dataset or model weights released. The approach depends on access to the Gemini API for the scaffolding stage.</li>
 </ul>
 <hr>
+<details class="dp-reviews"><summary>Peer Reviews</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=XSdKoJKyH2" target="_blank" rel="noopener">OpenReview</a></p></div></details>

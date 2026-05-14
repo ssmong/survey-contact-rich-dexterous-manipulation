@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.2 RotateIt</h3>
+<p class="dp-p"><strong>完整标题：</strong> RotateIt: Tactile Rotary In-Hand Manipulation with Sim-to-Real Touch</p>
+<p class="dp-p"><strong>作者：</strong> Haozhi Qi, Brent Yi, Sudharshan Suresh, Michael Lambeta, Yi Ma, Roberto Calandra, Jitendra Malik</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CoRL 2023</p>
+<p class="dp-p"><strong>Hora/RotateIt/AnyRotate演化链：</strong> 核心RL（PPO+RMA）和手部（Allegro）与Hora相同；主要贡献是添加DIGIT触觉传感用于旋转方向和滑动检测。RL算法、奖励结构和自适应机制继承自Hora。</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 触觉信息策略；在Hora基础上扩展触觉传感（DIGIT传感器）用于旋转方向和滑动检测</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）+ 指尖DIGIT触觉传感器</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是；带触觉域随机化的仿真到真实迁移（真实）。将模拟触觉信号校准到真实DIGIT传感器输出，实现触觉条件策略的零样本迁移</p>
+<p class="dp-p"><strong>物体数量：</strong> 在多样物体上评估；具体数量未报告但包含几何形状各异的物体</p>
+<p class="dp-p"><strong>任务：</strong> 触觉引导的手内旋转；使用指尖触觉反馈进行滑动检测和旋转方向感知的物体连续旋转</p>
+<p class="dp-p"><strong>核心方法论：</strong> 在Allegro Hand指尖上增加DIGIT光学触觉传感器来扩展Hora框架。触觉编码器与本体感觉状态一起处理模拟触觉图像。关键洞见是触觉传感提供直接接触信息，比仅使用本体感觉更可靠地消除物体状态歧义，特别是在检测旋转滑动时。触觉仿真到真实通过随机化触觉信号增强来解决。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>首次将光学触觉传感（DIGIT）与基于RL的手内旋转在真实灵巧手上集成（真实）</li>
+<li>带校准DIGIT仿真的触觉仿真到真实迁移流程</li>
+<li>展示了触觉反馈相比仅本体感觉基线（Hora）提高了旋转鲁棒性</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 仍限于单轴旋转；DIGIT传感器增加了成本和脆弱性；触觉仿真到真实差距仍存在（模拟触觉相比真实光学信号有简化）；仅限刚性物体</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。触觉条件MLP策略每次前向传播 <1ms。触觉图像处理（DIGIT传感器）增加少量开销。</li>
+<li><strong>部署硬件：</strong> Allegro Hand（16自由度）+ DIGIT触觉传感器。策略在IsaacGym中训练；通过零样本仿真到真实迁移部署。</li>
+<li><strong>支持实时？</strong> 是。带触觉条件的MLP策略速度足以支持真实硬件上的实时灵巧控制。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。纯RL（PPO）+ 触觉信息策略——所有数据在仿真中生成并进行仿真到真实迁移。</li>
+<li><strong>收集方法：</strong> IsaacGym中扩展Hora框架的纯RL。触觉编码器与本体感觉状态一起处理模拟DIGIT触觉图像。通过随机化触觉信号增强和DIGIT校准实现触觉仿真到真实迁移。</li>
+<li><strong>数据规模：</strong> IsaacGym中标准并行RL训练。评估了多样物体。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 代码发布状态未报告。</li>
+</ul>

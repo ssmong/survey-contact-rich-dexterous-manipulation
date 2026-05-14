@@ -1,0 +1,37 @@
+<h3 class="dp-h3">7.3 TCDM</h3>
+<p class="dp-p"><strong>类型：基准 + 基线方法</strong></p>
+<p class="dp-p"><strong>完整标题：</strong> From One Hand to Multiple Hands: Imitation Learning for Dexterous Manipulation from Single-Camera Teleoperation（也称为TCDM——Task-Conditioned Dexterous Manipulation）</p>
+<p class="dp-p"><strong>作者：</strong> Sudeep Dasari, Abhinav Gupta等（Meta FAIR）</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> ICRA 2023</p>
+<p class="dp-p"><strong>arXiv：</strong> https://github.com/facebookresearch/TCDM</p>
+<p class="dp-p"><strong>RL算法：</strong> 无模型RL（PPO）+ 动作捕捉衍生的参考轨迹作为先验。使用重定向到机器人手部形态的人手动作捕捉数据来引导策略学习。</p>
+<p class="dp-p"><strong>手部硬件：</strong> 仿真中3个手部平台：Adroit/Shadow类（30自由度）、D'Claw（9自由度）和Allegro（16自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> MuJoCo</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否。仅仿真。</p>
+<p class="dp-p"><strong>任务：</strong> 50个多样操作任务，使用GRAB数据集的34个物体。任务包括抓取、重新定位和功能性操作（如使用工具、打开容器）。任务源自重定向到不同手部形态的人类动作捕捉演示。</p>
+<p class="dp-p"><strong>核心方法论：</strong> TCDM利用人手动作捕捉数据作为基于RL的灵巧操作的先验。来自GRAB数据集的人类演示被重定向到不同机器人手部形态，然后用作参考运动通过跟踪奖励引导RL训练。这种方法为本来难以从零学习的接触丰富任务引导探索。任务条件表述允许单一策略处理多种操作行为。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>展示人类动作捕捉数据可有效引导跨不同手部形态的多样灵巧操作任务的RL</li>
+<li>扩展到50个任务34个物体——在当时显著大于先前灵巧RL基准</li>
+<li>展示跨构型迁移：相同人类演示可引导不同运动学和自由度数的手部策略</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅仿真无仿真到真实迁移。跨手部形态的重定向质量不一。一些需要精确力控（如易碎物体）的任务仅靠运动学重定向未能很好捕捉。</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<p class="dp-p"><strong>结果：</strong> 在三个手部平台上的大多数50个任务上成功学习（仿真）。动作捕捉引导的初始化显著优于随机探索基线。代码和预训练模型在GitHub上可用。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。MLP策略每次前向传播 <1ms。</li>
+<li><strong>部署硬件：</strong> 仅仿真（MuJoCo）。未展示真实机器人部署。</li>
+<li><strong>支持实时？</strong> 是，就策略本身而言（MLP推理速度极快）。但仅进行了仿真评估。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> GRAB数据集（人手动作捕捉）用于参考轨迹。MuJoCo中RL训练。</li>
+<li><strong>收集方法：</strong> RL + 人类动作捕捉演示（DAPG式）。GRAB数据集的人手动作捕捉数据重定向到3种机器人手部形态（Adroit/Shadow类30自由度、D'Claw 9自由度、Allegro 16自由度）。重定向运动用作RL的参考轨迹（跟踪奖励）。50个任务34个物体。</li>
+<li><strong>数据规模：</strong> 50个任务，来自GRAB的34个物体。动作捕捉参考轨迹引导RL探索。</li>
+<li><strong>遥操作设备：</strong> 不适用（来自GRAB数据集的人类动作捕捉数据，非实时遥操作）。</li>
+<li><strong>数据格式：</strong> GRAB动作捕捉格式（SMPL-H手部参数）重定向为机器人关节角度。</li>
+<li><strong>是否公开？</strong> 是——代码和预训练模型位于 https://github.com/facebookresearch/TCDM。GRAB数据集公开可用。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=EFXAJQWgCT" target="_blank" rel="noopener">OpenReview</a></p></div></details>

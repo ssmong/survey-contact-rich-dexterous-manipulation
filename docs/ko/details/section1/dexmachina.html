@@ -1,0 +1,91 @@
+<h3 class="dp-h3">DexMachina</h3>
+<p class="dp-p"><strong>전체 제목:</strong> DexMachina: Learning Dexterous Manipulation from Human Video via Retargeting and Reinforcement Learning</p>
+<p class="dp-p"><strong>저자:</strong> Mandi Zhao et al. (Stanford / NVIDIA)</p>
+<p class="dp-p"><strong>학회/연도:</strong> arXiv 프리프린트, 2025</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> 6종 로봇 핸드 평가 -- Inspire Hand, Allegro Hand (16 DoF), XHand, Schunk Hand, Ability Hand, DexRobot Hand. 이 교차 구현체 평가가 본 연구의 차별적 특징이다.</p>
+<p class="dp-p"><strong>작업:</strong> 양손 관절 물체 조작 작업으로, 복잡한 운동학적 구조를 가진 물체 조작 포함 (예: 용기 열기, 메커니즘 작동). 작업은 다수의 접촉점에 걸쳐 조율된 손가락 동작을 요구한다.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> DexMachina는 인간 비디오 시연에서 정교한 조작 기술을 학습한다. 파이프라인은 세 단계로 구성된다: (1) 인간 비디오에서 손-물체 상호작용 궤적 추출, (2) 이 동작을 다양한 로봇 핸드 형태로 리타게팅, (3) 시뮬레이션에서 강화학습을 사용하여 리타게팅된 동작을 물리적으로 실행 가능하고 강건한 정책으로 개선. Genesis 시뮬레이터가 물리 기반 훈련에 사용되어 빠른 병렬 환경 롤아웃을 가능하게 한다.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong> 인간 MANO 핸드 표현을 다양한 로봇 핸드 관절 구성으로 매핑하는 핸드 모션 리타게팅 네트워크, 이후 개선을 위한 RL 정책 네트워크(PPO 기반)를 사용한다. 모델 가중치는 아직 공개되지 않았다(평가가 TODO로 표시).</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> Genesis 시뮬레이터. Sim-to-real 전이는 시연되지 않았다 -- 현재 시뮬레이션 전용이며, 다양한 핸드 구현체에 걸친 리타게팅 및 학습 파이프라인에 초점을 맞추고 있다.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>로봇 전용 시연 수집 필요성을 제거하는 비디오-정책 파이프라인 제안: 인간 비디오만으로 다수 로봇 핸드의 정책 생성이 충분하며, 이전 리타게팅 연구는 구현체별 운동학적 대응 조정이 필요했다.</li>
+<li>동일 인간 비디오 소스로부터 형태적으로 구분되는 6종 로봇 핸드(Inspire, Allegro, XHand, Schunk, Ability, DexRobot)에 걸친 교차 구현체 정교한 조작을 시연하여, 리타게팅이 DoF 수와 손가락 구성에 걸쳐 일반화됨을 보인다.</li>
+<li>운동학적 리타게팅과 물리적으로 실행 가능한 실행 사이의 격차를 메우는 RL 개선 단계를 도입하여, 운동학적으로는 유효하나 동역학적으로 실행 불가능한 동작을 생성하는 직접 리타게팅 기준선을 개선한다.</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li><strong>힘/임피던스 인식:</strong> 없음. 힘/토크 센싱이나 임피던스 제어 사용 없음. 조작 중 접촉 힘은 시뮬레이션 접촉 모델과 위치 추적 행동에 의해 결정되며, 명시적으로 조절되지 않는다. 이는 정밀한 힘 조절이 필요한 작업(예: 깨지기 쉬운 물체 조작)으로의 전이를 제한할 수 있다.</li>
+<li><strong>VLA/언어 조건부:</strong> 없음. 파이프라인은 비전 기반(인간 비디오 입력)이나 언어 조건부나 VLA 아키텍처를 사용하지 않는다.</li>
+<li><strong>Sim-to-real:</strong> 없음. 시뮬레이션 전용. 실세계 배포는 이미 해결된 인간-로봇 리타게팅 격차 외에 추가적인 sim-to-real 격차 해결이 필요하다.</li>
+<li><strong>코드/데이터 공개:</strong> 모델 가중치와 평가 벤치마크가 TODO로 표시. 공개 보류 중.</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong> 5개 관절 물체를 포함하는 ARCTIC 데이터셋의 7개 시연에서 평가, 단기 지평(3개 클립)과 장기 지평(공중 조작, 뚜껑 열기/닫기, 뒤집기 등 복잡한 시퀀스 포함 4개 클립)으로 분리.</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>지표 / 발견</th>
+<th>값</th>
+<th>맥락</th>
+</tr></thead><tbody>
+<tr>
+<td>평가 핸드 수</td>
+<td>6</td>
+<td>Inspire, Allegro, XHand, Schunk, Ability, DexRobot</td>
+</tr>
+<tr>
+<td>ARCTIC 시연 수</td>
+<td>7</td>
+<td>단기 지평 3개 + 장기 지평 4개 클립</td>
+</tr>
+<tr>
+<td>기준선 대비 성능</td>
+<td>일관된 개선</td>
+<td>DexMachina가 모든 핸드와 작업에서 직접 리타게팅 대비 개선</td>
+</tr>
+<tr>
+<td>장기 지평 이득</td>
+<td>가장 큼</td>
+<td>장기 지평 시연에서 특히 큰 개선</td>
+</tr>
+<tr>
+<td>핸드 형태 효과</td>
+<td>더 큰 핸드가 더 나은 성능</td>
+<td>완전 구동 핸드가 더 높은 최종 성능과 더 나은 학습 효율성 달성</td>
+</tr>
+<tr>
+<td>Allegro Hand</td>
+<td>덜 인간형임에도 강한 성능</td>
+<td>인간 손과의 형태적 차이에도 불구하고 주목할 만한 성능</td>
+</tr>
+<tr>
+<td>Inspire Hand</td>
+<td>전략 편차 필요</td>
+<td>덜 구동된 핸드는 인간 안내 전략에서 더 많은 편차 필요</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">참고: 핸드별 정확한 성공률 수치는 논문 Figure 3에 막대 그래프로 보고되며 표로 정리되지 않았다.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 보고되지 않음. 실세계 배포 없는 시뮬레이션 전용 연구.</li>
+<li><strong>배포 하드웨어:</strong> 시뮬레이션 전용 (12,000개 병렬 환경으로 PPO 훈련하는 Genesis 물리 엔진). 물리적 배포 하드웨어 없음. 저자들은 "검토된 범위의 정교한 핸드에 대한 하드웨어 접근 부족으로 인해 학습된 RL 정책이 아직 실세계 환경에서 평가되지 않았다"고 기술한다.</li>
+<li><strong>실시간 가능 여부:</strong> 해당 없음 (시뮬레이션 전용).</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> 손-물체 상호작용의 인간 비디오 시연 (명명된 벤치마크 데이터셋 없음). 파이프라인은 야외 인간 비디오를 데이터 소스로 입력받는다.</li>
+<li><strong>수집 방법:</strong> 인간 비디오 캡처 (인간 손 조작의 수동 녹화). 손-물체 상호작용 궤적이 비디오에서 추출되어 로봇 핸드 형태로 리타게팅되고 시뮬레이션에서 RL을 통해 개선된다. 로봇 원격 조작이 필요 없다.</li>
+<li><strong>데이터 규모:</strong> 보고되지 않음. 사용된 인간 비디오 시연 수는 공개 자료에 명시되지 않았다.</li>
+<li><strong>원격 조작 장비:</strong> 해당 없음 (인간 비디오 입력, 원격 조작이 아님).</li>
+<li><strong>데이터 포맷:</strong> 보고되지 않음.</li>
+<li><strong>공개 여부:</strong> 모델 가중치와 평가 벤치마크가 TODO로 표시; 공개 보류 중.</li>
+</ul>
+<blockquote class="dp-quote"><em>arXiv:2505.24853에서 결과 검증. 핸드 수가 4종에서 6종으로 업데이트(Ability Hand와 DexRobot Hand 추가). ARCTIC 데이터셋을 사용하여 평가.</em></blockquote>
+<hr>
+<details class="dp-reviews"><summary>피어 리뷰 <span class="dp-review-score-badge">5.5</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">평균: <strong>5.5</strong> · 4 개 리뷰 · Submitted to ICLR 2026 · <a href="https://openreview.net/forum?id=3c6bnSJwDg" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 6</span> <span class="dp-review-text">This paper investigates the challenging problem of functional retargeting: training dexterous robot manipulation policies from human demonstrations to track object states. The focus is on long-horizon…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 6</span> <span class="dp-review-text">The paper presents a curriculum-based reinforcement learning method that converts a single hand-object demonstration into a bimanual dexterous manipulation policy capable of reproducing the demonstrat…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 6</span> <span class="dp-review-text">DexMachina studies the function retargeting problem with the goal of transferring human-object manipulation demonstrations to robot action sequences that can manipulate the object accordingly. The cor…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 4</span> <span class="dp-review-text">This paper tackles the functional retargeting problem, requiring robots to reproduce human-demonstrated trajectories. A virtual-controller-based curriculum with multiple reward functions is proposed t…</span></div>
+</div>
+</details>

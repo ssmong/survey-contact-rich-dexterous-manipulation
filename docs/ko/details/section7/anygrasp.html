@@ -1,0 +1,71 @@
+<h3 class="dp-h3">7.1 AnyGrasp</h3>
+<p class="dp-p"><strong>전체 제목:</strong> AnyGrasp: Robust and Efficient Grasp Perception in Spatial and Temporal Domains</p>
+<p class="dp-p"><strong>저자:</strong> Hao-Shu Fang, Chenxi Wang, Hongjie Fang, Minghao Gou, Jirong Liu, Hengxu Yan, Wenhai Liu, Yichen Xie, Cewu Lu (Shanghai Jiao Tong University)</p>
+<p class="dp-p"><strong>학회/연도:</strong> IEEE Transactions on Robotics (T-RO), 2023 (arXiv 2212.08333, December 2022)</p>
+<p class="dp-p"><strong>포함 근거:</strong> AnyGrasp is primarily a parallel-jaw grasp detection system, not a dexterous hand method. It is included here because it serves as a widely-used upstream grasp perception module in dexterous manipulation pipelines. Several dexterous VLA and grasping papers (e.g., DexGraspVLA, grasping systems using point cloud inputs) build upon or compare against AnyGrasp's grasp detection backbone. Understanding this foundational module provides context for the dexterous grasping methods in this section.</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> Not RL-based. AnyGrasp uses supervised learning with dense analytical grasp labels. The GSNet (Grasp Scoring Network) architecture is trained on the GraspNet-1Billion dataset with dense supervision combining real perception data and analytically generated grasp labels.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Parallel-jaw gripper (not a dexterous hand). Generates 7-DoF grasp poses for two-finger grippers.</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> Trained on GraspNet-1Billion dataset (which includes simulation-generated grasp labels); deployed directly on real hardware.</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes. Trained on GraspNet-1Billion (real RGB-D + analytical grasp labels) and deployed directly on physical robots with 93.3% success rate clearing 300+ unseen objects.</p>
+<p class="dp-p"><strong>객체 수:</strong> 300+ unseen objects in bin-clearing evaluation.</p>
+<p class="dp-p"><strong>작업:</strong> Grasp detection and execution in cluttered scenes. Key capabilities:</p>
+<p class="dp-p">1. Static grasp detection from single-frame point clouds</p>
+<p class="dp-p">2. Dynamic grasp tracking (temporal correspondence across frames, demonstrated catching a swimming robot fish)</p>
+<p class="dp-p">3. Bin clearing with dense clutter</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> AnyGrasp builds on GSNet, a point-cloud-based grasp detection network using PointNet2 backbone. The system processes depth images into point clouds and predicts dense 7-DoF grasp poses (position, orientation, width) with quality scores. Key innovations:</p>
+<ul class="dp-list">
+<li><strong>Dense supervision:</strong> Combines real perception data with analytically generated grasp labels, providing richer training signal than sparse human annotations.</li>
+<li><strong>Center-of-mass awareness:</strong> Incorporates object CoM estimation to predict more stable grasps.</li>
+<li><strong>Temporal grasp tracking:</strong> Extends single-frame detection to temporal domain, establishing correspondence between grasps across frames for dynamic/moving objects.</li>
+<li><strong>Robustness to depth noise:</strong> Demonstrated grasp detection under significant depth-sensing noise from consumer-grade RGB-D cameras.</li>
+</ul>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Unified grasp perception framework covering both spatial (single-frame) and temporal (cross-frame tracking) domains.</li>
+<li>93.3% success rate on 300+ unseen objects in bin clearing, with >900 mean picks per hour on a single-arm system.</li>
+<li>Dynamic grasping capability (catching a moving robot fish) via temporal grasp tracking.</li>
+<li>Widely adopted as upstream perception module; the AnyGrasp SDK and GSNet have been integrated into numerous downstream manipulation systems.</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Bin clearing success rate</td>
+<td>93.3% (300+ unseen objects)</td>
+</tr>
+<tr>
+<td>Mean picks per hour</td>
+<td>>900 (single arm)</td>
+</tr>
+<tr>
+<td>Dynamic grasping</td>
+<td>Demonstrated (catching swimming robot fish)</td>
+</tr>
+<tr>
+<td>Grasp pose representation</td>
+<td>7-DoF (position + orientation + width)</td>
+</tr>
+<tr>
+<td>Input</td>
+<td>Single-view point cloud (from RGB-D camera)</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>Parallel-jaw gripper only; no multi-finger dexterous grasp generation.</li>
+<li>Proprietary SDK with license registration required; not fully open-source (compiled library + license).</li>
+<li>Generates grasp poses without execution policy; requires separate motion planning and control stack.</li>
+<li>Point cloud-based detection depends on depth camera quality; struggles with transparent/reflective objects.</li>
+<li>No language conditioning or semantic grasp selection.</li>
+</ul>
+<p class="dp-p"><strong>코드 공개:</strong> AnyGrasp SDK available at <a href="https://github.com/graspnet/anygrasp_sdk" target="_blank" rel="noopener">GitHub</a> with license registration (proprietary, compiled library). The underlying GSNet architecture has third-party open implementations.</p>
+<p class="dp-p"><strong>Relevance to dexterous manipulation:</strong> While AnyGrasp itself detects parallel-jaw grasps, its point cloud processing pipeline and grasp quality estimation approach have influenced dexterous grasping methods. The GraspNet-1Billion dataset it was trained on has been extended with multi-finger grasp annotations in subsequent works. AnyGrasp's real-time detection speed (>900 picks/hour) sets a practical baseline that dexterous grasp planners must approach for deployment.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Real-time grasp detection at >900 mean picks per hour on a single-arm system, implying grasp detection runs at well above real-time rates. Specific per-frame inference latency not explicitly reported but fast enough for continuous grasp tracking.</li>
+<li><strong>배포 하드웨어:</strong> Single-arm robot with parallel-jaw gripper + RGB-D camera (consumer-grade). Point cloud processing runs on a desktop GPU. The AnyGrasp SDK provides the inference pipeline.</li>
+<li><strong>실시간 가능 여부:</strong> Yes. >900 picks/hour demonstrated on real hardware. Dynamic grasping (catching a moving object) further confirms real-time capability.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=U26asOu6gd" target="_blank" rel="noopener">OpenReview</a></p></div></details>

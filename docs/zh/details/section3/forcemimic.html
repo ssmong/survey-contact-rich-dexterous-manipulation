@@ -1,0 +1,39 @@
+<h2 class="dp-h2">3.15 ForceMimic</h2>
+<blockquote class="dp-quote"><strong>注意：</strong> 这不是VLA（无语言条件化）。因其力输出方法论直接与力感知操作策略设计相关而收录于第3节。</blockquote>
+<ul class="dp-list">
+<li><strong>全称:</strong> ForceMimic: Force-Centric Imitation Learning with Force-Motion Capture System for Contact-Rich Manipulation</li>
+<li><strong>作者:</strong> 上海交通大学 / Flexiv等</li>
+<li><strong>发表平台/年份:</strong> ICRA 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2410.07554</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 来自自定义力-运动捕获系统的捕获交互力旋量，同时记录人类演示者的运动和遥操作过程中的交互力。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 是——力旋量-位置混合输出。模型同时预测期望的末端执行器位置和期望的交互力旋量，使混合控制器能够主动调节接触力。<strong>力输出类型：完整力旋量（6D）。</strong></p>
+<p class="dp-p"><strong>机器人平台：</strong> Flexiv Rizon机械臂 + 平行夹爪。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 蔬菜削皮作为主要评估任务——一项具有挑战性的接触丰富任务，需要精确的力控制以在不损伤蔬菜的情况下削皮。</p>
+<p class="dp-p"><strong>关键方法：</strong> ForceMimic引入了一个力-运动捕获系统，在人类演示过程中同时记录运动轨迹和交互力。与仅捕获位置的标准遥操作不同，该系统使用F/T传感器记录演示者在接触丰富任务中施加的力。模仿学习策略随后学习同时预测位置和力目标，使混合力-位置控制器能够主动调节接触。混合模仿学习（HybridIL）框架将力和位置视为联合预测量，分别设置位置跟踪和力跟踪的损失项。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 在力增强演示上训练的模仿学习策略。策略同时输出位置目标和力旋量目标。混合力-位置控制器同时执行两种目标。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入力-运动捕获系统，在演示过程中同时捕获运动和力，为接触丰富的模仿学习提供更丰富的监督。</li>
+<li>提出HybridIL，一种联合预测位置和力目标的混合模仿学习框架，实现主动力调节。</li>
+<li>证明混合力-位置模仿在蔬菜削皮任务上显著优于仅位置模仿，精确力控制在该任务中至关重要。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 仅在单一任务（蔬菜削皮）上评估。力-运动捕获系统增加了演示过程的硬件成本和复杂性。无VLA/语言条件化——这是带力的视觉运动策略，不是完整的VLA。代码已发布（github.com/ForceMimic/hybridil），但无预训练权重。</p>
+<p class="dp-p"><strong>结果：</strong> ForceMimic在蔬菜削皮任务上的成功率显著高于仅位置模仿学习基线。混合力-位置输出对于保持一致的削皮力而不切穿或留下过多皮至关重要。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。论文未公开部署期间的每步推理延迟或控制频率。数据收集使用不同传感器速率（F/T传感器1000 Hz、SLAM相机200 Hz、RGB-D 30 Hz），但这些是采集速率，非部署规格。</li>
+<li><strong>部署硬件：</strong> Flexiv Rizon机械臂 + 平行夹爪，配备ForceCapture系统（自定义F/T传感器集成）。推理硬件未指定。</li>
+<li><strong>是否支持实时？</strong> 未验证。混合力-位置控制器需要实时执行，但未提供具体推理延迟数据。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 通过ForceCapture系统（自定义力-运动捕获硬件）收集的自定义演示。聚焦蔬菜削皮任务。</li>
+<li><strong>收集方法：</strong> 使用ForceCapture系统收集人类演示，在遥操作过程中同时记录运动轨迹和交互力旋量。该系统使操作者能在约5分钟内完成一次蔬菜削皮演示（传统力反馈遥操作需要13分钟以上）。</li>
+<li><strong>数据规模：</strong> 未明确报告。论文聚焦蔬菜削皮任务。</li>
+<li><strong>遥操作设备：</strong> ForceCapture系统——自定义力-运动捕获系统，集成F/T传感器（1000 Hz）、SLAM相机（200 Hz）和RGB-D相机（30 Hz），用于演示过程中的同步力-运动记录。</li>
+<li><strong>数据格式：</strong> 未报告。处理后的数据集可下载。</li>
+<li><strong>是否公开可用？</strong> 是。处理后的数据集可通过Google Drive获取。代码在<a href="https://github.com/ForceMimic/hybridil" target="_blank" rel="noopener">GitHub</a>。ForceCapture系统在<a href="https://github.com/ForceMimic/forcecapture" target="_blank" rel="noopener">GitHub</a>。未发布预训练权重。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=lrJBZAeql4" target="_blank" rel="noopener">OpenReview</a></p></div></details>

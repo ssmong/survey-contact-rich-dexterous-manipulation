@@ -1,0 +1,53 @@
+<p class="dp-p"># 9.1 ManiSkill3</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> ManiSkill3: GPU Parallelized Robotics Simulation and Benchmark with Enhanced Visual and Contact-Rich Environments</li>
+<li><strong>作者：</strong> Stone Tao, Fanbo Xiang, Arth Shukla, Yuzhe Qin, Xander Gao, Hao Su 及合作者（UCSD、Stanford等）</li>
+<li><strong>发表venue/年份：</strong> RSS 2025（arXiv 2410.00425，2024年10月）</li>
+<li><strong>仿真平台：</strong> SAPIEN，搭载GPU并行物理引擎（PhysX 5）和渲染</li>
+<li><strong>灵巧手支持：</strong> Allegro Hand、DClaw；可扩展至任意URDF手部模型</li>
+<li><strong>任务：</strong> 20+任务族，涵盖刚体、可变形体和流体操作；包含灵巧手内重定向和多指抓取环境</li>
+<li><strong>性能：</strong> 比前代ManiSkill版本快达430倍；单GPU支持数千个并行环境</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">ManiSkill3重新设计了仿真循环，充分利用GPU并行性进行物理步进和视觉渲染。它封装了SAPIEN的PhysX 5后端，可同时运行数千个环境，使以往需要数天的强化学习训练在数分钟内完成。该框架提供统一的Gym兼容API，内置RL（PPO、SAC）、模仿学习和VLA评估的基线。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>GPU并行仿真在刚体任务上实现相比ManiSkill2的430倍加速，在软体和流体任务上也有显著提升</li>
+<li>统一基准，涵盖RL、IL（Diffusion Policy、ACT）和VLA（RT-2、Octo）基线，便于标准化比较</li>
+<li>增强的接触丰富环境，改进了碰撞检测和摩擦建模，适用于灵巧操作任务</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>触觉传感仿真有限；不原生支持高分辨率触觉传感器模型（如GelSight、DIGIT）</li>
+<li>软体仿真虽支持，但比刚体慢且灵巧任务的基准测试不够充分</li>
+<li>灵巧手任务的仿真到真实迁移结果在论文中未做充分验证</li>
+</ul>
+<h2 class="dp-h2">覆盖缺口</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>标准</th>
+<th>是否覆盖？</th>
+</tr></thead><tbody>
+<tr>
+<td>力/力矩评估指标</td>
+<td>否</td>
+</tr>
+<tr>
+<td>可变形物体任务</td>
+<td>是（包含软体和流体任务，但灵巧手场景基准测试较少）</td>
+</tr>
+<tr>
+<td>触觉传感</td>
+<td>否（无原生触觉传感器模型）</td>
+</tr>
+<tr>
+<td>多阶段/长时程任务</td>
+<td>部分（有一些多步骤任务，但无系统的长时程任务套件）</td>
+</tr>
+<tr>
+<td>多手协调</td>
+<td>否</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">完全开源。通过 <code>pip install mani-skill</code> 安装。GitHub: <a href="https://github.com/haosulab/ManiSkill" target="_blank" rel="noopener">haosulab/ManiSkill</a></p>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=bpIKoHHUYI" target="_blank" rel="noopener">OpenReview</a></p></div></details>

@@ -1,0 +1,42 @@
+<h3 class="dp-h3">5.9 Force Policy</h3>
+<p class="dp-p"><strong>完整标题:</strong> Force Policy: Learning Contact-Rich Manipulation from Force Demonstrations</p>
+<p class="dp-p"><strong>作者:</strong> (SJTU / Flexiv Robotics)</p>
+<p class="dp-p"><strong>发表venue/年份:</strong> RSS 2026</p>
+<blockquote class="dp-quote"><strong>注意:</strong> 本文使用混合位置-力控制，而非阻抗控制。因与力感知操作的主题相近而纳入。</blockquote>
+<p class="dp-p"><strong>K/D如何确定:</strong> 从捕获力分布的遥操作示教中进行模仿学习。学习策略输出力目标(期望交互力矩)，而非直接的阻抗参数。系统在混合位置-力控制框架中运行，学习的力目标补充位置轨迹。</p>
+<p class="dp-p"><strong>输出内容:</strong> IL策略预测的沿任务相关轴的力/力矩目标。这些是期望交互力，不是刚度或阻尼矩阵。底层混合位置-力控制器执行组合的位置+力目标。</p>
+<p class="dp-p"><strong>机器人平台:</strong> Flexiv Rizon臂 + 平行夹爪。仅真实机器人(无仿真)。无灵巧手。</p>
+<p class="dp-p"><strong>任务:</strong> 需要精确力调节的接触丰富操作任务：插头插入、受控接触力表面擦拭、齿轮装配、物体打磨。这些任务需要在接触期间保持特定的力分布。</p>
+<p class="dp-p"><strong>核心方法:</strong> Force Policy从遥操作示教中学习预测期望交互力，示教中操作员施加的力通过Flexiv Rizon的内置力/力矩传感进行捕获。IL策略接收视觉和本体感觉输入，在每个时间步输出位置目标和力目标。混合位置-力控制器执行组合目标：在无约束方向进行位置控制，在约束(接触)方向进行力控制。核心贡献是证明从示教中学习力目标比学习仅位置目标对接触丰富任务更有效。</p>
+<p class="dp-p"><strong>架构/参数:</strong> 基于Transformer的IL策略用于联合位置-力目标预测。Flexiv Rizon集成的6轴力/力矩传感用于示教捕获。混合位置-力控制器用于执行。仅真实机器人——无仿真训练或评估。</p>
+<p class="dp-p"><strong>主要贡献:</strong></p>
+<ul class="dp-list">
+<li>展示了从遥操作示教中进行接触丰富操作的力目标学习</li>
+<li>表明显式力预测在需要力调节的任务中优于仅位置模仿</li>
+<li>在工业相关任务(插入、装配、打磨)上进行真实机器人评估</li>
+</ul>
+<p class="dp-p"><strong>局限/空白:</strong></p>
+<ul class="dp-list">
+<li>无灵巧手——Flexiv臂+夹爪</li>
+<li>仅真实机器人；无仿真用于可重复性或消融实验</li>
+<li>输出力目标而非阻抗参数——不能实现可变柔顺</li>
+<li>未发布代码或权重</li>
+<li>力示教需要力传感遥操作设备(Flexiv专用)</li>
+<li>不学习阻抗；混合控制器的阻抗参数是固定的</li>
+</ul>
+<p class="dp-p"><strong>实验结果:</strong> Force Policy在所有测试的接触丰富任务上比仅位置IL和固定力基线实现了更高的成功率。插入任务中的力跟踪精度比仅位置方法显著提高。Flexiv Rizon上的真实机器人演示确认了实际适用性。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟:</strong> 未明确报告。基于Transformer的IL策略逐时间步预测位置和力目标。具体控制频率未说明，但Flexiv Rizon支持高频力控制；学习策略可能以10-50 Hz运行。</li>
+<li><strong>部署硬件:</strong> Flexiv Rizon臂配集成6轴力/力矩传感。仅真实机器人评估。策略推理GPU未指定。</li>
+<li><strong>可实时运行?</strong> 是，可能。系统在真实硬件(Flexiv Rizon)上演示了需要力调节的接触丰富任务，暗示实时运行。混合位置-力控制器以机器人原生控制率运行；学习策略以较低频率提供目标。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集:</strong> 在配有集成力/力矩传感的Flexiv Rizon臂上采集的自定义遥操作示教。</li>
+<li><strong>采集方法:</strong> 带力捕获的遥操作。示教者施加的力通过Flexiv Rizon内置6轴力/力矩传感器在接触丰富任务(插头插入、表面擦拭、齿轮装配、打磨)中记录。仅真实机器人——无仿真。</li>
+<li><strong>数据规模:</strong> 未明确报告。每个任务的示教数量未在可用材料中披露。</li>
+<li><strong>遥操作设备:</strong> Flexiv Rizon原生遥操作接口，配集成6轴力/力矩传感用于示教中的力捕获。</li>
+<li><strong>数据格式:</strong> 关节位置-力目标轨迹配力/力矩传感器读数。具体文件格式未报告。</li>
+<li><strong>公开可用?</strong> 否。未发布代码或权重。</li>
+</ul>

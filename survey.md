@@ -19,13 +19,13 @@ Multi-fingered hand systems performing grasping, tool use, or object manipulatio
 | [**SimToolReal**](https://arxiv.org/abs/2602.16863) | Stanford IPRL | arXiv | 2026 | Sharpa (22) + KUKA | 24 tool-use tasks (hammer, screwdriver, spatula) | IsaacGym | Yes | [GitHub](https://github.com/tylerlum/simtoolreal) ✅ | ✅ ckpt | ✗ |
 | [**Grasp-to-Act**](https://arxiv.org/abs/2602.20466) | UIUC RoboTouch | arXiv | 2026 | LEAP (16) | 5 dynamic tool-use (hammer, saw, cut, stir, scoop) | Sim + real | Yes | ✗ | ✗ | ✗ |
 | [**DexMachina**](https://arxiv.org/abs/2505.24853) | Stanford/NVIDIA | arXiv | 2025 | Inspire, Allegro, Xhand, Schunk | Bimanual articulated object manipulation | Genesis | ✗ | [GitHub](https://github.com/MandiZhao/dexmachina) ✅ | ✗ (eval TODO) | ✗ |
-| [**ManipTrans**](https://arxiv.org/abs/2503.21860) | BIGAI/Tsinghua/PKU | CVPR 2025 | 2025 | 4 hands (Shadow, MANO, Inspire, Allegro) | Bimanual (pen cap, bottle unscrew) | IsaacGym P4 | ✗ | [GitHub](https://github.com/ManipTrans/ManipTrans) ✅ | ✅ imitator ckpt + HF | ✗ |
+| [**ManipTrans**](https://arxiv.org/abs/2503.21860) | BIGAI/Tsinghua/PKU | CVPR | 2025 | 4 hands (Shadow, MANO, Inspire, Allegro) | Bimanual (pen cap, bottle unscrew) | IsaacGym P4 | ✗ | [GitHub](https://github.com/ManipTrans/ManipTrans) ✅ | ✅ imitator ckpt + HF | ✗ |
 | [**SPIDER**](https://arxiv.org/abs/2511.09484) | Meta FAIR / Berkeley | arXiv | 2025 | 9 humanoid embodiments | Retargeted human demos | MuJoCo | ✅ (Franka+Allegro) | [GitHub](https://github.com/facebookresearch/spider) ✅ | ✗ | ✗ |
-| **Scaffolding+VLM** | Stanford / KIT | NeurIPS 2025 | 2025 | Allegro (16) + KUKA | Articulated objects (apple, bottle, drawer) | Sim + real | Yes | [GitHub](https://github.com/vdebakker/vlm-scaffolding) ✅ | ✗ | ✅ Gemini VLM |
-| [**DexUMI**](https://arxiv.org/abs/2505.21864) | Stanford | CoRL 2025 Best Paper Finalist | 2025 | XHand, Inspire | Real-world dexterous manipulation | Real only | N/A | [GitHub](https://github.com/real-stanford/DexUMI) ✅ | ✗ | ✗ |
-| [**DexterityGen**](https://arxiv.org/abs/2502.04307) | Berkeley/Meta | RSS 2025 | 2025 | Allegro (16) + arm | Tool use (pen, screwdriver, syringe) | IsaacGym | ✅ | ✗ | ✗ | ✗ |
-| [**ArtiGrasp**](https://arxiv.org/abs/2309.03891) | ETH Zurich | 3DV 2024 | 2024 | MANO (human proxy) | Bimanual grasp + articulation (8 objects) | RaiSim | ✗ | [GitHub](https://github.com/zdchan/artigrasp) ✅ | ✅ pretrained | ✗ |
-| [**DexDeform**](https://arxiv.org/abs/2304.03223) | MIT-IBM | ICLR 2023 | 2023 | Multi-finger (sim) | 6 deformable object tasks (play-doh) | PlasticineLab | ✗ | [GitHub](https://github.com/sizhe-li/DexDeform) ✅ | ✗ | ✗ |
+| **Scaffolding+VLM** | Stanford / KIT | NeurIPS | 2025 | Allegro (16) + KUKA | Articulated objects (apple, bottle, drawer) | Sim + real | Yes | [GitHub](https://github.com/vdebakker/vlm-scaffolding) ✅ | ✗ | ✅ Gemini VLM |
+| [**DexUMI**](https://arxiv.org/abs/2505.21864) | Stanford | CoRL Best Paper Finalist | 2025 | XHand, Inspire | Real-world dexterous manipulation | Real only | N/A | [GitHub](https://github.com/real-stanford/DexUMI) ✅ | ✗ | ✗ |
+| [**DexterityGen**](https://arxiv.org/abs/2502.04307) | Berkeley/Meta | RSS | 2025 | Allegro (16) + arm | Tool use (pen, screwdriver, syringe) | IsaacGym | ✅ | ✗ | ✗ | ✗ |
+| [**ArtiGrasp**](https://arxiv.org/abs/2309.03891) | ETH Zurich | 3DV | 2024 | MANO (human proxy) | Bimanual grasp + articulation (8 objects) | RaiSim | ✗ | [GitHub](https://github.com/zdchan/artigrasp) ✅ | ✅ pretrained | ✗ |
+| [**DexDeform**](https://arxiv.org/abs/2304.03223) | MIT-IBM | ICLR | 2023 | Multi-finger (sim) | 6 deformable object tasks (play-doh) | PlasticineLab | ✗ | [GitHub](https://github.com/sizhe-li/DexDeform) ✅ | ✗ | ✗ |
 
 ---
 
@@ -35,12 +35,12 @@ VLA models with dexterous hand support or language-conditioned dexterous manipul
 
 | Paper | Group | Venue | Year | Hand (DoF) | Tasks | Code | Weights | Key Method |
 |---|---|---|---|---|---|---|---|---|
-| [**UniDex-VLA**](https://arxiv.org/abs/2603.22264) | UniDex-AI | CVPR 2026 | 2026 | 8 hands via FAAS (Allegro, LEAP, Shadow, Inspire, Wuji, Oymotion, Ability, Xhand) | Tool use, 81% task progress | [GitHub](https://github.com/unidex-ai/UniDex) ✅ | ✅ 3-epoch + 32-epoch on HF | 3D VLA + flow matching, FAAS unified action |
-| [**DexGraspVLA**](https://arxiv.org/abs/2502.08142) | Psi-Robot | AAAI 2026 | 2026 | Custom dexterous | Grasping in clutter, 90%+ success | [GitHub](https://github.com/Psi-Robot/DexGraspVLA) ✅ | ✅ controller ckpt (GDrive) | Qwen2.5-VL-72B planner + diffusion controller |
-| [**DexVLA**](https://arxiv.org/abs/2502.05855) | Multi-inst. | CoRL 2025 | 2025 | Yes (curriculum) | Dexterous skill learning | [GitHub](https://github.com/juruobenruo/DexVLA) ✅ | ✅ ScaleDP-H/L on HF | Plug-in 1B diffusion expert on frozen VLM |
-| **Dexora** | Multi-inst. | ICRA 2026 | 2025 | Bimanual 36-DoF | Pick-place, dexterous manip, assembly, tool use | [GitHub](https://github.com/ZZongzheng0918/Dexora) ✅ | ✅ real data on HF | 12.2K real + 100K sim episodes |
-| [**Grasp as You Say**](https://arxiv.org/abs/2405.19291) | Sun Yat-sen | NeurIPS 2024 | 2024 | Shadow (24) | Language-guided grasping ("grasp mug by handle") | [GitHub](https://github.com/iSEE-Laboratory/Grasp-as-You-Say) ✅ | ✗ | Language-conditioned dexterous grasp generation |
-| [**HumanoidGen**](https://arxiv.org/abs/2507.00833) | TeleHuman | NeurIPS 2025 | 2025 | Unitree H1_2 + Inspire (6 DoF/hand) | 20 tabletop tasks (bimanual, long-horizon) | [GitHub](https://github.com/TeleHuman/HumanoidGen) ✅ | ✅ HF (model + data) | LLM planner + MCTS + diffusion policy |
+| [**UniDex-VLA**](https://arxiv.org/abs/2603.22264) | UniDex-AI | CVPR | 2026 | 8 hands via FAAS (Allegro, LEAP, Shadow, Inspire, Wuji, Oymotion, Ability, Xhand) | Tool use, 81% task progress | [GitHub](https://github.com/unidex-ai/UniDex) ✅ | ✅ 3-epoch + 32-epoch on HF | 3D VLA + flow matching, FAAS unified action |
+| [**DexGraspVLA**](https://arxiv.org/abs/2502.08142) | Psi-Robot | AAAI | 2026 | Custom dexterous | Grasping in clutter, 90%+ success | [GitHub](https://github.com/Psi-Robot/DexGraspVLA) ✅ | ✅ controller ckpt (GDrive) | Qwen2.5-VL-72B planner + diffusion controller |
+| [**DexVLA**](https://arxiv.org/abs/2502.05855) | Multi-inst. | CoRL | 2025 | Yes (curriculum) | Dexterous skill learning | [GitHub](https://github.com/juruobenruo/DexVLA) ✅ | ✅ ScaleDP-H/L on HF | Plug-in 1B diffusion expert on frozen VLM |
+| **Dexora** | Multi-inst. | ICRA | 2025 | Bimanual 36-DoF | Pick-place, dexterous manip, assembly, tool use | [GitHub](https://github.com/ZZongzheng0918/Dexora) ✅ | ✅ real data on HF | 12.2K real + 100K sim episodes |
+| [**Grasp as You Say**](https://arxiv.org/abs/2405.19291) | Sun Yat-sen | NeurIPS | 2024 | Shadow (24) | Language-guided grasping ("grasp mug by handle") | [GitHub](https://github.com/iSEE-Laboratory/Grasp-as-You-Say) ✅ | ✗ | Language-conditioned dexterous grasp generation |
+| [**HumanoidGen**](https://arxiv.org/abs/2507.00833) | TeleHuman | NeurIPS | 2025 | Unitree H1_2 + Inspire (6 DoF/hand) | 20 tabletop tasks (bimanual, long-horizon) | [GitHub](https://github.com/TeleHuman/HumanoidGen) ✅ | ✅ HF (model + data) | LLM planner + MCTS + diffusion policy |
 | [**VLA+Diffusion Switch**](https://arxiv.org/abs/2410.14022) | — | arXiv | 2024 | ADAPT Hand (13) | Pick-and-place with VLA switching | ✗ | ✗ | VLA + diffusion policy switching on series-elastic multi-finger hand |
 
 ---
@@ -51,26 +51,26 @@ Models incorporating force/torque or tactile sensing for contact-rich tasks. Inc
 
 | Paper | Group | Venue | Year | Force Input | Force/Impedance Output? | Robot | Code | Weights | Tasks |
 |---|---|---|---|---|---|---|---|---|---|
-| [**ForceVLA**](https://arxiv.org/abs/2505.22159) | SJTU/Fudan | NeurIPS 2025 | 2025 | 6-axis F/T | ✗ (position only) | Flexiv Rizon + gripper | [GitHub](https://github.com/ft-robotic/ForceVLA) ✅ | ✗ (data on HF) | Plug insertion, wiping, peeling (5 tasks) |
-| [**ForceVLA2**](https://arxiv.org/abs/2603.15169) | Shanghai AI Lab | CVPR 2026 | 2026 | 6-axis F/T 300Hz | ✅ hybrid F/P + predicted force | Flexiv Rizon 4s + gripper | ✗ "coming soon" | ✗ | Press, clean, assemble gears (5 tasks) |
-| [**FD-VLA**](https://arxiv.org/abs/2602.02142) | NUS | ICRA 2026 | 2026 | Distilled (no sensor at inference) | ✗ | UR5e + gripper | ✗ | ✗ | Wiping, insertion, button press (3 tasks) |
+| [**ForceVLA**](https://arxiv.org/abs/2505.22159) | SJTU/Fudan | NeurIPS | 2025 | 6-axis F/T | ✗ (position only) | Flexiv Rizon + gripper | [GitHub](https://github.com/ft-robotic/ForceVLA) ✅ | ✗ (data on HF) | Plug insertion, wiping, peeling (5 tasks) |
+| [**ForceVLA2**](https://arxiv.org/abs/2603.15169) | Shanghai AI Lab | CVPR | 2026 | 6-axis F/T 300Hz | ✅ hybrid F/P + predicted force | Flexiv Rizon 4s + gripper | ✗ "coming soon" | ✗ | Press, clean, assemble gears (5 tasks) |
+| [**FD-VLA**](https://arxiv.org/abs/2602.02142) | NUS | ICRA | 2026 | Distilled (no sensor at inference) | ✗ | UR5e + gripper | ✗ | ✗ | Wiping, insertion, button press (3 tasks) |
 | [**FAVLA**](https://arxiv.org/abs/2602.23648) | USTC | arXiv | 2026 | 6-axis F/T high-freq | ✗ | Monte dual-arm X-ARM | ✗ | ✗ | USB insertion, gear, wiping (4 tasks) |
 | [**HapticVLA**](https://arxiv.org/abs/2603.15257) | Skoltech | arXiv | 2026 | Tactile (distilled away) | ✗ | LeRobot SO-101 + tactile | Paper claims release; no public repo found as of May 2026 | Not verified | Jar/waffle/egg pick-and-place |
 | [**DreamTacVLA**](https://arxiv.org/abs/2512.23864) | Northwestern | arXiv | 2025 | Tactile (V-JEPA2) | ✗ | Dobot Xtrainer + gripper + tactile | [GitHub](https://github.com/michaelyeah7/learning-to-feel-the-future) (code only) | ✗ | Tactile world model predicts future latent → action refinement; up to 95% across 4 contact-rich tasks |
 | [**OmniVTLA**](https://arxiv.org/abs/2508.08706) | - | arXiv | 2025 | Vision-based + force-based tactile | ✗ | Gripper + Dex Hand | ✗ (dataset only) | ✗ | Pick-and-place (100% dex hand) |
 | [**Tactile-VLA**](https://arxiv.org/abs/2507.09160) | Tsinghua | arXiv | 2025 | Tactile | ✅ hybrid pos-force | Not specified | ✗ | ✗ | Charger insertion 90% |
 | [**TaF-VLA**](https://arxiv.org/abs/2601.20321) | - | arXiv | 2026 | GelSight + 6-axis F/T | ✗ | Franka FR3 + gripper | ✗ | ✗ | 8 contact-rich tasks |
-| [**TA-VLA**](https://arxiv.org/abs/2509.07962) | Tsinghua AIR | CoRL 2025 | 2025 | Joint torque | Aux torque prediction | Cobot Magic ALOHA | ✗ | ✗ | 10 tasks (button, charger, USB...) |
+| [**TA-VLA**](https://arxiv.org/abs/2509.07962) | Tsinghua AIR | CoRL | 2025 | Joint torque | Aux torque prediction | Cobot Magic ALOHA | ✗ | ✗ | 10 tasks (button, charger, USB...) |
 | [**CRAFT**](https://arxiv.org/abs/2602.12532) | - | arXiv | 2026 | Force | ✗ | Teleop arm | ✗ | ✗ | Deformable, alignment tasks |
 | [**VLA-Touch**](https://arxiv.org/abs/2507.17294) | NUS | arXiv | 2025 | GelSight tactile | ✗ (residual correction) | Arm + gripper | [GitHub](https://github.com/jxbi1010/VLA-Touch) ✅ | ✅ ckpts + HF | Contact-rich manipulation |
 | [**FoAR**](https://arxiv.org/abs/2411.15753) | SJTU | RA-L/IROS 2025 | 2024 | 6-axis F/T | ✗ | Flexiv Rizon + gripper | [GitHub](https://github.com/Alan-Heoooh/FoAR) ✅ | ✗ | Wiping, peeling |
-| [**FACTR**](https://arxiv.org/abs/2502.17432) | CMU | RSS 2025 | 2025 | Joint torque (servo current) | ✗ | Franka + gripper | [GitHub](https://github.com/RaindragonD/factr) ✅ | ✗ (encoder only) | Box lift, pivot, dough rolling |
-| [**ForceMimic**](https://arxiv.org/abs/2410.07554) | SJTU | ICRA 2025 | 2024 | Captured interaction wrench | ✅ wrench-position hybrid | Flexiv + gripper | [GitHub](https://github.com/ForceMimic/hybridil) ✅ | ✗ | Vegetable peeling |
-| [**Reactive Diffusion Policy**](https://arxiv.org/abs/2503.02881) | - | RSS 2025 | 2025 | GelSight Mini | ✗ (learned "impedance-like") | Flexiv Rizon 4 + gripper | [GitHub](https://github.com/xiaoxiaoxh/reactive_diffusion_policy) ✅ | ✅ ckpts + HF | 3 contact-rich tasks |
-| [**ACP**](https://arxiv.org/abs/2410.09309) | Toyota/Columbia | ICRA 2025 | 2024 | 6-axis F/T (ATI) | ✅ scalar stiffness | UR5e + passive tools | ✗ | ✗ | Item flipping, vase wiping |
-| [**TacDiffusion**](https://arxiv.org/abs/2409.11047) | TU Munich MIRMI | ICRA 2025 | 2024 | Tactile | ✅ 6D wrench | Gripper + tactile | [GitHub](https://github.com/popnut123/TacDiffusion) ✅ | ✗ | Force-domain diffusion, 95.7% zero-shot |
+| [**FACTR**](https://arxiv.org/abs/2502.17432) | CMU | RSS | 2025 | Joint torque (servo current) | ✗ | Franka + gripper | [GitHub](https://github.com/RaindragonD/factr) ✅ | ✗ (encoder only) | Box lift, pivot, dough rolling |
+| [**ForceMimic**](https://arxiv.org/abs/2410.07554) | SJTU | ICRA | 2024 | Captured interaction wrench | ✅ wrench-position hybrid | Flexiv + gripper | [GitHub](https://github.com/ForceMimic/hybridil) ✅ | ✗ | Vegetable peeling |
+| [**Reactive Diffusion Policy**](https://arxiv.org/abs/2503.02881) | - | RSS | 2025 | GelSight Mini | ✗ (learned "impedance-like") | Flexiv Rizon 4 + gripper | [GitHub](https://github.com/xiaoxiaoxh/reactive_diffusion_policy) ✅ | ✅ ckpts + HF | 3 contact-rich tasks |
+| [**ACP**](https://arxiv.org/abs/2410.09309) | Toyota/Columbia | ICRA | 2024 | 6-axis F/T (ATI) | ✅ scalar stiffness | UR5e + passive tools | ✗ | ✗ | Item flipping, vase wiping |
+| [**TacDiffusion**](https://arxiv.org/abs/2409.11047) | TU Munich MIRMI | ICRA | 2024 | Tactile | ✅ 6D wrench | Gripper + tactile | [GitHub](https://github.com/popnut123/TacDiffusion) ✅ | ✗ | Force-domain diffusion, 95.7% zero-shot |
 | [**FARM**](https://arxiv.org/abs/2510.13324) | TU Munich MIRMI | arXiv | 2025 | GelSight Mini | ✅ grip force | Modified UMI gripper | ✗ | ✗ | Joint position + force prediction |
-| [**T-Dex**](https://arxiv.org/abs/2303.12076) | NYU (Pinto) | ICRA 2024 | 2024 | Tactile (DIGIT) | ✗ (position only) | **Allegro (16) + DIGIT** + Kinova arm | [GitHub](https://github.com/irmakguzey/tdex) ✅ | ✗ | 5 dexterous tasks (joystick, book, bowl, peg, playdough); 1.7x over vision-only. One of very few §3 entries with a dex hand. |
+| [**T-Dex**](https://arxiv.org/abs/2303.12076) | NYU (Pinto) | ICRA | 2024 | Tactile (DIGIT) | ✗ (position only) | **Allegro (16) + DIGIT** + Kinova arm | [GitHub](https://github.com/irmakguzey/tdex) ✅ | ✗ | 5 dexterous tasks (joystick, book, bowl, peg, playdough); 1.7x over vision-only. One of very few §3 entries with a dex hand. |
 
 ---
 
@@ -82,9 +82,9 @@ Systems where a VLM/LLM generates or retrieves impedance parameters (K, D) for a
 |---|---|---|---|---|---|---|---|---|---|---|
 | [**CompliantVLA-adaptor**](https://arxiv.org/abs/2601.15541) | IIT Genoa / TU Darmstadt | arXiv | 2026 | VLM (GPT-4o-mini) zero-shot | ✅ (Kx,Ky,Kz) | ✅ (Dx,Dy,Dz) | Franka Panda + gripper | ✗ | Project page (pending) | ✗ (training-free) |
 | [**OmniVIC**](https://arxiv.org/abs/2510.17150) | IIT Genoa / Georgia Tech | arXiv | 2025 | VLM + RAG self-improving | ✅ | ✅ | Franka Panda + F/T sensor | ✗ | ✗ | ✗ (uses GPT-4o-mini API) |
-| [**HumanoidVLM**](https://arxiv.org/abs/2601.14874) | - | HRI 2026 | 2026 | VLM (Molmo-7B) + FAISS RAG | ✅ (retrieved) | ✅ (retrieved) | Unitree G1 humanoid | ✗ | ✗ | ✗ |
-| **SafeHumanoid** | Same group | HRI 2026 | 2026 | VLM + RAG retrieval | ✅ | ✅ | Unitree G1 | ✗ | ✗ | ✗ |
-| [**ImpedanceGPT**](https://arxiv.org/abs/2503.02723) | - | IROS 2025 | 2025 | VLM (Molmo) + RAG | ✅ | ✅ | Drone swarm (not manipulation) | N/A | [GitHub](https://github.com/Faryal-Batool/ImpedanceGPT) ✅ | ✗ |
+| [**HumanoidVLM**](https://arxiv.org/abs/2601.14874) | - | HRI | 2026 | VLM (Molmo-7B) + FAISS RAG | ✅ (retrieved) | ✅ (retrieved) | Unitree G1 humanoid | ✗ | ✗ | ✗ |
+| **SafeHumanoid** | Same group | HRI | 2026 | VLM + RAG retrieval | ✅ | ✅ | Unitree G1 | ✗ | ✗ | ✗ |
+| [**ImpedanceGPT**](https://arxiv.org/abs/2503.02723) | - | IROS | 2025 | VLM (Molmo) + RAG | ✅ | ✅ | Drone swarm (not manipulation) | N/A | [GitHub](https://github.com/Faryal-Batool/ImpedanceGPT) ✅ | ✗ |
 
 ---
 
@@ -94,18 +94,18 @@ Systems that learn or optimize impedance/stiffness/damping parameters without a 
 
 | Paper | Group | Venue | Year | Stiffness (K) | Damping (D) | Learning Method | Robot | Dex Hand? | Sim | Code | Weights |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| [**Comp-ACT**](https://arxiv.org/abs/2406.14990) | OMRON SINIC X / UTokyo | IROS 2024 | 2024 | ✅ (12D Cholesky) | ✗ | IL (ACT from VR demos) | 2x UR5e + gripper | ✗ | Robosuite (MuJoCo) | [GitHub](https://github.com/omron-sinicx/CompACT) ✅ | ✗ |
+| [**Comp-ACT**](https://arxiv.org/abs/2406.14990) | OMRON SINIC X / UTokyo | IROS | 2024 | ✅ (12D Cholesky) | ✗ | IL (ACT from VR demos) | 2x UR5e + gripper | ✗ | Robosuite (MuJoCo) | [GitHub](https://github.com/omron-sinicx/CompACT) ✅ | ✗ |
 | [**Diff-Impedance**](https://arxiv.org/abs/2509.19696) | KIT / MIT | arXiv | 2025 | ✅ | ✅ | Diffusion + energy-based | KUKA LBR iiwa | ✗ | Sim + real | [GitHub](https://github.com/StrokeAIRobotics/DiffusionBasedImpedanceLearning) ✅ | ✗ |
-| [**VICES**](https://arxiv.org/abs/1906.08880) | Stanford / NVIDIA | IROS 2019 | 2019 | ✅ | ✅ | RL (policy gradient) | Franka/Sawyer + gripper | ✗ | Robosuite (MuJoCo) | [robosuite/vices](https://github.com/ARISE-Initiative/robosuite/tree/vices_iros19) ✅ | ✗ |
-| [**CHIP**](https://arxiv.org/abs/2512.14689) | NVIDIA NVLabs | ICRA 2025 | 2025 | ✅ (EE stiffness) | ✗ | RL (hindsight perturbation) | Humanoid 35-DoF | ✗ | Isaac Sim | [Page](https://nvlabs.github.io/CHIP/) | ✗ |
+| [**VICES**](https://arxiv.org/abs/1906.08880) | Stanford / NVIDIA | IROS | 2019 | ✅ | ✅ | RL (policy gradient) | Franka/Sawyer + gripper | ✗ | Robosuite (MuJoCo) | [robosuite/vices](https://github.com/ARISE-Initiative/robosuite/tree/vices_iros19) ✅ | ✗ |
+| [**CHIP**](https://arxiv.org/abs/2512.14689) | NVIDIA NVLabs | ICRA | 2025 | ✅ (EE stiffness) | ✗ | RL (hindsight perturbation) | Humanoid 35-DoF | ✗ | Isaac Sim | [Page](https://nvlabs.github.io/CHIP/) | ✗ |
 | [**FILIC**](https://arxiv.org/abs/2509.17053) | Tsinghua/HKUST | arXiv | 2025 | Fixed K | Fixed B | IL (transformer, 25Hz) | AIRBOT Play | ✗ | MuJoCo + real | [GitHub](https://github.com/OpenGHz/FILIC) ✅ | ✗ |
 | [**CHEQ**](https://arxiv.org/abs/2501.07985) | RWTH Aachen | arXiv | 2025 | ✅ | ✅ | RL (hybrid adaptive) | Arm (polishing) | ✗ | Real hardware | ✗ | ✗ |
-| [**DA-VIL**](https://arxiv.org/abs/2410.19712) | IIIT/Brown | ICRA 2025 | 2024 | ✅ | Not reported | RL + QP optimization | Dual-arm | ✗ | Sim | Project page only | ✗ |
-| [**DexForce**](https://arxiv.org/abs/2501.10356) | Stanford | RA-L 2025 | 2025 | Fixed k_f | ✗ | Hand-tuned | Allegro (16) | **✅** | ✗ (real only) | ✗ | ✗ |
-| [**Force Policy**](https://arxiv.org/abs/2602.22088) | SJTU/Flexiv | RSS 2026 | 2026 | Force targets | ✗ | IL (teleop demos) | Flexiv + gripper | ✗ | ✗ (real only) | ✗ | ✗ |
-| [**IndustReal**](https://arxiv.org/abs/2305.17110) | NVIDIA | RSS 2023 | 2023 | Fixed | Fixed | RL (PPO) learns poses | Franka + gripper | ✗ | IsaacGym | [GitHub](https://github.com/NVlabs/industreallib) ✅ | ✅ RL policies |
+| [**DA-VIL**](https://arxiv.org/abs/2410.19712) | IIIT/Brown | ICRA | 2024 | ✅ | Not reported | RL + QP optimization | Dual-arm | ✗ | Sim | Project page only | ✗ |
+| [**DexForce**](https://arxiv.org/abs/2501.10356) | Stanford | RA-L | 2025 | Fixed k_f | ✗ | Hand-tuned | Allegro (16) | **✅** | ✗ (real only) | ✗ | ✗ |
+| [**Force Policy**](https://arxiv.org/abs/2602.22088) | SJTU/Flexiv | RSS | 2026 | Force targets | ✗ | IL (teleop demos) | Flexiv + gripper | ✗ | ✗ (real only) | ✗ | ✗ |
+| [**IndustReal**](https://arxiv.org/abs/2305.17110) | NVIDIA | RSS | 2023 | Fixed | Fixed | RL (PPO) learns poses | Franka + gripper | ✗ | IsaacGym | [GitHub](https://github.com/NVlabs/industreallib) ✅ | ✅ RL policies |
 | [**Divide et Impera**](https://arxiv.org/abs/2410.01054) | MIT/KIT | arXiv | 2024 | ✅ (families) | ✅ | NN success predictor | Real arm | ✗ | Real | ✗ | ✗ |
-| [**DCM**](https://arxiv.org/abs/2403.13221) | Omron SINIC X | IROS 2024 | 2024 | VIC input | ✗ | Diffusion contact model | Arm + gripper | ✗ | ✗ | ✗ | ✗ |
+| [**DCM**](https://arxiv.org/abs/2403.13221) | Omron SINIC X | IROS | 2024 | VIC input | ✗ | Diffusion contact model | Arm + gripper | ✗ | ✗ | ✗ | ✗ |
 
 ---
 
@@ -143,19 +143,19 @@ All GR00T VLA versions output position targets only. "22 DoF hands" in N1.7 orig
 | [**Gemini Robotics**](https://arxiv.org/abs/2503.20020) | Google DeepMind | arXiv | 2025 | ✗ (gripper) | ✗ | ✗ | ✗ (closed, trusted testers) | Gemini 2.0-based VLA; 2x SOTA on generalization benchmark; ALOHA/Franka/Apollo |
 | **Gemini Robotics 1.5** | Google DeepMind | Blog | 2026 | ✗ | ✗ | ✗ | ✗ (trusted testers) | VLA + reasoning; cross-embodiment; Gemini API (ER 1.5) |
 | **Gemini Robotics On-Device** | Google DeepMind | Blog | 2025 | ✗ | ✗ | SDK (limited) | ✗ | On-device VLA; fine-tune with 50-100 demos; no network dependency |
-| [**RT-2**](https://arxiv.org/abs/2307.15818) | Google DeepMind | CoRL 2023 | 2023 | ✗ | ✗ | ✗ | ✗ (closed) | 55B VLM co-fine-tuned for robot actions |
-| [**OpenVLA**](https://arxiv.org/abs/2406.09246) | Berkeley/Stanford | CoRL 2024 | 2024 | ✗ | ✗ | [GitHub](https://github.com/openvla/openvla) ✅ | ✅ HF | 7B VLA baseline, Apache 2.0 |
-| [**OpenVLA-OFT**](https://arxiv.org/abs/2502.19645) | Stanford/Berkeley | RSS 2025 | 2025 | ✗ (ALOHA) | ✗ | [GitHub](https://github.com/moojink/openvla-oft) ✅ | ✅ | 26x faster inference, parallel decoding |
-| [**Octo**](https://arxiv.org/abs/2405.12213) | Berkeley RAIL | RSS 2024 | 2024 | ✗ | ✗ | [GitHub](https://github.com/octo-models/octo) ✅ | ✅ HF | 93M, modular fine-tuning |
-| [**RDT-1B**](https://arxiv.org/abs/2410.07864) | Tsinghua thu-ml | ICLR 2025 | 2025 | ✗ (bimanual) | ✗ | [GitHub](https://github.com/thu-ml/RoboticsDiffusionTransformer) ✅ | ✅ HF 1B | Largest open diffusion model |
-| [**HPT**](https://arxiv.org/abs/2409.20537) | MIT (Kaiming He) | NeurIPS 2024 | 2024 | ✗ | ✗ | [GitHub](https://github.com/liruiw/HPT) ✅ | ✗ | Heterogeneous embodiment pre-training |
+| [**RT-2**](https://arxiv.org/abs/2307.15818) | Google DeepMind | CoRL | 2023 | ✗ | ✗ | ✗ | ✗ (closed) | 55B VLM co-fine-tuned for robot actions |
+| [**OpenVLA**](https://arxiv.org/abs/2406.09246) | Berkeley/Stanford | CoRL | 2024 | ✗ | ✗ | [GitHub](https://github.com/openvla/openvla) ✅ | ✅ HF | 7B VLA baseline, Apache 2.0 |
+| [**OpenVLA-OFT**](https://arxiv.org/abs/2502.19645) | Stanford/Berkeley | RSS | 2025 | ✗ (ALOHA) | ✗ | [GitHub](https://github.com/moojink/openvla-oft) ✅ | ✅ | 26x faster inference, parallel decoding |
+| [**Octo**](https://arxiv.org/abs/2405.12213) | Berkeley RAIL | RSS | 2024 | ✗ | ✗ | [GitHub](https://github.com/octo-models/octo) ✅ | ✅ HF | 93M, modular fine-tuning |
+| [**RDT-1B**](https://arxiv.org/abs/2410.07864) | Tsinghua thu-ml | ICLR | 2025 | ✗ (bimanual) | ✗ | [GitHub](https://github.com/thu-ml/RoboticsDiffusionTransformer) ✅ | ✅ HF 1B | Largest open diffusion model |
+| [**HPT**](https://arxiv.org/abs/2409.20537) | MIT (Kaiming He) | NeurIPS | 2024 | ✗ | ✗ | [GitHub](https://github.com/liruiw/HPT) ✅ | ✗ | Heterogeneous embodiment pre-training |
 | [**CogACT**](https://arxiv.org/abs/2411.19650) | Microsoft | arXiv | 2024 | ✗ | ✗ | [GitHub](https://github.com/microsoft/CogACT) ✅ | ✗ | Cognition-action separation |
 | [**EgoScale**](https://arxiv.org/abs/2602.16710) | NVIDIA/Berkeley | arXiv | 2026 | ✅ 22-DoF | ✗ | ✗ | ✗ | 20K hrs human video, dexterous scaling law |
-| [**SimpleVLA-RL**](https://arxiv.org/abs/2509.09674) | — | ICLR 2026 | 2025 | ✗ | ✗ | [GitHub](https://github.com/PRIME-RL/SimpleVLA-RL) ✅ | ✗ | RL fine-tuning of VLA |
-| [**SpatialVLA**](https://arxiv.org/abs/2501.15830) | Shanghai AI Lab / Multi-inst. | RSS 2025 | 2025 | ✗ | ✗ | ✅ (project page) | ✅ | 3.5B VLA with Ego3D position encoding + adaptive action grids on PaliGemma2 |
-| [**TinyVLA**](https://arxiv.org/abs/2409.12514) | ECNU / Midea | AAAI 2025 | 2025 | ✗ | ✗ | ✗ (project page only) | ✗ | 1.3B VLA + diffusion decoder; matches 7B OpenVLA at 20x speed |
+| [**SimpleVLA-RL**](https://arxiv.org/abs/2509.09674) | — | ICLR | 2025 | ✗ | ✗ | [GitHub](https://github.com/PRIME-RL/SimpleVLA-RL) ✅ | ✗ | RL fine-tuning of VLA |
+| [**SpatialVLA**](https://arxiv.org/abs/2501.15830) | Shanghai AI Lab / Multi-inst. | RSS | 2025 | ✗ | ✗ | ✅ (project page) | ✅ | 3.5B VLA with Ego3D position encoding + adaptive action grids on PaliGemma2 |
+| [**TinyVLA**](https://arxiv.org/abs/2409.12514) | ECNU / Midea | AAAI | 2025 | ✗ | ✗ | ✗ (project page only) | ✗ | 1.3B VLA + diffusion decoder; matches 7B OpenVLA at 20x speed |
 | [**LLARVA**](https://arxiv.org/abs/2406.11815) | UC Berkeley | arXiv | 2024 | ✗ | ✗ | ✗ (project page only) | ✗ | Vision-action instruction tuning with 2D visual trace auxiliary task |
-| [**UniAct**](https://arxiv.org/abs/2501.10105) | Multi-inst. | CVPR 2025 | 2025 | Designed for diverse | ✗ | [GitHub](https://github.com/2toinf/UniAct) ✅ | ✗ | Universal action codebook |
+| [**UniAct**](https://arxiv.org/abs/2501.10105) | Multi-inst. | CVPR | 2025 | Designed for diverse | ✗ | [GitHub](https://github.com/2toinf/UniAct) ✅ | ✗ | Universal action codebook |
 
 ### 6.4 Visuomotor Policies (without language conditioning)
 
@@ -163,10 +163,10 @@ Influential visuomotor policies that do not use a VLM backbone but are widely ad
 
 | Paper | Group | Venue | Year | Dex Hand? | Force Output? | Open Code | Open Weights | Key Feature |
 |---|---|---|---|---|---|---|---|---|
-| [**Diffusion Policy**](https://arxiv.org/abs/2303.04137) | Columbia (Shuran Song) | RSS 2023 | 2023 | ✗ | ✗ | [GitHub](https://github.com/real-stanford/diffusion_policy) ✅ | ✗ | Foundational diffusion policy method |
-| [**ACT / ALOHA**](https://arxiv.org/abs/2304.13705) | Stanford (Tony Zhao) | RSS 2023 | 2023 | ✗ (gripper) | ✗ | [GitHub](https://github.com/tonyzhaozh/act) ✅ | ✗ | Action chunking transformer, bimanual teleop |
-| [**DP3**](https://arxiv.org/abs/2403.03954) | Tsinghua (Yanjie Ze) | RSS 2024 | 2024 | ✅ (sim) | ✗ | [GitHub](https://github.com/YanjieZe/3D-Diffusion-Policy) ✅ | ✗ | 3D point cloud diffusion, 72 tasks |
-| [**iDP3**](https://arxiv.org/abs/2410.10803) | Stanford/Tsinghua | IROS 2025 | 2025 | ✅ Inspire (25 DoF) | ✗ | [GitHub](https://github.com/YanjieZe/Improved-3D-Diffusion-Policy) ✅ | ✗ | Egocentric 3D on Fourier GR1 humanoid |
+| [**Diffusion Policy**](https://arxiv.org/abs/2303.04137) | Columbia (Shuran Song) | RSS | 2023 | ✗ | ✗ | [GitHub](https://github.com/real-stanford/diffusion_policy) ✅ | ✗ | Foundational diffusion policy method |
+| [**ACT / ALOHA**](https://arxiv.org/abs/2304.13705) | Stanford (Tony Zhao) | RSS | 2023 | ✗ (gripper) | ✗ | [GitHub](https://github.com/tonyzhaozh/act) ✅ | ✗ | Action chunking transformer, bimanual teleop |
+| [**DP3**](https://arxiv.org/abs/2403.03954) | Tsinghua (Yanjie Ze) | RSS | 2024 | ✅ (sim) | ✗ | [GitHub](https://github.com/YanjieZe/3D-Diffusion-Policy) ✅ | ✗ | 3D point cloud diffusion, 72 tasks |
+| [**iDP3**](https://arxiv.org/abs/2410.10803) | Stanford/Tsinghua | IROS | 2025 | ✅ Inspire (25 DoF) | ✗ | [GitHub](https://github.com/YanjieZe/Improved-3D-Diffusion-Policy) ✅ | ✗ | Egocentric 3D on Fourier GR1 humanoid |
 | [**DexWM**](https://arxiv.org/abs/2512.13644) | Meta FAIR / NYU | arXiv | 2025 | ✅ Allegro + Franka | ✗ | ✗ | ✗ | World model for dexterous hand-object interaction |
 
 ---
@@ -177,48 +177,48 @@ Influential visuomotor policies that do not use a VLM backbone but are widely ad
 
 | Paper | Group | Venue | Year | RL Algo | Hand (DoF) | Sim | Sim2Real | Objects | Code | Weights |
 |---|---|---|---|---|---|---|---|---|---|---|
-| [**CrossDex**](https://arxiv.org/abs/2410.02479) | PKU-RL | ICLR 2025 | 2025 | PPO + DAgger | 6 hands (Shadow, Allegro, LEAP, ...) | IsaacGym P4 | ✅ | 100 (YCB+GRAB) | [GitHub](https://github.com/PKU-RL/CrossDex) ✅ | Partial |
-| [**ResDex**](https://arxiv.org/abs/2410.01481) | PKU-RL | ICLR 2025 | 2025 | PPO + MoE + DAgger | Shadow (24) | IsaacGym P4 | ✗ | 3200, 88.8% | [GitHub](https://github.com/PKU-RL/ResDex) ✅ | Partial |
-| [**UniDexGrasp++**](https://arxiv.org/abs/2304.00464) | PKU-EPIC | ICCV 2023 | 2023 | PPO + DAgger | Shadow (24) | IsaacGym | ✗ | 3000+, 85.4% | [GitHub](https://github.com/PKU-EPIC/UniDexGrasp2) ✅ | ✅ state ckpt |
-| [**UniDexGrasp**](https://arxiv.org/abs/2303.00938) | PKU-EPIC | CVPR 2023 | 2023 | PPO (goal-conditioned) | Shadow (24) | IsaacGym | ✗ | 3000+, ~60% | [GitHub](https://github.com/PKU-EPIC/UniDexGrasp) ✅ | ✗ |
-| [**BODex**](https://arxiv.org/abs/2412.16490) | PKU-EPIC | ICRA 2025 | 2025 | Bilevel optimization | Shadow, Allegro, LEAP | cuRobo | ✅ 81% | 5355 | [GitHub](https://github.com/JYChen18/BODex) ✅ | Dataset on HF |
-| [**DexGrasp Anything**](https://arxiv.org/abs/2409.11159) | ShanghaiTech | CVPR 2025 Highlight | 2025 | Diffusion | Shadow | IsaacGym | ✗ | 15K+, 3.4M grasps | [GitHub](https://github.com/4DVLab/DexGrasp-Anything) ✅ | ✅ HF+GDrive |
-| [**DexGraspNet 2.0**](https://arxiv.org/abs/2410.15590) | PKU-EPIC | CoRL 2024 | 2024 | Diffusion | Shadow | IsaacGym | ✅ 90.7% | 1319, 426M grasps | [GitHub](https://github.com/PKU-EPIC/DexGraspNet2) ✅ | ✅ HF |
-| [**RobustDexGrasp**](https://arxiv.org/abs/2501.01771) | ETH Zurich | CoRL 2025 | 2025 | PPO + teacher-student | Allegro (16) + UR5 | RaiSim | ✅ 94.6% | 247K sim, 512 real | [GitHub](https://github.com/zdchan/RobustDexGrasp) ✅ | ✅ |
-| [**Dexonomy**](https://arxiv.org/abs/2504.01301) | PKU-EPIC | RSS 2025 | 2025 | Optimization | Shadow, Allegro, LEAP, Unitree G1 | MuJoCo + cuRobo | ✅ 82.3% | 10.7K, 31 types | [GitHub](https://github.com/JYChen18/Dexonomy) ✅ | HF |
-| [**UltraDexGrasp**](https://arxiv.org/abs/2603.05312) | InternRobotics | ICRA 2026 | 2026 | Multi-strategy | Multiple | BODex + cuRobo | ✅ 81.2% | 20M frames | [GitHub](https://github.com/InternRobotics/UltraDexGrasp) ✅ | ✗ |
-| [**DexPoint**](https://arxiv.org/abs/2211.09423) | UCSD | CoRL 2022 | 2022 | PPO (point cloud) | Allegro (16) | IsaacGym | ✅ | Category-level novel | [GitHub](https://github.com/yzqin/dexpoint-release) ✅ | ✗ |
+| [**CrossDex**](https://arxiv.org/abs/2410.02479) | PKU-RL | ICLR | 2025 | PPO + DAgger | 6 hands (Shadow, Allegro, LEAP, ...) | IsaacGym P4 | ✅ | 100 (YCB+GRAB) | [GitHub](https://github.com/PKU-RL/CrossDex) ✅ | Partial |
+| [**ResDex**](https://arxiv.org/abs/2410.01481) | PKU-RL | ICLR | 2025 | PPO + MoE + DAgger | Shadow (24) | IsaacGym P4 | ✗ | 3200, 88.8% | [GitHub](https://github.com/PKU-RL/ResDex) ✅ | Partial |
+| [**UniDexGrasp++**](https://arxiv.org/abs/2304.00464) | PKU-EPIC | ICCV | 2023 | PPO + DAgger | Shadow (24) | IsaacGym | ✗ | 3000+, 85.4% | [GitHub](https://github.com/PKU-EPIC/UniDexGrasp2) ✅ | ✅ state ckpt |
+| [**UniDexGrasp**](https://arxiv.org/abs/2303.00938) | PKU-EPIC | CVPR | 2023 | PPO (goal-conditioned) | Shadow (24) | IsaacGym | ✗ | 3000+, ~60% | [GitHub](https://github.com/PKU-EPIC/UniDexGrasp) ✅ | ✗ |
+| [**BODex**](https://arxiv.org/abs/2412.16490) | PKU-EPIC | ICRA | 2025 | Bilevel optimization | Shadow, Allegro, LEAP | cuRobo | ✅ 81% | 5355 | [GitHub](https://github.com/JYChen18/BODex) ✅ | Dataset on HF |
+| [**DexGrasp Anything**](https://arxiv.org/abs/2409.11159) | ShanghaiTech | CVPR Highlight | 2025 | Diffusion | Shadow | IsaacGym | ✗ | 15K+, 3.4M grasps | [GitHub](https://github.com/4DVLab/DexGrasp-Anything) ✅ | ✅ HF+GDrive |
+| [**DexGraspNet 2.0**](https://arxiv.org/abs/2410.15590) | PKU-EPIC | CoRL | 2024 | Diffusion | Shadow | IsaacGym | ✅ 90.7% | 1319, 426M grasps | [GitHub](https://github.com/PKU-EPIC/DexGraspNet2) ✅ | ✅ HF |
+| [**RobustDexGrasp**](https://arxiv.org/abs/2501.01771) | ETH Zurich | CoRL | 2025 | PPO + teacher-student | Allegro (16) + UR5 | RaiSim | ✅ 94.6% | 247K sim, 512 real | [GitHub](https://github.com/zdchan/RobustDexGrasp) ✅ | ✅ |
+| [**Dexonomy**](https://arxiv.org/abs/2504.01301) | PKU-EPIC | RSS | 2025 | Optimization | Shadow, Allegro, LEAP, Unitree G1 | MuJoCo + cuRobo | ✅ 82.3% | 10.7K, 31 types | [GitHub](https://github.com/JYChen18/Dexonomy) ✅ | HF |
+| [**UltraDexGrasp**](https://arxiv.org/abs/2603.05312) | InternRobotics | ICRA | 2026 | Multi-strategy | Multiple | BODex + cuRobo | ✅ 81.2% | 20M frames | [GitHub](https://github.com/InternRobotics/UltraDexGrasp) ✅ | ✗ |
+| [**DexPoint**](https://arxiv.org/abs/2211.09423) | UCSD | CoRL | 2022 | PPO (point cloud) | Allegro (16) | IsaacGym | ✅ | Category-level novel | [GitHub](https://github.com/yzqin/dexpoint-release) ✅ | ✗ |
 | [**AnyGrasp**](https://arxiv.org/abs/2212.08333) | SJTU (Cewu Lu) | IEEE T-RO | 2023 | Supervised (GSNet) | Parallel-jaw gripper | GraspNet-1B | ✅ 93.3% | 300+ unseen, >900 picks/hr | [SDK](https://github.com/graspnet/anygrasp_sdk) (license) | ✗ | Upstream grasp detection (parallel-jaw). Included as widely-used perception module upstream of dexterous VLA pipelines. |
-| [**DextrAH-G/RGB**](https://arxiv.org/abs/2407.02274) | NVIDIA | CoRL 2024 | 2024 | PPO + geometric fabrics | Allegro (16) + Kuka | Isaac Lab | ✅ | Multi-object | [GitHub](https://github.com/NVlabs/DEXTRAH) ✅ | ✗ |
+| [**DextrAH-G/RGB**](https://arxiv.org/abs/2407.02274) | NVIDIA | CoRL | 2024 | PPO + geometric fabrics | Allegro (16) + Kuka | Isaac Lab | ✅ | Multi-object | [GitHub](https://github.com/NVlabs/DEXTRAH) ✅ | ✗ |
 
 ### 7.2 In-Hand Manipulation / Reorientation
 
 | Paper | Group | Venue | Year | Hand (DoF) | Sim | Sim2Real | Code | Weights |
 |---|---|---|---|---|---|---|---|---|
 | [**Dactyl**](https://arxiv.org/abs/1808.00177) | OpenAI | arXiv 2018 / IJRR 2020 | 2018 | Shadow (24) | MuJoCo | ✅ (ADR) | ✗ | ✗ |
-| [**Hora**](https://arxiv.org/abs/2210.04887) | Berkeley/Meta | CoRL 2022 | 2022 | Allegro (16) | IsaacGym P4 | ✅ | [GitHub](https://github.com/HaozhiQi/hora) ✅ | ✅ |
-| [**Rotating w/o Seeing**](https://arxiv.org/abs/2303.10880) | UCSD | RSS 2023 | 2023 | Allegro (16) + binary tactile | IsaacGym | ✅ | [Page](https://touchdexterity.github.io) | ✗ |
-| [**General In-Hand Rotation**](https://arxiv.org/abs/2309.09979) | Berkeley/Meta | CoRL 2023 | 2023 | Allegro (16) + DIGIT | IsaacGym | ✅ | (in hora repo) | ✗ |
-| [**RotateIt**](https://arxiv.org/abs/2309.02388) | Berkeley/Meta/CMU | CoRL 2023 | 2023 | Allegro (16) + DIGIT | IsaacGym | ✅ | (in hora repo) | ✗ |
-| [**AnyRotate**](https://arxiv.org/abs/2405.07391) | U. Bristol | CoRL 2024 | 2024 | Allegro (16) + tactile | IsaacGym | ✅ | ✗ | ✗ |
+| [**Hora**](https://arxiv.org/abs/2210.04887) | Berkeley/Meta | CoRL | 2022 | Allegro (16) | IsaacGym P4 | ✅ | [GitHub](https://github.com/HaozhiQi/hora) ✅ | ✅ |
+| [**Rotating w/o Seeing**](https://arxiv.org/abs/2303.10880) | UCSD | RSS | 2023 | Allegro (16) + binary tactile | IsaacGym | ✅ | [Page](https://touchdexterity.github.io) | ✗ |
+| [**General In-Hand Rotation**](https://arxiv.org/abs/2309.09979) | Berkeley/Meta | CoRL | 2023 | Allegro (16) + DIGIT | IsaacGym | ✅ | (in hora repo) | ✗ |
+| [**RotateIt**](https://arxiv.org/abs/2309.02388) | Berkeley/Meta/CMU | CoRL | 2023 | Allegro (16) + DIGIT | IsaacGym | ✅ | (in hora repo) | ✗ |
+| [**AnyRotate**](https://arxiv.org/abs/2405.07391) | U. Bristol | CoRL | 2024 | Allegro (16) + tactile | IsaacGym | ✅ | ✗ | ✗ |
 | [**Visual Dexterity**](https://arxiv.org/abs/2211.11744) | MIT CSAIL | Science Robotics | 2023 | D'Claw (9/12) | IsaacGym P3 | ✅ | [GitHub](https://github.com/Improbable-AI/dexenv) ✅ | ✅ |
-| [**DeXtreme**](https://arxiv.org/abs/2210.13702) | NVIDIA | ICRA 2023 | 2023 | Allegro (16) | IsaacGym | ✅ | In IsaacGymEnvs ✅ | ✗ |
-| [**DexPBT**](https://arxiv.org/abs/2305.12127) | NVIDIA | RSS 2023 | 2023 | Allegro (16) + Kuka | IsaacGym | ✗ | In IsaacGymEnvs ✅ | ✗ |
-| [**SAPG**](https://arxiv.org/abs/2407.04890) | CMU | ICML 2024 Oral | 2024 | Allegro/Shadow (16-46) | IsaacGym P4 | ✗ | [GitHub](https://github.com/jayeshs999/sapg) ✅ | ✗ |
-| [**DexHandDiff**](https://arxiv.org/abs/2411.18562) | HKU/Berkeley | CVPR 2025 | 2025 | Shadow | Adroit (MuJoCo) | ✗ | [GitHub](https://github.com/Liang-ZX/DexHandDiff) ✅ | ✅ HF |
+| [**DeXtreme**](https://arxiv.org/abs/2210.13702) | NVIDIA | ICRA | 2023 | Allegro (16) | IsaacGym | ✅ | In IsaacGymEnvs ✅ | ✗ |
+| [**DexPBT**](https://arxiv.org/abs/2305.12127) | NVIDIA | RSS | 2023 | Allegro (16) + Kuka | IsaacGym | ✗ | In IsaacGymEnvs ✅ | ✗ |
+| [**SAPG**](https://arxiv.org/abs/2407.04890) | CMU | ICML Oral | 2024 | Allegro/Shadow (16-46) | IsaacGym P4 | ✗ | [GitHub](https://github.com/jayeshs999/sapg) ✅ | ✗ |
+| [**DexHandDiff**](https://arxiv.org/abs/2411.18562) | HKU/Berkeley | CVPR | 2025 | Shadow | Adroit (MuJoCo) | ✗ | [GitHub](https://github.com/Liang-ZX/DexHandDiff) ✅ | ✅ HF |
 
 ### 7.3 Long-Horizon / Multi-Stage / Contact-Rich
 
 | Paper | Group | Venue | Year | Hand (DoF) | Tasks | Sim | Sim2Real | Code | Weights |
 |---|---|---|---|---|---|---|---|---|---|
-| [**SeqDex**](https://arxiv.org/abs/2309.00987) | Stanford | CoRL 2023 | 2023 | Allegro (16) | Chained policies (search→orient→grasp→insert) | IsaacGym | ✅ | [GitHub](https://github.com/sequential-dexterity/SeqDex) ✅ | ✅ |
-| [**Bi-DexHands**](https://arxiv.org/abs/2206.08686) | PKU-MARL | NeurIPS 2022 | 2022 | 2x Shadow (48) | 16+ bimanual tasks | IsaacGym | ✗ | [GitHub](https://github.com/PKU-MARL/DexterousHands) ✅ | ✅ |
-| [**DexArt**](https://arxiv.org/abs/2305.05706) | UCSD | CVPR 2023 | 2023 | Allegro (16) | 4 articulated object tasks | SAPIEN | ✗ | [GitHub](https://github.com/Kami-code/dexart-release) ✅ | ✅ |
-| [**TCDM**](https://arxiv.org/abs/2209.11221) | Meta | ICRA 2023 | 2023 | 3 hand platforms | 50 tasks, 34 objects | MuJoCo | ✗ | [GitHub](https://github.com/facebookresearch/TCDM) ✅ | ✅ |
-| [**VTDexManip**](https://arxiv.org/abs/2501.01370) | - | ICLR 2025 | 2025 | Multi-finger (sim) | 6 tasks (bottle cap, faucet, reorientation) | IsaacGym | ✗ | [GitHub](https://github.com/LQTS/VTDexManip) ✅ | ✅ 18 models |
-| [**DexGarmentLab**](https://arxiv.org/abs/2503.18693) | Multi-inst. | NeurIPS 2025 Spotlight | 2025 | Bimanual dex | 15 garment tasks, 2500+ garments | IsaacSim | ✗ | [GitHub](https://github.com/wayrise/DexGarmentLab) ✅ | ✗ |
-| [**Contact Trust Region**](https://arxiv.org/abs/2505.02291) | MIT CSAIL (Tedrake) | IJRR 2025 | 2025 | Allegro (16) | Contact-rich MPC | Drake | ✗ | ✗ | ✗ |
-| [**Complementarity-Free**](https://arxiv.org/abs/2408.07855) | MIT CSAIL (Pang, Tedrake) | RSS 2025 | 2024 | Allegro (16) | Closed-form differentiable contact, 50-100 Hz MPC | Drake | ✗ | ✗ | ✗ |
+| [**SeqDex**](https://arxiv.org/abs/2309.00987) | Stanford | CoRL | 2023 | Allegro (16) | Chained policies (search→orient→grasp→insert) | IsaacGym | ✅ | [GitHub](https://github.com/sequential-dexterity/SeqDex) ✅ | ✅ |
+| [**Bi-DexHands**](https://arxiv.org/abs/2206.08686) | PKU-MARL | NeurIPS | 2022 | 2x Shadow (48) | 16+ bimanual tasks | IsaacGym | ✗ | [GitHub](https://github.com/PKU-MARL/DexterousHands) ✅ | ✅ |
+| [**DexArt**](https://arxiv.org/abs/2305.05706) | UCSD | CVPR | 2023 | Allegro (16) | 4 articulated object tasks | SAPIEN | ✗ | [GitHub](https://github.com/Kami-code/dexart-release) ✅ | ✅ |
+| [**TCDM**](https://arxiv.org/abs/2209.11221) | Meta | ICRA | 2023 | 3 hand platforms | 50 tasks, 34 objects | MuJoCo | ✗ | [GitHub](https://github.com/facebookresearch/TCDM) ✅ | ✅ |
+| [**VTDexManip**](https://arxiv.org/abs/2501.01370) | - | ICLR | 2025 | Multi-finger (sim) | 6 tasks (bottle cap, faucet, reorientation) | IsaacGym | ✗ | [GitHub](https://github.com/LQTS/VTDexManip) ✅ | ✅ 18 models |
+| [**DexGarmentLab**](https://arxiv.org/abs/2503.18693) | Multi-inst. | NeurIPS Spotlight | 2025 | Bimanual dex | 15 garment tasks, 2500+ garments | IsaacSim | ✗ | [GitHub](https://github.com/wayrise/DexGarmentLab) ✅ | ✗ |
+| [**Contact Trust Region**](https://arxiv.org/abs/2505.02291) | MIT CSAIL (Tedrake) | IJRR | 2025 | Allegro (16) | Contact-rich MPC | Drake | ✗ | ✗ | ✗ |
+| [**Complementarity-Free**](https://arxiv.org/abs/2408.07855) | MIT CSAIL (Pang, Tedrake) | RSS | 2024 | Allegro (16) | Closed-form differentiable contact, 50-100 Hz MPC | Drake | ✗ | ✗ | ✗ |
 | [**ComFree-Sim**](https://arxiv.org/abs/2603.12185) | — | arXiv | 2026 | LEAP Hand | GPU-parallel contact MPC on NVIDIA Warp | Custom (Warp) | ✗ | ✗ | ✗ |
 
 Note: IndustReal (NVIDIA, RSS 2023) also addresses contact-rich assembly with RL; see §5 for details.
@@ -227,19 +227,19 @@ Note: IndustReal (NVIDIA, RSS 2023) also addresses contact-rich assembly with RL
 
 | Paper | Group | Venue | Year | Hand (DoF) | Tasks | Sim2Real | Code |
 |---|---|---|---|---|---|---|---|
-| [**DQ-RISE**](https://arxiv.org/abs/2503.01766) | SJTU | ICRA 2026 | 2026 | OyMotion RoHand + Flexiv Rizon 4 | 6 real tasks, 85.83% | ✅ | [GitHub](https://github.com/rise-policy/DQ-RISE) ✅ |
-| [**DexTrack**](https://arxiv.org/abs/2501.15760) | PKU/Shanghai AI | ICLR 2025 | 2025 | Shadow (24), Allegro (16) | MoCap tracking | ✗ | [GitHub](https://github.com/Meowuu7/DexTrack) partial |
+| [**DQ-RISE**](https://arxiv.org/abs/2503.01766) | SJTU | ICRA | 2026 | OyMotion RoHand + Flexiv Rizon 4 | 6 real tasks, 85.83% | ✅ | [GitHub](https://github.com/rise-policy/DQ-RISE) ✅ |
+| [**DexTrack**](https://arxiv.org/abs/2501.15760) | PKU/Shanghai AI | ICLR | 2025 | Shadow (24), Allegro (16) | MoCap tracking | ✗ | [GitHub](https://github.com/Meowuu7/DexTrack) partial |
 | [**BiDexHD**](https://arxiv.org/abs/2501.09821) | PKU | arXiv | 2025 | 2x Shadow (48) | 141 bimanual tasks (TACO) | ✗ | ✗ |
 | [**HandelBot**](https://arxiv.org/abs/2603.12243) | Stanford | arXiv | 2026 | LEAP (16) bimanual | Real piano playing | ✅ | [GitHub](https://github.com/amberxie88/handelbot) ✅ |
 | [**DexDrummer**](https://arxiv.org/abs/2603.22263) | Stanford | arXiv | 2026 | Bimanual dexterous | Drumming (contact-rich) | ✗ | [GitHub](https://github.com/hc-fang/dexdrummer) ✅ |
-| [**RoboPianist**](https://arxiv.org/abs/2304.04150) | Google/Berkeley | CoRL 2023 | 2023 | Anthropomorphic bimanual | Piano (150 pieces) | ✗ | [GitHub](https://github.com/google-research/robopianist) ✅ |
-| [**DemoStart**](https://arxiv.org/abs/2409.06613) | Google DeepMind | ICRA 2025 | 2024 | DEX-EE (3-finger) | Plug insertion, cube reorientation | ✅ | ✗ |
+| [**RoboPianist**](https://arxiv.org/abs/2304.04150) | Google/Berkeley | CoRL | 2023 | Anthropomorphic bimanual | Piano (150 pieces) | ✗ | [GitHub](https://github.com/google-research/robopianist) ✅ |
+| [**DemoStart**](https://arxiv.org/abs/2409.06613) | Google DeepMind | ICRA | 2024 | DEX-EE (3-finger) | Plug insertion, cube reorientation | ✅ | ✗ |
 | **Closing Reality Gap** | - | arXiv | 2026 | 5-finger hand | Force-controlled grasping | ✅ zero-shot | ✗ |
-| [**Maniwhere**](https://arxiv.org/abs/2407.15815) | Shanghai AI Lab | CoRL 2024 | 2024 | Allegro (16) | 8 tasks, visual generalization | ✅ | [GitHub](https://github.com/gemcollector/maniwhere) ✅ |
-| [**Eureka**](https://arxiv.org/abs/2310.12931) | NVIDIA | ICLR 2024 | 2024 | Shadow (24, sim) | LLM-generated rewards, pen spinning | ✗ | [GitHub](https://github.com/eureka-research/Eureka) ✅ |
-| [**DrEureka**](https://arxiv.org/abs/2406.01967) | NVIDIA | RSS 2024 | 2024 | Shadow (sim) + quadruped | LLM-guided DR, sim2real | ✅ | [GitHub](https://github.com/eureka-research/DrEureka) ✅ |
-| [**DexMV**](https://arxiv.org/abs/2108.05877) | UCSD | ECCV 2022 | 2022 | Adroit (30, sim) | IL from human video (pour, place, relocate) | ✗ | [GitHub](https://github.com/yzqin/dexmv-sim) ✅ |
-| [**CyberDemo**](https://arxiv.org/abs/2402.14795) | UCSD | CVPR 2024 | 2024 | Allegro (16) | Augmented sim demos, valve rotation | ✅ | [GitHub](https://github.com/wang59695487/CyberDemo) ✅ |
+| [**Maniwhere**](https://arxiv.org/abs/2407.15815) | Shanghai AI Lab | CoRL | 2024 | Allegro (16) | 8 tasks, visual generalization | ✅ | [GitHub](https://github.com/gemcollector/maniwhere) ✅ |
+| [**Eureka**](https://arxiv.org/abs/2310.12931) | NVIDIA | ICLR | 2024 | Shadow (24, sim) | LLM-generated rewards, pen spinning | ✗ | [GitHub](https://github.com/eureka-research/Eureka) ✅ |
+| [**DrEureka**](https://arxiv.org/abs/2406.01967) | NVIDIA | RSS | 2024 | Shadow (sim) + quadruped | LLM-guided DR, sim2real | ✅ | [GitHub](https://github.com/eureka-research/DrEureka) ✅ |
+| [**DexMV**](https://arxiv.org/abs/2108.05877) | UCSD | ECCV | 2022 | Adroit (30, sim) | IL from human video (pour, place, relocate) | ✗ | [GitHub](https://github.com/yzqin/dexmv-sim) ✅ |
+| [**CyberDemo**](https://arxiv.org/abs/2402.14795) | UCSD | CVPR | 2024 | Allegro (16) | Augmented sim demos, valve rotation | ✅ | [GitHub](https://github.com/wang59695487/CyberDemo) ✅ |
 
 ---
 
@@ -307,15 +307,15 @@ Note: IndustReal (NVIDIA, RSS 2023) also addresses contact-rich assembly with RL
 
 | Benchmark | Venue | Year | Dex Hand | Sim Platform | Key Feature | Install |
 |---|---|---|---|---|---|---|
-| [**ManiSkill3**](https://arxiv.org/abs/2410.00425) | RSS 2025 | 2025 | Allegro, DClaw | SAPIEN (GPU) | 430x faster, RL/IL/VLA baselines | `pip install mani-skill` |
-| **MuJoCo Playground** | RSS 2025 demo | 2025 | LEAP Hand | MuJoCo | Train in minutes, zero-shot sim2real | `pip install playground` |
+| [**ManiSkill3**](https://arxiv.org/abs/2410.00425) | RSS | 2025 | Allegro, DClaw | SAPIEN (GPU) | 430x faster, RL/IL/VLA baselines | `pip install mani-skill` |
+| **MuJoCo Playground** | RSS demo | 2025 | LEAP Hand | MuJoCo | Train in minutes, zero-shot sim2real | `pip install playground` |
 | **MuJoCo Manipulus** | 2025 | 2025 | Tool manipulation | MuJoCo | 16 tool use tasks | Open source |
-| **Adroit** | RSS 2018 | 2018 | Shadow (24) | MuJoCo | Standard RL baseline | `pip install gymnasium-robotics` |
+| **Adroit** | RSS | 2018 | Shadow (24) | MuJoCo | Standard RL baseline | `pip install gymnasium-robotics` |
 | **Genesis** | Dec 2024 | 2024 | Any URDF | Genesis | 430Kx real-time, differentiable | `pip install genesis-world` |
-| **DiffTactile** | ICLR 2024 | 2024 | Multi-finger | Custom | Differentiable FEM tactile sim | [GitHub](https://github.com/Genesis-Embodied-AI/DiffTactile) |
+| **DiffTactile** | ICLR | 2024 | Multi-finger | Custom | Differentiable FEM tactile sim | [GitHub](https://github.com/Genesis-Embodied-AI/DiffTactile) |
 | **TeleOpBench** | 2025 | 2025 | 3 humanoids | Isaac Sim | 30 tasks, 4 teleop modalities | [GitHub](https://github.com/cyjdlhy/TeleOpBench) |
-| [**Isaac Lab**](https://isaac-sim.github.io/IsaacLab/) | RA-L 2023 / 2024 | 2024 | Allegro, Shadow, any URDF | Isaac Sim (PhysX 5) | IsaacGym successor, GPU-parallel, RTX rendering | `pip install isaaclab` |
-| [**TACTO**](https://github.com/facebookresearch/tacto) | RA-L 2022 | 2022 | Gripper (DIGIT/GelSight sim) | PyBullet + PyRender | Vision-based tactile sensor simulator | `pip install tacto` |
+| [**Isaac Lab**](https://isaac-sim.github.io/IsaacLab/) | RA-L / 2024 | 2024 | Allegro, Shadow, any URDF | Isaac Sim (PhysX 5) | IsaacGym successor, GPU-parallel, RTX rendering | `pip install isaaclab` |
+| [**TACTO**](https://github.com/facebookresearch/tacto) | RA-L | 2022 | Gripper (DIGIT/GelSight sim) | PyBullet + PyRender | Vision-based tactile sensor simulator | `pip install tacto` |
 
 ---
 
@@ -323,17 +323,17 @@ Note: IndustReal (NVIDIA, RSS 2023) also addresses contact-rich assembly with RL
 
 | System | Group | Venue | Year | Input | Target Hand | Force Feedback | Cost | Code |
 |---|---|---|---|---|---|---|---|---|
-| [**DexCap**](https://arxiv.org/abs/2403.07788) | Stanford | RSS 2024 | 2024 | SLAM + electromagnetic | LEAP Hand | ✗ | ~$2K | [GitHub](https://github.com/j96w/DexCap) ✅ |
+| [**DexCap**](https://arxiv.org/abs/2403.07788) | Stanford | RSS | 2024 | SLAM + electromagnetic | LEAP Hand | ✗ | ~$2K | [GitHub](https://github.com/j96w/DexCap) ✅ |
 | [**BunnyVisionPro**](https://arxiv.org/abs/2407.03162) | HKU / UCSD | arXiv | 2024 | Apple Vision Pro | Bimanual dex | Low-cost haptic | ~$3.5K+ | [GitHub](https://github.com/Dingry/BunnyVisionPro) ✅ |
-| **AnyTeleop** | UCSD | RSS 2023 | 2023 | Vision (camera) | Multiple | ✗ | Low | Project page |
-| [**DOGlove**](https://arxiv.org/abs/2505.14635) | TEA Lab | RSS 2025 | 2025 | Haptic glove | Any dex hand | ✅ 5-DoF | <$600 | [GitHub](https://github.com/TEA-Lab/DOGlove) ✅ |
+| **AnyTeleop** | UCSD | RSS | 2023 | Vision (camera) | Multiple | ✗ | Low | Project page |
+| [**DOGlove**](https://arxiv.org/abs/2505.14635) | TEA Lab | RSS | 2025 | Haptic glove | Any dex hand | ✅ 5-DoF | <$600 | [GitHub](https://github.com/TEA-Lab/DOGlove) ✅ |
 | [**DEXOP**](https://arxiv.org/abs/2509.04441) | Stanford | arXiv | 2025 | Passive exoskeleton | Any dex hand | ✅ proprioceptive | - | [Page](https://dex-op.github.io/) |
 | [**DEX-Mouse**](https://arxiv.org/abs/2604.15013) | - | arXiv | 2026 | Handheld interface | Universal | ✅ kinesthetic | <$150 | Open-sourced |
 | [**Open TeleDex**](https://arxiv.org/abs/2510.14771) | - | arXiv | 2025 | Phone-based | Any arm + hand | ✗ | Very low | [GitHub](https://github.com/omarrayyann/TeleDex) ✅ |
-| [**OmniH2O**](https://arxiv.org/abs/2406.08858) | CMU LeCAR | CoRL 2024 | 2024 | VR/voice/RGB | Humanoid | ✗ | - | [GitHub](https://github.com/LeCAR-Lab/human2humanoid) ✅ |
-| [**Open-TeleVision**](https://arxiv.org/abs/2407.10107) | UCSD | CoRL 2024 | 2024 | Stereo VR | Bimanual dex | ✗ | - | [GitHub](https://github.com/OpenTeleVision/TeleVision) ✅ |
-| [**HATO**](https://arxiv.org/abs/2404.16823) | UC Berkeley | ICRA 2024 | 2024 | Meta Quest 2 VR | 2x Psyonic Ability Hand (6 DoF) + touch sensors | ✗ (touch on robot only) | Low (VR + prosthetic hands) | [GitHub](https://toruowo.github.io/hato/) ✅ |
-| [**DexPilot**](https://arxiv.org/abs/1910.03135) | NVIDIA | ICRA 2020 | 2020 | Vision (bare hand, single RGB camera) | Allegro (16) + Kuka IIWA | ✗ | Very low (camera only) | [Page](https://sites.google.com/view/dex-pilot) |
+| [**OmniH2O**](https://arxiv.org/abs/2406.08858) | CMU LeCAR | CoRL | 2024 | VR/voice/RGB | Humanoid | ✗ | - | [GitHub](https://github.com/LeCAR-Lab/human2humanoid) ✅ |
+| [**Open-TeleVision**](https://arxiv.org/abs/2407.10107) | UCSD | CoRL | 2024 | Stereo VR | Bimanual dex | ✗ | - | [GitHub](https://github.com/OpenTeleVision/TeleVision) ✅ |
+| [**HATO**](https://arxiv.org/abs/2404.16823) | UC Berkeley | ICRA | 2024 | Meta Quest 2 VR | 2x Psyonic Ability Hand (6 DoF) + touch sensors | ✗ (touch on robot only) | Low (VR + prosthetic hands) | [GitHub](https://toruowo.github.io/hato/) ✅ |
+| [**DexPilot**](https://arxiv.org/abs/1910.03135) | NVIDIA | ICRA | 2020 | Vision (bare hand, single RGB camera) | Allegro (16) + Kuka IIWA | ✗ | Very low (camera only) | [Page](https://sites.google.com/view/dex-pilot) |
 
 ---
 
@@ -356,10 +356,10 @@ Note: IndustReal (NVIDIA, RSS 2023) also addresses contact-rich assembly with RL
 
 | Model | Group | Venue | Year | Key Feature | Code |
 |---|---|---|---|---|---|
-| **Sparsh** | Meta FAIR/CMU | CoRL 2024 | 2024 | SSL cross-sensor tactile encoder, TacBench 5-task benchmark | [GitHub](https://github.com/facebookresearch/sparsh) ✅, weights ✅ |
-| **UniTouch** | UCSD | CVPR 2024 | 2024 | Unified touch-vision-language-sound alignment | [GitHub](https://github.com/cfeng16/UniTouch) ✅, weights ✅ |
-| **AnyTouch** | Renmin Univ | ICLR 2025 | 2025 | Cross-sensor SSL with TacQuad 4-sensor dataset | [GitHub](https://github.com/GeWu-Lab/AnyTouch) ✅, weights ✅ |
-| **NeuralFeels** | Meta FAIR | Science Robotics 2024 | 2024 | Neural field for Allegro+DIGIT in-hand tracking | [GitHub](https://github.com/facebookresearch/neuralfeels) ✅ |
+| **Sparsh** | Meta FAIR/CMU | CoRL | 2024 | SSL cross-sensor tactile encoder, TacBench 5-task benchmark | [GitHub](https://github.com/facebookresearch/sparsh) ✅, weights ✅ |
+| **UniTouch** | UCSD | CVPR | 2024 | Unified touch-vision-language-sound alignment | [GitHub](https://github.com/cfeng16/UniTouch) ✅, weights ✅ |
+| **AnyTouch** | Renmin Univ | ICLR | 2025 | Cross-sensor SSL with TacQuad 4-sensor dataset | [GitHub](https://github.com/GeWu-Lab/AnyTouch) ✅, weights ✅ |
+| **NeuralFeels** | Meta FAIR | Science Robotics | 2024 | Neural field for Allegro+DIGIT in-hand tracking | [GitHub](https://github.com/facebookresearch/neuralfeels) ✅ |
 
 ---
 

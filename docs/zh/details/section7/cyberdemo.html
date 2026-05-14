@@ -1,0 +1,59 @@
+<h3 class="dp-h3">7.4 CyberDemo</h3>
+<p class="dp-p"><strong>完整标题：</strong> CyberDemo: Augmenting Simulated Human Demonstration for Real-World Dexterous Manipulation</p>
+<p class="dp-p"><strong>作者：</strong> Jun Wang, Yuzhe Qin, Kaiming Kuang, Yigit Korkmaz, Akhilan Gurumoorthy, Hao Su, Xiaolong Wang</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CVPR 2024</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2402.14795</p>
+<p class="dp-p"><strong>RL算法：</strong> 模仿学习（行为克隆），从增强的仿真演示。使用重定向到仿真中机器人手的人手演示，然后进行广泛的域随机化增强。</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）用于真实世界部署</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym / SAPIEN（用于仿真环境和演示增强）</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是。核心贡献是通过增强仿真演示实现仿真到真实迁移。演示从人手运动收集，在仿真中重定向到Allegro Hand，然后通过物体姿态、光照、物理属性和相机视角的变化进行增强。在增强仿真数据上训练的策略迁移到真实Allegro Hand。</p>
+<p class="dp-p"><strong>任务：</strong> 灵巧操作包括阀门旋转（三阀、四阀、五阀）和其他物体操作任务。在不同几何和物理属性的物体上测试，包括训练期间未见的新颖物体。</p>
+<p class="dp-p"><strong>核心方法论：</strong> 通过利用仿真进行数据增强来解决真实世界灵巧操作的数据瓶颈。(1) 收集操作任务的人类演示。(2) 在仿真中将人手运动重定向到Allegro Hand。(3) 通过变化物体几何、纹理、姿态、物理参数和相机视角在仿真中大规模增强演示。(4) 在增强数据集上训练视觉运动策略（行为克隆）。关键发现是增强仿真演示在策略训练中优于真实世界演示，因为仿真能实现比真实数据收集多数个数量级的多样性。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>展示增强仿真演示在灵巧操作策略训练中超越真实世界演示</li>
+<li>仿真中的广泛数据增强流程（几何、纹理、姿态、物理、视角变化）</li>
+<li>在Allegro Hand上成功实现阀门旋转和操作任务的仿真到真实迁移</li>
+<li>泛化至训练期间未见的新颖物体，包括不同阀门配置</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>仿真演示 vs 真实演示</td>
+<td>仿真增强演示优于真实演示</td>
+</tr>
+<tr>
+<td>真实世界手部</td>
+<td>Allegro Hand（16自由度）</td>
+</tr>
+<tr>
+<td>新颖物体泛化</td>
+<td>是（未见阀门类型）</td>
+</tr>
+<tr>
+<td>任务</td>
+<td>阀门旋转（三/四/五阀）、操作</td>
+</tr>
+<tr>
+<td>仿真到真实</td>
+<td>通过增强演示零样本迁移</td>
+</tr>
+</tbody></table></div>
+<blockquote class="dp-quote">具体逐任务成功率未在此条目中报告；详细数字请参阅论文。</blockquote>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li><strong>力控：</strong> 无力传感或阻抗控制；基于位置的模仿学习</li>
+<li><strong>VLA/语言：</strong> 无语言条件或VLA骨干</li>
+<li><strong>仿真到真实：</strong> 增强有帮助但接触动力学的仿真到真实差距仍存在；高度接触敏感任务的性能未广泛评估</li>
+<li><strong>代码：</strong> <a href="https://github.com/wang59695487/CyberDemo" target="_blank" rel="noopener">GitHub</a> 可用</li>
+<li><strong>可扩展性：</strong> 需要人类演示收集作为种子；增强是自动化的但种子收集是手动的</li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。行为克隆策略（MLP/CNN）每次前向传播 <5ms。</li>
+<li><strong>部署硬件：</strong> Allegro Hand（16自由度）用于真实世界部署。策略在IsaacGym/SAPIEN中增强仿真演示上训练；通过零样本仿真到真实迁移部署。</li>
+<li><strong>支持实时？</strong> 是。轻量模仿学习策略支持真实Allegro Hand上的实时控制。</li>
+</ul>

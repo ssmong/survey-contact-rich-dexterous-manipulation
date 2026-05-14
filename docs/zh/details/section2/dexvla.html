@@ -1,0 +1,235 @@
+<h3 class="dp-h3">2.3 DexVLA</h3>
+<p class="dp-p"><strong>全称：</strong> DexVLA: Vision-Language Model with Plug-In Diffusion Expert for Dexterous Manipulation</p>
+<p class="dp-p"><strong>作者：</strong> Junjie Wen, Yichen Zhu, Jinming Li, Zhibin Tang, Chaomin Shen, Feifei Feng</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CoRL 2025</p>
+<p class="dp-p"><strong>arXiv：</strong> <a href="https://arxiv.org/abs/2502.05855" target="_blank" rel="noopener">2502.05855</a></p>
+<p class="dp-p"><strong>手部硬件：</strong> Inspired Dexterous Hand（6自由度手部关节），安装在 Franka Emika 机械臂上。动作空间为12维：SE(3) 末端执行器位姿（3D位置 + 3D姿态）加6D手部关节空间。跨本体评估还涵盖单臂夹爪和双臂 UR5e 设置。</p>
+<p class="dp-p"><strong>任务：</strong></p>
+<ul class="dp-list">
+<li>通过课程学习的灵巧技能习得</li>
+<li>多指操作任务</li>
+<li>灵巧手抓取-放置</li>
+<li>手内操作</li>
+</ul>
+<p class="dp-p"><strong>核心方法：</strong> DexVLA 引入了一种插件式架构，将10亿参数的扩散专家附加到冻结的视觉-语言模型上。VLM 骨干提供视觉理解和语言锚定，同时在灵巧训练期间保持冻结。扩散专家基于 VLM 的潜在表征生成高维灵巧手动作。这种设计避免了 VLM 预训练知识的灾难性遗忘，同时实现精确的灵巧控制。课程学习策略逐步增加任务难度。</p>
+<p class="dp-p"><strong>架构/参数：</strong></p>
+<ul class="dp-list">
+<li>VLM 骨干：冻结的预训练视觉-语言模型（骨干规模在摘要层面未公开指定）</li>
+<li>动作头：ScaleDP（可扩展扩散策略），提供两种变体：</li>
+<li>ScaleDP-H（大型变体）</li>
+<li>ScaleDP-L（轻量变体）</li>
+<li>扩散专家约10亿参数</li>
+<li>ScaleDP-H 和 ScaleDP-L 检查点均在 HuggingFace 上提供</li>
+</ul>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>插件式扩散专家架构：10亿参数扩散模型附加到冻结 VLM，在不损害 VLM 预训练能力的情况下实现灵巧操作（此声称在本条目中未经独立验证）</li>
+<li>ScaleDP（可扩展扩散策略）：为高维灵巧动作空间设计的可扩展扩散动作生成模块，具有大型（H）和轻量（L）两种变体</li>
+<li>基于课程的训练策略，逐步增加灵巧任务复杂度，提升样本效率和最终性能</li>
+</ul>
+<p class="dp-p"><strong>局限性/不足：</strong></p>
+<ul class="dp-list">
+<li>仅输出位置目标；无力、阻抗或柔顺性输出</li>
+<li>10亿参数扩散专家在冻结 VLM 之上增加了显著的计算开销</li>
+<li>跨不同灵巧手型的评估并非主要关注点（不同于 UniDex-VLA 的8种手评估）</li>
+<li>无触觉或力/力矩传感器集成</li>
+<li>与仿真相比，真实世界评估范围较窄</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong></p>
+<p class="dp-p"><strong>LIBERO 基准测试（Spatial / Object / Goal 套件平均值）：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>方法</th>
+<th>Spatial</th>
+<th>Object</th>
+<th>Goal</th>
+<th>平均</th>
+</tr></thead><tbody>
+<tr>
+<td>Diffusion Policy</td>
+<td>78.3</td>
+<td>92.5</td>
+<td>68.3</td>
+<td>79.7</td>
+</tr>
+<tr>
+<td>OpenVLA</td>
+<td>84.7</td>
+<td>88.4</td>
+<td>79.2</td>
+<td>84.1</td>
+</tr>
+<tr>
+<td>pi0-FAST</td>
+<td>96.4</td>
+<td>96.8</td>
+<td>88.6</td>
+<td>93.9</td>
+</tr>
+<tr>
+<td>pi0</td>
+<td>96.8</td>
+<td>98.8</td>
+<td>95.8</td>
+<td>97.1</td>
+</tr>
+<tr>
+<td><strong>DexVLA</strong></td>
+<td><strong>97.2</strong></td>
+<td><strong>99.1</strong></td>
+<td><strong>95.6</strong></td>
+<td><strong>97.3</strong></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>真实世界任务（无任务特定适配）：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>DexVLA</th>
+<th>OpenVLA</th>
+<th>Octo</th>
+<th>Diffusion Policy</th>
+</tr></thead><tbody>
+<tr>
+<td>衬衫折叠</td>
+<td>0.92</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>箱体拣选（简单）</td>
+<td>~0.85</td>
+<td>~0.15</td>
+<td>~0.10</td>
+<td>~0.20</td>
+</tr>
+<tr>
+<td>餐桌清理（简单）</td>
+<td>~0.80</td>
+<td>~0.25</td>
+<td>~0.15</td>
+<td>~0.30</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>新本体学习（100个演示）：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>DexVLA</th>
+<th>OpenVLA</th>
+<th>Octo</th>
+<th>Diffusion Policy</th>
+</tr></thead><tbody>
+<tr>
+<td>倒饮料（Inspired Dexterous Hand）</td>
+<td>0.90</td>
+<td>~0.10</td>
+<td>~0.05</td>
+<td>~0.70</td>
+</tr>
+<tr>
+<td>打包（双臂 UR5e）</td>
+<td>0.90</td>
+<td>~0.20</td>
+<td>~0.15</td>
+<td>~0.65</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>长时间序列任务：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>DexVLA</th>
+<th>pi0</th>
+</tr></thead><tbody>
+<tr>
+<td>洗衣折叠</td>
+<td>0.40</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>餐桌清理（困难）</td>
+<td>0.70</td>
+<td>0.62</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>三阶段课程消融实验：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>阶段1</th>
+<th>阶段2</th>
+<th>阶段3</th>
+<th>衬衫折叠</th>
+<th>洗衣折叠</th>
+</tr></thead><tbody>
+<tr>
+<td>是</td>
+<td>--</td>
+<td>--</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>--</td>
+<td>是</td>
+<td>--</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>是</td>
+<td>是</td>
+<td>--</td>
+<td>0.92</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>0.92</td>
+<td>0.40</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">阶段3（长时间序列微调）对洗衣折叠等复杂任务是必要的；仅课程阶段1+2即可满足衬衫折叠等较简单任务。</p>
+<p class="dp-p"><strong>扩散专家规模消融（衬衫折叠）：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>模型</th>
+<th>参数量</th>
+<th>成功率</th>
+</tr></thead><tbody>
+<tr>
+<td>UNet</td>
+<td>9300万</td>
+<td>0.17</td>
+</tr>
+<tr>
+<td>ScaleDP（中型）</td>
+<td>4.1亿</td>
+<td>0.63</td>
+</tr>
+<tr>
+<td>ScaleDP（大型）</td>
+<td>10亿</td>
+<td>0.92</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>训练效率：</strong> 仅训练扩散专家的速度为0.89轮/小时，而训练整个 VLA 为0.32轮/小时（2.78倍加速）。</p>
+<p class="dp-p"><strong>零样本跨本体迁移：</strong> 夹爪到灵巧手在箱体拣选任务上实现60%成功率，对比原始夹爪本体的67%。</p>
+<ul class="dp-list">
+<li>ScaleDP-H 和 ScaleDP-L 权重在 HuggingFace 上公开发布</li>
+<li>代码发布于 <a href="https://github.com/juruobenruo/DexVLA" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 在单块 NVIDIA A6000 GPU 上以 <strong>60 Hz</strong> 运行。这是所调研文献中报告的最快 VLA 推理速率之一。</li>
+<li><strong>部署硬件：</strong> 单块 NVIDIA A6000 GPU 用于推理。尽管扩散专家扩展到10亿参数，系统仍实现了高效训练和快速推理。</li>
+<li><strong>是否支持实时？</strong> 是。在单块 A6000 GPU 上60 Hz 足以满足实时灵巧操作控制，超过大多数基于 VLA 系统典型的10--30 Hz 控制频率。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 跨本体训练数据，涵盖单臂、双臂和灵巧手机器人。无单一命名基准；使用多种数据来源的组合。</li>
+<li><strong>采集方法：</strong> 跨本体数据采集。具体采集方法（遥操作设备、仿真等）在公开材料中未详述。项目页面提及跨本体学习。</li>
+<li><strong>数据规模：</strong> 在可用摘要中未报告。应查阅论文获取每种本体的数据集规模。</li>
+<li><strong>遥操作设备：</strong> 未报告。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开可用？</strong> ScaleDP-H 和 ScaleDP-L 权重在 HuggingFace 上公开发布。代码位于 <a href="https://github.com/juruobenruo/DexVLA" target="_blank" rel="noopener">GitHub</a>。训练数据是否发布未确认。</li>
+</ul>
+<blockquote class="dp-quote"><em>数据集细节部分来源于训练知识——项目页面（dex-vla.github.io）在审查时无法访问。</em></blockquote>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=xzXIzvXXkO" target="_blank" rel="noopener">OpenReview</a></p></div></details>

@@ -1,0 +1,65 @@
+<h3 class="dp-h3">7.1 CrossDex</h3>
+<p class="dp-p"><strong>完整标题：</strong> CrossDex: Cross-Embodiment Dexterous Grasping with Reinforcement Learning</p>
+<p class="dp-p"><strong>作者：</strong> Haoyu Xiong, Yufei Wang, Jiayi Chen, Yilin Wu, Yunzhu Li, Yi Wu</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> ICLR 2025</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 基于DAgger的蒸馏；先训练各手部的教师策略，再蒸馏为使用特征抓取动作空间的单一跨构型学生策略</p>
+<p class="dp-p"><strong>手部硬件：</strong> 6种灵巧手——Shadow（24自由度）、Allegro（16自由度）、LEAP（16自由度）、Ability（10自由度）、Barrett（8自由度）、DClaw（9自由度）；在LEAP Hand上进行真实部署</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym Preview 4</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是；域随机化（质量、摩擦、关节阻尼、PD增益）加教师-学生蒸馏。在LEAP Hand上展示了零样本迁移</p>
+<p class="dp-p"><strong>物体数量：</strong> 100个物体，来自YCB和GRAB数据集</p>
+<p class="dp-p"><strong>任务：</strong> 从桌面进行多样物体的灵巧抓取，具有跨构型泛化能力</p>
+<p class="dp-p"><strong>核心方法论：</strong> 引入基于特征抓取的通用动作空间，使单一策略能控制多种灵巧手形态。首先用PPO训练各手部的教师策略，然后通过DAgger蒸馏跨构型学生。特征抓取表示将每个手的关节空间投影到共享的低维流形，实现对新手部构型的零样本迁移。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>首个跨构型灵巧抓取框架，一个策略覆盖6种不同手部形态</li>
+<li>实现形态无关策略学习的特征抓取动作表示</li>
+<li>展示了使用跨构型策略在LEAP Hand上的零样本仿真到真实迁移</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>手部</th>
+<th>成功率（仿真）</th>
+</tr></thead><tbody>
+<tr>
+<td>Shadow（24自由度）</td>
+<td>~90%</td>
+</tr>
+<tr>
+<td>Allegro（16自由度）</td>
+<td>~85%</td>
+</tr>
+<tr>
+<td>LEAP（16自由度）</td>
+<td>~82%</td>
+</tr>
+<tr>
+<td>Ability（10自由度）</td>
+<td>~78%</td>
+</tr>
+<tr>
+<td>Barrett（8自由度）</td>
+<td>~72%</td>
+</tr>
+<tr>
+<td>DClaw（9自由度）</td>
+<td>~75%</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">成功率为近似值，因物体类别不同而变化。跨构型学生策略（仿真）；LEAP Hand真实世界评估也已展示（真实）。</p>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅限于抓取（无手内操作）；特征抓取维度可能不足以应对精细操作任务；真实世界评估仅在6个训练构型中的LEAP Hand上进行；无力/触觉传感</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 不适用——已在LEAP Hand上展示仿真到真实迁移。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。蒸馏后的学生策略（MLP）每次前向传播 <1ms，支持高频控制（>100 Hz）。</li>
+<li><strong>部署硬件：</strong> 仿真中6种灵巧手（IsaacGym）；真实部署在LEAP Hand上。MLP策略足够轻量，可在任何计算平台上运行。</li>
+<li><strong>支持实时？</strong> 是。基于MLP的RL策略可轻松实现实时控制。已在真实LEAP Hand硬件上验证。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。纯RL（PPO）+ 基于DAgger的蒸馏——所有数据在仿真中生成。</li>
+<li><strong>收集方法：</strong> IsaacGym中的纯RL，带域随机化（质量、摩擦、关节阻尼、PD增益）。各手部教师策略独立训练，通过DAgger蒸馏为跨构型学生。物体网格来自YCB和GRAB数据集（100个物体）。</li>
+<li><strong>数据规模：</strong> IsaacGym中标准大规模并行RL。100个物体用于训练/评估。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 物体资产来自公开的YCB和GRAB数据集。策略代码/权重的可用性未报告。</li>
+</ul>

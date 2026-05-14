@@ -46,7 +46,7 @@
 <td>Comparable</td>
 </tr>
 </tbody></table></div>
-<p class="dp-p">*Note: Exact numerical values are reported in the Science Robotics publication. The key finding is that tactile-visual fusion consistently outperforms either modality alone, with the largest gains in heavily occluded scenarios where vision alone fails. The neural field representation enables continuous tracking through contact state changes.*</p>
+<p class="dp-p"><em>Note: Exact numerical values are reported in the Science Robotics publication. The key finding is that tactile-visual fusion consistently outperforms either modality alone, with the largest gains in heavily occluded scenarios where vision alone fails. The neural field representation enables continuous tracking through contact state changes.</em></p>
 <h2 class="dp-h2">Limitations/Gaps</h2>
 <ul class="dp-list">
 <li>Requires known object 3D models for initialization; not applicable to novel objects without prior shape information</li>
@@ -59,3 +59,4 @@
 <p class="dp-p">Like all tactile representation models in this section, NeuralFeels does not integrate into a closed-loop manipulation policy that generates actions. It provides state estimation (pose tracking) rather than action generation. See <a href="sparsh.md#shared-limitation-no-closed-loop-policy-integration" target="_blank" rel="noopener">Sparsh</a> for a detailed discussion of this shared limitation. NeuralFeels comes closest to closing this loop among the four models by operating on real dexterous hardware during active manipulation, but the tracking output would need to be consumed by a separate policy to complete the perception-action cycle.</p>
 <h2 class="dp-h2">Open-source status</h2>
 <p class="dp-p">Open-source. GitHub: <a href="https://github.com/facebookresearch/neuralfeels" target="_blank" rel="noopener">facebookresearch/neuralfeels</a></p>
+<details class="dp-reviews"><summary>Peer Reviews</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=v0i2lCyFrX" target="_blank" rel="noopener">OpenReview</a></p></div></details>

@@ -1,0 +1,31 @@
+<h2 class="dp-h2">3.9 TaF-VLA</h2>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> TaF-VLA: Tactile and Force Vision-Language-Action Model for Contact-Rich Manipulation</li>
+<li><strong>학회/연도:</strong> arXiv 프리프린트, 2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2601.20321</li>
+</ul>
+<p class="dp-p"><strong>힘/촉각 입력 유형:</strong> 이중 모달리티: GelSight 비전 기반 촉각 센서 + 6축 F/T 센서. 국소 표면 접촉(GelSight)과 글로벌 렌치(F/T) 보완.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> 없음. 위치 전용 출력.</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> GelSight 및 F/T 센서가 장착된 Franka FR3 + 병렬 조 그리퍼.</p>
+<p class="dp-p"><strong>작업:</strong> 8가지 접촉이 풍부한 조작 작업.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> 통합 VLA 내에서 두 보완 모달리티 융합. GelSight CNN 인코더와 F/T MLP 인코더의 출력이 VLM에서 교차 어텐션으로 융합.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>VLA 내 촉각+F/T 공동 융합, 보완적 정보 제공 시연</li>
+<li>힘 인식 VLA 중 가장 많은 8개 작업에서 평가</li>
+<li>이중 모달리티가 단일 모달리티 단독보다 우수함을 절제로 시연</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> 코드/가중치 미공개. 위치 전용 출력. 이중 센서 요구로 하드웨어 비용 증가.</p>
+<p class="dp-p"><strong>결과:</strong> 이중 모달리티 모델이 8개 작업에서 단일 모달리티 변형 능가.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 명시적 보고 없음. 저자들이 "힘 상호작용은 본질적으로 빠르며, 더 빠른 추론이 가능한 아키텍처 필요"를 인정.</li>
+<li><strong>배포 하드웨어:</strong> 추론용 NVIDIA RTX 4090. Franka FR3 팔.</li>
+<li><strong>실시간 가능 여부:</strong> 부분적. 저자들이 실시간 제어를 미충족 요구로 식별.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> TaF-Dataset. 동기화된 이중 모달리티 데이터.</li>
+<li><strong>데이터 규모:</strong> 1천만 이상 동기화 관측.</li>
+<li><strong>공개 여부:</strong> 미확인.</li>
+</ul>

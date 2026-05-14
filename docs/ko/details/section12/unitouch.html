@@ -1,0 +1,60 @@
+<p class="dp-p"># 12.2 UniTouch</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> UniTouch: Universal Touch Representation for Robot Manipulation</li>
+<li><strong>저자:</strong> Che Fang 외 (UCSD)</li>
+<li><strong>학회/연도:</strong> CVPR 2024</li>
+<li><strong>지원 센서:</strong> 다수의 비전 기반 tactile 센서</li>
+<li><strong>정렬:</strong> 터치-비전-언어-소리 멀티모달 정렬</li>
+<li><strong>사전학습 방법:</strong> tactile 표현을 비전, 언어, 오디오 모달리티와 정렬하는 contrastive learning</li>
+</ul>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">UniTouch는 터치 신호를 세 가지 다른 모달리티 -- 비전, 언어, 소리 -- 와 정렬하여 통합된 tactile 표현을 학습한다. Contrastive learning(CLIP 스타일)을 사용하여 tactile 이미지를 시각 이미지, 텍스트 설명, 접촉 이벤트의 오디오 녹음과 공유 임베딩 공간에 매핑한다. 이 멀티모달 정렬은 zero-shot 전이를 가능하게 한다: tactile 표현을 언어("거친 표면")로 쿼리하거나 tactile별 레이블 없이 시각적 외형과 매칭할 수 있다. 이 접근법은 터치, 비전, 언어, 소리가 물리적 접촉에 대한 상보적 설명을 제공한다는 통찰에 기반한다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>크로스 모달 쿼리(예: "사포처럼 느껴지는 텍스처 찾기"를 비전이나 언어에서)를 가능하게 하는 최초의 터치-비전-언어-소리 정렬 모델</li>
+<li>작업별 학습 없이 언어-tactile 정렬을 통한 zero-shot tactile 분류</li>
+<li>tactile 데이터가 언어 및 비전 인코더의 풍부한 의미론에서 이점을 얻을 수 있는 통합 표현 공간</li>
+<li>재료 분류 및 접촉 속성 추정을 포함한 다수의 downstream 작업에서 입증</li>
+</ul>
+<h2 class="dp-h2">정량적 결과</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>작업</th>
+<th>메트릭</th>
+<th>UniTouch</th>
+<th>비전 전용 baseline</th>
+<th>터치 전용 baseline</th>
+</tr></thead><tbody>
+<tr>
+<td>재료 분류 (zero-shot)</td>
+<td>Accuracy (%)</td>
+<td>언어 정렬을 통해 가능</td>
+<td>해당 없음</td>
+<td>해당 없음 (레이블 필요)</td>
+</tr>
+<tr>
+<td>크로스 모달 검색 (터치-to-비전)</td>
+<td>Recall@K</td>
+<td>시연됨</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>접촉 속성 추정</td>
+<td>회귀 오차</td>
+<td>지도학습과 경쟁적</td>
+<td>접촉 속성에서 비전 전용이 더 낮음</td>
+<td>접촉 특화 작업에서 더 우수</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><em>참고: UniTouch의 주요 이점은 단일 모달리티 모델이 수행할 수 없는 zero-shot 및 크로스 모달 기능을 가능하게 하는 것이다. 지도학습 baseline과의 직접적 정확도 비교는 작업에 따라 다르다.</em></p>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>멀티모달 정렬 품질이 쌍으로 된 터치-비전-언어-소리 데이터의 가용성과 품질에 크게 의존하며, 이는 부족함</li>
+<li>소리 모달리티는 충격/접촉 이벤트에 유용하나 준정적 조작(grasping, sliding)에서는 덜 유용</li>
+<li>표현이 분류/검색 작업에 최적화; closed-loop 조작 policy 학습에 대한 유용성 미시연</li>
+<li>비전 기반 tactile 센서로 제한; 비시각 tactile 모달리티 미지원</li>
+</ul>
+<h2 class="dp-h2">공유 한계</h2>
+<p class="dp-p">본 섹션의 모든 tactile 표현 모델과 마찬가지로, UniTouch는 closed-loop 조작 policy에의 통합을 시연하지 않는다. 이 공유 한계에 대한 상세한 논의는 <a href="sparsh.md#공유-한계-closed-loop-policy-통합-부재" target="_blank" rel="noopener">Sparsh</a>를 참조.</p>
+<h2 class="dp-h2">오픈소스 현황</h2>
+<p class="dp-p">오픈소스 (코드 + 사전학습 가중치). GitHub: <a href="https://github.com/cfeng16/UniTouch" target="_blank" rel="noopener">cfeng16/UniTouch</a></p>

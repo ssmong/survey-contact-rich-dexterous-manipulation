@@ -1,0 +1,56 @@
+<h3 class="dp-h3">7.1 DexGraspNet 2.0</h3>
+<p class="dp-p"><strong>完整标题：</strong> DexGraspNet 2.0: Learning Generative Dexterous Grasping in Large-scale Synthetic Cluttered Scenes</p>
+<p class="dp-p"><strong>作者：</strong> Jiayi Chen, Yuxing Chen, Jialiang Zhang, Yinzhen Xu, Weikang Wan, He Wang</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CoRL 2024</p>
+<p class="dp-p"><strong>PKU-EPIC谱系：</strong> 将DexGraspNet 1.0从孤立物体抓取扩展到杂乱中的场景感知抓取；引入基于扩散的生成（vs BODex中的优化）和大规模数据集（4.26亿个抓取）。</p>
+<p class="dp-p"><strong>RL算法：</strong> 用于抓取生成的扩散模型；在带场景级上下文（杂乱感知）的大规模合成数据集上训练</p>
+<p class="dp-p"><strong>手部硬件：</strong> Shadow Hand（24自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是；90.7%真实世界成功率（真实），杂乱桌面抓取</p>
+<p class="dp-p"><strong>物体数量：</strong> 1319个物体；数据集中4.26亿个抓取</p>
+<p class="dp-p"><strong>任务：</strong> 带场景感知抓取生成的杂乱场景灵巧抓取</p>
+<p class="dp-p"><strong>核心方法论：</strong> 通过训练在目标物体和周围场景上下文（邻近物体、桌面）条件下生成抓取的扩散模型，将DexGraspNet扩展到杂乱场景。4.26亿抓取数据集通过程序化杂乱布局在仿真中生成。场景级条件支持避免邻近物体的无碰撞抓取生成。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>首个带杂乱上下文的大规模灵巧抓取数据集（4.26亿个抓取）</li>
+<li>在杂乱环境中生成无碰撞抓取的场景感知扩散模型</li>
+<li>90.7%仿真到真实成功率（真实），展示基于扩散抓取生成的实用部署</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>真实世界成功率</td>
+<td>90.7%（真实）</td>
+</tr>
+<tr>
+<td>数据集大小</td>
+<td>4.26亿个抓取</td>
+</tr>
+<tr>
+<td>物体集大小</td>
+<td>1319</td>
+</tr>
+<tr>
+<td>手部</td>
+<td>Shadow（24自由度）</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong> 仍是开环抓取生成（无反应式执行）；依赖精确场景重建；仅Shadow Hand；杂乱处理是几何的（不推理物体语义或任务目标）</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 基于扩散的抓取生成需要多步去噪。具体延迟未报告，但典型扩散推理在现代GPU上每次抓取50-500ms。</li>
+<li><strong>部署硬件：</strong> 在Shadow Hand上展示真实世界部署（杂乱桌面抓取90.7%成功率）。扩散推理的GPU未指定。</li>
+<li><strong>支持实时？</strong> 有限。抓取生成为离线（扩散采样），但生成抓取的执行为实时。扩散模型生成抓取姿态，非闭环控制命令。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 定制大规模合成杂乱场景抓取数据集。1319个物体带场景级杂乱上下文的4.26亿个抓取。</li>
+<li><strong>收集方法：</strong> IsaacGym仿真中的程序化生成。通过程序化布局生成创建杂乱场景。扩散模型在以目标物体和周围场景上下文为条件的生成抓取上训练。</li>
+<li><strong>数据规模：</strong> 4.26亿个抓取，1319个物体。发表时最大场景感知灵巧抓取数据集。</li>
+<li><strong>遥操作设备：</strong> 不适用（程序化仿真生成）。</li>
+<li><strong>数据格式：</strong> 物体/场景点云 + 抓取姿态。具体格式未报告。</li>
+<li><strong>是否公开？</strong> 数据集发布状态未报告。</li>
+</ul>

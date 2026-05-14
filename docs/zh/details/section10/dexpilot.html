@@ -1,0 +1,57 @@
+<p class="dp-p"># 10.11 DexPilot</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> DexPilot: Vision Based Teleoperation of Dexterous Robotic Hand-Arm System</li>
+<li><strong>作者：</strong> Ankur Handa, Karl Van Wyk, Wei Yang, Jacky Liang, Yu-Wei Chao, Qian Wan, Stan Birchfield, Nathan Ratliff, Dieter Fox (NVIDIA)</li>
+<li><strong>发表venue/年份：</strong> ICRA 2020 (arXiv 1910.03135, 2019年10月)</li>
+<li><strong>arXiv：</strong> https://arxiv.org/abs/1910.03135</li>
+<li><strong>输入模态：</strong> 基于视觉（RGB相机观察裸手，无手套或标记物）</li>
+<li><strong>目标手：</strong> Allegro Hand（16自由度）+ Kuka IIWA机械臂（7自由度），共23个驱动自由度</li>
+<li><strong>力反馈：</strong> 无</li>
+<li><strong>成本：</strong> 低（单目RGB相机）</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">DexPilot通过单目RGB相机观察操作者的裸手来实现灵巧机器人手臂系统的遥操作。系统使用基于视觉的手部姿态估计器检测手部关键点（指尖、指关节、手腕），然后求解优化问题将检测到的人手姿态重定向到机器人手的关节空间。重定向公式在遵守Allegro Hand的关节极限和运动学约束的同时，最小化人手和机器人指尖位置之间的差异。手臂运动通过IK将手腕姿态映射到Kuka IIWA末端执行器来单独控制。</p>
+<p class="dp-p">关键创新在于无标记、无手套的设计：操作者只需在相机前移动裸手。这消除了对专用遥操作硬件（VR控制器、触觉手套、电磁追踪器）的需求，降低了成本和设置时间。系统支持手臂系统全部23个驱动自由度，使复杂操作超越简单抓放成为可能。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>首个用于完整灵巧手臂系统（23个驱动自由度）的基于视觉（裸手、无标记/手套）的遥操作系统</li>
+<li>基于优化的重定向，在运动学可行性约束下将人手关键点映射到Allegro Hand关节空间</li>
+<li>仅使用单目RGB相机作为输入即展示了复杂操作任务（超越抓放）</li>
+<li>证明了基于视觉的手部追踪足以用于灵巧遥操作，相比手套/外骨骼系统降低了硬件成本</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>对操作者无力/触觉反馈；操作完全依赖视觉反馈</li>
+<li>基于视觉的手部追踪对遮挡（手指相互遮挡）和光照条件敏感</li>
+<li>单相机设置提供有限的深度信息，可能导致重定向歧义</li>
+<li>视觉处理管线的延迟可能限制高频接触丰富任务</li>
+<li>仅在Allegro Hand + Kuka IIWA上评估；无跨平台验证</li>
+<li>无策略学习组件；纯遥操作系统（采集的数据可用于下游模仿学习，但论文中未演示）</li>
+</ul>
+<h2 class="dp-h2">数据质量影响</h2>
+<p class="dp-p">DexPilot采集的是仅包含位置的示教数据，无力或触觉信息。基于视觉的手部追踪引入噪声和偶发的追踪失败（尤其在遮挡时），相比手套或外骨骼系统降低了示教质量。然而，低成本和易设置性使收集更大的数据集成为可能，有望通过数据量弥补单次示教质量的不足。系统证明了无需专用硬件即可采集高维灵巧示教数据。</p>
+<h2 class="dp-h2">定量结果</h2>
+<p class="dp-p">论文在多个操作任务上评估了两位人类示教者的速度和可靠性指标。任务包括抓取各种物体、手内重新定位和工具操作。具体成功率数值按任务类别报告，但因示教者技能水平而异。</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>控制的总驱动自由度</td>
+<td>23（16手+7臂）</td>
+</tr>
+<tr>
+<td>输入硬件</td>
+<td>单目RGB相机</td>
+</tr>
+<tr>
+<td>手部追踪</td>
+<td>基于视觉的关键点检测</td>
+</tr>
+<tr>
+<td>重定向</td>
+<td>基于优化</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">未开源。项目页面（含视频）: https://sites.google.com/view/dex-pilot</p>

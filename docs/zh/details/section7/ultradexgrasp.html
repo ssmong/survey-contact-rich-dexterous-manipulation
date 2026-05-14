@@ -1,0 +1,52 @@
+<h3 class="dp-h3">7.1 UltraDexGrasp</h3>
+<p class="dp-p"><strong>完整标题：</strong> UltraDexGrasp: Ultra-Scalable Dexterous Grasping with Cross-Embodiment Diverse Grasp Dataset</p>
+<p class="dp-p"><strong>作者：</strong> Jiayi Chen, He Wang等</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> ICRA 2026</p>
+<p class="dp-p"><strong>PKU-EPIC谱系：</strong> 将Dexonomy从950万扩展到2000万个抓取；主要贡献是数据集规模，而非算法创新。优化流程（BODex/cuRobo双层优化）和分类法结构（来自Dexonomy）均被继承。论文展示了扩展生成抓取数据改善跨构型迁移，但未引入新的优化或学习方法。</p>
+<p class="dp-p"><strong>RL算法：</strong> 多策略方法，结合优化（BODex/cuRobo）与策略学习；利用多样抓取数据集进行跨构型训练</p>
+<p class="dp-p"><strong>手部硬件：</strong> 多种灵巧手（跨构型）</p>
+<p class="dp-p"><strong>仿真平台：</strong> BODex + cuRobo</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是；81.2%真实世界成功率（真实）</p>
+<p class="dp-p"><strong>物体数量：</strong> 2000万训练帧，跨多样物体</p>
+<p class="dp-p"><strong>任务：</strong> 超大规模跨构型灵巧抓取</p>
+<p class="dp-p"><strong>核心方法论：</strong> 基于BODex/Dexonomy流程生成超大规模跨构型抓取数据集（2000万帧），然后利用该数据训练跨构型抓取策略。多策略方法结合基于优化的抓取生成与学习的执行策略，利用生成数据集的规模和多样性实现鲁棒泛化。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>发表时最大规模灵巧抓取数据集（2000万帧）</li>
+<li>从多样生成数据而非手部特定策略训练跨构型抓取</li>
+<li>展示扩展抓取数据生成转化为改善的真实世界迁移</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>真实世界成功率</td>
+<td>81.2%（真实）</td>
+</tr>
+<tr>
+<td>数据集大小</td>
+<td>2000万帧</td>
+</tr>
+<tr>
+<td>Dexonomy基线数据集</td>
+<td>950万个抓取</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong> 基于先前优化流程（BODex、Dexonomy）——相对这些基线为增量改进；81.2%真实成功率低于RobustDexGrasp（94.6%），表明跨构型通用性与单构型性能之间的权衡；抓取之外的任务多样性有限</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。学习的策略每次前向传播 <5ms。基于优化的抓取生成为离线。</li>
+<li><strong>部署硬件：</strong> 多种灵巧手（跨构型）。展示了81.2%真实世界成功率。</li>
+<li><strong>支持实时？</strong> 是，在部署端。学习的策略支持真实硬件上的实时抓取控制。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 超大规模跨构型抓取数据集，扩展BODex/Dexonomy流程。2000万训练帧。</li>
+<li><strong>收集方法：</strong> 基于优化的抓取生成（BODex/cuRobo双层优化）结合从生成数据的策略学习。跨构型训练覆盖多种手部形态。</li>
+<li><strong>数据规模：</strong> 2000万训练帧。将Dexonomy的950万抓取扩展到更大规模。</li>
+<li><strong>遥操作设备：</strong> 不适用（基于优化的生成 + 从生成数据的RL）。</li>
+<li><strong>数据格式：</strong> 带训练帧的抓取数据集用于跨构型策略学习。</li>
+<li><strong>是否公开？</strong> 数据集发布状态未报告。</li>
+</ul>

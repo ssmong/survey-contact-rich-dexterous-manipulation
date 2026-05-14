@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.9 Open-TeleVision</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> Open-TeleVision: Teleoperation with Immersive Active Visual Feedback</li>
+<li><strong>作者：</strong> Xuxin Cheng, Jialong Li, Shiqi Yang, Ge Yang, Xiaolong Wang (UCSD)</li>
+<li><strong>发表venue/年份：</strong> CoRL 2024 (arXiv 2407.10107, 2024年7月)</li>
+<li><strong>输入模态：</strong> 立体VR头显（操作者通过机器人的眼睛观看）</li>
+<li><strong>目标手：</strong> 双臂灵巧设置</li>
+<li><strong>力反馈：</strong> 无（视觉反馈替代）</li>
+<li><strong>成本：</strong> VR头显成本（消费级）</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">Open-TeleVision通过将机器人头部相机的立体视频流式传输到操作者的VR头显，提供沉浸式视觉反馈，创建第一人称视角。操作者以立体3D方式看到机器人所见的画面，提供的深度感知在一定程度上补偿了触觉反馈的缺失。VR头显的手部追踪通过实时重定向控制机器人的双臂灵巧手。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>来自机器人视角的沉浸式立体视觉反馈，提升操作者空间感知和操作精度</li>
+<li>主动视觉反馈（操作者头部运动控制机器人相机朝向），实现自然视角控制</li>
+<li>展示了相比固定视角遥操作的任务完成率提升</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>无力或触觉反馈；接触丰富任务完全依赖视觉线索</li>
+<li>机器人上的立体相机设置增加了硬件复杂度和成本</li>
+<li>VR头显延迟和显示质量影响长时间操作的操作者舒适度</li>
+<li>手部追踪精度取决于特定VR头显的能力</li>
+</ul>
+<h2 class="dp-h2">数据质量影响</h2>
+<p class="dp-p">沉浸式立体视觉反馈改善了操作者的空间感知，相比固定视角系统转化为更好的手指放置精度。操作者能更自然地判断深度和物体接近度，减少示教中的定位误差。然而，系统不提供力反馈，因此示教数据仍然是力盲的。基于Open-TeleVision数据训练的策略受益于更高空间精度的示教（更好的手指-物体对齐），但仍无法学习力调节。视觉反馈在某些场景中替代了触觉线索（操作者通过视觉检测物体变形或滑移），但对于接触力不可视觉观察的任务（如拧紧螺丝、按到特定激活力的按钮），这种替代是不可靠的。</p>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">开源。GitHub: <a href="https://github.com/OpenTeleVision/TeleVision" target="_blank" rel="noopener">OpenTeleVision/TeleVision</a></p>

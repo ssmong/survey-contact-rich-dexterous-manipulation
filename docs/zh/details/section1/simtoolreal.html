@@ -1,0 +1,66 @@
+<h3 class="dp-h3">SimToolReal</h3>
+<p class="dp-p"><strong>全称：</strong> From Sim to Real: A Pipeline for Training and Deploying Dexterous Tool-Use Policies</p>
+<p class="dp-p"><strong>作者：</strong> Tyler Lum et al. (Stanford IPRL)</p>
+<p class="dp-p"><strong>会议/年份：</strong> arXiv预印本，2026</p>
+<p class="dp-p"><strong>手部硬件：</strong> Sharpa Hand（22自由度），安装在KUKA机器人臂上。Sharpa Hand是一款高自由度拟人灵巧手，专为需要多指协调的复杂操作任务设计。</p>
+<p class="dp-p"><strong>任务：</strong> 评估了24项工具使用任务，包括锤击、螺丝刀旋转、铲子翻转以及其他工具介导的操作场景。任务套件旨在覆盖广泛的日常工具使用行为，这些行为需要手指-工具-物体的协调交互。</p>
+<p class="dp-p"><strong>核心方法：</strong> SimToolReal提出了一个端到端流程，用于在仿真中训练灵巧工具使用策略并将其部署到真实硬件上。该方法在IsaacGym中通过域随机化训练强化学习策略，以实现稳健的仿真到真实迁移。该流程涵盖了从仿真环境设计、策略训练到在22自由度Sharpa Hand上进行真实世界部署的完整工作流程。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 在大规模并行IsaacGym环境中使用PPO训练的强化学习策略。策略网络通常为基于MLP的架构，接收本体感知状态输入。检查点已公开发布。</p>
+<p class="dp-p"><strong>仿真平台：</strong> NVIDIA IsaacGym。已展示仿真到真实迁移——完全在仿真中训练的策略无需微调即可部署到真实硬件上。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>首次展示了24个任务规模的完整灵巧工具使用仿真到真实流程，此前的工作最多仅涵盖少数几个高自由度手的工具使用任务。</li>
+<li>提供了最大规模的灵巧工具使用评估套件，涵盖多种工具类别（锤击、旋转、铲取等），而此前的基准测试仅关注单一工具类型。</li>
+<li>开源了代码（<a href="https://github.com/tylerlum/simtoolreal" target="_blank" rel="noopener">GitHub</a>）和模型检查点，保证了可复现性——大多数同类工作未发布训练好的策略。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。系统未引入力/力矩传感或阻抗控制；完全依赖基于位置的控制目标。对于涉及显著接触力的任务（锤击、撬动），接触管理通过仿真接触模型和硬件柔顺性隐式处理，而非显式的力调节。</li>
+<li><strong>VLA/语言条件化：</strong> 无。策略为任务特定的强化学习智能体，未集成语言或视觉语言模型。</li>
+<li><strong>仿真到真实：</strong> 是。完全在IsaacGym中训练的策略通过域随机化无需微调即可部署到真实硬件上。</li>
+<li><strong>代码/权重可用性：</strong> 代码已发布（<a href="https://github.com/tylerlum/simtoolreal" target="_blank" rel="noopener">GitHub</a>）；模型检查点已公开。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 在跨24个任务、12个物体实例和6个工具类别（锤子、马克笔、橡皮擦、刷子、铲子、螺丝刀）的120次真实世界试验中进行了评估。论文报告了任务进度（在epsilon=2cm容差内跟踪的目标姿态完成百分比），而非二元成功率。</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+<th>说明</th>
+</tr></thead><tbody>
+<tr>
+<td>相对基线的提升</td>
+<td>+37%</td>
+<td>SimToolReal相比此前重定向和固定抓取方法在任务进度上的提升</td>
+</tr>
+<tr>
+<td>真实世界试验次数</td>
+<td>120</td>
+<td>涵盖24个任务、12个物体实例、6个工具类别</td>
+</tr>
+<tr>
+<td>最佳性能类别</td>
+<td>橡皮擦任务</td>
+<td>以平移为主的轨迹（最高任务进度）</td>
+</tr>
+<tr>
+<td>与专用策略对比</td>
+<td>持平</td>
+<td>SimToolReal在训练条件下与专用策略性能持平，同时在轨迹变化下保持鲁棒性</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">逐工具类别结果（来自论文图表）：橡皮擦和马克笔任务达到最高任务进度；锤子、刷子、铲子和螺丝刀任务（需要手内旋转）表现中等但成功。运动学重定向基线在大多数情况下未能完成抓取。固定抓取基线在需要旋转的任务上性能下降。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。论文提到真实世界推理时30 Hz的物体姿态跟踪，并在训练中对观测延迟和动作执行延迟进行了域随机化，但未量化每步策略推理时间。</li>
+<li><strong>部署硬件：</strong> KUKA机器人臂 + Sharpa Hand（22自由度）+ ZED立体相机，用于真实世界部署。用于策略推理的GPU型号未报告。</li>
+<li><strong>是否实时：</strong> 对于基于强化学习的MLP策略可能是实时的（通常为亚毫秒级推理），但具体控制频率未报告。30 Hz的姿态估计表明控制回路运行频率在30 Hz或以下。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> DexToolBench（为本工作创建的自定义基准测试），涵盖6个工具类别：锤子、马克笔、橡皮擦、刷子、铲子和螺丝刀，每个类别包含多个物体实例和任务变体。</li>
+<li><strong>收集方法：</strong> 在IsaacGym中进行强化学习仿真试验。通过ZED相机捕获的真实世界RGB-D演示（经SAM 2、SAM 3D处理进行网格提取，FoundationPose用于6D姿态估计）用于定义任务轨迹，这些轨迹被转换为JSON姿态文件用于仿真训练。</li>
+<li><strong>数据规模：</strong> 未明确报告（按物体类别/物体/任务层次化组织）。</li>
+<li><strong>遥操作设备：</strong> 不适用（在仿真中通过强化学习训练；真实演示通过被动RGB-D录制采集，非遥操作）。</li>
+<li><strong>数据格式：</strong> RGB图像、深度图像、物体掩码、相机内参（cam_K.txt）、机器人坐标系下的姿态（poses.json），按任务目录组织。</li>
+<li><strong>是否公开：</strong> 是。基准数据可通过<code>download_dextoolbench_data.py</code>下载；预训练策略检查点可通过<code>download_pretrained_policy.py</code>下载（<a href="https://github.com/tylerlum/simtoolreal" target="_blank" rel="noopener">GitHub</a>）。</li>
+</ul>
+<hr>

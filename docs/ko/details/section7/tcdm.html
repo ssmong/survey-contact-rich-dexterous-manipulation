@@ -1,0 +1,37 @@
+<h3 class="dp-h3">7.3 TCDM</h3>
+<p class="dp-p"><strong>Type: Benchmark + baseline method</strong></p>
+<p class="dp-p"><strong>전체 제목:</strong> From One Hand to Multiple Hands: Imitation Learning for Dexterous Manipulation from Single-Camera Teleoperation (also known as TCDM -- Task-Conditioned Dexterous Manipulation)</p>
+<p class="dp-p"><strong>저자:</strong> Sudeep Dasari, Abhinav Gupta, et al. (Meta FAIR)</p>
+<p class="dp-p"><strong>학회/연도:</strong> ICRA 2023</p>
+<p class="dp-p"><strong>arXiv:</strong> https://github.com/facebookresearch/TCDM</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> Model-free RL (PPO) with motion-capture-derived reference trajectories as priors. Uses human hand motion capture data retargeted to robot hand morphologies to bootstrap policy learning.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> 3 hand platforms: Adroit/Shadow-like (30 DoF), D'Claw (9 DoF), and Allegro (16 DoF) in simulation</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> MuJoCo</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> No. Simulation-only.</p>
+<p class="dp-p"><strong>작업:</strong> 50 diverse manipulation tasks using 34 objects from the GRAB dataset. Tasks include grasping, repositioning, and functional manipulation (e.g., using tools, opening containers). Tasks are derived from human motion-capture demonstrations retargeted to different hand morphologies.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> TCDM leverages human hand motion capture data as a prior for RL-based dexterous manipulation. Human demonstrations from the GRAB dataset are retargeted to different robot hand morphologies, then used as reference motions to guide RL training via a tracking reward. This approach bootstraps exploration for contact-rich tasks that are otherwise difficult to learn from scratch. The task-conditioned formulation allows a single policy to handle multiple manipulation behaviors.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated that human MoCap data can effectively bootstrap RL for diverse dexterous manipulation tasks across different hand morphologies</li>
+<li>Scaled to 50 tasks with 34 objects -- substantially larger than prior dexterous RL benchmarks at the time</li>
+<li>Showed cross-embodiment transfer: the same human demonstrations can guide policies for hands with different kinematics and DoF counts</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> Simulation-only with no sim-to-real transfer. Retargeting quality varies across hand morphologies. Some tasks that require precise force control (e.g., fragile objects) are not well captured by kinematic retargeting alone.</p>
+<p class="dp-p"><strong>시뮬레이션 전용 한계:</strong> 시뮬레이션에서만 평가됨; sim-to-real 전이 미입증, 실제 환경 실행 가능성 미검증.</p>
+<p class="dp-p"><strong>결과:</strong> Achieved successful learning on the majority of the 50 tasks across all three hand platforms (sim). MoCap-guided initialization significantly outperformed random exploration baselines. Code and pretrained models available on GitHub.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not reported. The MLP policy runs in <1ms per forward pass.</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (MuJoCo). No real-robot deployment demonstrated.</li>
+<li><strong>실시간 가능 여부:</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> GRAB dataset (human hand motion capture) for reference trajectories. RL training in MuJoCo.</li>
+<li><strong>수집 방법:</strong> RL + human MoCap demonstrations (DAPG-style). Human hand MoCap data from GRAB dataset retargeted to 3 robot hand morphologies (Adroit/Shadow-like 30 DoF, D'Claw 9 DoF, Allegro 16 DoF). Retargeted motions used as reference trajectories for RL (tracking reward). 50 tasks with 34 objects.</li>
+<li><strong>데이터 규모:</strong> 50 tasks, 34 objects from GRAB. MoCap reference trajectories bootstrap RL exploration.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (human MoCap data from GRAB dataset, not live teleoperation).</li>
+<li><strong>데이터 포맷:</strong> GRAB MoCap format (SMPL-H hand parameters) retargeted to robot joint angles.</li>
+<li><strong>공개 여부:</strong> Yes -- code and pretrained models at https://github.com/facebookresearch/TCDM. GRAB dataset publicly available.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=EFXAJQWgCT" target="_blank" rel="noopener">OpenReview</a></p></div></details>

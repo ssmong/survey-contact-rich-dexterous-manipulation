@@ -1,0 +1,51 @@
+<h2 class="dp-h2">3.7 OmniVTLA</h2>
+<ul class="dp-list">
+<li><strong>全称:</strong> OmniVTLA: Omni Vision-Tactile-Language-Action Model for Dexterous Manipulation</li>
+<li><strong>作者:</strong> 综述表中未指定</li>
+<li><strong>发表平台/年份:</strong> arXiv预印本，2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2508.08706</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 同时支持视觉触觉和力触觉传感器。该模型设计为在统一框架内处理异构触觉模态（光学触觉图像和力触觉信号）。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 否。仅位置输出。</p>
+<blockquote class="dp-quote"><strong>局限性（仅位置输出）：</strong> 仅位置输出；尽管接收了力/触觉输入，策略无法主动调节接触力。</blockquote>
+<p class="dp-p"><strong>机器人平台：</strong> 在平行夹爪和灵巧手平台上均进行了评估。</p>
+<blockquote class="dp-quote"><strong>局限性（灵巧手）：</strong> 灵巧手评估仅限于简单抓放。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 抓放操作任务。在带触觉输入的灵巧手抓放任务上达到100%成功率。</p>
+<p class="dp-p"><strong>关键方法：</strong> OmniVTLA提出了一个统一架构，可在视觉和语言输入的同时处理多种触觉模态（视觉触觉和力触觉）。模型为每种触觉类型使用模态特定编码器，然后投影到与VLM主干兼容的共享嵌入空间。模态无关的融合层将触觉特征与视觉和语言token组合。这种设计允许同一模型架构无需重新训练即可适配不同的触觉传感器类型。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 多模态VLA，具有模态特定的触觉编码器，输入共享的VLM主干网络。架构在融合层面设计为传感器无关。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出统一VLA框架，在单一模型中处理异构触觉模态（视觉触觉和力触觉）。</li>
+<li>证明触觉输入能实现灵巧手操作的高成功率（抓放100%）。</li>
+<li>提供触觉VLA训练数据集（数据集已发布，代码尚未公开）。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 未发布代码（仅数据集）。评估仅限于相对简单的抓放任务。虽然论文展示了灵巧手支持，但任务复杂度未充分发挥灵巧能力。抓放100%的成功率表明任务可能不够具有挑战性，难以区分不同方法。</p>
+<p class="dp-p"><strong>结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>灵巧手抓放成功率</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>多模态与单模态对比</td>
+<td>多模态触觉融合优于单模态基线</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。论文未公开每步推理延迟或控制频率。</li>
+<li><strong>部署硬件：</strong> 在NVIDIA A100（80 GB显存）GPU上训练。在夹爪和灵巧手平台上均进行了真实世界实验。推理硬件未单独指定。</li>
+<li><strong>是否支持实时？</strong> 未验证。论文中未报告推理延迟或控制频率。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> ObjTac（本工作发布的自定义数据集）。一个全面的力触觉数据集，捕获文本、视觉和触觉信息。</li>
+<li><strong>收集方法：</strong> 使用力/压力传感器进行力触觉数据收集，覆盖10个类别的56个物体。三模态样本结合视觉、触觉和文本信息。</li>
+<li><strong>数据规模：</strong> 135K三模态样本，覆盖56个物体和10个类别。</li>
+<li><strong>遥操作设备：</strong> 未报告。使用力触觉传感器的自动化数据收集。</li>
+<li><strong>数据格式：</strong> 三模态：文本描述 + 视觉图像 + 力触觉读数。</li>
+<li><strong>是否公开可用？</strong> 是。ObjTac数据集可在<a href="https://readerek.github.io/Objtac.github.io" target="_blank" rel="noopener">readerek.github.io/Objtac.github.io</a>获取。代码尚未发布（仅数据集）。</li>
+</ul>

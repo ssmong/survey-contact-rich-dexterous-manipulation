@@ -67,7 +67,7 @@
 <td>Comparable</td>
 </tr>
 </tbody></table></div>
-<p class="dp-p">*Note: MAE and DINO consistently outperform IJEPA across TacBench tasks. SSL methods achieve performance comparable to supervised baselines, demonstrating that task-specific labels are not necessary for learning useful tactile representations.*</p>
+<p class="dp-p"><em>Note: MAE and DINO consistently outperform IJEPA across TacBench tasks. SSL methods achieve performance comparable to supervised baselines, demonstrating that task-specific labels are not necessary for learning useful tactile representations.</em></p>
 <h2 class="dp-h2">Limitations/Gaps</h2>
 <ul class="dp-list">
 <li>Limited to vision-based tactile sensors (camera-based like DIGIT/GelSight); does not handle resistive, capacitive, or barometric tactile arrays</li>
@@ -79,3 +79,4 @@
 <p class="dp-p"><strong>This limitation -- no integration into closed-loop manipulation policies -- is shared by all tactile representation models in this section (Sparsh, <a href="unitouch.md" target="_blank" rel="noopener">UniTouch</a>, <a href="anytouch.md" target="_blank" rel="noopener">AnyTouch</a>, <a href="neuralfeels.md" target="_blank" rel="noopener">NeuralFeels</a>).</strong> All four models evaluate their learned representations on standalone perception tasks (classification, regression, tracking) rather than demonstrating end-to-end use as a tactile encoder within a manipulation policy (VLA or RL). This disconnect means the representations are validated for perceptual quality but not for actionable utility -- a representation that accurately estimates contact force may not produce features useful for a policy deciding how to adjust grasp force. Closing this loop by using a pretrained tactile encoder as the tactile backbone of a dexterous manipulation policy is the critical next step for this line of work.</p>
 <h2 class="dp-h2">Open-source status</h2>
 <p class="dp-p">Fully open-source (code + pretrained weights). GitHub: <a href="https://github.com/facebookresearch/sparsh" target="_blank" rel="noopener">facebookresearch/sparsh</a></p>
+<details class="dp-reviews"><summary>Peer Reviews</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=EAPt6Upzb7" target="_blank" rel="noopener">OpenReview</a></p></div></details>

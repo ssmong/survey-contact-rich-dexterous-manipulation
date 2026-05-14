@@ -1,0 +1,94 @@
+<h3 class="dp-h3">LLARVA: Vision-Action Instruction Tuning Enhances Robot Learning</h3>
+<p class="dp-p"><strong>完整标题：</strong> LLARVA: Vision-Action Instruction Tuning Enhances Robot Learning</p>
+<p class="dp-p"><strong>作者：</strong> Dantong Niu, Yuvan Sharma, Giscard Biamby, Jerome Quenum, Yutong Bai, Baifeng Shi, Trevor Darrell, Roei Herzig (Berkeley AI Research, UC Berkeley)</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> arXiv 2024</p>
+<p class="dp-p"><strong>架构：</strong> 基于LLaVA 1.5构建，配备Llama 2 7B语言模型和CLIP ViT-L/14视觉编码器。视觉和语言编码器均冻结；适配通过LLM上的LoRA适配器和可训练MLP投影层完成，该投影层将视觉特征对齐到语言token维度。动作作为语言token解码（无专门动作头）——模型同时输出2D视觉轨迹预测和动作序列作为结构化文本。总参数量约7B（以Llama 2骨干为主）。</p>
+<p class="dp-p"><strong>动作空间：</strong> 因机器人具身而异（关节或末端执行器控制，绝对或增量）。模型通过在指令提示中编码控制模式信息来处理13种机器人类型的异构动作空间。连续动作离散化为文本token。评估包括7D EEF控制（Franka）和关节空间控制（RLBench）。</p>
+<p class="dp-p"><strong>灵巧手支持？</strong> ✗ --- 所有13种机器人具身均为夹爪评估。</p>
+<p class="dp-p"><strong>力/阻抗输出？</strong> ✗ --- 仅位置目标。</p>
+<p class="dp-p"><strong>核心方法论：</strong> LLARVA引入视觉-动作指令调优，VLA被训练为在预测机器人动作的同时预测辅助2D视觉轨迹（末端执行器轨迹坐标的(x,y)序列）。这些轨迹通过在不同机器人上训练Faster R-CNN末端执行器边界框检测器，然后提取中心点轨迹来生成。指令提示编码机器人类型、控制模式、任务描述和本体感受历史，使单一模型能处理13种不同机器人具身。训练分两阶段：(1) 在8.5M图像-轨迹对上进行视觉-动作指令预训练（来自37个OXE子集），(2) 在下游任务上微调。</p>
+<p class="dp-p"><strong>训练数据：</strong> 预训练：来自37个Open X-Embodiment子集的8.5M图像-2D视觉轨迹对，涵盖13种机器人类型。微调：RLBench（每个任务800个演示，12-18个任务）和真实Franka Panda（1,920个episode用于取放/堆叠/拆叠任务）。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出视觉-动作指令调优，以辅助2D视觉轨迹预测作为自监督预训练目标，通过提供桥接视觉和动作的中间空间表示来改善动作预测。</li>
+<li>证明编码机器人类型、控制模式和本体感受历史的结构化自然语言提示可使单一VLA在13种机器人具身间泛化，无需具身特定头。</li>
+<li>表明在8.5M OXE轨迹对上进行指令预训练提供平均+17.5%的改进，视觉轨迹预测在下游任务上额外增加+15%。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>基准/任务</th>
+<th>LLARVA</th>
+<th>Image-BC (CNN)</th>
+<th>Image-BC (ViT)</th>
+<th>PerAct (3D)</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td>RLBench多任务平均</td>
+<td>43.3%</td>
+<td>1.3%</td>
+<td>1.3%</td>
+<td>55.3%</td>
+<td>仅2D；PerAct使用3D体素</td>
+</tr>
+<tr>
+<td>真实Franka取放</td>
+<td>93.75%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>含视觉轨迹</td>
+</tr>
+<tr>
+<td>真实Franka堆叠</td>
+<td>56.25%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>含视觉轨迹</td>
+</tr>
+<tr>
+<td>真实Franka拆叠</td>
+<td>100%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>含视觉轨迹</td>
+</tr>
+<tr>
+<td>指令预训练消融</td>
+<td>平均+17.5%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>对比无预训练</td>
+</tr>
+<tr>
+<td>视觉轨迹消融</td>
+<td>平均+15%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>对比无轨迹监督</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>2D视觉轨迹缺乏深度信息；作者指出3D轨迹表示将改善精细操作。</li>
+<li>单视角128x128输入图像限制了精细任务的空间精度。</li>
+<li>当前架构无法处理多视角或利用深度/体素表示。</li>
+<li>RLBench性能（43.3%）落后于基于3D的方法如PerAct（55.3%），凸显了仅2D的代价。</li>
+<li>尽管有基于轨迹的记忆增强，长时域任务的时间上下文仍然有限。</li>
+<li>无灵巧手或力感知评估。</li>
+</ul>
+<p class="dp-p"><strong>开放权重/代码：</strong> 项目页面：<a href="https://llarva24.github.io/" target="_blank" rel="noopener">llarva24.github.io</a>。作者将工作描述为开源，但论文中未提供明确的GitHub仓库链接或模型权重下载。</p>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> Open X-Embodiment（37个子集，13种机器人类型）用于预训练。RLBench仿真和真实Franka Panda用于微调。</li>
+<li><strong>收集方法：</strong> OXE数据从多种来源聚合。视觉轨迹通过在OXE episode上进行Faster R-CNN末端执行器检测生成。RLBench演示来自仿真。真实机器人演示通过遥操作收集。</li>
+<li><strong>数据规模：</strong> 8.5M图像-轨迹对用于预训练。每个RLBench任务800个演示。真实Franka任务1,920个episode。</li>
+<li><strong>遥操作设备：</strong> 因OXE组成数据集而异。真实Franka：未指定。</li>
+<li><strong>数据格式：</strong> RLDS（OXE标准）用于预训练。</li>
+<li><strong>是否公开？</strong> OXE数据公开。模型权重和代码发布状态不明确。</li>
+</ul>
+<hr>

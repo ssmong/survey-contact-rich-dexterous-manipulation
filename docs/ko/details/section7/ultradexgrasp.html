@@ -1,0 +1,52 @@
+<h3 class="dp-h3">7.1 UltraDexGrasp</h3>
+<p class="dp-p"><strong>전체 제목:</strong> UltraDexGrasp: Ultra-Scalable Dexterous Grasping with Cross-Embodiment Diverse Grasp Dataset</p>
+<p class="dp-p"><strong>저자:</strong> Jiayi Chen, He Wang, et al.</p>
+<p class="dp-p"><strong>학회/연도:</strong> ICRA 2026</p>
+<p class="dp-p"><strong>PKU-EPIC lineage:</strong> Scales Dexonomy from 9.5M to 20M grasps; the primary contribution is dataset scale, not algorithmic novelty. The optimization pipeline (BODex/cuRobo bilevel optimization) and taxonomy structure (from Dexonomy) are inherited. The paper demonstrates that scaling the generated grasp data improves cross-embodiment transfer but does not introduce new optimization or learning methods.</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> Multi-strategy approach combining optimization (BODex/cuRobo) with policy learning; leverages diverse grasp datasets for cross-embodiment training</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Multiple dexterous hands (cross-embodiment)</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> BODex + cuRobo</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes; 81.2% real-world success rate (real)</p>
+<p class="dp-p"><strong>객체 수:</strong> 20 million training frames across diverse objects</p>
+<p class="dp-p"><strong>작업:</strong> Ultra-scale cross-embodiment dexterous grasping</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Builds on the BODex/Dexonomy pipeline to generate an ultra-large-scale cross-embodiment grasp dataset (20M frames), then trains cross-embodiment grasping policies using this data. The multi-strategy approach combines optimization-based grasp generation with learned execution policies, leveraging the scale and diversity of the generated dataset to achieve robust generalization.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Largest-scale dexterous grasping dataset at time of publication (20M frames)</li>
+<li>Cross-embodiment grasping trained from diverse generated data rather than hand-specific policies</li>
+<li>Demonstrates that scaling grasp data generation translates to improved real-world transfer</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Real-world success rate</td>
+<td>81.2% (real)</td>
+</tr>
+<tr>
+<td>Dataset size</td>
+<td>20M frames</td>
+</tr>
+<tr>
+<td>Dexonomy baseline dataset</td>
+<td>9.5M grasps</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong> Building on prior optimization pipelines (BODex, Dexonomy) -- incremental improvement over those baselines; 81.2% real success rate is lower than RobustDexGrasp (94.6%), suggesting cross-embodiment generality trades off with single-embodiment performance; limited task diversity beyond grasping</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not explicitly reported. The learned policy runs in <5ms per forward pass. Optimization-based grasp generation is offline.</li>
+<li><strong>배포 하드웨어:</strong> Multiple dexterous hands (cross-embodiment). 81.2% real-world success rate demonstrated.</li>
+<li><strong>실시간 가능 여부:</strong> Yes, at deployment. The learned policy supports real-time grasping control on real hardware.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> Ultra-large-scale cross-embodiment grasp dataset, extending BODex/Dexonomy pipelines. 20 million training frames.</li>
+<li><strong>수집 방법:</strong> Optimization-based grasp generation (BODex/cuRobo bilevel optimization) combined with policy learning from generated data. Cross-embodiment training across multiple hand morphologies.</li>
+<li><strong>데이터 규모:</strong> 20 million training frames. Extends Dexonomy's 9.5M grasps to larger scale.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (optimization-based generation + RL from generated data).</li>
+<li><strong>데이터 포맷:</strong> Grasp datasets with training frames for cross-embodiment policy learning.</li>
+<li><strong>공개 여부:</strong> Dataset release status not reported.</li>
+</ul>

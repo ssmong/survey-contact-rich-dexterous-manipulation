@@ -1,0 +1,40 @@
+<h3 class="dp-h3">5.2 Diff-Impedance</h3>
+<p class="dp-p"><strong>完整标题:</strong> Diffusion-Based Impedance Learning for Contact-Rich Manipulation</p>
+<p class="dp-p"><strong>作者:</strong> Fan Yang, Hanna Ziesche, Zhichao Wen, Marco Ewerton, Leonel Rozo (KIT / MIT)</p>
+<p class="dp-p"><strong>发表venue/年份:</strong> arXiv预印本, 2025</p>
+<p class="dp-p"><strong>K/D如何确定:</strong> 扩散模型 + 基于能量的优化。扩散策略被训练为联合预测位置轨迹和阻抗曲线(K和D)。扩散模型从学习到的位置和阻抗参数联合分布中生成样本，基于能量的细化步骤优化阻抗曲线以满足稳定性和任务性能。刚度和阻尼均独立学习。</p>
+<p class="dp-p"><strong>输出内容:</strong> 完整的笛卡尔刚度K和阻尼D矩阵，与位置轨迹联合预测。扩散模型在轨迹时间范围内输出完整的阻抗曲线，而非仅瞬时值。</p>
+<p class="dp-p"><strong>机器人平台:</strong> KUKA LBR iiwa 14 R820(7自由度力矩控制臂)。在仿真和真实硬件上均有评估。无灵巧手。</p>
+<p class="dp-p"><strong>任务:</strong> 接触丰富操作任务包括：带力调节的表面打磨、带横向柔顺的轴孔插入、需要恒定接触力的擦拭任务以及物体翻转。</p>
+<p class="dp-p"><strong>核心方法:</strong> Diff-Impedance将阻抗轨迹预测制定为条件去噪扩散过程。模型以视觉观测和任务条件为输入，迭代去噪位置和阻抗参数的联合轨迹。基于能量的组件引入物理知情损失，惩罚违反无源性或产生不稳定接触行为的阻抗曲线。这种混合方法结合了扩散模型的表达力(捕获多模态示教分布)和对阻抗输出的基于物理的约束。</p>
+<p class="dp-p"><strong>架构/参数:</strong> 条件去噪扩散概率模型(DDPM)。基于UNet的去噪器配视觉条件(ResNet编码器)。联合输出空间：位置轨迹(6D x 时间范围) + K轨迹(6D或36D x 时间范围) + D轨迹(6D或36D x 时间范围)。稳定性感知细化的能量函数。基于KUKA iiwa的物理引导示教进行训练。</p>
+<p class="dp-p"><strong>主要贡献:</strong></p>
+<ul class="dp-list">
+<li>提出基于扩散的方法联合学习位置轨迹和完整阻抗曲线(K和D)</li>
+<li>基于能量的细化提供阻抗生成的物理知情约束，提高稳定性</li>
+<li>展示在KUKA iiwa上学习阻抗策略的仿真到现实迁移</li>
+</ul>
+<p class="dp-p"><strong>局限/空白:</strong></p>
+<ul class="dp-list">
+<li>无灵巧手——仅KUKA臂配末端工具</li>
+<li>扩散推理计算量大(~10-50去噪步骤)，限制控制频率</li>
+<li>基于能量的细化增加额外计算；实时适用性取决于硬件</li>
+<li>基于物理引导示教训练，采集劳动密集</li>
+<li>未涉及多接触场景(如多指尖)</li>
+</ul>
+<p class="dp-p"><strong>实验结果:</strong> 在所有接触丰富任务上优于固定阻抗和仅位置扩散策略基线。学习到的阻抗曲线跨任务阶段适配(如接近时较低刚度，接触时较高)。在真实KUKA iiwa上成功实现仿真到现实迁移。代码见github.com/StrokeAIRobotics/DiffusionBasedImpedanceLearning。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟:</strong> 未明确基准测试。基于扩散的推理每次轨迹预测需要~10-50去噪步骤，计算量大。典型扩散策略推理延迟在现代GPU上为50-500ms/动作，取决于去噪步数和网络大小。</li>
+<li><strong>部署硬件:</strong> KUKA LBR iiwa 14 R820用于真实机器人实验。扩散模型推理GPU未指定。</li>
+<li><strong>可实时运行?</strong> 有限。扩散推理是瓶颈——多步去噪过程将控制频率限制在约2-20 Hz，取决于硬件和去噪步数。轨迹级预测(在时间范围内输出阻抗曲线)通过降低所需推理频率部分缓解此问题。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集:</strong> 在KUKA LBR iiwa 14 R820上采集的自定义物理引导示教。</li>
+<li><strong>采集方法:</strong> 物理引导示教(人类直接物理引导机械臂)。机器人的关节力矩传感器捕获示教轨迹和阻抗曲线。从MuJoCo仿真到真实KUKA iiwa的仿真到现实迁移评估。</li>
+<li><strong>数据规模:</strong> 未明确报告。每个任务多次示教(表面打磨、轴孔插入、擦拭、物体翻转)。</li>
+<li><strong>遥操作设备:</strong> 物理引导示教(无遥操作设备；直接物理引导KUKA iiwa力矩控制臂)。</li>
+<li><strong>数据格式:</strong> 位置轨迹(6D x 时间范围) + 刚度K轨迹 + 阻尼D轨迹。具体文件格式未报告。</li>
+<li><strong>公开可用?</strong> 代码见https://github.com/StrokeAIRobotics/DiffusionBasedImpedanceLearning。数据集发布状态未指定。</li>
+</ul>

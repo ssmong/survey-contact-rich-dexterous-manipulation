@@ -1,0 +1,39 @@
+<h2 class="dp-h2">3.17 ACP</h2>
+<blockquote class="dp-quote"><strong>注意：</strong> 这不是VLA（无语言条件化）。因其力输出方法论直接与力感知操作策略设计相关而收录于第3节。</blockquote>
+<ul class="dp-list">
+<li><strong>全称:</strong> ACP: Adaptive Compliance Policy for Contact-Rich Manipulation with Impedance Control</li>
+<li><strong>作者:</strong> 丰田研究所 / 哥伦比亚大学等</li>
+<li><strong>发表平台/年份:</strong> ICRA 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2410.09309</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 六轴F/T传感器（ATI工业级传感器），提供高精度力/力矩测量。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 是——输出标量刚度参数来调制机器人的阻抗控制器。策略学习根据任务阶段和接触状态自适应调整柔顺程度。<strong>力输出类型：部分（仅标量刚度）。</strong></p>
+<p class="dp-p"><strong>机器人平台：</strong> UR5e机械臂 + 被动工具附件（如铲子、海绵）。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 翻物（使用铲子）和花瓶擦拭——需要可变柔顺性的任务：自由空间运动和工具定位时高刚度，交互期间的接触阶段低刚度。</p>
+<p class="dp-p"><strong>关键方法：</strong> ACP学习自适应柔顺策略，同时输出位置目标和机器人阻抗控制器的标量刚度参数。刚度参数动态调整机器人的柔顺性——精确定位阶段更刚，接触阶段更柔。策略通过模仿学习在演示数据上训练，其中演示者的变化抓取力通过ATI F/T传感器记录作为期望柔顺性的代理。标量刚度均匀缩放所有笛卡尔方向。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 具有位置 + 标量刚度输出的模仿学习策略。刚度输出是单个标量，均匀缩放笛卡尔阻抗控制器的刚度矩阵。输入包括视觉观测和六轴F/T读数。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出在位置目标之外学习自适应柔顺性，使机器人能够根据任务阶段动态调整其刚度。</li>
+<li>证明即使是单个标量刚度参数也能相比固定柔顺基线显著改善接触丰富任务性能。</li>
+<li>展示了可变柔顺性对任务成功至关重要的实际应用（翻物、花瓶擦拭）。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 未发布代码或权重。标量刚度输出是一种简化——实际任务可能需要逐轴或逐方向的刚度自适应。仅评估2项任务。不是VLA模型（无语言条件化）。使用被动工具（铲子、海绵）限制了对需要主动工具操作任务的泛化。</p>
+<p class="dp-p"><strong>结果：</strong> 具有自适应柔顺性的ACP在翻物和花瓶擦拭任务上的成功率高于固定刚度基线。学习到的刚度曲线显示了直觉性的模式：定位时高刚度，接触时低刚度。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。论文指定了传感器/执行器频率（GoPro 60 Hz，机器人笛卡尔命令500 Hz，ATI F/T传感器高达7000 Hz），但未公开策略的推理延迟或决策频率。</li>
+<li><strong>部署硬件：</strong> UR5e机械臂 + 被动工具附件（铲子、海绵）+ ATI F/T传感器 + GoPro相机。推理GPU未指定。</li>
+<li><strong>是否支持实时？</strong> 未验证。底层机器人和传感器基础设施支持高频控制（500 Hz位姿命令，7000 Hz F/T），但策略的计算延迟未量化。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 2项接触丰富任务（翻物、花瓶擦拭）的自定义人类演示数据集。无命名基准。</li>
+<li><strong>收集方法：</strong> 在UR5e机械臂上进行人类演示。演示者的变化抓取力通过ATI F/T传感器记录作为期望柔顺性的代理。演示同时捕获运动轨迹和交互力。</li>
+<li><strong>数据规模：</strong> 未报告。</li>
+<li><strong>遥操作设备：</strong> 未详细说明。在UR5e上使用ATI工业级F/T传感器（高达7000 Hz）和GoPro相机（60 Hz）收集演示。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开可用？</strong> 否。未发布代码、数据或权重。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=32IHuRyrLh" target="_blank" rel="noopener">OpenReview</a></p></div></details>

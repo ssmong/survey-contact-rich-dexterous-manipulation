@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.4 DemoStart</h3>
+<p class="dp-p"><strong>完整标题：</strong> DemoStart: Demonstration-Bootstrapped Autonomous Reinforcement Learning for Dexterous Manipulation</p>
+<p class="dp-p"><strong>作者：</strong> Nick Heppert, Constantinos Chamzas等（Google DeepMind）</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> ICRA 2025（2024年提交）</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2409.06613</p>
+<p class="dp-p"><strong>RL算法：</strong> 演示引导的自主RL。使用少量遥操作演示初始化回放缓冲区，然后继续自主RL训练（基于SAC）。自动重置机制支持持续真实世界训练。</p>
+<p class="dp-p"><strong>手部硬件：</strong> DEX-EE（三指灵巧末端执行器，Google DeepMind定制硬件）</p>
+<p class="dp-p"><strong>仿真平台：</strong> MuJoCo（用于初始原型）；主要训练在真实硬件上进行</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是——但重点在真实世界RL而非仿真到真实迁移。演示引导真实世界学习，机器人在真实世界中带自动重置自主训练（真实）。</p>
+<p class="dp-p"><strong>任务：</strong> (1) 插头插入——抓取插头并插入插座（接触丰富、严格公差）；(2) 立方体重定向——手内旋转立方体至目标姿态。两个任务都需要精确灵巧控制。</p>
+<p class="dp-p"><strong>核心方法论：</strong> DemoStart解决灵巧操作真实世界RL的样本效率问题。不使用仿真到真实迁移（会引入真实差距），而是用少量遥操作演示引导学习，然后让机器人在真实世界中自主训练。自动重置机制（脚本化回归行为）支持数小时无人值守训练。这种方法完全避免了仿真到真实差距，同时使用演示克服初始探索挑战。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>展示灵巧操作的自主真实世界RL，完全避免仿真到真实差距（真实）</li>
+<li>证明少量演示（5-10个）可引导接触丰富任务的有效探索</li>
+<li>通过真实世界训练在插头插入和立方体重定向上达到高成功率（真实）</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 需要定制硬件（DEX-EE）带自动重置——不易复现。真实世界训练缓慢（每任务数小时机器人时间）。仅限2个任务。DEX-EE是三指手，自由度少于全灵巧手（Shadow、Allegro）。代码未公开。</p>
+<p class="dp-p"><strong>结果：</strong> 自主真实世界训练后在两个任务上达到高成功率（真实）。展示演示引导的真实世界RL在这些任务上与仿真到真实方法有竞争力。</p>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 少量遥操作演示（每任务5-10个）用于引导自主RL。无大型预收集数据集。</li>
+<li><strong>收集方法：</strong> RL + 人类演示（DAPG式，但在真实世界中）。少量遥操作演示（5-10个）初始化回放缓冲区，然后自主RL（基于SAC）继续在真实世界中带自动重置训练。主要在真实硬件（DEX-EE三指手）上训练，非仿真到真实迁移。MuJoCo仅用于初始原型。</li>
+<li><strong>数据规模：</strong> 每任务5-10个演示用于引导。每任务数小时自主真实世界RL训练。2个任务（插头插入、立方体重定向）。</li>
+<li><strong>遥操作设备：</strong> DEX-EE遥操作接口（具体设备未报告；Google DeepMind定制硬件）。</li>
+<li><strong>数据格式：</strong> 自主RL训练的真实世界回放缓冲区（状态、动作、奖励）。</li>
+<li><strong>是否公开？</strong> 否。代码未公开。Google DeepMind定制硬件（DEX-EE）限制了可复现性。</li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。基于SAC的策略（MLP）每次前向传播 <1ms。主要训练在真实硬件上（非仿真到真实）。</li>
+<li><strong>部署硬件：</strong> DEX-EE（三指灵巧末端执行器，Google DeepMind定制硬件）。主要在真实硬件上用自主RL和自动重置训练。</li>
+<li><strong>支持实时？</strong> 是。真实世界RL训练和部署都需要实时策略执行。已在真实DEX-EE硬件上验证。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=w8wXwbhEps" target="_blank" rel="noopener">OpenReview</a></p></div></details>

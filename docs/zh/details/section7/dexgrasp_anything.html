@@ -1,0 +1,57 @@
+<h3 class="dp-h3">7.1 DexGrasp Anything</h3>
+<p class="dp-p"><strong>完整标题：</strong> DexGrasp Anything: Learning Universal Dexterous Grasping with Diffusion Models</p>
+<p class="dp-p"><strong>作者：</strong> Jiayi Chen, Yubin Ke, Renxin Zhong, Shilong Mu, Hao-Shu Fang, Cewu Lu</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CVPR 2025 (Highlight)</p>
+<p class="dp-p"><strong>RL算法：</strong> 扩散模型（用于抓取姿态生成的去噪扩散概率模型）；非标准RL，而是生成式方法</p>
+<p class="dp-p"><strong>手部硬件：</strong> Shadow Hand（24自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否</p>
+<p class="dp-p"><strong>物体数量：</strong> 15,000+物体；数据集中340万个生成抓取</p>
+<p class="dp-p"><strong>任务：</strong> 任意物体的通用灵巧抓取合成，包括有挑战性的薄型、小型和铰接物体</p>
+<p class="dp-p"><strong>核心方法论：</strong> 训练扩散模型根据物体点云条件生成灵巧抓取姿态。模型从大规模仿真数据集中学习成功抓取的分布，然后在推理时通过迭代去噪生成多样抓取提议。基于物理的判别器过滤生成抓取的可行性和稳定性。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>基于扩散的抓取生成，实现对每个物体的多样、多模态抓取采样</li>
+<li>发表时最大灵巧抓取数据集（340万抓取，15K+物体）</li>
+<li>处理优化方法难以应对的挑战性物体类别（薄型、小型、铰接）</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>物体集大小</td>
+<td>15,000+</td>
+</tr>
+<tr>
+<td>生成抓取数</td>
+<td>340万</td>
+</tr>
+<tr>
+<td>手部</td>
+<td>Shadow（24自由度）</td>
+</tr>
+<tr>
+<td>评估</td>
+<td>仅仿真（仿真）</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅仿真；仅Shadow Hand；无执行策略的开环抓取生成；扩散采样速度可能限制实时部署；未展示使用生成姿态的闭环抓取</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 基于扩散的抓取姿态生成需要多步去噪（现代GPU上每次抓取50-500ms）。这是离线抓取生成，非实时控制。</li>
+<li><strong>部署硬件：</strong> 仅仿真（IsaacGym）。未展示真实机器人部署。</li>
+<li><strong>支持实时？</strong> 否，就抓取生成而言（扩散采样为离线）。生成的抓取姿态可由实时控制器执行，但完整流程未在实时中展示。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 定制大规模仿真灵巧抓取数据集。15,000+物体上340万个生成抓取。</li>
+<li><strong>收集方法：</strong> 在仿真抓取数据上训练的扩散模型。通过IsaacGym中的仿真rollout生成抓取，使用基于物理的判别器过滤可行性和稳定性。Shadow Hand（24自由度）。</li>
+<li><strong>数据规模：</strong> 340万抓取，15,000+物体。发表时最大灵巧抓取数据集。</li>
+<li><strong>遥操作设备：</strong> 不适用（仿真抓取生成，无演示）。</li>
+<li><strong>数据格式：</strong> 物体点云 + 抓取姿态。具体文件格式未报告。</li>
+<li><strong>是否公开？</strong> 数据集发布状态未报告。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=DVB8WDaofB" target="_blank" rel="noopener">OpenReview</a></p></div></details>

@@ -1,0 +1,55 @@
+<h3 class="dp-h3">EgoScale: Scaling Egocentric Human Video Pre-training for Dexterous Robot Manipulation</h3>
+<p class="dp-p"><strong>完整标题：</strong> Scaling Manipulation Learning with Visual Kinematic Chain Prediction</p>
+<p class="dp-p"><strong>作者：</strong> Xinyu Zhang, Yifu Lu, Haozhan Yang, Yifan Guo, Liang Zhao, Yuke Zhu, Linxi "Jim" Fan (NVIDIA Research / UC Berkeley)</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> arXiv 2026</p>
+<p class="dp-p"><strong>架构：</strong> EgoScale引入一个预训练框架，将第一人称人类视频转换为机器人操作的训练数据。它使用视觉运动链表示来跟踪视频中的人手和物体姿态，将其转换为22自由度Sharpa手动作表示。VLA架构基于GR00T框架构建，包含视觉-语言骨干和扩散transformer动作头。关键架构贡献是手-物体姿态估计流水线，而非新的VLA架构。</p>
+<p class="dp-p"><strong>动作空间：</strong> 从第一人称视频中的人手姿态跟踪提取22自由度（Sharpa手表示）。这捕获了手指关节运动、腕部姿态和物体交互。</p>
+<p class="dp-p"><strong>灵巧手支持？</strong> 部分（仅表示层面）。22自由度Sharpa手表示在人类视频预训练期间建模多指配置，但未演示在物理22自由度灵巧机器人手上的部署。灵巧能力处于表示层面（视频姿态提取），而非物理机器人部署。该流水线从人类视频中提取22自由度手部姿态并将其用作预训练的伪标签，但未在论文中验证向实际多指机器人手执行接触丰富操作的下游迁移。</p>
+<p class="dp-p"><strong>力/阻抗输出？</strong> ✗ --- 从视觉姿态估计得到的位置目标；无力信息。</p>
+<p class="dp-p"><strong>核心方法论：</strong> EgoScale通过利用大规模人类第一人称视频来解决灵巧操作的数据稀缺问题。它训练一个视觉运动链预测器从无标注人类视频中提取22自由度手部动作标签，然后使用这些伪标签预训练机器人操作策略。该方法展示了灵巧操作的缩放定律：性能随人类视频预训练数据量的增加呈对数线性改善，最高达20K小时。这一人类视频预训练随后被整合到GR00T N1.7中。</p>
+<p class="dp-p"><strong>训练数据：</strong> 20,000小时人类第一人称视频（Ego4D, Ego-Exo4D和专有来源）。在多个平台上使用机器人微调数据。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>展示了灵巧操作的缩放定律：随人类视频预训练规模增加至20K小时，性能呈对数线性改善。</li>
+<li>引入从无标注第一人称视频中提取22自由度灵巧手动作标签的流水线。</li>
+<li>证明人类视频预训练可迁移到机器人操作，桥接人手和机器人末端执行器之间的具身差距。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>基准/任务</th>
+<th>EgoScale（20K小时）</th>
+<th>无预训练</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td><em>（请查阅arXiv论文获取缩放定律曲线和逐任务结果。论文报告下游操作性能随预训练数据规模呈对数线性改善。）</em></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li><strong>关键：物理灵巧手部署未经验证。</strong> 视频衍生的22自由度表示是否可迁移到实际多指机器人手控制尚未验证。22自由度Sharpa手表示在预训练期间使用（从人类视频中提取姿态），但论文未演示在物理22自由度灵巧机器人手上执行自主操作的部署。灵巧能力仍停留在表示层面。</li>
+<li>22自由度表示与Sharpa手形态绑定；适配其他手部设计需要重新映射。</li>
+<li>视频中未捕获力信息——操作过程中的接触力未被观测。</li>
+<li>代码和权重均未公开发布。</li>
+<li>从视频中提取的手部姿态存在噪声，可能无法准确捕获精细的手指接触。</li>
+</ul>
+<p class="dp-p"><strong>开放权重/代码：</strong> ✗ --- 截至2026年5月未公开发布。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。EgoScale主要是预训练框架（从视频中提取手部姿态），而非独立推理系统。下游VLA（基于GR00T框架构建）继承GR00T N1.7的推理特性（Jetson Orin上约2.9-4.6 Hz）。</li>
+<li><strong>部署硬件：</strong> 姿态提取流水线离线处理视频。下游VLA部署遵循GR00T N1.7规格。</li>
+<li><strong>可实时运行？</strong> 不适用于预训练流水线（离线视频处理）。下游VLA部署继承GR00T N1.7的实时特性。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 20,000小时来自Ego4D、Ego-Exo4D和NVIDIA专有来源的人类第一人称视频。来自多个平台的机器人微调数据。</li>
+<li><strong>收集方法：</strong> 人类第一人称视频（被动观察，无遥操作），通过视觉运动链预测器处理，从无标注视频中提取22自由度Sharpa手动作伪标签。机器人微调使用目标平台上的遥操作演示。</li>
+<li><strong>数据规模：</strong> 20,000小时人类视频用于预训练。机器人微调规模因情况而异。展示的缩放定律：性能随预训练时间增加至20K小时呈对数线性改善。</li>
+<li><strong>遥操作设备：</strong> 不适用于视频预训练（被动人类视频）。机器人微调使用平台特定的遥操作。</li>
+<li><strong>数据格式：</strong> 从视频中提取的22自由度手部姿态轨迹作为伪标签。原始视频来自Ego4D（公开可用）和专有来源。</li>
+<li><strong>是否公开？</strong> 部分。Ego4D和Ego-Exo4D是公开可用的数据集。NVIDIA专有视频数据和提取的伪标签未发布。EgoScale代码/权重未发布。</li>
+</ul>
+<hr>

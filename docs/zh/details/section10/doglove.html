@@ -1,0 +1,30 @@
+<p class="dp-p"># 10.4 DOGlove</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> DOGlove: Dexterous Manipulation with a Low-Cost Open-Source Haptic Force Feedback Glove</li>
+<li><strong>作者：</strong> Han Zhang, Hanwen Zhao, Yixuan Wang等（TEA Lab）</li>
+<li><strong>发表venue/年份：</strong> RSS 2025 (arXiv 2505.14635, 2025年5月)</li>
+<li><strong>输入模态：</strong> 定制触觉手套，内置关节角度传感器+力反馈执行器</li>
+<li><strong>目标手：</strong> 任意灵巧手（在多平台上验证）</li>
+<li><strong>力反馈：</strong> 5自由度触觉反馈（每指一个）</li>
+<li><strong>成本：</strong> <$600</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">DOGlove是一款定制设计的触觉手套，为灵巧遥操作同时提供运动捕捉和力反馈。手套通过嵌入式传感器测量手指关节角度，并通过小型执行器（每指一个，共5自由度）向操作者手指渲染接触力。设计优先考虑低成本和开源可复现性，使用现成组件和3D打印结构件。双向力反馈使操作者能感受抓取接触，显著提升了接触丰富任务的遥操作质量。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>低于$600的灵巧遥操作手套，具备双向触觉反馈——本综述中成本最低的力反馈方案</li>
+<li>5自由度触觉渲染（每个指尖一个），使操作者能在操作过程中感受接触力</li>
+<li>完全开源的硬件设计（可3D打印）和软件栈</li>
+<li>展示了相比无反馈遥操作的操作质量提升</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>5自由度触觉反馈仅提供逐指力，不提供空间分布的指尖接触模式</li>
+<li>力渲染保真度受执行器带宽和功率限制</li>
+<li>需要逐用户标定以实现精确的运动学映射</li>
+<li>手套形态可能限制自然手部运动范围</li>
+</ul>
+<h2 class="dp-h2">数据质量影响</h2>
+<p class="dp-p">DOGlove是唯一低于$1K且将力信息嵌入采集示教数据的系统。5自由度触觉反馈允许操作者在数据采集过程中调节抓取力，产生编码了力感知行为的示教数据，这在纯相机或纯位置系统中是缺失的。然而，逐指力粒度较为粗糙：每根手指接收单一标量力信号，而非空间分布的接触压力，因此操作者无法区分指尖内的接触位置或压力分布。基于DOGlove数据训练的策略相比力盲示教数据展示了改善的力调节，但仍缺乏需要精确指尖压力控制任务（如受控滑动、纹理依赖抓取）所需的精细接触感知。</p>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">完全开源（硬件+软件）。GitHub: <a href="https://github.com/TEA-Lab/DOGlove" target="_blank" rel="noopener">TEA-Lab/DOGlove</a></p>

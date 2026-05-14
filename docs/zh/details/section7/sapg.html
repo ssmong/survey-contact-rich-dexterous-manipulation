@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.2 SAPG</h3>
+<p class="dp-p"><strong>完整标题：</strong> SAPG: Split and Merge Policy Gradient for Dexterous Manipulation</p>
+<p class="dp-p"><strong>作者：</strong> Jayesh Singla, Ananye Agarwal, Deepak Pathak</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> ICML 2024（口头报告）</p>
+<p class="dp-p"><strong>RL算法：</strong> 分裂合并策略梯度——一种新颖RL算法，在探索期间将策略分裂为手指级子策略（允许独立的逐指探索），在策略更新期间合并（维持单一协调策略）</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）、Shadow Hand（24自由度）和更高自由度配置（含额外臂关节最多46自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym Preview 4</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否（仅仿真）</p>
+<p class="dp-p"><strong>物体数量：</strong> 在标准基准上评估（立方体旋转、转笔、保定球等）</p>
+<p class="dp-p"><strong>任务：</strong> 手内重定向、转笔、保定球操作和标准基准（Adroit、DexHand）的其他灵巧任务</p>
+<p class="dp-p"><strong>核心方法论：</strong> 通过分裂策略梯度计算来解决高自由度灵巧操作的探索挑战。在rollout期间，每个手指组以自己的扰动独立探索，实现高维关节空间中协调但多样的探索。在梯度更新期间，手指级探索被合并为单一策略更新。这种分裂合并方案在高自由度设置中相比标准PPO显著提高了样本效率。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>专为高自由度操作设计的新颖分裂合并策略梯度算法</li>
+<li>在标准灵巧基准上相比PPO/SAC显著提高样本效率和最终性能</li>
+<li>扩展到标准RL算法无法学习的非常高自由度系统（46自由度）</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅仿真；分裂结构假设有意义的手指级分解，可能不适用于所有操作任务；主要在标准基准上评估而非真实世界任务多样性；无仿真到真实验证</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。合并后的MLP策略每次前向传播 <1ms，即使46自由度配置也是如此。</li>
+<li><strong>部署硬件：</strong> 仅仿真（IsaacGym）。未展示真实机器人部署。</li>
+<li><strong>支持实时？</strong> 是，就策略本身而言（MLP推理速度极快）。但仅进行了仿真评估。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。纯RL + 新颖分裂合并策略梯度——所有数据在仿真中生成。</li>
+<li><strong>收集方法：</strong> IsaacGym中的纯RL。分裂合并探索：每个手指组在rollout期间独立探索，在梯度更新期间合并。在标准Adroit/DexHand基准上评估（立方体旋转、转笔、保定球）。最高46自由度。</li>
+<li><strong>数据规模：</strong> IsaacGym中标准并行RL训练。标准基准物体。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 代码发布状态未报告。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=4dOJAfXhNV" target="_blank" rel="noopener">OpenReview</a></p></div></details>

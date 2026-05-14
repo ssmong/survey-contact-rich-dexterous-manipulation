@@ -1,0 +1,193 @@
+<h3 class="dp-h3">2.6 HumanoidGen</h3>
+<p class="dp-p"><strong>全称：</strong> HumanoidGen: Data Generation for Bimanual Dexterous Manipulation via LLM Reasoning</p>
+<p class="dp-p"><strong>作者：</strong> Zhi Jing, Siyuan Yang, Jicong Ao, Ting Xiao, Yu-Gang Jiang, Chenjia Bai</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> NeurIPS 2025</p>
+<p class="dp-p"><strong>arXiv：</strong> <a href="https://arxiv.org/abs/2507.00833" target="_blank" rel="noopener">2507.00833</a>（注：此前引用为2505.14680，该编号指向一篇不相关的论文）</p>
+<p class="dp-p"><strong>手部硬件：</strong> Unitree H1-2 人形机器人，配备 Inspire 灵巧手（每手6自由度，每臂7自由度；总动作空间26维）。Inspire 手为多指灵巧手，确认归入灵巧操作章节。</p>
+<p class="dp-p"><strong>任务：</strong></p>
+<ul class="dp-list">
+<li>20项桌面操作任务</li>
+<li>双臂协调任务</li>
+<li>长时间序列多步操作</li>
+<li>人形本体背景下需要灵巧手-物体交互的任务</li>
+</ul>
+<p class="dp-p"><strong>核心方法：</strong> HumanoidGen 使用大语言模型（LLM）作为任务规划器，结合蒙特卡洛树搜索（MCTS）进行策略生成。LLM 将复杂操作指令分解为子任务序列，而 MCTS 探索可能的动作计划空间以找到高回报轨迹。扩散策略作为底层控制器，为人形机器人的手臂和手部生成连续动作。语言在规划层面用于指定和分解任务，LLM 提供关于操作策略的常识推理。</p>
+<p class="dp-p"><strong>架构/参数：</strong></p>
+<ul class="dp-list">
+<li>高层规划器：LLM（摘要中未公开具体模型；用于任务分解和 MCTS 引导）</li>
+<li>搜索：蒙特卡洛树搜索用于计划优化</li>
+<li>底层控制器：扩散策略用于连续动作生成</li>
+<li>目标平台：Unitree H1_2 人形机器人</li>
+<li>模型和数据权重在 HuggingFace 上提供</li>
+</ul>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>LLM 引导的 MCTS 框架用于生成多样化操作策略，结合 LLM 的常识推理能力与 MCTS 的系统性探索</li>
+<li>在完整人形平台上演示了20项桌面任务，包括双臂和长时间序列操作</li>
+<li>该框架为同一任务生成多样化的策略解决方案，通过解决方案多样性提升鲁棒性</li>
+</ul>
+<p class="dp-p"><strong>局限性/不足：</strong></p>
+<ul class="dp-list">
+<li>仅限人形集成手部；未涉及独立灵巧手平台（Allegro、Shadow、LEAP）</li>
+<li>无力或阻抗输出；扩散策略生成位置目标</li>
+<li>LLM 规划器在任务分解层面运作，而非精细手指控制层面</li>
+<li>MCTS 探索对实时应用可能计算开销较大</li>
+<li>评估主要集中在桌面操作；未涵盖工具使用或高度接触密集型任务</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong></p>
+<p class="dp-p"><strong>MCTS 有效性（数据生成成功率）：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>无 MCTS</th>
+<th>MCTS</th>
+<th>MCTS 迭代次数 (N)</th>
+</tr></thead><tbody>
+<tr>
+<td>Block Stack Single</td>
+<td>63.3 +/- 6.2%</td>
+<td>98.3 +/- 2.4%</td>
+<td>N=2</td>
+</tr>
+<tr>
+<td>Blocks Stack Easy</td>
+<td>46.7 +/- 2.4%</td>
+<td>95.0 +/- 4.1%</td>
+<td>N=3</td>
+</tr>
+<tr>
+<td>Blocks Stack Hard</td>
+<td>18.3 +/- 6.2%</td>
+<td>98.3 +/- 2.4%</td>
+<td>N=12</td>
+</tr>
+<tr>
+<td>Pyramid Stack</td>
+<td>13.3 +/- 6.2%</td>
+<td>90.0 +/- 4.1%</td>
+<td>N=12</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">MCTS 相比无 MCTS 基线，成功率提升35--77个百分点。</p>
+<p class="dp-p"><strong>策略学习结果（DP3 vs DP，部分任务，不同演示数量）：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>策略</th>
+<th>20个演示</th>
+<th>50个演示</th>
+<th>100个演示</th>
+</tr></thead><tbody>
+<tr>
+<td>Blocks Stack Easy</td>
+<td>DP3</td>
+<td>0.0%</td>
+<td>0.0%</td>
+<td>22.8 +/- 16.5%</td>
+</tr>
+<tr>
+<td>Blocks Stack Easy</td>
+<td>DP</td>
+<td>0.0%</td>
+<td>0.0%</td>
+<td>0.0%</td>
+</tr>
+<tr>
+<td>Cup Pour Easy</td>
+<td>DP3</td>
+<td>67.8 +/- 10.8%</td>
+<td>75.6 +/- 9.6%</td>
+<td>72.2 +/- 7.9%</td>
+</tr>
+<tr>
+<td>Cup Pour Easy</td>
+<td>DP</td>
+<td>0.0%</td>
+<td>2.2 +/- 6.3%</td>
+<td>0.0%</td>
+</tr>
+<tr>
+<td>Open Box Easy</td>
+<td>DP3</td>
+<td>85.6 +/- 8.0%</td>
+<td>95.6 +/- 4.4%</td>
+<td>95.0 +/- 4.1%</td>
+</tr>
+<tr>
+<td>Open Box Easy</td>
+<td>DP</td>
+<td>93.3 +/- 13.3%</td>
+<td>100.0%</td>
+<td>100.0%</td>
+</tr>
+<tr>
+<td>Open Box Hard</td>
+<td>DP3</td>
+<td>95.6 +/- 5.5%</td>
+<td>96.1 +/- 4.6%</td>
+<td>98.3 +/- 3.3%</td>
+</tr>
+<tr>
+<td>Open Box Hard</td>
+<td>DP</td>
+<td>11.1 +/- 19.1%</td>
+<td>93.3 +/- 9.4%</td>
+<td>100.0%</td>
+</tr>
+<tr>
+<td>Open Drawer</td>
+<td>DP3</td>
+<td>58.3 +/- 8.3%</td>
+<td>76.0 +/- 13.1%</td>
+<td>84.4 +/- 11.3%</td>
+</tr>
+<tr>
+<td>Open Drawer</td>
+<td>DP</td>
+<td>17.8 +/- 22.0%</td>
+<td>13.3 +/- 18.9%</td>
+<td>48.9 +/- 31.4%</td>
+</tr>
+<tr>
+<td>Close Box Hard</td>
+<td>DP3</td>
+<td>88.9 +/- 17.6%</td>
+<td>96.3 +/- 6.9%</td>
+<td>96.3 +/- 6.9%</td>
+</tr>
+<tr>
+<td>Close Laptop Easy</td>
+<td>DP3</td>
+<td>100.0%</td>
+<td>100.0%</td>
+<td>100.0%</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">完整基准（HGen-Bench）中共14项任务在所有条件下进行了评估。DP3 总体优于 DP，尤其在灵巧任务上。所有任务的平均成功率超过50%。</p>
+<ul class="dp-list">
+<li>模型和数据在 HuggingFace 上发布</li>
+<li>代码发布于 <a href="https://github.com/TeleHuman/HumanoidGen" target="_blank" rel="noopener">GitHub</a></li>
+<li>项目页面：<a href="https://openhumanoidgen.github.io" target="_blank" rel="noopener">openhumanoidgen.github.io</a></li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 论文（arXiv 2507.00833）中未报告。</li>
+<li><strong>部署硬件：</strong> Unitree H1_2 人形机器人平台。训练/推理 GPU 未指定。</li>
+<li><strong>是否支持实时？</strong> 未验证。基于 MCTS 的规划可能在推理时引入计算开销，但具体延迟数据不可用。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 自定义仿真生成数据集。在 HuggingFace 上提供（<code>TeleEmbodied/humanoidgen_dataset</code>）。</li>
+<li><strong>采集方法：</strong> 使用 ManiSkill 平台的基于仿真的数据生成。通过启用 <code>record_data</code> 运行任务求解器脚本，为20项桌面操作任务生成演示轨迹。</li>
+<li><strong>数据规模：</strong> 未明确报告。HuggingFace 数据集仓库存在，但具体回合/轨迹数量在公开文档中未披露。</li>
+<li><strong>遥操作设备：</strong> 不适用（仿真生成数据）。真实世界部署使用 Unitree H1_2 人形机器人。</li>
+<li><strong>数据格式：</strong> 以 pickle 格式采集，然后通过 <code>pkl2zarr.py</code> 转换为 zarr 格式用于策略训练。</li>
+<li><strong>是否公开可用？</strong> 是。数据集在 HuggingFace 上（<code>TeleEmbodied/humanoidgen_dataset</code>）。模型在 HuggingFace 上（<code>TeleEmbodied/humanoidgen_model</code>）。代码位于 <a href="https://github.com/TeleHuman/HumanoidGen" target="_blank" rel="noopener">GitHub</a>。注：场景生成和额外任务生成代码尚未发布。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审 <span class="dp-review-score-badge">4.0</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">平均分: <strong>4.0</strong> · 4 条评审 · NeurIPS 2025 poster · <a href="https://openreview.net/forum?id=Mk9ykil8eP" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 4</span> <span class="dp-review-text">This paper introduces HumanoidGen, a framework to automatically generate tasks and demonstrations for bimanual dexterous manipulation, addressing a key data scarcity problem for humanoid robots. It us…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 3</span> <span class="dp-review-text">This paper presents HumanoidGen, a framework for automatic data generation in bimanual dexterous manipulation, leveraging LLM-based planning, spatial annotation, and MCTS-enhanced reasoning. The syste…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 5</span> <span class="dp-review-text">This paper presents HumanoidGen, an automated framework for generating diverse bimanual dexterous manipulation tasks and collecting demonstrations for humanoid robots. The framework leverages atomic o…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 4</span> <span class="dp-review-text">This paper introduces HumanoidGen, an automated framework for generating high-quality demonstration data for humanoid robots performing bimanual dexterous manipulation tasks. Unlike existing robotics …</span></div>
+</div>
+</details>

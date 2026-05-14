@@ -1,0 +1,108 @@
+<h3 class="dp-h3">ManipTrans</h3>
+<p class="dp-p"><strong>全称：</strong> ManipTrans: Transferring Dexterous Manipulation Across Embodiments</p>
+<p class="dp-p"><strong>作者：</strong> BIGAI / 清华大学 / 北京大学等研究人员</p>
+<p class="dp-p"><strong>会议/年份：</strong> CVPR 2025</p>
+<p class="dp-p"><strong>手部硬件：</strong> 评估了4种机器人手形态：Shadow Hand（K=22自由度）、Articulated MANO（K=22自由度）、Inspire Hand（K=12自由度）和Allegro Hand（K=16自由度）。跨形态迁移在这些形态多样的手之间得到了验证。</p>
+<p class="dp-p"><strong>任务：</strong> 双手灵巧操作任务，包括笔帽拔取、瓶盖拧开以及其他需要双手协调操作的铰接物体操作。相关的DexManipNet数据集包含跨这些任务和形态的3,300个回合。</p>
+<p class="dp-p"><strong>核心方法：</strong> ManipTrans解决了跨不同机器人手形态迁移灵巧操作技能的挑战。该方法学习一种与形态无关的操作表示，可映射到不同的手部形态。它使用通用模仿器架构，接收一种手部形态上的演示，生成可在不同目标手上执行的策略，无需针对每种形态收集演示即可实现跨形态技能迁移。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 模仿器网络学习跨形态操作的共享隐空间。预训练模仿器检查点和完整模型权重已在HuggingFace上发布。系统在IsaacGym Preview 4中使用并行环境训练。</p>
+<p class="dp-p"><strong>仿真平台：</strong> NVIDIA IsaacGym Preview 4。未展示仿真到真实迁移——工作聚焦于仿真中的跨形态迁移。DexManipNet数据集提供了兼容MuJoCo的演示数据。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入了通用模仿器，可在4种机器人手形态（Shadow、MANO、Inspire、Allegro）之间迁移操作演示，无需针对目标形态的演示，而此前的跨形态方法至少需要每种目标手上的部分演示数据。</li>
+<li>发布了DexManipNet，包含3,300个跨多种手的双手操作回合的数据集，在HuggingFace上公开——这是最大的公开跨形态灵巧操作数据集。</li>
+<li>表明共享隐操作表示可以匹配使用匹配演示训练的形态特定策略的性能，证明了跨形态迁移不会固有地牺牲操作质量。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。未引入力/力矩传感或阻抗控制。通用模仿器完全在关节位置空间中操作，意味着接触密集操作（如瓶盖拧开扭矩）过程中产生的力分布未被显式控制。对于接触力大小至关重要的任务（如避免过度拧紧或压碎），这可能限制真实世界的适用性。</li>
+<li><strong>VLA/语言条件化：</strong> 无。未探索语言条件化和VLA集成。通用模仿器基于演示轨迹进行条件化，而非语言指令。</li>
+<li><strong>仿真到真实：</strong> 无。工作仅限仿真。跨形态迁移在IsaacGym中得到验证，但未涉及物理硬件部署。</li>
+<li><strong>代码/权重可用性：</strong> 预训练模仿器检查点和模型权重已在HuggingFace上发布。DexManipNet数据集公开可用。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 在跨4种机器人手形态的双手操作任务上进行了评估。成功定义为满足阈值：旋转误差<30度，平移误差<3cm，关节误差<8cm，指尖误差<6cm。</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>方法</th>
+<th>单手成功率</th>
+<th>双手成功率</th>
+<th>旋转误差（度）</th>
+<th>平移误差（cm）</th>
+<th>关节误差（cm）</th>
+<th>指尖误差（cm）</th>
+</tr></thead><tbody>
+<tr>
+<td>仅重定向</td>
+<td>4.6%</td>
+<td>0.0%</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td>仅强化学习</td>
+<td>34.3%</td>
+<td>12.1%</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td>重定向 + 残差</td>
+<td>47.8%</td>
+<td>13.9%</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><strong>ManipTrans</strong></td>
+<td><strong>58.1%</strong></td>
+<td><strong>39.5%</strong></td>
+<td><strong>8.60</strong></td>
+<td><strong>0.49</strong></td>
+<td><strong>2.15</strong></td>
+<td><strong>1.36</strong></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">瓶子重排的策略学习基准（使用DexManipNet）：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>方法</th>
+<th>成功率</th>
+</tr></thead><tbody>
+<tr>
+<td>IBC</td>
+<td>4.69%</td>
+</tr>
+<tr>
+<td>BET</td>
+<td>9.69%</td>
+</tr>
+<tr>
+<td>DP-UNet</td>
+<td>18.44%</td>
+</tr>
+<tr>
+<td>DP-Trans</td>
+<td>14.69%</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">评估的手：Shadow Hand（K=22）、Articulated MANO（K=22）、Inspire Hand（K=12）、Allegro Hand（K=16）。ManipTrans在所有形态上实现了一致的性能，无需针对每种形态调整超参数。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。工作仅限仿真（IsaacGym Preview 4）。</li>
+<li><strong>部署硬件：</strong> 仅仿真。未展示真实世界部署。</li>
+<li><strong>是否实时：</strong> 不适用（仅限仿真）。通用模仿器推理速度未表征。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> DexManipNet（随本工作发布的自定义数据集）。包含跨多种机器人手形态的双手操作演示。</li>
+<li><strong>收集方法：</strong> 在IsaacGym Preview 4中仿真生成的演示。通过轨迹优化/脚本化控制器生成双手操作任务的演示，然后用于跨形态模仿学习。</li>
+<li><strong>数据规模：</strong> 3,300个双手操作回合（134万帧），涵盖约1,200个物体，来自OakInk-V2的61个任务，以及约600个双手序列。4种机器人手形态。</li>
+<li><strong>遥操作设备：</strong> 不适用（仿真生成的数据）。</li>
+<li><strong>数据格式：</strong> 兼容MuJoCo的演示数据；在HuggingFace上发布。</li>
+<li><strong>是否公开：</strong> 是。DexManipNet数据集在HuggingFace上公开可用。预训练模仿器检查点和模型权重也在HuggingFace上发布。</li>
+</ul>
+<hr>

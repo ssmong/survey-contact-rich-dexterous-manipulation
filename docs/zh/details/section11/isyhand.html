@@ -1,0 +1,46 @@
+<p class="dp-p"># 11.3 ISyHand</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> ISyHand: An Intrinsically Soft Dexterous Hand for Contact-Rich Manipulation</li>
+<li><strong>作者：</strong> MPI for Intelligent Systems (MPI-IS), Tubingen</li>
+<li><strong>发表场所/年份：</strong> 2025</li>
+<li><strong>自由度：</strong> 18（12个手指自由度 + 6个掌部/腕部自由度）</li>
+<li><strong>成本：</strong> ~$1,300</li>
+<li><strong>触觉传感：</strong> 无内置</li>
+<li><strong>驱动方式：</strong> 腱驱动，内在柔顺关节</li>
+</ul>
+<h2 class="dp-h2">定量参数</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>参数</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>执行器控制带宽</td>
+<td>现有文献未报告</td>
+</tr>
+<tr>
+<td>最大指尖力</td>
+<td>现有文献未报告（柔顺关节可能限制最大力输出，低于刚性关节设计）</td>
+</tr>
+<tr>
+<td>耐久性</td>
+<td>现有文献未报告（腱磨损是潜在维护问题）</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">ISyHand采用了与LEAP等刚性关节手截然不同的机械方案：使用内在柔顺关节和腱驱动执行机构。柔顺性内嵌于关节机构本身，而非通过控制实现。这意味着手在抓取过程中会被动地适应物体几何形状——一种无需显式力控制的物理阻抗形式。18自由度设计（12个手指 + 6个掌部/腕部）提供了较高的灵巧性，腱驱动执行方式允许将电机布置在前臂，降低了指尖重量和惯量。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>内在机械柔顺性，无需显式阻抗控制即可实现被动力调节</li>
+<li>在本综述低于$2K的灵巧手中自由度最高（18）</li>
+<li>以最低成本（$1,300）实现最高自由度，性价比优异</li>
+<li>腱驱动执行方式实现低惯量的轻质指尖</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>无触觉传感；柔顺关节提供隐式接触适应但无显式接触测量</li>
+<li>腱驱动执行引入了线缆布线复杂性和潜在维护问题（腱磨损、松弛）</li>
+<li>由于难以准确建模腱动力学和关节柔顺性，软体/柔顺手的仿真到真实迁移更具挑战性</li>
+<li>柔顺关节可能限制最大指尖力，低于刚性关节设计</li>
+</ul>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">项目主页：<a href="https://isyhand.is.mpg.de/" target="_blank" rel="noopener">isyhand.is.mpg.de</a>。设计文件可获取。</p>

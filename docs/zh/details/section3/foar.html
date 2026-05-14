@@ -1,0 +1,40 @@
+<h2 class="dp-h2">3.13 FoAR</h2>
+<blockquote class="dp-quote"><strong>注意：</strong> 这不是VLA（无语言条件化）。因其力输出方法论直接与力感知操作策略设计相关而收录于第3节。</blockquote>
+<ul class="dp-list">
+<li><strong>全称:</strong> FoAR: Force-Aware Reactive Policy for Contact-Rich Robotic Manipulation</li>
+<li><strong>作者:</strong> Alan Heoooh等（上海交通大学）</li>
+<li><strong>发表平台/年份:</strong> RA-L / IROS 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2411.15753</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 安装在腕部的六轴F/T传感器（Flexiv Rizon内置传感器）。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 否。仅位置输出。力用作反应行为的输入，但机器人执行位置命令。</p>
+<blockquote class="dp-quote"><strong>局限性（仅位置输出）：</strong> 仅位置输出；尽管接收了力/触觉输入，策略无法主动调节接触力。</blockquote>
+<p class="dp-p"><strong>机器人平台：</strong> Flexiv Rizon机械臂 + 平行夹爪。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 表面擦拭和胶带/蔬菜剥离——需要在沿表面移动的同时保持接触的任务。</p>
+<p class="dp-p"><strong>关键方法：</strong> FoAR是一种力感知反应策略，使用实时F/T反馈生成反应式位置调整。策略通过包含同步F/T记录的演示进行模仿学习训练。一个关键设计选择是使用力条件动作表示，其中F/T信号通过门控机制调制动作输出——当接触力在可接受范围内时，策略遵循标称轨迹；当力偏离时，策略生成修正运动。这使得机器人即使在表面几何不确定的情况下也能在擦拭和剥离任务中保持期望的接触。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 基于Transformer的反应策略，具有力条件化。模型处理F/T读数历史和视觉观测，生成仅位置的动作块。力门控机制通过学习的注意力加权融合实现。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入力条件反应策略，基于F/T反馈生成实时修正运动，实现稳健的接触保持。</li>
+<li>展示了在不同表面几何上泛化的有效擦拭和剥离行为，其中保持一致的接触力至关重要。</li>
+<li>公开发布代码（GitHub），支持可复现性。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 不是完整的VLA模型——FoAR使用力和视觉但不包含语言条件化。仅位置输出限制了显式调节接触力的能力。仅在2种任务类型上评估（擦拭和剥离）。仅限单一机器人平台。</p>
+<p class="dp-p"><strong>结果：</strong> FoAR在擦拭和剥离任务上实现了稳健的接触丰富操作，通过反应式位置调整保持一致的接触力。力条件策略在这些任务上显著优于纯视觉基线。代码可在GitHub获取（github.com/Alan-Heoooh/FoAR）。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 策略以大约<strong>10 Hz</strong>进行动作预测（动作时域20步）。F/T数据以100 Hz采样（高频感知）。扩散模型使用20次DDIM迭代进行推理。</li>
+<li><strong>部署硬件：</strong> 在2块NVIDIA A100 GPU上训练。在Intel Core i9-10900K CPU + NVIDIA RTX 3090 GPU上进行推理/部署。Flexiv Rizon机械臂用于真实世界执行。</li>
+<li><strong>是否支持实时？</strong> 是，在10 Hz下配合时序集成缓冲。基于DDIM的扩散10 Hz动作预测频率足以满足所评估的擦拭和剥离任务，尽管DDIM迭代相比直接策略推理增加了延迟。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> Flexiv Rizon机械臂上表面擦拭和胶带/蔬菜剥离任务的自定义演示数据集。无命名基准。</li>
+<li><strong>收集方法：</strong> 遥操作演示，同步记录六轴F/T数据（100 Hz）和视觉观测。F/T数据来自Flexiv Rizon的内置腕部传感器。</li>
+<li><strong>数据规模：</strong> 未报告。</li>
+<li><strong>遥操作设备：</strong> 未详细说明。在Flexiv Rizon机械臂上使用内置腕部F/T传感器进行遥操作。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开可用？</strong> 代码已在<a href="https://github.com/Alan-Heoooh/FoAR" target="_blank" rel="noopener">GitHub</a>发布。演示数据是否包含在发布中未确认。项目页面位于tonyfang.net/FoAR/。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=cbjluXVaJz" target="_blank" rel="noopener">OpenReview</a></p></div></details>

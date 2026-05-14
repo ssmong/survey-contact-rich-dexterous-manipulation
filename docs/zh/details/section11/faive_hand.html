@@ -1,0 +1,63 @@
+<p class="dp-p"># 11.6 FAIVE Hand</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> FAIVE Hand: A Low-Cost, 3D-Printed, Tendon-Driven Dexterous Robot Hand</li>
+<li><strong>作者：</strong> ETH Zurich, Soft Robotics Lab (SRL)</li>
+<li><strong>发表场所/年份：</strong> 2024（开源硬件发布；相关策略学习论文）</li>
+<li><strong>自由度：</strong> 11+个驱动自由度（因版本而异；P0/P2/P4修订版自由度递增）</li>
+<li><strong>成本：</strong> ~$500-800（物料清单；显著低于本节所有其他灵巧手）</li>
+<li><strong>触觉传感：</strong> 无内置（指尖设计可容纳第三方传感器）</li>
+<li><strong>驱动方式：</strong> 腱驱动，使用现成舵机；肌腱通过3D打印手指连杆布线</li>
+<li><strong>制造方式：</strong> 结构件全部3D打印（FDM/SLA）；无需CNC加工或定制机加工</li>
+</ul>
+<h2 class="dp-h2">定量参数</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>参数</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>手指</td>
+<td>4指 + 拇指（仿人布局）</td>
+</tr>
+<tr>
+<td>驱动自由度</td>
+<td>11+（因版本而异；P4版自由度更高）</td>
+</tr>
+<tr>
+<td>被动自由度</td>
+<td>通过腱耦合提供额外的欠驱动关节</td>
+</tr>
+<tr>
+<td>重量</td>
+<td>未报告（3D打印结构表明重量较轻）</td>
+</tr>
+<tr>
+<td>执行器控制带宽</td>
+<td>~50 Hz（受舵机限制）</td>
+</tr>
+<tr>
+<td>最大指尖力</td>
+<td>受腱张力和舵机扭矩限制；低于直驱设计</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">FAIVE Hand围绕超低成本可及性原则设计。所有结构件均可在消费级3D打印机上打印，驱动使用现成舵机配合腱布线。欠驱动腱驱动设计意味着所需电机数少于关节自由度数，被动关节耦合提供自适应抓取能力。已发布多个硬件修订版（P0、P2、P4），设计逐步优化。该手可安装于标准机械臂，并已基于强化学习实现了仿真到真实迁移的灵巧操作任务。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>超低成本灵巧手（~$500-800），比本综述中其他任何灵巧手便宜约2-6倍</li>
+<li>全3D打印：无需CNC加工、激光切割或定制零件；使灵巧操作硬件的获取更加民主化</li>
+<li>腱驱动欠驱动方式，以更少的电机实现自适应抓取</li>
+<li>多个开源硬件修订版，社区参与贡献</li>
+<li>已验证操作策略的仿真到真实迁移</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>自由度较低（11+），低于LEAP（16）、ORCA（17）或ISyHand（18），限制了精细操作灵巧性</li>
+<li>腱驱动执行引入了线缆布线复杂性、腱磨损和潜在松弛问题</li>
+<li>无集成触觉传感；无第三方传感器则无法测量指尖力</li>
+<li>3D打印零件的机械耐久性低于注塑成型或CNC加工件；长期使用后可能需要重新打印</li>
+<li>舵机带宽（~50 Hz）和扭矩有限，低于Dynamixel或定制执行器</li>
+<li>研究社区规模较小，已发表的仿真到真实结果少于LEAP Hand</li>
+<li>由于难以准确建模腱动力学和3D打印关节柔顺性，仿真到真实差距可能更大</li>
+</ul>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">完全开源（CAD、固件、装配说明、物料清单）。GitHub：<a href="https://github.com/srl-ethz/faive-hand" target="_blank" rel="noopener">srl-ethz/faive-hand</a>（注：不同版本的仓库可能使用不同的命名约定）。提供多个硬件修订版。</p>

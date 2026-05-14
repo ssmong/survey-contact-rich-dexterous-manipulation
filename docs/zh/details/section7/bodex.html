@@ -1,0 +1,56 @@
+<h3 class="dp-h3">7.1 BODex</h3>
+<p class="dp-p"><strong>完整标题：</strong> BODex: Bilevel Optimization for Efficient and Scalable Dexterous Grasping</p>
+<p class="dp-p"><strong>作者：</strong> Jiayi Chen, Yuxing Chen, Jialiang Zhang, He Wang</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> ICRA 2025</p>
+<p class="dp-p"><strong>PKU-EPIC谱系：</strong> 用双层优化替代基于RL的抓取生成（UniDexGrasp/UniDexGrasp++），实现跨手部支持而无需逐手部RL训练。核心算法从学习策略转向基于优化的抓取合成。</p>
+<p class="dp-p"><strong>RL算法：</strong> 双层优化（非标准RL）——外层优化抓取接触点，内层通过cuRobo求解逆运动学；生成抓取数据集而非学习策略</p>
+<p class="dp-p"><strong>手部硬件：</strong> Shadow Hand（24自由度）、Allegro Hand（16自由度）、LEAP Hand（16自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> cuRobo（CUDA加速机器人优化）</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是；81%真实世界成功率（真实），使用生成的抓取</p>
+<p class="dp-p"><strong>物体数量：</strong> 5355个物体；大规模抓取数据集生成</p>
+<p class="dp-p"><strong>任务：</strong> 灵巧抓取生成（抓取姿态合成而非闭环控制）</p>
+<p class="dp-p"><strong>核心方法论：</strong> 将灵巧抓取合成表述为双层优化问题。外层优化物体表面的接触点位置以最大化抓取质量指标（力闭合、表面覆盖）。内层使用cuRobo的GPU加速逆运动学找到可达这些接触点的可行手部配置。完全避免了RL训练，实现大规模快速抓取生成。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>比基于RL的方法快数个数量级的抓取生成（分钟 vs 小时）</li>
+<li>单一优化框架的跨构型支持（Shadow、Allegro、LEAP）</li>
+<li>81%仿真到真实迁移率（真实），在物理硬件上验证生成的抓取</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>真实世界成功率</td>
+<td>81%（真实）</td>
+</tr>
+<tr>
+<td>物体集大小</td>
+<td>5355</td>
+</tr>
+<tr>
+<td>支持的手部</td>
+<td>Shadow、Allegro、LEAP</td>
+</tr>
+<tr>
+<td>生成速度</td>
+<td>比RL快数个数量级</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong> 开环抓取合成（无闭环执行策略）；依赖精确物体几何；不处理物体不确定性或部分视角；抓取质量指标可能未捕捉真实世界鲁棒性因素（表面摩擦、柔顺性）</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 基于优化的抓取计算为离线（非实时推理）。cuRobo加速的IK求解比基于RL的替代方案快数个数量级。部署时开环执行预计算抓取。</li>
+<li><strong>部署硬件：</strong> 在Shadow、Allegro和LEAP手上进行真实部署（81%真实世界成功率）。抓取计算通过cuRobo使用NVIDIA GPU。</li>
+<li><strong>支持实时？</strong> 是，在部署端（预计算抓取开环执行）。抓取生成本身为离线但速度快（cuRobo加速）。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 通过双层优化程序化生成的抓取数据集（非RL）。5355个物体来自3D模型库。</li>
+<li><strong>收集方法：</strong> 使用cuRobo（CUDA加速）的基于优化的抓取合成。外层优化物体表面接触点；内层求解逆运动学。跨构型（Shadow、Allegro、LEAP）。无RL训练，无演示。</li>
+<li><strong>数据规模：</strong> 5355个物体。大规模抓取数据集在分钟内生成（vs RL方法的小时）。</li>
+<li><strong>遥操作设备：</strong> 不适用（基于优化，无演示）。</li>
+<li><strong>数据格式：</strong> 生成的抓取姿态（目标物体的手部配置）。具体格式未报告。</li>
+<li><strong>是否公开？</strong> 数据集/代码发布状态未报告。</li>
+</ul>

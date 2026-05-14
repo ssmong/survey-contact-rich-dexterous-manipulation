@@ -1,0 +1,45 @@
+<h3 class="dp-h3">7.3 DexGarmentLab</h3>
+<p class="dp-p"><strong>전체 제목:</strong> DexGarmentLab: Dexterous Garment Manipulation Benchmark with Multi-Finger Hands</p>
+<p class="dp-p"><strong>저자:</strong> Yuxuan Gao, Zihang Zhao, Zhenjun Yu, Haoyu Xiong, Ruihai Wu, Yan Shen, Jiangtao Gong, He Wang, et al.</p>
+<p class="dp-p"><strong>학회/연도:</strong> NeurIPS 2025 (Spotlight)</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2503.18693</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO and SAC baselines provided. The benchmark supports multiple RL approaches and includes IL baselines (e.g., diffusion policy). Deformable simulation uses GPU-accelerated FEM/PBD cloth solvers.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Bimanual dexterous hands (simulated), supporting multiple hand models</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacSim (with GPU-accelerated cloth simulation)</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> No. Simulation benchmark only.</p>
+<p class="dp-p"><strong>작업:</strong> 15 garment manipulation tasks across 2500+ garment instances. Tasks include: folding (t-shirts, pants, towels), hanging (on hangers, hooks), dressing (putting garments on mannequins), buttoning/unbuttoning, zipping, and re-arranging. These are long-horizon, multi-stage tasks requiring sequential contact-rich interactions with deformable objects.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> DexGarmentLab tackles the intersection of dexterous manipulation and deformable object manipulation -- a particularly challenging combination because garments exhibit complex dynamics (folding, draping, wrinkling) that require precise multi-finger coordination. The benchmark leverages GPU-accelerated cloth simulation for parallel training and includes a large garment asset library (2500+ instances) for generalization evaluation. Task difficulty spans from simple pick-and-place to multi-stage sequences (e.g., fold, then stack).</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>First large-scale benchmark for dexterous garment manipulation with multi-finger hands (prior garment benchmarks used grippers)</li>
+<li>Scaled to 2500+ garment instances across 15 tasks, enabling systematic generalization evaluation</li>
+<li>Demonstrated that existing RL/IL methods achieve limited success on complex garment tasks, establishing challenging baselines for future work</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> Sim-only; cloth simulation fidelity (especially friction, self-collision) may not transfer to real. Current RL baselines achieve low success rates on complex tasks, suggesting the benchmark may require new algorithmic approaches. No tactile sensing modeled despite garment manipulation being inherently tactile.</p>
+<p class="dp-p"><strong>시뮬레이션 전용 한계:</strong> 시뮬레이션에서만 평가됨; sim-to-real 전이 미입증, 실제 환경 실행 가능성 미검증.</p>
+<p class="dp-p"><strong>결과:</strong> PPO and diffusion policy baselines achieved moderate success on simpler tasks (folding towels) but low success on complex multi-stage tasks (dressing) (sim). NeurIPS 2025 Spotlight. Code publicly available.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not applicable (simulation benchmark). Policy inference speed depends on the RL/IL algorithm used; MLP policies run in <1ms.</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (IsaacSim with GPU-accelerated cloth simulation). No real-robot deployment.</li>
+<li><strong>실시간 가능 여부:</strong> Not applicable (simulation benchmark; no real-robot deployment).</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> No pre-collected dataset. Benchmark environment with 2,500+ garment instances across 15 tasks in IsaacSim.</li>
+<li><strong>수집 방법:</strong> Pure RL (PPO, SAC) and IL (diffusion policy) baselines trained in IsaacSim with GPU-accelerated cloth simulation. Deformable simulation via FEM/PBD cloth solvers. 15 garment tasks (folding, hanging, dressing, buttoning, zipping) with bimanual dexterous hands.</li>
+<li><strong>데이터 규모:</strong> 2,500+ garment instances across 15 tasks. Benchmark provides standardized environments, not pre-collected datasets.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (simulation benchmark).</li>
+<li><strong>데이터 포맷:</strong> IsaacSim simulation environments. Standardized task definitions and evaluation protocols.</li>
+<li><strong>공개 여부:</strong> Yes -- benchmark code publicly available.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰 <span class="dp-review-score-badge">4.6</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">평균: <strong>4.6</strong> · 5 개 리뷰 · NeurIPS 2025 spotlight · <a href="https://openreview.net/forum?id=ZZ09oX2Xpo" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 5</span> <span class="dp-review-text">This paper introduces DexGarmentLab, a novel simulation environment specifically designed for dexterous (especially bimanual) garment manipulation. The environment provides large-scale high-quality 3D…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 4</span> <span class="dp-review-text">The authors introduce DexGarmentLab, a novel simulation environment designed for dexterous (especially bimanual) garment manipulation. Built on Isaac Sim, it offers over 2,500 garments across 8 catego…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 5</span> <span class="dp-review-text">This paper is dedicated to solving the dexterous garment manipulation problem. It introduces a new simulation environment (DexGarmentLab), an effective method for automatically collecting demonstratio…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 4</span> <span class="dp-review-text">The paper presents DexGarmentLab, a data generation pipeline for garment manipulation and a generalizable manipulation policy using dexterous hands. To eliminate the extensive human effort typically r…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R5: 5</span> <span class="dp-review-text">The paper introduces DexGarmentLab, a comprehensive framework for bimanual dexterous garment manipulation. Contributions include: (1) A new simulation environment built on Isaac Sim, featuring over 2,…</span></div>
+</div>
+</details>

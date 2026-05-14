@@ -1,0 +1,44 @@
+<h3 class="dp-h3">7.3 VTDexManip</h3>
+<p class="dp-p"><strong>전체 제목:</strong> VTDexManip: A Vision-Tactile Dataset for Dexterous Manipulation</p>
+<p class="dp-p"><strong>저자:</strong> Qiang Luo, Xudong Han, Haoran Li, Ao Li, Boyang Gao, Shaowei Liu, et al.</p>
+<p class="dp-p"><strong>학회/연도:</strong> ICLR 2025</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2501.01370</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO with multi-modal observations (vision + binary tactile). The framework trains teacher policies with privileged state, then distills to student policies using vision and tactile inputs.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Multi-finger dexterous hand (simulated), modeled with binary tactile sensor arrays on fingertips</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> No. Simulation-only benchmark and dataset.</p>
+<p class="dp-p"><strong>작업:</strong> 6 complex dexterous tasks: (1) bottle cap opening/closing; (2) faucet turning; (3) object reorientation; (4) pen spinning; (5) valve turning; (6) lid manipulation. Tasks involve sustained multi-finger contact with objects requiring precise coordination.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> VTDexManip provides both a benchmark and a large-scale dataset (565K frames, 182 objects) for vision-tactile dexterous manipulation. Binary tactile contact signals on each fingertip are used alongside visual observations to learn contact-aware policies. The dataset captures the correlation between visual object state, tactile contact patterns, and successful manipulation strategies, enabling both RL training and imitation learning approaches.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Created a large-scale vision-tactile dataset for dexterous manipulation (565K frames across 182 objects and 6 tasks)</li>
+<li>Demonstrated that incorporating tactile feedback improves policy performance on contact-rich tasks compared to vision-only baselines</li>
+<li>Released 18 pretrained models spanning different task-sensor combinations for community benchmarking</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> Binary tactile sensing is a significant simplification compared to real tactile sensors (e.g., GelSight) that provide rich spatial force distributions. Sim-only with no real-world validation. The gap between simulated and real tactile signals remains unaddressed.</p>
+<p class="dp-p"><strong>시뮬레이션 전용 한계:</strong> 시뮬레이션에서만 평가됨; sim-to-real 전이 미입증, 실제 환경 실행 가능성 미검증.</p>
+<p class="dp-p"><strong>결과:</strong> Vision+tactile policies outperformed vision-only baselines on 5 of 6 tasks (sim). Released 18 pretrained model checkpoints. Dataset and code publicly available.</p>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> Custom large-scale vision-tactile dexterous manipulation dataset (VTDexManip). 565K frames, 182 objects, 6 tasks.</li>
+<li><strong>수집 방법:</strong> Generated in IsaacGym simulation. PPO-trained teacher policies with privileged state generate trajectories; vision + binary tactile observations recorded. 6 tasks: bottle cap, faucet, reorientation, pen spinning, valve, lid manipulation.</li>
+<li><strong>데이터 규모:</strong> 565,000 frames across 182 objects and 6 tasks. 18 pretrained models released.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (simulation-generated data).</li>
+<li><strong>데이터 포맷:</strong> Vision frames + binary tactile contact signals + proprioceptive state. Specific file format not reported.</li>
+<li><strong>공개 여부:</strong> Yes -- dataset, 18 pretrained models, and code publicly available.</li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not applicable (simulation benchmark/dataset). Policy inference depends on the algorithm used; PPO-trained MLP policies run in <1ms.</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (IsaacGym). No real-robot deployment.</li>
+<li><strong>실시간 가능 여부:</strong> Not applicable (simulation benchmark; no real-robot deployment).</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰 <span class="dp-review-score-badge">5.5</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">평균: <strong>5.5</strong> · 4 개 리뷰 · ICLR 2025 Poster · <a href="https://openreview.net/forum?id=jf7C7EGw21" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 5</span> <span class="dp-review-text">The author introduces a unique dataset for visual-tactile with 10 daily tasks.  A new benchmark with six complex dexterous manipulation tasks is proposed, using a reinforcement learning-based vision-t…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 6</span> <span class="dp-review-text">This paper introduces a new visual-tactile dataset for training and benchmarking dexterous manipulation skills. It includes 10 tasks with 182 objects collected by human operators and provides a compre…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 5</span> <span class="dp-review-text">This paper proposes a vision-tactile dataset and a novel benchmark for evaluating the vision-tactile pre-training methods. The experiments show that the tactile signals can provide guidance for the de…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 6</span> <span class="dp-review-text">This paper introduces a dataset and benchmark to address the limitations in current robotic manipulation learning frameworks by incorporating both vision and tactile modalities. It collects human mani…</span></div>
+</div>
+</details>

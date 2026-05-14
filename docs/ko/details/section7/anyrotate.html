@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.2 AnyRotate</h3>
+<p class="dp-p"><strong>전체 제목:</strong> AnyRotate: Gravity-Invariant In-Hand Object Rotation with Sim-to-Real Touch</p>
+<p class="dp-p"><strong>저자:</strong> Max Yang, Chenghua Lu, Alex Church, Yijiong Lin, Chris Li, Efi Psomopoulou, Nathan F. Lepora</p>
+<p class="dp-p"><strong>학회/연도:</strong> CoRL 2024</p>
+<p class="dp-p"><strong>Hora/RotateIt/AnyRotate evolutionary chain:</strong> Extends the Hora/RotateIt framework with gravity randomization; the RL algorithm (PPO+RMA) is inherited from Hora. The primary novelty is training across randomized gravity directions to enable rotation with any hand orientation, plus the finding that tactile sensing is essential for gravity-invariant rotation (proprioception-only fails in non-palm-up orientations).</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO with tactile-conditioned policy; extends tactile in-hand rotation to arbitrary gravity directions (gravity-invariant)</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Allegro Hand (16 DoF) + tactile sensors (TacTip-based)</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes; sim-to-real with tactile domain randomization across varied hand orientations (real)</p>
+<p class="dp-p"><strong>객체 수:</strong> Multiple objects evaluated in various orientations</p>
+<p class="dp-p"><strong>작업:</strong> Gravity-invariant in-hand object rotation -- continuous rotation with the hand held at arbitrary orientations (palm-up, palm-down, sideways)</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Addresses a key limitation of prior work (Hora, RotateIt) which assumes a palm-up hand configuration. Trains the rotation policy across randomized gravity directions relative to the hand, using tactile feedback to maintain stable contact regardless of gravity orientation. The tactile signal provides critical contact state information when gravity is not aligned with the palm, where proprioception alone is insufficient.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>First gravity-invariant in-hand rotation policy, enabling rotation with any hand orientation (real)</li>
+<li>Demonstrated that tactile sensing is essential for gravity-invariant rotation (proprioception-only fails in non-palm-up orientations)</li>
+<li>Sim-to-real transfer across hand orientations not seen during real-world training (real)</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> Still single-axis rotation; limited object diversity in real-world evaluation; custom tactile sensor setup may not generalize to other sensor types; no code publicly released at time of survey</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not explicitly reported. The tactile-conditioned MLP policy runs in <1ms per forward pass.</li>
+<li><strong>배포 하드웨어:</strong> Allegro Hand (16 DoF) + TacTip-based tactile sensors. Policy trained in IsaacGym; deployed via zero-shot sim-to-real transfer across varied hand orientations.</li>
+<li><strong>실시간 가능 여부:</strong> Yes. MLP-based policy with tactile conditioning supports real-time control. Demonstrated on real Allegro Hand in multiple orientations.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> No pre-collected dataset. Pure RL (PPO) with tactile-conditioned policy and gravity randomization -- all data generated in simulation.</li>
+<li><strong>수집 방법:</strong> Pure RL in IsaacGym extending Hora/RotateIt framework. Gravity direction randomized during training. Tactile feedback (TacTip-based) for contact state in varied hand orientations. Sim-to-real via tactile domain randomization.</li>
+<li><strong>데이터 규모:</strong> Standard parallel RL training in IsaacGym. Multiple objects in various orientations.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>데이터 포맷:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>공개 여부:</strong> No code publicly released at time of survey.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=Bt5upUsbvu" target="_blank" rel="noopener">OpenReview</a></p></div></details>

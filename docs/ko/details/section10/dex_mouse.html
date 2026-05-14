@@ -1,0 +1,30 @@
+<p class="dp-p"># 10.6 DEX-Mouse</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> DEX-Mouse: A Handheld Interface for Dexterous Teleoperation with Universal Applicability</li>
+<li><strong>저자:</strong> 서베이에 미명시</li>
+<li><strong>학회/연도:</strong> arXiv 2604.15013, 2026년 4월</li>
+<li><strong>입력 모달리티:</strong> 핸드헬드 물리적 인터페이스 (마우스형 디바이스)</li>
+<li><strong>대상 hand:</strong> 범용 (임의의 dexterous hand)</li>
+<li><strong>Force feedback:</strong> 디바이스 역학을 통한 역감각 피드백</li>
+<li><strong>비용:</strong> <$150</li>
+</ul>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">DEX-Mouse는 dexterous 원격조작 입력을 착용 글러브나 exoskeleton이 아닌 핸드헬드 디바이스로 재구상한다. 운영자는 마우스 형태의 소형 물리적 인터페이스를 조작하여 손 동작을 dexterous 로봇 hand 명령에 매핑한다. 디바이스는 기계적 구조를 통해 역감각 피드백을 제공한다. $150 이하로, 본 서베이에서 가장 저렴한 원격조작 인터페이스를 대표하며, dexterous 데이터 수집에 대한 접근을 민주화한다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>조사 대상 중 가장 저렴한 dexterous 원격조작 인터페이스 (<$150), dexterous 데이터 수집의 진입 장벽을 극적으로 낮춤</li>
+<li>핸드헬드 형태로 착용형 보정 및 착탈 오버헤드 제거</li>
+<li>다양한 로봇 hand 플랫폼에 걸친 범용 적용성</li>
+<li>디바이스 역학을 통한 역감각 피드백</li>
+</ul>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>핸드헬드 인터페이스가 글러브 기반 시스템과 동일한 충실도로 독립적 손가락 동작을 캡처할 수 없음</li>
+<li>역감각 피드백이 손가락별 접촉 렌더링이 아닌 디바이스 수준 힘으로 제한</li>
+<li>디바이스 동작에서 고-DoF hand 명령으로의 매핑이 비직관적인 운영자 훈련을 요구할 수 있음</li>
+<li>매우 최근 (2026); 제한된 커뮤니티 검증</li>
+</ul>
+<h2 class="dp-h2">데이터 품질 영향</h2>
+<p class="dp-p">핸드헬드 형태는 캡처된 시연의 차원성을 근본적으로 제한한다: 단일 디바이스가 15-20개 이상의 손가락 관절을 동시에 독립적으로 제어할 수 없어, 디바이스 동작에서 hand 관절 명령으로의 매핑이 결합을 도입하고 수집된 궤적의 표현력을 줄인다. DEX-Mouse 데이터로 학습된 policy는 조잡한 grasp 전략(예: power grasp)을 효과적으로 학습할 수 있지만, 정밀 조작(예: in-hand reorientation, pen spinning)에 필요한 독립적 손가락 제어가 부족하다. 디바이스 역학을 통한 역감각 피드백은 일부 접촉 인식을 제공하지만, 손가락 수준이 아닌 디바이스 수준이므로 downstream policy에서의 힘 조절 행동이 제한된다.</p>
+<h2 class="dp-h2">오픈소스 현황</h2>
+<p class="dp-p">오픈소스 (하드웨어 + 소프트웨어).</p>

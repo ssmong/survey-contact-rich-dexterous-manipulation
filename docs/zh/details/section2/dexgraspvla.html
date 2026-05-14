@@ -1,0 +1,67 @@
+<h3 class="dp-h3">2.2 DexGraspVLA</h3>
+<p class="dp-p"><strong>全称：</strong> DexGraspVLA: A Vision-Language-Action Framework for Dexterous Grasping</p>
+<p class="dp-p"><strong>作者：</strong> Psi-Robot team et al.</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> AAAI 2026</p>
+<p class="dp-p"><strong>arXiv：</strong> <a href="https://arxiv.org/abs/2502.08142" target="_blank" rel="noopener">2502.08142</a></p>
+<p class="dp-p"><strong>手部硬件：</strong> 定制灵巧手（在摘要层面未公开具体型号和自由度数；系统设计用于多指抓取）</p>
+<p class="dp-p"><strong>任务：</strong></p>
+<ul class="dp-list">
+<li>杂乱环境中的灵巧抓取</li>
+<li>语言指定抓取（例如"通过杯柄抓住红色杯子"）</li>
+<li>遮挡及不同物体摆放条件下的抓取</li>
+</ul>
+<p class="dp-p"><strong>核心方法：</strong> DexGraspVLA 采用两阶段架构，将高层规划与底层灵巧控制分离。一个大型视觉-语言模型（Qwen2.5-VL-72B）作为语义规划器，解析语言指令和视觉场景以确定抓取意图和目标物体。然后，基于扩散的控制器根据规划器的输出生成精细的灵巧抓取动作。语言既用于任务指定，也用于在杂乱场景中锚定物体引用。</p>
+<p class="dp-p"><strong>架构/参数：</strong></p>
+<ul class="dp-list">
+<li>规划器：Qwen2.5-VL-72B（720亿参数视觉-语言模型）</li>
+<li>控制器：基于扩散的动作生成模型</li>
+<li>两阶段设计保持大型 VLM 冻结用于规划，同时训练较小的扩散控制器用于灵巧动作</li>
+<li>控制器检查点已公开（Google Drive）</li>
+</ul>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>证明了超大型 VLM（720亿参数）在与专用扩散控制器结合时可作为灵巧抓取的有效规划器</li>
+<li>两阶段架构将语义理解（VLM）与运动控制（扩散模型）解耦，允许各组件独立优化</li>
+<li>在杂乱真实世界场景中实现语言条件化灵巧抓取，超越了单物体或孤立抓取设定</li>
+</ul>
+<p class="dp-p"><strong>局限性/不足：</strong></p>
+<ul class="dp-list">
+<li>依赖极大的 VLM（720亿参数），引发推理延迟和实时控制部署可行性的问题</li>
+<li>仅限抓取：未涉及抓取后操作、手内重定向或工具使用</li>
+<li>无力或触觉反馈集成；抓取纯粹基于视觉和语言进行规划</li>
+<li>仅限单一手部硬件平台；无跨本体评估</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td>抓取成功率</td>
+<td>"90%+"（近似值，按原文报告）</td>
+<td>杂乱环境</td>
+</tr>
+</tbody></table></div>
+<blockquote class="dp-quote"><strong>[编辑注 -- 需补充精确数据]：</strong> "90%+"数据为原始条目的近似声称。确切成功率、测试物体数量、评估试验次数及具体杂乱条件须从完整论文（arXiv 2502.08142）中提取。缺少这些细节，该声称无法被正确解读。关键问题：(1) 确切百分比是多少？(2) 涉及多少物体和试验？(3) 如何定义"杂乱"——多少干扰物体？(4) 是真实世界还是仿真？</blockquote>
+<ul class="dp-list">
+<li>优于此前的语言条件化抓取基线方法（具体基线名称和差距应从论文中提取）</li>
+<li>控制器检查点已发布（Google Drive）</li>
+<li>代码发布于 <a href="https://github.com/Psi-Robot/DexGraspVLA" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。使用720亿参数 VLM（Qwen2.5-VL-72B）作为规划器引发显著的延迟关注，但 VLM 可能以较低的规划频率运行，而扩散控制器以较高的动作频率运行。</li>
+<li><strong>部署硬件：</strong> 未指定。训练硬件使用8块 NVIDIA H100 GPU。720亿参数 VLM 推理需要大量 GPU 显存（可能需要多 GPU 或量化部署）。</li>
+<li><strong>是否支持实时？</strong> 可能受720亿参数 VLM 推理限制。两阶段架构（VLM 规划器 + 扩散控制器）如果 VLM 以较低频率进行规划则可缓解该问题，但具体延迟数据尚未公开。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 自定义人工演示数据集。提供了一个小型示例数据集（51个样本）供理解训练。</li>
+<li><strong>采集方法：</strong> 人工演示。因知识产权限制，具体遥操作设备细节未公开（"由于知识产权限制，我们无法开源硬件相关代码"）。</li>
+<li><strong>数据规模：</strong> 示例数据集包含51个演示样本。完整训练数据集规模未公开。</li>
+<li><strong>遥操作设备：</strong> 未公开（知识产权受限）。</li>
+<li><strong>数据格式：</strong> Zarr 格式。每个样本包含：动作数据（13自由度——机械臂和手）、状态数据（13自由度）、第三视角头部相机图像（RGB + 二值掩码，4通道）、第一视角腕部相机图像（RGB，3通道）及回合分割元数据。</li>
+<li><strong>是否公开可用？</strong> 示例数据集（51个演示）通过 Google Drive 提供。控制器检查点在 Google Drive 上提供。完整训练数据集可用性未确认。代码位于 <a href="https://github.com/Psi-Robot/DexGraspVLA" target="_blank" rel="noopener">GitHub</a>。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=Jx1ZM6wYvF" target="_blank" rel="noopener">OpenReview</a></p></div></details>

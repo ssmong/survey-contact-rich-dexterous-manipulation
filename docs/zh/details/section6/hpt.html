@@ -1,0 +1,54 @@
+<h3 class="dp-h3">HPT: Heterogeneous Pre-trained Transformers</h3>
+<p class="dp-p"><strong>完整标题：</strong> Scaling Proprioceptive-Visual Learning with Heterogeneous Pre-trained Transformers</p>
+<p class="dp-p"><strong>作者：</strong> Lirui Wang, Xinlei Chen, Jialiang Zhao, Kaiming He (MIT CSAIL)</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> NeurIPS 2024</p>
+<p class="dp-p"><strong>架构：</strong> HPT通过使用具身特定的"stem"网络（小型MLP或卷积）将异构本体感受和动作空间投影到共享潜在表示来解决跨具身异构性问题。共享transformer主干处理对齐的表示，具身特定的"head"网络将输出解码回原始动作空间。视觉特征来自预训练编码器（CLIP, DINOv2）。共享主干约300M参数；总大小随stem/head数量而变。</p>
+<p class="dp-p"><strong>动作空间：</strong> 因具身而异，由每个具身的head网络处理。支持任意本体感受和动作维度。</p>
+<p class="dp-p"><strong>灵巧手支持？</strong> ✗ --- 未在灵巧手上明确演示，尽管异构stem/head架构设计为可适应任意具身配置。</p>
+<p class="dp-p"><strong>力/阻抗输出？</strong> ✗ --- 仅位置目标。</p>
+<p class="dp-p"><strong>核心方法论：</strong> HPT解决了不同机器人具有不同观测和动作空间维度的根本挑战，这使得简单的跨具身训练不可能。stem-trunk-head架构将具身特定处理与共享表示学习解耦。在预训练期间，多个具身特定的stem和head与共享trunk联合训练，学习通用操作表示。在微调时，可以为未见过的具身添加新的stem/head，同时保持trunk冻结。</p>
+<p class="dp-p"><strong>训练数据：</strong> 在包括OXE子集在内的多样化跨具身数据集上预训练，涵盖50+种不同的机器人配置。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出stem-trunk-head架构用于异构跨具身预训练，为动作/观测空间不匹配问题提供原则性解决方案。</li>
+<li>证明共享transformer trunk在不同具身之间学习可迁移的操作表示。</li>
+<li>表明该方法随数据多样性扩展：更多样化的预训练数据提高下游微调性能。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>基准/任务</th>
+<th>HPT</th>
+<th>基线</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td><em>（请查阅NeurIPS 2024论文获取逐任务结果。论文报告了跨具身数据多样性扩展带来的改进。）</em></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>每个新具身需要训练新的stem和head，并需要一些具身特定数据。</li>
+<li>该方法未在高自由度灵巧手系统上评估。</li>
+<li>基础模型无语言条件化（仅本体感受-视觉）。</li>
+<li>未发布公开模型权重。</li>
+</ul>
+<p class="dp-p"><strong>开放权重/代码：</strong> ✅ 代码：<a href="https://github.com/liruiw/HPT" target="_blank" rel="noopener">GitHub</a>。✗ 预训练权重未公开。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确基准测试。共享transformer trunk（约300M参数）加上轻量级的每具身stem/head应该在桌面GPU上运行约10-30 Hz，与中等大小的transformer策略相当。</li>
+<li><strong>部署硬件：</strong> 未报告。约300M参数的trunk大小适中，需要桌面GPU进行实时推理，但小于十亿参数级VLA。</li>
+<li><strong>可实时运行？</strong> 是，很可能。适中的模型大小和基于MLP的stem/head应该支持典型操作频率下的实时控制。但未报告具体基准数据。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> Open X-Embodiment（OXE）子集，涵盖50+种不同机器人配置用于预训练。在任务特定演示数据上微调。</li>
+<li><strong>收集方法：</strong> 从OXE聚合的跨具身数据（遥操作、脚本策略）。stem-trunk-head架构处理跨具身的异构观测/动作空间。</li>
+<li><strong>数据规模：</strong> 50+种机器人配置用于预训练。微调演示数量未指定。</li>
+<li><strong>遥操作设备：</strong> 因OXE组成数据集而异。</li>
+<li><strong>数据格式：</strong> 多种格式由每具身stem网络处理。</li>
+<li><strong>是否公开？</strong> OXE数据公开。预训练HPT权重未发布。</li>
+</ul>
+<hr>

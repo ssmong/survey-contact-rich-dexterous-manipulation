@@ -1,0 +1,41 @@
+<h3 class="dp-h3">5.4 CHIP</h3>
+<p class="dp-p"><strong>完整标题:</strong> CHIP: Contact Handling with Impedance Perturbation for Robust Humanoid Control</p>
+<p class="dp-p"><strong>作者:</strong> NVIDIA NVLabs</p>
+<p class="dp-p"><strong>发表venue/年份:</strong> ICRA 2025</p>
+<p class="dp-p"><strong>K/D如何确定:</strong> 强化学习(PPO)配合事后阻抗扰动。RL智能体学习将末端执行器刚度作为动作空间的一部分输出。核心创新是"事后扰动"：在训练期间，仿真器对成功轨迹的阻抗参数追溯性地施加扰动并检查是否仍然成功，创建课程引导策略选择鲁棒的阻抗值。</p>
+<p class="dp-p"><strong>输出内容:</strong> 末端执行器(EE)刚度值(标量或每个EE的低维刚度)。阻尼不独立输出(导出或固定)。策略还输出人形机器人手臂的期望EE位置。</p>
+<p class="dp-p"><strong>机器人平台:</strong> 仿真人形机器人，35自由度(全身)。非独立灵巧手，尽管人形机器人有集成手部结构。在NVIDIA Isaac Sim中评估。</p>
+<p class="dp-p"><strong>任务:</strong> 接触丰富的全身人形操作：使用身体接触的物体抓取、推动大型物体、开重门以及人形机器人使用手臂和身体抵抗接触力的任务。</p>
+<p class="dp-p"><strong>核心方法:</strong> CHIP解决了标准人形接触RL常产生脆弱策略的问题——仅在特定阻抗值下有效的策略。事后扰动技术生成多样化训练数据：轨迹成功后，CHIP追溯性地改变阻抗参数并重新仿真，找到仍导致成功的阻抗值范围。这扩展了训练分布，教导策略输出对扰动鲁棒的阻抗值。结果是策略能够在不需要大量阻抗参数域随机化的情况下跨接触条件泛化。</p>
+<p class="dp-p"><strong>架构/参数:</strong> PPO训练的策略网络(MLP)。Isaac Sim中的35自由度人形机器人。动作空间包含期望EE位置 + EE刚度。事后扰动模块在训练期间运行额外前向仿真以增强回放缓冲区。使用GPU并行化Isaac Sim环境训练。</p>
+<p class="dp-p"><strong>主要贡献:</strong></p>
+<ul class="dp-list">
+<li>事后阻抗扰动：一种新颖的训练技术，追溯性地扰动成功轨迹的阻抗参数以学习鲁棒阻抗选择</li>
+<li>证明学习EE刚度使人形机器人比固定阻抗策略更鲁棒地处理多样接触场景</li>
+<li>将全身人形RL与学习型阻抗控制结合用于接触丰富任务</li>
+</ul>
+<p class="dp-p"><strong>局限/空白:</strong></p>
+<ul class="dp-list">
+<li>无独立灵巧手——人形机器人配集成夹爪，非多指手</li>
+<li>仅仿真(Isaac Sim)——未演示真实机器人迁移</li>
+<li>EE刚度为标量或低维；未学习完整6D阻抗矩阵</li>
+<li>阻尼不独立学习</li>
+<li>人形机器人实体具有特殊性；方法迁移到其他平台不明确</li>
+<li>仅项目页面(无公开代码仓库)</li>
+</ul>
+<p class="dp-p"><strong>实验结果:</strong> CHIP策略在所有测试的人形操作任务中比固定阻抗和未扰动RL基线实现了更高的接触丰富任务成功率。与标准PPO训练相比，事后扰动将接触变化鲁棒性提高了15-30%。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟:</strong> 未报告。策略是标准MLP，每次前向传播<1ms。训练使用GPU并行化Isaac Sim环境。</li>
+<li><strong>部署硬件:</strong> 仅仿真(NVIDIA Isaac Sim)。训练利用NVIDIA GPU进行大规模并行仿真。未演示真实机器人部署。</li>
+<li><strong>可实时运行?</strong> 推理方面可以。MLP策略极快。但系统仅在仿真中评估；未演示带实时阻抗控制的真实机器人部署。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集:</strong> 无预采集数据集。纯RL配事后阻抗扰动——所有数据在仿真中生成。</li>
+<li><strong>采集方法:</strong> NVIDIA Isaac Sim中GPU并行化环境的纯RL(PPO)。事后扰动技术通过追溯性地改变成功轨迹的阻抗参数并重新仿真来生成额外训练数据。无人类示教。</li>
+<li><strong>数据规模:</strong> Isaac Sim中的标准大规模RL训练(大规模并行GPU仿真)。未报告具体回合数。事后扰动通过使用扰动阻抗重新仿真轨迹来增强有效数据集。</li>
+<li><strong>遥操作设备:</strong> 不适用(纯RL，无示教)。</li>
+<li><strong>数据格式:</strong> 不适用(在线RL配事后增强，无离线数据集)。</li>
+<li><strong>公开可用?</strong> 无公开代码仓库。仅项目页面。</li>
+</ul>

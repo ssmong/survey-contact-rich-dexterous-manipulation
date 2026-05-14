@@ -1,0 +1,91 @@
+<h3 class="dp-h3">DexMachina</h3>
+<p class="dp-p"><strong>全称：</strong> DexMachina: Learning Dexterous Manipulation from Human Video via Retargeting and Reinforcement Learning</p>
+<p class="dp-p"><strong>作者：</strong> Mandi Zhao et al. (Stanford / NVIDIA)</p>
+<p class="dp-p"><strong>会议/年份：</strong> arXiv预印本，2025</p>
+<p class="dp-p"><strong>手部硬件：</strong> 评估了六种机器人手——Inspire Hand、Allegro Hand（16自由度）、XHand、Schunk Hand、Ability Hand和DexRobot Hand。跨形态评估是本工作的显著特点。</p>
+<p class="dp-p"><strong>任务：</strong> 双手铰接物体操作任务，包括操作具有复杂运动学结构的物体（如打开容器、操作机构）。任务需要跨多个接触点的协调手指运动。</p>
+<p class="dp-p"><strong>核心方法：</strong> DexMachina从人类视频演示中学习灵巧操作技能。流程包含三个阶段：（1）从人类视频中提取手-物体交互轨迹，（2）将这些运动重定向到不同的机器人手形态，（3）使用仿真中的强化学习优化重定向运动，生成物理可行且鲁棒的策略。Genesis仿真器用于基于物理的训练，支持快速并行环境试验。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 系统使用手部运动重定向网络将人类MANO手表示映射到各种机器人手关节配置，随后使用基于PPO的强化学习策略网络进行优化。模型权重尚未公开发布（评估标记为TODO）。</p>
+<p class="dp-p"><strong>仿真平台：</strong> Genesis仿真器。未展示仿真到真实迁移——工作目前仅限仿真，重点关注跨多种手部形态的重定向和学习流程。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出了从视频到策略的流程，消除了对机器人特定演示采集的需求：仅需人类视频即可为多种机器人手生成策略，而此前的重定向工作需要针对每种形态进行运动学对应调整。</li>
+<li>在6种形态各异的机器人手（Inspire、Allegro、XHand、Schunk、Ability、DexRobot）上展示了跨形态灵巧操作，来源于同一人类视频，表明重定向可泛化到不同的自由度数量和手指配置。</li>
+<li>引入了强化学习优化阶段，弥合了运动学重定向与物理可行执行之间的差距，改进了生成运动学有效但动力学不可行运动的直接重定向基线。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。未使用力/力矩传感或阻抗控制。操作过程中的接触力由仿真接触模型和位置跟踪行为决定，而非显式调节。这可能限制向需要精确力调节的任务（如易碎物体操作）的迁移。</li>
+<li><strong>VLA/语言条件化：</strong> 无。流程基于视觉（人类视频输入），但未使用语言条件化或VLA架构。</li>
+<li><strong>仿真到真实：</strong> 无。工作仅限仿真。真实世界部署需要解决在人类到机器人重定向差距之外的额外仿真到真实差距。</li>
+<li><strong>代码/权重可用性：</strong> 模型权重和评估基准列为TODO。可用性待定。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 在ARCTIC数据集的7个演示上进行了评估，涉及5个铰接物体，分为短期（3个片段）和长期（4个片段，包括空中操作、盖子开关、翻转等复杂序列）。</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标/发现</th>
+<th>数值</th>
+<th>说明</th>
+</tr></thead><tbody>
+<tr>
+<td>评估的手数</td>
+<td>6</td>
+<td>Inspire、Allegro、XHand、Schunk、Ability、DexRobot</td>
+</tr>
+<tr>
+<td>ARCTIC演示</td>
+<td>7</td>
+<td>3个短期 + 4个长期片段</td>
+</tr>
+<tr>
+<td>相对基线的性能</td>
+<td>一致提升</td>
+<td>DexMachina在所有手和任务上均优于直接重定向</td>
+</tr>
+<tr>
+<td>长期任务增益</td>
+<td>最显著</td>
+<td>在长期演示上的改进尤为显著</td>
+</tr>
+<tr>
+<td>手形态影响</td>
+<td>较大的手表现更好</td>
+<td>全驱动手实现更高的最终性能和更好的学习效率</td>
+</tr>
+<tr>
+<td>Allegro Hand</td>
+<td>尽管拟人性较低仍表现良好</td>
+<td>尽管与人手形态差异较大仍有显著性能</td>
+</tr>
+<tr>
+<td>Inspire Hand</td>
+<td>需要偏离策略</td>
+<td>欠驱动手需要更多偏离人类引导策略</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">注：精确的逐手成功率数值在论文图3中以柱状图形式呈现，而非表格化数值。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。工作仅限仿真，无真实世界部署。</li>
+<li><strong>部署硬件：</strong> 仅仿真（Genesis物理引擎，使用12,000个并行环境进行PPO训练）。无物理部署硬件。作者指出"由于缺乏硬件访问，我们学习到的强化学习策略尚未在所检验范围内的灵巧手的真实世界环境中进行评估"。</li>
+<li><strong>是否实时：</strong> 不适用（仅限仿真）。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> 手-物体交互的人类视频演示（无命名基准数据集）。流程以自然场景中的人类视频作为数据源。</li>
+<li><strong>收集方法：</strong> 人类视频捕获（人类手部操作的被动录制）。从视频中提取手-物体交互轨迹，重定向到机器人手形态，并在仿真中通过强化学习进行优化。无需机器人遥操作。</li>
+<li><strong>数据规模：</strong> 未报告。使用的人类视频演示数量未在公开材料中指定。</li>
+<li><strong>遥操作设备：</strong> 不适用（人类视频输入，非遥操作）。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开：</strong> 模型权重和评估基准列为TODO；可用性待定。</li>
+</ul>
+<blockquote class="dp-quote"><em>结果已根据arXiv:2505.24853验证。手数从4更新为6（新增Ability Hand和DexRobot Hand）。评估使用ARCTIC数据集。</em></blockquote>
+<hr>
+<details class="dp-reviews"><summary>同行评审 <span class="dp-review-score-badge">5.5</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">平均分: <strong>5.5</strong> · 4 条评审 · Submitted to ICLR 2026 · <a href="https://openreview.net/forum?id=3c6bnSJwDg" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 6</span> <span class="dp-review-text">This paper investigates the challenging problem of functional retargeting: training dexterous robot manipulation policies from human demonstrations to track object states. The focus is on long-horizon…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 6</span> <span class="dp-review-text">The paper presents a curriculum-based reinforcement learning method that converts a single hand-object demonstration into a bimanual dexterous manipulation policy capable of reproducing the demonstrat…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 6</span> <span class="dp-review-text">DexMachina studies the function retargeting problem with the goal of transferring human-object manipulation demonstrations to robot action sequences that can manipulate the object accordingly. The cor…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 4</span> <span class="dp-review-text">This paper tackles the functional retargeting problem, requiring robots to reproduce human-demonstrated trajectories. A virtual-controller-based curriculum with multiple reward functions is proposed t…</span></div>
+</div>
+</details>

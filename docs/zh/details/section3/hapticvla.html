@@ -1,0 +1,39 @@
+<h2 class="dp-h2">3.5 HapticVLA</h2>
+<ul class="dp-list">
+<li><strong>全称:</strong> HapticVLA: Haptic-Enhanced Vision-Language-Action Model via Tactile Distillation</li>
+<li><strong>作者:</strong> Skoltech等</li>
+<li><strong>发表平台/年份:</strong> arXiv预印本，2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2603.15257</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 触觉传感器在训练时使用，但在推理时通过蒸馏去除。模型在训练过程中从触觉信号学习，在部署时无需触觉传感器运行，类似于FD-VLA的蒸馏方法，但应用于触觉（而非F/T）模态。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 否。仅位置输出。</p>
+<blockquote class="dp-quote"><strong>局限性（仅位置输出）：</strong> 仅位置输出；尽管接收了力/触觉输入，策略无法主动调节接触力。</blockquote>
+<p class="dp-p"><strong>机器人平台：</strong> LeRobot SO-101机械臂，训练数据收集时附带触觉传感器。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 接触敏感物体的抓放任务：罐子处理、华夫饼拾取、鸡蛋操作。这些任务由于物体的脆弱性或滑溜性而受益于触觉反馈。</p>
+<p class="dp-p"><strong>关键方法：</strong> HapticVLA使用触觉蒸馏——以触觉输入训练的教师模型监督仅以视觉和语言运行的学生模型。触觉信号在训练期间提供关于抓取质量、接触稳定性和表面属性的特权信息。学生模型通过特征级蒸馏学习从视觉线索推断这些接触属性。这使得策略可以在没有触觉传感器的低成本机器人上部署。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 具有触觉蒸馏的教师-学生架构。教师接收视觉 + 语言 + 触觉；学生仅使用视觉 + 语言。基于与LeRobot生态系统兼容的VLA主干网络。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>将蒸馏范式（类似FD-VLA）应用于触觉模态而非F/T感知，证明了特权模态蒸馏方法的普适性。</li>
+<li>面向低成本机器人平台（LeRobot SO-101），展示触觉知识即使在消费级硬件上也能改善操作。</li>
+<li>证明在脆弱和可变形物体的抓取成功率上优于纯视觉基线。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 论文声称发布代码，但截至2026年5月未验证到公开仓库。蒸馏在部署时完全移除触觉感知，失去需要实时触觉反馈的反应能力。仅限于抓放任务——未在插入或装配等更复杂的接触丰富任务上评估。</p>
+<p class="dp-p"><strong>结果：</strong> 在脆弱物体处理（罐子、鸡蛋）任务上的成功率优于纯视觉基线。蒸馏方法以中等保真度将触觉知识转移给纯视觉学生。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未以ms或Hz明确报告。触觉传感器阵列以120 Hz运行，提供感知输入频率。</li>
+<li><strong>部署硬件：</strong> <strong>NVIDIA Jetson Orin NX 16 GB</strong> 边缘计算设备，用于真实世界实验中的所有推理计算。LeRobot SO-101机械臂配备触觉传感器。</li>
+<li><strong>是否支持实时？</strong> 是。部署在边缘硬件（Jetson Orin NX）上，表明系统专为实时机器人控制设计。基础模型（SmolVLA）被描述为"通过异步推理优化的高频边缘部署"。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 接触敏感物体抓放任务的自定义演示数据集（罐子处理、华夫饼拾取、鸡蛋操作）。无命名基准。</li>
+<li><strong>收集方法：</strong> 使用触觉传感器的演示（训练时使用，推理时蒸馏去除）。教师模型使用触觉输入训练；学生模型仅通过视觉和语言经触觉蒸馏学习。系统使用"预计算的、安全感知的触觉奖励"。</li>
+<li><strong>数据规模：</strong> 未报告。</li>
+<li><strong>遥操作设备：</strong> 未报告。在LeRobot SO-101机械臂上收集数据，附带触觉传感器。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开可用？</strong> 论文声称发布代码，但截至2026年5月未验证到公开仓库。</li>
+</ul>
+<blockquote class="dp-quote"><em>数据集详情来源于训练知识，未经原始来源验证——arXiv摘要未披露数据具体信息。</em></blockquote>

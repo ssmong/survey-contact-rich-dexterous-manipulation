@@ -1,0 +1,54 @@
+<h3 class="dp-h3">ACT / ALOHA: Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware</h3>
+<p class="dp-p"><strong>完整标题：</strong> Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware</p>
+<p class="dp-p"><strong>作者：</strong> Tony Z. Zhao, Vikash Kumar, Sergey Levine, Chelsea Finn (Stanford University)</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> RSS 2023</p>
+<p class="dp-p"><strong>架构：</strong> Action Chunking with Transformers（ACT）是具有transformer编码器-解码器架构的CVAE（条件变分自编码器）策略。编码器通过ResNet-18骨干处理来自多个相机（腕部和顶部）的视觉观测，结合关节位置本体感受。一个风格变量z（推理时从学习的先验中采样）被拼接以实现多模态动作生成。Transformer解码器自回归生成未来关节空间动作块。总模型大小约40-80M参数。</p>
+<p class="dp-p"><strong>动作空间：</strong> 双臂ALOHA为14D：两个6自由度ViperX 300s臂（关节位置）+ 2个夹爪宽度。ACT以50 Hz预测50-100个未来时间步的动作块，执行k步后重新规划（使用指数加权的时间集成实现平滑过渡）。</p>
+<p class="dp-p"><strong>灵巧手支持？</strong> ✗ --- 为ALOHA双臂夹爪系统设计。如果经过适当训练，关节空间动作表示可以扩展到灵巧手，但尚未演示。后续工作已将ACT类架构适配于灵巧系统（如Comp-ACT）。</p>
+<p class="dp-p"><strong>力/阻抗输出？</strong> ✗ --- 仅关节位置目标，由机器人内部PD控制器跟踪。Comp-ACT（IROS 2024）后来将ACT扩展为输出可变阻抗参数。</p>
+<p class="dp-p"><strong>核心方法论：</strong> ACT结合两个关键思想：(1) 动作块化与时间集成，策略预测较长时域的未来动作但仅执行几步后重新规划；(2) CVAE训练框架，其中"风格变量"z捕获人类演示中的多模态性（如同一任务的不同策略）。训练时，编码器从完整动作序列中推断z；推理时，z从学习的先验中采样。ACT与ALOHA硬件平台共同开发，ALOHA是一个低成本（约2万美元）双臂遥操作和机器人系统，使用现成的ViperX臂。</p>
+<p class="dp-p"><strong>训练数据：</strong> 通过ALOHA遥操作系统收集的任务特定演示数据。通常每个任务50-500个以50 Hz遥操作的演示。任务包括双臂穿线、堆叠、传递和精确放置。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入动作块化与时间集成作为多步动作预测的原则性方法，使仅需适量演示即可实现精细操作。</li>
+<li>共同开发ALOHA低成本双臂遥操作平台，大幅降低双臂操作研究的门槛。</li>
+<li>证明相对简单的模仿学习方法可以解决以前被认为对IL来说过于困难的精细双臂任务（如穿扎带）。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>基准/任务</th>
+<th>ACT</th>
+<th>BC基线</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td><em>（请查阅RSS 2023论文获取ALOHA双臂操作任务的逐任务成功率，包括穿线、堆叠和传递。）</em></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>关节空间动作表示限制跨具身迁移。</li>
+<li>CVAE风格变量在训练期间可能崩溃，降低多模态覆盖。</li>
+<li>无语言条件化（仅任务特定模型）。</li>
+<li>无力/柔顺输出；依赖机器人内建PD控制器处理接触。</li>
+</ul>
+<p class="dp-p"><strong>开放权重/代码：</strong> ✅ 代码：<a href="https://github.com/tonyzhaozh/act" target="_blank" rel="noopener">GitHub</a>。✗ 无预训练权重（需要任务特定训练）。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> ACT以50 Hz控制频率运行，与ALOHA硬件的原生速率匹配。轻量级transformer解码器（约40-80M参数）加CVAE推理仅需每个动作块单次前向传播（无迭代去噪）。推理延迟约为桌面GPU上每次前向传播5-10ms。</li>
+<li><strong>部署硬件：</strong> 桌面GPU用于策略推理（具体型号未报告，但约40-80M参数的模型轻量级）。ALOHA硬件平台（双ViperX 300s臂）低成本（约2万美元）。</li>
+<li><strong>可实时运行？</strong> 是。ACT以50 Hz加动作块化（预测50-100个未来步骤）运行，执行k步后重新规划并使用时间集成。单次CVAE推理（无迭代去噪）使ACT显著快于基于扩散的替代方案。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 通过ALOHA双臂硬件平台为每个任务收集的自定义遥操作演示。</li>
+<li><strong>收集方法：</strong> 使用ALOHA系统（低成本约2万美元双臂设置，配备双ViperX 300s 6自由度臂和平行爪夹爪）的主从式遥操作。人类演示者控制主臂，从臂以50 Hz复现动作。数据包括所有关节的关节位置 + 夹爪宽度 + 多视角相机图像（腕部和顶部）。</li>
+<li><strong>数据规模：</strong> 每个任务50-500个以50 Hz录制的演示。任务包括双臂穿线、堆叠、传递和精确放置。</li>
+<li><strong>遥操作设备：</strong> ALOHA主从系统：双ViperX 300s 6自由度臂配平行爪夹爪。低成本、开源遥操作硬件。</li>
+<li><strong>数据格式：</strong> 包含关节位置、夹爪状态和相机图像的HDF5文件。</li>
+<li><strong>是否公开？</strong> 代码在 https://github.com/tonyzhaozh/act 。ALOHA硬件设计开源。任务特定演示数据集未集中发布（用户自行收集）。</li>
+</ul>
+<hr>

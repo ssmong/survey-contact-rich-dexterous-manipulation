@@ -1,0 +1,69 @@
+<h3 class="dp-h3">7.4 Eureka</h3>
+<p class="dp-p"><strong>전체 제목:</strong> Eureka: Human-Level Reward Design via Coding Large Language Models</p>
+<p class="dp-p"><strong>저자:</strong> Yecheng Jason Ma, William Liang, Guanzhi Wang, De-An Huang, Osbert Bastani, Dinesh Jayaraman, Yuke Zhu, Linxi Fan, Anima Anandkumar</p>
+<p class="dp-p"><strong>학회/연도:</strong> ICLR 2024</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2310.12931</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO (IsaacGym RL tasks); the LLM generates reward function code, which is used to train PPO policies. Evolutionary optimization over reward candidates with LLM-based mutation.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Shadow Hand (24 DoF) in simulation (pen spinning task); additional 9 robot morphologies across 29 environments</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym (NVIDIA GPU-accelerated RL environments)</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> No. All results are in simulation. The paper focuses on reward design, not sim-to-real transfer.</p>
+<p class="dp-p"><strong>작업:</strong> 29 tasks across 10 robot morphologies. Flagship task: Shadow Hand pen spinning (first successful RL solution to this task). Other tasks include cartpole, quadruped locomotion, humanoid, and various manipulation benchmarks.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Uses GPT-4 to generate reward function code from environment source code and task descriptions. An evolutionary search proposes multiple reward candidates per iteration, trains RL policies for each, evaluates fitness, and feeds results back to the LLM for refinement. The LLM uses environment code (not natural language task descriptions) as context, enabling it to write executable reward functions. Optionally incorporates human feedback through natural language to refine rewards via in-context learning.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Proposed automated reward design via LLM code generation that outperforms manually designed reward functions on IsaacGym benchmarks across diverse RL tasks (83% of tasks, 52% average normalized improvement)</li>
+<li>First successful RL policy for Shadow Hand pen spinning in simulation (no real-world transfer), achieved by combining Eureka-generated rewards with curriculum learning</li>
+<li>Demonstrated that LLMs can generate reward functions from environment source code without domain-specific prompting</li>
+<li>Gradient-free in-context learning approach for incorporating human feedback into reward design</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Tasks outperforming human rewards</td>
+<td>83% (29 tasks, 10 robot morphologies)</td>
+</tr>
+<tr>
+<td>Average normalized improvement</td>
+<td>52% over expert human rewards</td>
+</tr>
+<tr>
+<td>Pen spinning</td>
+<td>First successful RL solution (Shadow Hand)</td>
+</tr>
+<tr>
+<td>LLM used</td>
+<td>GPT-4</td>
+</tr>
+<tr>
+<td>Reward candidates per iteration</td>
+<td>Multiple (evolutionary search)</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li><strong>Force control:</strong> No force/torque sensing or impedance control; all tasks use position-based control</li>
+<li><strong>VLA/Language:</strong> Uses LLM for reward generation (not for policy); no language-conditioned policies</li>
+<li><strong>Sim2Real:</strong> No real-world experiments; all results in simulation</li>
+<li><strong>Code:</strong> <a href="https://github.com/eureka-research/Eureka" target="_blank" rel="noopener">GitHub</a> available</li>
+<li><strong>Compute:</strong> Requires substantial GPU compute for parallel reward candidate evaluation and significant LLM API costs</li>
+<li><strong>Generalization:</strong> Reward functions are task-specific; no cross-task transfer of reward designs</li>
+<li>All results are in simulation only; 'superhuman' comparisons are against manually designed reward functions in IsaacGym, not against human physical performance.</li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not reported. The trained MLP policy runs in <1ms per forward pass. LLM reward generation is offline (not part of deployment).</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (IsaacGym). No real-robot deployment. LLM (GPT-4) used offline for reward function generation.</li>
+<li><strong>실시간 가능 여부:</strong> Yes, for the trained policy (MLP inference is trivially fast). Eureka's contribution is reward generation, not inference optimization.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰 <span class="dp-review-score-badge">6.2</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">평균: <strong>6.2</strong> · 4 개 리뷰 · ICLR 2024 poster · <a href="https://openreview.net/forum?id=IEduRUO55F" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 6.0</span> <span class="dp-review-text">The paper presents a novel approach to leverage LLMs to plan/control complex low-level manipulation tasks in the form of an LLM-powered reward function generator. Its generation algorithm performs ite…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 6.0</span> <span class="dp-review-text">The main idea of the paper is to have a LLM provide the reward function for RL problems.</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 5.0</span> <span class="dp-review-text">The paper introduces EUREKA, an LLM-powered method for reward design for reinforcement learning tasks. The proposed method utilizes the zero-shot generation and in-context improvement of LLM, enabling…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 8.0</span> <span class="dp-review-text">This paper purpose a novel pipeline to harness the LLM to design reward for using reinforcement learning to do diverse tasks without any task-specific template. The pipeline use environment code and r…</span></div>
+</div>
+</details>

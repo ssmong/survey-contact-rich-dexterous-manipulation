@@ -1,0 +1,36 @@
+<h3 class="dp-h3">7.4 DexDrummer</h3>
+<p class="dp-p"><strong>전체 제목:</strong> DexDrummer: Dexterous Drumming via Reinforcement Learning</p>
+<p class="dp-p"><strong>저자:</strong> Hao-Chun Fang, Kenneth Shaw, Deepak Pathak, et al. (Stanford)</p>
+<p class="dp-p"><strong>학회/연도:</strong> arXiv 2026</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2603.22263</p>
+<p class="dp-p"><strong>Musical instrument differentiation:</strong> Distinguished by tool grasping (drumstick) and impact force control. Unlike piano playing (RoboPianist, HandelBot) where fingers directly contact keys, drumming requires holding tools and generating controlled impact forces on drum surfaces -- combining grasp stability with dynamic striking. Sim-only.</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO with musical-score-conditioned rewards. Similar framework to HandelBot but adapted for percussion. Requires learning to generate impact forces on drum surfaces.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Bimanual dexterous hands (holding drumsticks)</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym / MuJoCo</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> No (simulation results; real-world transfer not reported in initial preprint).</p>
+<p class="dp-p"><strong>작업:</strong> Drumming -- striking drum surfaces at correct times with correct intensity according to musical scores. Involves holding drumsticks (tool use), rapid contact-rich impacts, bimanual coordination, and dynamic force control.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> DexDrummer extends musical instrument playing to percussion, which introduces additional challenges beyond piano: the agent must hold tools (drumsticks), generate controlled impact forces (not just key presses), and coordinate rapid bimanual alternating strikes. The contact dynamics of stick-on-drum impacts are more violent and dynamic than piano key presses, requiring robust contact handling in simulation.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Extended dexterous musical manipulation to percussion/drumming, requiring tool-use and impact force control</li>
+<li>Demonstrated that RL can learn dynamic striking motions with held tools, combining grasping stability with impact generation</li>
+<li>Addressed bimanual coordination for alternating and simultaneous strikes</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> No real-world transfer demonstrated. Drumstick grasping stability during rapid striking is a significant sim-to-real challenge. Limited rhythmic complexity in evaluation.</p>
+<p class="dp-p"><strong>시뮬레이션 전용 한계:</strong> 시뮬레이션에서만 평가됨; sim-to-real 전이 미입증, 실제 환경 실행 가능성 미검증.</p>
+<p class="dp-p"><strong>결과:</strong> Achieved successful drumming in simulation with correct timing and force patterns (sim). Code publicly available.</p>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> Musical scores for percussion as task specifications. No pre-collected robot demonstration dataset.</li>
+<li><strong>수집 방법:</strong> Pure RL (PPO) with musical-score-conditioned rewards in IsaacGym/MuJoCo. Bimanual dexterous hands holding drumsticks. Agent learns tool grasping, impact force generation, and timing from reward feedback. Simulation only.</li>
+<li><strong>데이터 규모:</strong> Musical scores of varying difficulty. Standard parallel RL training.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>데이터 포맷:</strong> Musical scores (percussion note sequences with timing).</li>
+<li><strong>공개 여부:</strong> Code publicly available.</li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not reported. The MLP policy runs in <1ms per forward pass.</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (IsaacGym/MuJoCo). No real-robot deployment demonstrated.</li>
+<li><strong>실시간 가능 여부:</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>

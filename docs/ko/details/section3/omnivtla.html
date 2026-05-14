@@ -1,0 +1,47 @@
+<h2 class="dp-h2">3.7 OmniVTLA</h2>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> OmniVTLA: Omni Vision-Tactile-Language-Action Model for Dexterous Manipulation</li>
+<li><strong>저자:</strong> 서베이 표에 미명시</li>
+<li><strong>학회/연도:</strong> arXiv 프리프린트, 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2508.08706</li>
+</ul>
+<p class="dp-p"><strong>힘/촉각 입력 유형:</strong> 비전 기반 및 힘 기반 촉각 센서 모두. 통합 프레임워크 내에서 이종 촉각 모달리티(광학 촉각 이미지와 힘 기반 촉각 신호) 처리를 위해 설계.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> 없음. 위치 전용 출력.</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> 병렬 조 그리퍼와 정교한 핸드 플랫폼 모두에서 평가.</p>
+<blockquote class="dp-quote"><strong>한계 (정교한 핸드):</strong> 정교한 핸드 평가는 단순 집기-놓기로 제한.</blockquote>
+<p class="dp-p"><strong>작업:</strong> 집기-놓기 조작 작업. 촉각 입력으로 정교한 핸드 집기-놓기 작업에서 100% 성공률 달성.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> OmniVTLA는 시각 및 언어 입력과 함께 여러 촉각 모달리티(비전 기반 및 힘 기반)를 처리할 수 있는 통합 아키텍처를 제안. 각 촉각 유형에 대한 모달리티별 인코더가 VLM 백본과 호환되는 공유 임베딩 공간으로 투영. 모달리티 비독립 융합 레이어가 촉각 특징을 시각 및 언어 토큰과 결합. 이 설계는 재훈련 없이 동일 모델 아키텍처가 다른 촉각 센서 유형과 작동할 수 있게 함.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>단일 모델 내에서 이종 촉각 모달리티(비전 기반과 힘 기반)를 처리하는 통합 VLA 프레임워크 제안</li>
+<li>촉각 입력이 정교한 핸드 조작에서 높은 성공률을 가능하게 함을 시연(집기-놓기에서 100%)</li>
+<li>촉각-VLA 훈련을 위한 데이터셋 제공(데이터셋 공개, 코드 미공개)</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> 코드 미공개(데이터셋만). 평가가 비교적 단순한 집기-놓기 작업으로 제한. 100% 성공률은 작업이 접근법을 차별화하기에 충분히 도전적이지 않을 수 있음을 시사.</p>
+<p class="dp-p"><strong>결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>지표</th>
+<th>값</th>
+</tr></thead><tbody>
+<tr>
+<td>정교한 핸드 집기-놓기 성공</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>다중 모달 vs. 단일 모달리티</td>
+<td>다중 모달 촉각 융합이 단일 모달리티 기준선을 능가</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 보고되지 않음.</li>
+<li><strong>배포 하드웨어:</strong> NVIDIA A100 (80 GB VRAM) GPU에서 훈련. 실세계 실험은 그리퍼와 정교한 핸드 플랫폼 모두에서 시연. 추론 하드웨어 별도 미명시.</li>
+<li><strong>실시간 가능 여부:</strong> 미검증.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> ObjTac (본 연구와 함께 공개된 맞춤 데이터셋). 텍스트, 시각, 촉각 정보를 캡처하는 포괄적 힘 기반 촉각 데이터셋.</li>
+<li><strong>수집 방법:</strong> 10개 범주 56개 물체에 걸쳐 힘/압력 센서를 사용한 힘 기반 촉각 데이터 수집. 시각, 촉각, 텍스트 정보를 결합하는 삼중 모달 샘플.</li>
+<li><strong>데이터 규모:</strong> 56개 물체, 10개 범주에 걸쳐 13.5만 삼중 모달 샘플.</li>
+<li><strong>공개 여부:</strong> 예. ObjTac 데이터셋이 <a href="https://readerek.github.io/Objtac.github.io" target="_blank" rel="noopener">readerek.github.io/Objtac.github.io</a>에서 이용 가능. 코드 미공개(데이터셋만).</li>
+</ul>

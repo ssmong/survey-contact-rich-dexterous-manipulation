@@ -1,0 +1,71 @@
+<h3 class="dp-h3">7.1 AnyGrasp</h3>
+<p class="dp-p"><strong>完整标题：</strong> AnyGrasp: Robust and Efficient Grasp Perception in Spatial and Temporal Domains</p>
+<p class="dp-p"><strong>作者：</strong> Hao-Shu Fang, Chenxi Wang, Hongjie Fang, Minghao Gou, Jirong Liu, Hengxu Yan, Wenhai Liu, Yichen Xie, Cewu Lu（上海交通大学）</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> IEEE Transactions on Robotics (T-RO), 2023（arXiv 2212.08333，2022年12月）</p>
+<p class="dp-p"><strong>收录理由：</strong> AnyGrasp主要是平行夹爪抓取检测系统，并非灵巧手方法。收录于此是因为它作为灵巧操作流程中广泛使用的上游抓取感知模块。若干灵巧VLA和抓取论文（如DexGraspVLA、使用点云输入的抓取系统）构建于或对比AnyGrasp的抓取检测骨干。理解这一基础模块为本节灵巧抓取方法提供上下文。</p>
+<p class="dp-p"><strong>RL算法：</strong> 非RL方法。AnyGrasp使用带密集解析抓取标签的监督学习。GSNet（抓取评分网络）架构在GraspNet-1Billion数据集上训练，结合真实感知数据和解析生成的抓取标签的密集监督。</p>
+<p class="dp-p"><strong>手部硬件：</strong> 平行夹爪（非灵巧手）。生成双指夹爪的7自由度抓取姿态。</p>
+<p class="dp-p"><strong>仿真平台：</strong> 在GraspNet-1Billion数据集（包含仿真生成的抓取标签）上训练；直接部署在真实硬件上。</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是。在GraspNet-1Billion（真实RGB-D + 解析抓取标签）上训练，直接部署在物理机器人上，93.3%成功率清理300+未见物体。</p>
+<p class="dp-p"><strong>物体数量：</strong> 仓清理评估中300+未见物体。</p>
+<p class="dp-p"><strong>任务：</strong> 杂乱场景中的抓取检测和执行。关键能力：</p>
+<p class="dp-p">1. 从单帧点云的静态抓取检测</p>
+<p class="dp-p">2. 动态抓取跟踪（跨帧时间对应，展示抓住游泳机器鱼）</p>
+<p class="dp-p">3. 密集杂乱的仓清理</p>
+<p class="dp-p"><strong>核心方法论：</strong> AnyGrasp构建于GSNet，一个使用PointNet2骨干的基于点云的抓取检测网络。系统处理深度图像为点云并预测密集7自由度抓取姿态（位置、姿态、宽度）及质量分数。关键创新：</p>
+<ul class="dp-list">
+<li><strong>密集监督：</strong> 结合真实感知数据与解析生成的抓取标签，提供比稀疏人工标注更丰富的训练信号。</li>
+<li><strong>质心感知：</strong> 融入物体质心估计以预测更稳定的抓取。</li>
+<li><strong>时间抓取跟踪：</strong> 将单帧检测扩展到时间域，建立跨帧抓取对应用于动态/移动物体。</li>
+<li><strong>深度噪声鲁棒性：</strong> 在消费级RGB-D相机的显著深度传感噪声下展示抓取检测。</li>
+</ul>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>统一的抓取感知框架覆盖空间（单帧）和时间（跨帧跟踪）域。</li>
+<li>在仓清理中300+未见物体上93.3%成功率，单臂系统每小时>900次拾取。</li>
+<li>通过时间抓取跟踪实现动态抓取能力（抓住移动机器鱼）。</li>
+<li>被广泛采用为上游感知模块；AnyGrasp SDK和GSNet已集成到众多下游操作系统中。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>仓清理成功率</td>
+<td>93.3%（300+未见物体）</td>
+</tr>
+<tr>
+<td>平均每小时拾取</td>
+<td>>900（单臂）</td>
+</tr>
+<tr>
+<td>动态抓取</td>
+<td>已展示（抓住游泳机器鱼）</td>
+</tr>
+<tr>
+<td>抓取姿态表示</td>
+<td>7自由度（位置 + 姿态 + 宽度）</td>
+</tr>
+<tr>
+<td>输入</td>
+<td>单视角点云（来自RGB-D相机）</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>仅平行夹爪；无多指灵巧抓取生成。</li>
+<li>专有SDK需要许可证注册；非完全开源（编译库 + 许可证）。</li>
+<li>生成抓取姿态无执行策略；需要单独的运动规划和控制栈。</li>
+<li>基于点云的检测依赖深度相机质量；对透明/反光物体有困难。</li>
+<li>无语言条件或语义抓取选择。</li>
+</ul>
+<p class="dp-p"><strong>代码可用性：</strong> AnyGrasp SDK在<a href="https://github.com/graspnet/anygrasp_sdk" target="_blank" rel="noopener">GitHub</a>上带许可证注册可用（专有，编译库）。底层GSNet架构有第三方开源实现。</p>
+<p class="dp-p"><strong>与灵巧操作的相关性：</strong> 虽然AnyGrasp本身检测平行夹爪抓取，但其点云处理流程和抓取质量估计方法影响了灵巧抓取方法。其训练所用的GraspNet-1Billion数据集在后续工作中被扩展了多指抓取标注。AnyGrasp的实时检测速度（每小时>900次拾取）为灵巧抓取规划器必须达到的部署设定了实用基线。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 单臂系统上每小时>900次平均拾取的实时抓取检测，意味着抓取检测运行速度远高于实时。每帧具体推理延迟未明确报告，但足以支持连续抓取跟踪。</li>
+<li><strong>部署硬件：</strong> 带平行夹爪的单臂机器人 + RGB-D相机（消费级）。点云处理在桌面GPU上运行。AnyGrasp SDK提供推理流程。</li>
+<li><strong>支持实时？</strong> 是。在真实硬件上展示每小时>900次拾取。动态抓取（抓住移动物体）进一步确认实时能力。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=U26asOu6gd" target="_blank" rel="noopener">OpenReview</a></p></div></details>

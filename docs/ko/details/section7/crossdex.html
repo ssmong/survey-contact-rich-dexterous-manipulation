@@ -1,0 +1,65 @@
+<h3 class="dp-h3">7.1 CrossDex</h3>
+<p class="dp-p"><strong>전체 제목:</strong> CrossDex: Cross-Embodiment Dexterous Grasping with Reinforcement Learning</p>
+<p class="dp-p"><strong>저자:</strong> Haoyu Xiong, Yufei Wang, Jiayi Chen, Yilin Wu, Yunzhu Li, Yi Wu</p>
+<p class="dp-p"><strong>학회/연도:</strong> ICLR 2025</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO with DAgger-based distillation; trains per-hand teacher policies, then distills into a single cross-embodiment student policy using eigengrasp action space</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> 6 dexterous hands -- Shadow (24 DoF), Allegro (16 DoF), LEAP (16 DoF), Ability (10 DoF), Barrett (8 DoF), DClaw (9 DoF); real deployment on LEAP Hand</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym Preview 4</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes; domain randomization (mass, friction, joint damping, PD gains) plus teacher-student distillation. Zero-shot transfer demonstrated on LEAP Hand</p>
+<p class="dp-p"><strong>객체 수:</strong> 100 objects from YCB and GRAB datasets</p>
+<p class="dp-p"><strong>작업:</strong> Dexterous grasping of diverse objects from a table surface, with cross-embodiment generalization</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Introduces an eigengrasp-based universal action space that enables a single policy to control multiple dexterous hand morphologies. Teacher policies are first trained per-hand with PPO, then a cross-embodiment student is distilled via DAgger. The eigengrasp representation projects each hand's joint space into a shared low-dimensional manifold, enabling zero-shot transfer to new hand embodiments.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>First cross-embodiment dexterous grasping framework that trains one policy for 6 different hand morphologies</li>
+<li>Eigengrasp action representation enabling morphology-agnostic policy learning</li>
+<li>Demonstrated zero-shot sim-to-real transfer on LEAP Hand with the cross-embodiment policy</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Hand</th>
+<th>Success rate (sim)</th>
+</tr></thead><tbody>
+<tr>
+<td>Shadow (24 DoF)</td>
+<td>~90%</td>
+</tr>
+<tr>
+<td>Allegro (16 DoF)</td>
+<td>~85%</td>
+</tr>
+<tr>
+<td>LEAP (16 DoF)</td>
+<td>~82%</td>
+</tr>
+<tr>
+<td>Ability (10 DoF)</td>
+<td>~78%</td>
+</tr>
+<tr>
+<td>Barrett (8 DoF)</td>
+<td>~72%</td>
+</tr>
+<tr>
+<td>DClaw (9 DoF)</td>
+<td>~75%</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">Success rates are approximate and vary by object category. Cross-embodiment student policy (sim); real-world LEAP Hand evaluation also demonstrated (real).</p>
+<p class="dp-p"><strong>한계점:</strong> Limited to grasping (no in-hand manipulation); eigengrasp dimensionality may be insufficient for fine manipulation tasks; real-world evaluation only on LEAP Hand among the 6 trained embodiments; no force/tactile sensing</p>
+<p class="dp-p"><strong>Sim-only limitation:</strong> N/A -- sim-to-real transfer demonstrated on LEAP Hand.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not explicitly reported. The distilled student policy (MLP) runs in <1ms per forward pass, enabling high-frequency control (>100 Hz).</li>
+<li><strong>배포 하드웨어:</strong> 6 dexterous hands in simulation (IsaacGym); real deployment on LEAP Hand. MLP policy is lightweight enough for any compute platform.</li>
+<li><strong>실시간 가능 여부:</strong> Yes. MLP-based RL policies are trivially fast for real-time control. Demonstrated on real LEAP Hand hardware.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> No pre-collected dataset. Pure RL (PPO) with DAgger-based distillation -- all data generated in simulation.</li>
+<li><strong>수집 방법:</strong> Pure RL in IsaacGym with domain randomization (mass, friction, joint damping, PD gains). Per-hand teacher policies trained independently, then distilled into cross-embodiment student via DAgger. Object meshes from YCB and GRAB datasets (100 objects).</li>
+<li><strong>데이터 규모:</strong> Standard large-scale parallel RL in IsaacGym. 100 objects for training/evaluation.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>데이터 포맷:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>공개 여부:</strong> Object assets from public YCB and GRAB datasets. Policy code/weights availability not reported.</li>
+</ul>

@@ -1,0 +1,35 @@
+# 10.4 DOGlove
+
+- **전체 제목:** DOGlove: Dexterous Manipulation with a Low-Cost Open-Source Haptic Force Feedback Glove
+- **저자:** Han Zhang, Hanwen Zhao, Yixuan Wang 외 (TEA Lab)
+- **학회/연도:** RSS 2025 (arXiv 2505.14635, 2025년 5월)
+- **입력 모달리티:** 관절 각도 센서 + force feedback 액추에이터를 갖춘 커스텀 haptic 글러브
+- **대상 hand:** 임의의 dexterous hand (다수의 플랫폼에서 시연)
+- **Force feedback:** 5-DoF haptic feedback (손가락당 하나)
+- **비용:** <$600
+
+## 핵심 방법론/설계
+
+DOGlove는 dexterous 원격조작을 위한 모션 캡처와 force feedback을 모두 제공하는 커스텀 설계 haptic 글러브이다. 글러브는 내장 센서를 통해 손가락 관절 각도를 측정하고, 소형 액추에이터(손가락당 하나, 총 5-DoF)를 통해 운영자의 손가락에 접촉력을 렌더링한다. 설계는 시중 부품과 3D 프린트 구조 부품을 사용하여 저비용과 오픈소스 재현성을 우선시한다. 양방향 force feedback으로 운영자가 grasp 접촉을 느낄 수 있어, contact-rich 작업에서 원격조작 품질이 크게 향상된다.
+
+## 주요 기여
+
+- 양방향 haptic feedback을 갖춘 $600 이하 dexterous 원격조작 글러브 -- 조사 대상 중 최저 비용 force-feedback 솔루션
+- 운영자가 조작 중 접촉력을 느낄 수 있는 5-DoF haptic 렌더링 (손가락 끝당 하나)
+- 완전 오픈소스 하드웨어 설계 (3D 프린트 가능) 및 소프트웨어 스택
+- feedback이 없는 원격조작 대비 향상된 조작 품질 입증
+
+## 한계점
+
+- 5-DoF haptic feedback이 손가락별 힘만 제공, 공간적으로 분산된 손가락 끝 접촉 패턴 미제공
+- 액추에이터 대역폭 및 출력에 의한 force 렌더링 충실도 제한
+- 정확한 kinematic 매핑을 위한 사용자별 보정 필요
+- 글러브 형태가 자연스러운 손 동작 범위를 제한할 수 있음
+
+## 데이터 품질 영향
+
+DOGlove는 수집된 시연에 힘 정보를 내장하는 유일한 $1K 미만 시스템이다. 5-DoF haptic feedback으로 운영자가 데이터 수집 중 grasp force를 조절할 수 있어, 카메라 전용 또는 위치 전용 시스템에서 부재하는 힘 인식 행동을 인코딩하는 시연을 생성한다. 그러나 손가락별 힘 세분성이 조잡하다: 각 손가락이 공간적으로 분산된 접촉 압력이 아닌 단일 스칼라 힘 신호를 수신하므로, 운영자가 손가락 끝 내의 접촉 위치나 압력 분포를 구별할 수 없다. DOGlove 데이터로 학습된 policy는 force-blind 시연 대비 향상된 힘 조절을 보이지만, 정밀한 손가락 끝 압력 제어(예: 제어된 sliding, 텍스처 의존 grasping)를 요구하는 작업에 필요한 세밀한 접촉 인식이 아직 부족하다.
+
+## 오픈소스 현황
+
+완전 오픈소스 (하드웨어 + 소프트웨어). GitHub: [TEA-Lab/DOGlove](https://github.com/TEA-Lab/DOGlove)

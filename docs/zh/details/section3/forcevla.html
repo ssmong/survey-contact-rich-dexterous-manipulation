@@ -1,0 +1,56 @@
+<h2 class="dp-h2">3.1 ForceVLA</h2>
+<ul class="dp-list">
+<li><strong>全称:</strong> ForceVLA: Towards Force-Aware Vision-Language-Action Model for Contact-Rich Manipulation</li>
+<li><strong>作者:</strong> Qiaojun Yu等（上海交通大学，复旦大学）</li>
+<li><strong>发表平台/年份:</strong> NeurIPS 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2505.22159</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 安装在Flexiv Rizon机械臂腕部的六轴力/力矩（F/T）传感器。原始F/T信号（Fx、Fy、Fz、Tx、Ty、Tz）被分词化，并与视觉token一起输入VLA主干网络。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 否。仅位置输出。力信息作为输入上下文用于改善策略决策，但机器人通过Flexiv Rizon的内置控制器执行位置命令。</p>
+<blockquote class="dp-quote"><strong>局限性（仅位置输出）：</strong> 仅位置输出；尽管接收了力/触觉输入，策略无法主动调节接触力。</blockquote>
+<p class="dp-p"><strong>机器人平台：</strong> Flexiv Rizon 4机械臂 + 平行夹爪。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 5项接触丰富的操作任务——插头插入、表面擦拭、胶带剥离、力敏感对齐的杯子堆叠和橡皮擦擦拭。所有任务都需要通过解读接触力来判断任务进度或调整运动。</p>
+<p class="dp-p"><strong>关键方法：</strong> ForceVLA通过引入力分词器来扩展预训练的VLA（基于OpenVLA架构），将连续的六轴F/T读数转换为与VLM词汇表兼容的离散token。力token与视觉和语言token在Transformer输入序列中交错排列。模型在包含同步F/T记录的小规模遥操作演示数据集上进行端到端微调。力条件注意力机制允许模型在生成下一个动作块时关注力的历史信息。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 基于OpenVLA（70亿参数）。力分词器添加了一个轻量级MLP编码器，将6D F/T读数投影到VLM的嵌入空间。动作输出基于位置（7D：6自由度末端执行器位姿 + 夹爪）。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出将六轴F/T感知作为VLA中的显式输入模态，将连续力读数分词化为与VLM词汇表兼容的离散token。</li>
+<li>证明力感知VLA在仅凭视觉线索不足的接触丰富任务上显著优于纯视觉VLA（例如，通过力反馈而非视觉遮挡来判断插入成功）。</li>
+<li>发布了力标注操作数据集（ForceVLA-Data：244条轨迹，约14万步），涵盖5项接触丰富任务的同步F/T数据（可在HuggingFace获取）。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 仅位置输出意味着机器人无法主动调节接触力——依赖于Flexiv机械臂的内置柔顺性。仅限5项任务，数据集相对较小。单一机器人平台（Flexiv Rizon），无跨形态评估。力分词化方法将连续力信号离散化，可能丢失高频接触信息。</p>
+<p class="dp-p"><strong>代码/数据可用性：</strong> ForceVLA-Data数据集已在HuggingFace发布（244条轨迹）。模型代码（区别于数据）是否公开发布应独立验证——主要的公开产物是数据集。</p>
+<p class="dp-p"><strong>结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>相对纯视觉VLA的成功率提升</td>
+<td>5项任务提升15--30%</td>
+</tr>
+<tr>
+<td>单任务最大提升</td>
+<td>插头插入（力反馈对于检测成功配合至关重要）</td>
+</tr>
+<tr>
+<td>数据集规模</td>
+<td>244条轨迹，约14万步</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。论文未公开每步推理延迟或控制频率。基于pi-zero框架的流式动作生成。</li>
+<li><strong>部署硬件：</strong> 训练使用8块NVIDIA RTX 4090 GPU。Flexiv Rizon 4机械臂 + 平行夹爪用于真实世界部署。推理硬件未单独指定。</li>
+<li><strong>是否支持实时？</strong> 未验证。论文或项目页面中未公开推理延迟和控制频率。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> ForceVLA-Data（本工作发布的自定义数据集）。涵盖5项接触丰富操作任务，包含同步的视觉、本体感知和力/力矩信号。</li>
+<li><strong>收集方法：</strong> 在Flexiv Rizon 4机械臂上进行遥操作演示，同步记录六轴F/T数据以及视觉和本体感知数据。</li>
+<li><strong>数据规模：</strong> 244条轨迹，约14万步，横跨5项任务（插头插入、表面擦拭、胶带剥离、杯子堆叠、橡皮擦擦拭）。</li>
+<li><strong>遥操作设备：</strong> 未详细说明。在Flexiv Rizon 4上使用F/T传感器进行遥操作。</li>
+<li><strong>数据格式：</strong> 同步多模态数据（视觉 + 本体感知 + 六轴F/T）。具体文件格式未报告。</li>
+<li><strong>是否公开可用？</strong> 是。ForceVLA-Data数据集已在HuggingFace发布（244条轨迹）。代码和数据可在项目页面获取（sites.google.com/view/forcevla2025）。</li>
+</ul>

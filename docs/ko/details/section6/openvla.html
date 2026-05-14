@@ -1,0 +1,54 @@
+<h3 class="dp-h3">OpenVLA: An Open-Source Vision-Language-Action Model</h3>
+<p class="dp-p"><strong>전체 제목:</strong> OpenVLA: An Open-Source Vision-Language-Action Model</p>
+<p class="dp-p"><strong>저자:</strong> Moo Jin Kim, Karl Pertsch, Siddharth Karamcheti, Ted Xiao, Ashwin Balakrishna, Suraj Nair, Rafael Rafailov, Ethan Foster, Grace Lam, Pannag Sanketi, Quan Vuong, Thomas Kollar, Benjamin Burchfiel, Russ Tedrake, Dorsa Sadigh, Sergey Levine, Percy Liang, Chelsea Finn</p>
+<p class="dp-p"><strong>학회/연도:</strong> CoRL 2024</p>
+<p class="dp-p"><strong>아키텍처:</strong> 7B parameter VLA built on the Prismatic VLM backbone (SigLIP + DinoV2 dual vision encoders fused into a Llama 2 7B language model). Actions are output as discrete tokens via autoregressive decoding, following the RT-2 paradigm. No separate action head; the LLM's output vocabulary is extended with 256 action bins per dimension.</p>
+<p class="dp-p"><strong>행동 공간:</strong> 7D (6-DoF end-effector delta + gripper), discretized into 256 bins per dimension, decoded as text tokens.</p>
+<p class="dp-p"><strong>다지 핸드 지원:</strong> ✗ --- Single-arm gripper systems only.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> ✗ --- Position targets only.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> OpenVLA provides the first fully open-source replication of the RT-2 VLA paradigm. It is trained on the Open X-Embodiment (OXE) dataset, a large-scale cross-embodiment robot dataset, and fine-tuned on downstream tasks using parameter-efficient methods (LoRA). The dual vision encoder (SigLIP for semantics + DinoV2 for spatial features) provides complementary visual representations. OpenVLA serves as a community baseline, enabling direct comparison and extension of VLA methods.</p>
+<p class="dp-p"><strong>훈련 데이터:</strong> Pretrained on 970K robot episodes from the Open X-Embodiment (OXE) dataset spanning 22 robot embodiments. The OXE mixture includes Bridge V2, RT-1, DROID, and numerous other datasets. Fine-tuning uses task-specific demonstration data (typically 50-500 episodes).</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>The first widely-adopted open-source VLA (Apache 2.0) with competitive performance to RT-2, enabling community research.</li>
+<li>Demonstrated that LoRA fine-tuning of a pretrained VLA can adapt to new tasks with as few as 50 demonstrations.</li>
+<li>Established a reproducible VLA baseline with standardized evaluation protocols.</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>OpenVLA (7B)</th>
+<th>RT-2-X</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td><em>(Results not independently verified --- arXiv page could not be fetched. The paper reports competitive performance with RT-2-X on Bridge V2 and SimplerEnv benchmarks. Consult CoRL 2024 paper for per-task success rates.)</em></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>Autoregressive single-token action decoding is slow (~4-6 Hz) and limits action expressiveness.</li>
+<li>7D action space is restrictive for bimanual or dexterous systems.</li>
+<li>Quantization of continuous actions into 256 bins introduces precision loss, particularly for fine manipulation.</li>
+<li>No multi-view image support in the base model.</li>
+</ul>
+<p class="dp-p"><strong>공개 가중치/코드:</strong> ✅ Fully open under Apache 2.0. <a href="https://github.com/openvla/openvla" target="_blank" rel="noopener">GitHub</a>, <a href="https://huggingface.co/openvla/openvla-7b" target="_blank" rel="noopener">HuggingFace</a>.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> OpenVLA runs at approximately 4-6 Hz on a single A100 GPU. The sequential autoregressive decoding of 7 action tokens through the full 7B parameter LLM is the bottleneck -- each action dimension is decoded one at a time, requiring 7 full forward passes through the model per action step.</li>
+<li><strong>배포 하드웨어:</strong> Requires a high-end GPU (NVIDIA A100 or equivalent) for inference. Can be quantized (4-bit, 8-bit) for deployment on consumer GPUs (RTX 3090/4090). Fine-tuning via LoRA is possible on consumer GPUs. Not deployable on edge devices due to the 7B parameter footprint.</li>
+<li><strong>실시간 가능 여부:</strong> Marginal. At 4-6 Hz, OpenVLA is usable for slow tabletop manipulation but too slow for contact-rich or dexterous tasks requiring 10+ Hz control. OpenVLA-OFT addresses this bottleneck with 26x faster inference via parallel action decoding.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> Open X-Embodiment (OXE) dataset -- 970K robot episodes spanning 22 robot embodiments. The OXE mixture includes Bridge V2, RT-1, DROID, and numerous other community-contributed datasets.</li>
+<li><strong>수집 방법:</strong> Aggregated from multiple sources with diverse collection methods: teleoperation (VR controllers, SpaceMouse, leader-follower), scripted policies, and human demonstrations across 22 different robot platforms. Fine-tuning uses task-specific demonstrations (typically 50-500 episodes).</li>
+<li><strong>데이터 규모:</strong> 970K robot episodes across 22 embodiments for pretraining. Fine-tuning: 50-500 demonstrations per task.</li>
+<li><strong>원격 조작 장비:</strong> Varies by constituent dataset -- Meta Quest VR controllers (DROID), SpaceMouse (Bridge V2), leader-follower (ALOHA), and others.</li>
+<li><strong>데이터 포맷:</strong> RLDS (TensorFlow Datasets) format, following the Open X-Embodiment standard.</li>
+<li><strong>공개 여부:</strong> Yes. OXE dataset is fully public. Model weights at https://huggingface.co/openvla/openvla-7b (Apache 2.0).</li>
+</ul>
+<hr>

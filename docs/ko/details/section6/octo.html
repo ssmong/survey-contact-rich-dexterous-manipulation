@@ -1,0 +1,56 @@
+<h3 class="dp-h3">Octo: An Open-Source Generalist Robot Policy</h3>
+<p class="dp-p"><strong>전체 제목:</strong> Octo: An Open-Source Generalist Robot Policy</p>
+<p class="dp-p"><strong>저자:</strong> Octo Model Team: Dibya Ghosh, Homer Walke, Karl Pertsch, Kevin Black, Oier Mees, Sudeep Dasari, Joey Hejna, Tobias Kreiman, Charles Xu, Jianlan Luo, You Liang Tan, Lawrence Yunliang Chen, Pannag Sanketi, Quan Vuong, Ted Xiao, Dorsa Sadigh, Chelsea Finn, Sergey Levine</p>
+<p class="dp-p"><strong>학회/연도:</strong> RSS 2024</p>
+<p class="dp-p"><strong>아키텍처:</strong> Octo is a 93M parameter transformer-based policy (not a VLA in the strict sense, as it lacks a large pre-trained VLM backbone). It uses a modular architecture with separate tokenizers for images, language (via a frozen language model encoder), and proprioceptive state. These are combined via a transformer backbone that attends over all input tokens. The action head is a diffusion-based decoder that generates continuous actions conditioned on a readout token from the transformer.</p>
+<p class="dp-p"><strong>행동 공간:</strong> Configurable per embodiment. Typically 7D (6-DoF EEF + gripper) but supports arbitrary action dimensions via the modular tokenizer design. Can represent both absolute and delta actions.</p>
+<p class="dp-p"><strong>다지 핸드 지원:</strong> ✗ --- Evaluated only on gripper-based systems, though the modular action head could accommodate higher-dimensional action spaces if training data included such demonstrations.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> ✗ --- Position targets only.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Octo is designed as a lightweight, modular generalist policy that can be efficiently fine-tuned to new robot embodiments, sensor configurations, and action spaces. Unlike VLAs that inherit a massive VLM backbone, Octo trains its transformer from scratch on robot data, keeping the model small enough for fast inference and fine-tuning. The diffusion action head supports multi-modal action distributions, avoiding the mode-averaging problem of regression-based policies. The modular tokenizer design allows adding or removing observation modalities (e.g., wrist cameras, different proprioceptive formats) without architectural changes.</p>
+<p class="dp-p"><strong>훈련 데이터:</strong> Pretrained on 800K robot episodes from the Open X-Embodiment (OXE) dataset. Fine-tuning demonstrated on WidowX, Franka, and various manipulation platforms with as few as 50 demonstrations.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated that a small (93M) generalist policy can match or exceed much larger VLAs on fine-tuned downstream tasks <em>on the specific benchmarks tested</em>, challenging the assumption that VLA performance scales primarily with model size. (Whether this advantage holds across broader task distributions remains to be established.)</li>
+<li>Introduced a modular tokenizer architecture that enables straightforward adaptation to new observation and action spaces without retraining the full model.</li>
+<li>Provided the first open-source generalist robot policy with a standardized fine-tuning API.</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>Octo (93M)</th>
+<th>RT-1-X</th>
+<th>RT-2-X</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td><em>(Results not independently verified --- arXiv page could not be fetched. The paper reports competitive or superior performance to RT-1-X on fine-tuned WidowX and Franka tasks. Consult RSS 2024 paper for per-task success rates.)</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>Small model size limits zero-shot generalization compared to billion-parameter VLAs.</li>
+<li>No pre-trained VLM backbone means Octo lacks the semantic reasoning and instruction-following capabilities of VLAs like RT-2 or OpenVLA.</li>
+<li>Not demonstrated on dexterous hand systems.</li>
+<li>The frozen language encoder provides only coarse language conditioning compared to co-fine-tuned VLMs.</li>
+</ul>
+<p class="dp-p"><strong>공개 가중치/코드:</strong> ✅ Fully open. <a href="https://github.com/octo-models/octo" target="_blank" rel="noopener">GitHub</a>, <a href="https://huggingface.co/rail-berkeley/octo-base" target="_blank" rel="noopener">HuggingFace</a>.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> With only 93M parameters, Octo is significantly faster than billion-parameter VLAs. The diffusion action head uses a small number of denoising steps. Octo is designed to fine-tune "within a few hours on standard consumer GPUs," implying efficient inference as well. Estimated ~10-30 Hz on a consumer GPU, though specific benchmarks are not prominently reported.</li>
+<li><strong>배포 하드웨어:</strong> Designed for consumer GPU deployment. Can be fine-tuned on standard consumer GPUs (e.g., RTX 3090/4090). The 93M parameter footprint is small enough for edge deployment scenarios, though Jetson Orin benchmarks are not reported.</li>
+<li><strong>실시간 가능 여부:</strong> Yes, likely. The small model size (93M parameters, ~75x smaller than OpenVLA 7B) and efficient diffusion head should enable real-time control at manipulation-appropriate frequencies (10-30 Hz) on consumer hardware. The modular tokenizer design adds minimal overhead.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> Open X-Embodiment (OXE) dataset -- 800K robot episodes from diverse manipulation datasets. Fine-tuning demonstrated on WidowX, Franka, and various platforms.</li>
+<li><strong>수집 방법:</strong> Aggregated cross-embodiment data from OXE (teleoperation, scripted policies, human demonstrations). Fine-tuning requires as few as 50 demonstrations.</li>
+<li><strong>데이터 규모:</strong> 800K robot episodes for pretraining (OXE subset). Fine-tuning: as few as 50 demonstrations per task.</li>
+<li><strong>원격 조작 장비:</strong> Varies by OXE constituent dataset.</li>
+<li><strong>데이터 포맷:</strong> RLDS (TensorFlow Datasets) format, following OXE standard.</li>
+<li><strong>공개 여부:</strong> Yes. OXE dataset is public. Octo weights at https://huggingface.co/rail-berkeley/octo-base.</li>
+</ul>
+<hr>

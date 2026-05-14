@@ -1,0 +1,61 @@
+<p class="dp-p"># 9.3 MuJoCo Manipulus</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> MuJoCo Manipulus: A Dexterous Tool Manipulation Benchmark</li>
+<li><strong>作者：</strong> Google DeepMind及合作者</li>
+<li><strong>发表venue/年份：</strong> 2025（预印本）</li>
+<li><strong>仿真平台：</strong> MuJoCo</li>
+<li><strong>灵巧手支持：</strong> 多指手执行工具操作</li>
+<li><strong>任务：</strong> 16个工具使用任务，包括锤击、拧螺丝、搅拌及其他功能性工具操作场景</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">Manipulus提供了一个专门针对灵巧工具操作的基准，这一领域在现有仿真基准中代表性不足。环境要求协调的多指控制来抓取、重定向和功能性地使用工具——超越了简单的拾放操作，涉及接触丰富的功能性交互。任务旨在同时测试工具操作的抓取阶段和功能使用阶段。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>首个在MuJoCo中包含16个不同任务的灵巧工具操作专用基准</li>
+<li>系统评估工具使用能力，要求兼具抓取稳定性和功能灵巧性</li>
+<li>兼容标准MuJoCo生态系统（Gymnasium、dm_control）</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>工具几何形状和物理属性相比真实工具有所简化</li>
+<li>无可变形工具或工件交互（如切割、涂抹）</li>
+<li>工具使用策略的仿真到真实验证有限</li>
+</ul>
+<h2 class="dp-h2">覆盖缺口</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>标准</th>
+<th>是否覆盖？</th>
+</tr></thead><tbody>
+<tr>
+<td>力/力矩评估指标</td>
+<td>否</td>
+</tr>
+<tr>
+<td>可变形物体任务</td>
+<td>否（仅刚性工具和工件）</td>
+</tr>
+<tr>
+<td>触觉传感</td>
+<td>否</td>
+</tr>
+<tr>
+<td>多阶段/长时程任务</td>
+<td>部分（工具使用涉及抓取+功能使用，但任务并非显式的多阶段序列）</td>
+</tr>
+<tr>
+<td>多手协调</td>
+<td>否</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">开源。通过MuJoCo生态系统获取。</p>
+<details class="dp-reviews"><summary>同行评审 <span class="dp-review-score-badge">3.4</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">平均分: <strong>3.4</strong> · 5 条评审 · Submitted to ICLR 2025 · <a href="https://openreview.net/forum?id=b9Ne5lHJ8Y" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 3</span> <span class="dp-review-text">The paper presents a benchmark designed for robotic tool manipulation using the MuJoCo physics engine. It offers a diverse set of 14 tool manipulation tasks across categories such as pouring, stacking…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 5</span> <span class="dp-review-text">This paper presents Mujoco Manipulus, a tool use benchmark for RL research.  This benchmark is built on top of Mujoco and gynmasium, and supports a range of tasks and tools such as scooping, stacking …</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 3</span> <span class="dp-review-text">This paper introduced a MuJoCo-based simulation framework named "MuJoCo Manipulus," which features tool-use tasks such as pouring, stacking, scooping, gathering, etc. In these benchmarking tasks, an "…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 3</span> <span class="dp-review-text">a Mujoco benchmark for policy learning including pouring, stacking, scooping, and various miscellaneous tasks, each with multiple tool options</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R5: 3</span> <span class="dp-review-text">The paper introduces MuJoCo Manipulus, a new benchmark for robotic tool manipulation. Built on the MuJoCo simulation platform, the benchmark includes 14 tasks and offers a user-friendly gym interface.…</span></div>
+</div>
+</details>

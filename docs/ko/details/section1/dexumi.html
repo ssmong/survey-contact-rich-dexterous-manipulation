@@ -1,0 +1,93 @@
+<h3 class="dp-h3">DexUMI</h3>
+<p class="dp-p"><strong>전체 제목:</strong> DexUMI: Dexterous Universal Manipulation Interface</p>
+<p class="dp-p"><strong>저자:</strong> Stanford et al. 연구팀</p>
+<p class="dp-p"><strong>학회/연도:</strong> CoRL 2025 (Best Paper Finalist)</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> XHand 및 Inspire Hand. DexUMI는 실세계 조작 데이터 수집 및 정책 배포를 위해 여러 정교한 핸드 플랫폼을 지원하는 하드웨어 독립적 인터페이스로 설계되었다.</p>
+<p class="dp-p"><strong>작업:</strong> 실세계 정교한 조작 작업. 시스템은 비정형 실세계 환경에서 정교한 핸드를 사용한 다양한 조작 시나리오의 데이터 수집 및 정책 학습을 가능하게 하는 데 초점을 맞춘다. 구체적 작업은 일상적 조작 행동을 포괄한다.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> DexUMI는 Universal Manipulation Interface (UMI) 패러다임을 정교한 다지 핸드로 확장한다. 인간 손 동작을 정교한 로봇 핸드로 매핑하는 휴대용 저비용 데이터 수집 프레임워크를 제공하여 야외 시연 수집을 가능하게 한다. 대부분의 정교한 조작 연구가 시뮬레이션에 의존하는 것과 달리, DexUMI는 전적으로 실세계에서 작동하며, 인터페이스를 통해 수집된 인간 시연을 사용하여 모방 학습 정책을 훈련한다. 최소한의 설정 오버헤드로 실용적 배포 가능성과 광범위한 작업 커버리지를 강조한다.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong> DexUMI 하드웨어 인터페이스를 통해 수집된 실세계 시연에서 훈련된 모방 학습 정책. 구체적 정책 아키텍처는 고차원 정교한 핸드 행동 공간에 적응된 UMI 프레임워크를 따른다.</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> 실세계 전용 -- 시뮬레이션 사용 없음. 전체 파이프라인(데이터 수집, 훈련, 배포)이 물리 하드웨어에서 작동한다.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>UMI 프레임워크를 정교한 핸드로 확장하여, 다지 조작을 위한 휴대용이고 접근 가능한 데이터 수집 인터페이스를 제공한다 -- 이전 정교한 핸드 원격 조작 시스템은 고가의 모션 캡처 설비나 맞춤 글러브 하드웨어가 필요했으나, DexUMI는 저비용 휴대용 장치를 사용한다.</li>
+<li>시뮬레이션 없이 실세계 전용 정교한 조작 학습을 시연하며, 이는 이 분야에서 지배적인 sim-to-real 패러다임과 대조된다 -- 이는 실세계 모방 학습이 병렬 조 그리퍼뿐 아니라 고DoF 핸드에서도 실행 가능함을 보여준다.</li>
+<li>CoRL 2025 Best Paper Finalist.</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li><strong>힘/임피던스 인식:</strong> 없음. 힘/토크 센싱이나 임피던스 제어가 포함되지 않음. 모방 학습 정책은 시연에서 위치 궤적을 학습하며, 명시적 힘 조절이 없다. 정밀한 접촉 힘 제어가 필요한 작업(예: 깨지기 쉬운 물체 삽입, 제어된 도구 적용)에서 위치 전용 제어 방식이 불충분할 수 있다.</li>
+<li><strong>VLA/언어 조건부:</strong> 없음. 파이프라인은 언어 조건부나 VLA 백본 없이 시연 기반 모방 학습을 사용한다. 작업 지정은 언어 지시가 아닌 물리적 시연을 통해 이루어진다.</li>
+<li><strong>Sim-to-real:</strong> 해당 없음. 시스템은 시뮬레이션 구성 요소 없이 전적으로 실세계에서 작동한다. 이는 sim-to-real 격차를 제거하나 시뮬레이션 기반 접근법 대비 데이터 수집의 확장성을 제한한다.</li>
+<li><strong>코드/데이터 공개:</strong> 리뷰 시점에서 공개 문서화되지 않음.</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong> 미구동(Inspire Hand, 6개 능동 DoF) 및 완전 구동(XHand, 12개 능동 DoF) 플랫폼 모두에서 평가, 작업 전체 평균 성공률 86%. 최적 구성은 상대적 손가락 행동, 촉각 센싱, 인페인팅 기반 시각 적응을 사용한다.</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>작업</th>
+<th>핸드</th>
+<th>성공률</th>
+</tr></thead><tbody>
+<tr>
+<td>큐브 집기</td>
+<td>Inspire Hand</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>달걀 상자 열기</td>
+<td>Inspire Hand</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>차 집기 (도구)</td>
+<td>Inspire Hand</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>차 집기 (잎)</td>
+<td>Inspire Hand</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>주방 - 손잡이</td>
+<td>XHand</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>주방 - 팬</td>
+<td>XHand</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>주방 - 소금</td>
+<td>XHand</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td>주방 - 전체</td>
+<td>XHand</td>
+<td>0.75</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">데이터 수집은 기존 원격 조작 방법 대비 3.2배 더 효율적이다 (15분 수집 세션 내).</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 정책이 <strong>10 Hz</strong>로 실행. UR5 팔은 125 Hz, Inspire Hand는 10 Hz, XHand는 60 Hz로 명령을 실행. 정책은 16개 미래 행동 단계를 예측하고 처음 8개만 10 Hz로 실행.</li>
+<li><strong>배포 하드웨어:</strong> UR5 로봇 팔 + XHand 또는 Inspire Hand. 시각 특징 추출을 위해 사전 훈련된 DINO-V2 사용. 추론 GPU 미명시.</li>
+<li><strong>실시간 가능 여부:</strong> 예, 10 Hz 정책 주파수에서. 시스템은 시간적 정렬(tcapture = treceive - lsensor)을 통해 센서 지연을 보상한다. 10 Hz 속도는 팔 수준 조작에 적합하나 XHand의 네이티브 60 Hz 능력보다 느리다.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> DexUMI 하드웨어 인터페이스를 통해 수집된 맞춤 실세계 시연. 명명된 벤치마크 데이터셋 없음.</li>
+<li><strong>수집 방법:</strong> DexUMI 휴대용 핸드헬드 장치를 통해 수집된 야외 인간 시연으로, 인간 손 동작을 정교한 로봇 핸드(XHand, Inspire Hand)로 매핑한다. 시스템은 모션 캡처나 VR 설비 없이 저비용 휴대용 데이터 수집을 위해 설계되었다.</li>
+<li><strong>데이터 규모:</strong> 공개 자료에 보고되지 않음. 작업별 수집된 시연 수는 논문을 참조해야 한다.</li>
+<li><strong>원격 조작 장비:</strong> DexUMI 핸드헬드 장치 -- Universal Manipulation Interface (UMI) 패러다임을 다지 정교한 핸드로 확장하는 휴대용 저비용 인터페이스. 고가 글러브, 외골격 또는 MoCap 불필요.</li>
+<li><strong>데이터 포맷:</strong> 보고되지 않음. 고차원 정교한 핸드 행동 공간에 적응된 UMI 프레임워크를 따른다.</li>
+<li><strong>공개 여부:</strong> 리뷰 시점에서 공개 문서화되지 않음.</li>
+</ul>
+<blockquote class="dp-quote"><em>arXiv:2505.21864에서 결과 검증. Table 1에서 작업별 성공률 추출. 평균 86% 성공률 확인.</em></blockquote>
+<hr>
+<details class="dp-reviews"><summary>피어 리뷰 <span class="dp-review-score-badge">9.0</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">평균: <strong>9.0</strong> · 1 개 리뷰 · CoRL 2025 Workshop Dexterous Manipulation Spotlight · <a href="https://openreview.net/forum?id=EkigXMH9Ik" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 9</span></div>
+</div>
+</details>

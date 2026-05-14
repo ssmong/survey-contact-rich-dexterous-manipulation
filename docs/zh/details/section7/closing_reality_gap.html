@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.4 Closing Reality Gap</h3>
+<p class="dp-p"><strong>完整标题：</strong> Closing the Reality Gap for Force-Controlled Dexterous Grasping（确切标题未核实；2026年预印本）</p>
+<p class="dp-p"><strong>作者：</strong> 未完全核实</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> arXiv 2026（无确认的arXiv链接）</p>
+<p class="dp-p"><strong>注：</strong> 此条目在综述表中引用，但截至调研日期无法确认具体arXiv链接。以下详细信息基于可用参考。</p>
+<blockquote class="dp-quote"><strong>以下所有贡献标记为[未核实]，因为论文未被直接访问。</strong></blockquote>
+<p class="dp-p"><strong>RL算法：</strong> [未核实] RL（PPO变体）+ 力感知训练。专门解决力控抓取的仿真到真实差距，将力反馈纳入RL训练循环并使用力域随机化。</p>
+<p class="dp-p"><strong>手部硬件：</strong> [未核实] 五指灵巧手（具体型号未核实）</p>
+<p class="dp-p"><strong>仿真平台：</strong> [未核实] 未确认</p>
+<p class="dp-p"><strong>仿真到真实？</strong> [未核实] 是。零样本仿真到真实迁移带力控，专门针对力域真实差距。</p>
+<p class="dp-p"><strong>任务：</strong> [未核实] 力控灵巧抓取——以明确力调节（而非纯位置控制）抓取物体。重点在实现施加适当力的稳定抓取，而不仅是实现运动学接触。</p>
+<p class="dp-p"><strong>核心方法论：</strong> [未核实] 本工作专门针对力控灵巧操作的真实差距。虽然大多数仿真到真实灵巧RL迁移位置策略，但力控抓取需要同时匹配运动学轨迹和力轮廓。方法引入力域随机化和力感知奖励整形，产生以正确力行为迁移的策略，而不仅是正确位置。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>[未核实] 解决了力控（而非仅位置控制）灵巧抓取的仿真到真实迁移这一未充分探索的问题</li>
+<li>[未核实] 展示了力感知抓取策略的零样本迁移</li>
+<li>[未核实] 强调力控操作的"真实差距"与位置控制真实差距在质上不同</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 论文未完全核实；细节可能与上述描述不同。截至调研日期可用信息有限。具体手部平台和仿真器未确认。</p>
+<p class="dp-p"><strong>结果：</strong> 无法报告定量结果；论文未被访问。</p>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> [未核实] 预期无预收集数据集。可能为仿真中的纯RL + 力感知训练。</li>
+<li><strong>收集方法：</strong> [未核实] 纯RL + 力域随机化和力感知奖励整形。针对力控（而非仅位置控制）灵巧抓取的仿真到真实迁移。</li>
+<li><strong>数据规模：</strong> [未核实] 未报告。论文未完全访问。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，预期无演示）。</li>
+<li><strong>数据格式：</strong> 不适用。</li>
+<li><strong>是否公开？</strong> 数据集详情未报告。论文未完全核实。</li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> [未核实] 未报告。预期MLP策略每次前向传播 <1ms。</li>
+<li><strong>部署硬件：</strong> [未核实] 五指灵巧手。带力控的仿真到真实迁移。</li>
+<li><strong>支持实时？</strong> [未核实] 预期是，基于MLP的RL策略。论文未完全核实。</li>
+</ul>

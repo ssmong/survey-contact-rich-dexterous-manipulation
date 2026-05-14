@@ -1,0 +1,940 @@
+{
+  "artigrasp": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=rFKPSfDvUv",
+    "venue": "3DV 2024",
+    "reviews": []
+  },
+  "dexdeform": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=N9FQ1besOs",
+    "venue": "CoRR 2023",
+    "reviews": []
+  },
+  "dexmachina": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=3c6bnSJwDg",
+    "venue": "Submitted to ICLR 2026",
+    "avg_rating": 5.5,
+    "num_reviews": 4,
+    "reviews": [
+      {
+        "rating": 6,
+        "confidence": 4,
+        "summary": "This paper investigates the challenging problem of functional retargeting: training dexterous robot manipulation policies from human demonstrations to track object states. The focus is on long-horizon, bimanual tasks involving articulated objects, which present issues like large action spaces and th"
+      },
+      {
+        "rating": 6,
+        "confidence": 3,
+        "summary": "The paper presents a curriculum-based reinforcement learning method that converts a single hand-object demonstration into a bimanual dexterous manipulation policy capable of reproducing the demonstrated trajectory, and showing this paradigm can be used for different robot hands and articulated objec"
+      },
+      {
+        "rating": 6,
+        "confidence": 4,
+        "summary": "DexMachina studies the function retargeting problem with the goal of transferring human-object manipulation demonstrations to robot action sequences that can manipulate the object accordingly. The core of the method is a virtual object controller and an automatic curriculum learning strategy. The ob"
+      },
+      {
+        "rating": 4,
+        "confidence": 4,
+        "summary": "This paper tackles the functional retargeting problem, requiring robots to reproduce human-demonstrated trajectories. A virtual-controller-based curriculum with multiple reward functions is proposed to improve performance. In addition, the authors introduce a new simulation benchmark featuring diver"
+      }
+    ]
+  },
+  "dexteritygen": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=LP2NjYyoch",
+    "venue": "CoRR 2025",
+    "reviews": []
+  },
+  "dexumi": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=EkigXMH9Ik",
+    "venue": "CoRL 2025 Workshop Dexterous Manipulation Spotlight",
+    "avg_rating": 9.0,
+    "num_reviews": 1,
+    "reviews": [
+      {
+        "rating": 9,
+        "confidence": 5
+      }
+    ]
+  },
+  "grasptoact": {
+    "found": false
+  },
+  "maniptrans": {
+    "found": false
+  },
+  "scaffoldingvlm": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=XSdKoJKyH2",
+    "venue": "Dex-RSS-25",
+    "reviews": []
+  },
+  "simtoolreal": {
+    "found": false
+  },
+  "spider": {
+    "found": false
+  },
+  "anyteleop": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=rSJ5RPXFG8",
+    "venue": "CoRR 2023",
+    "reviews": []
+  },
+  "bunnyvisionpro": {
+    "found": false
+  },
+  "dexmouse": {
+    "found": false
+  },
+  "dexcap": {
+    "found": false
+  },
+  "dexop": {
+    "found": false
+  },
+  "dexpilot": {
+    "found": false
+  },
+  "doglove": {
+    "found": false
+  },
+  "hato": {
+    "found": false
+  },
+  "omnih2o": {
+    "found": false
+  },
+  "openteledex": {
+    "found": false
+  },
+  "opentelevision": {
+    "found": false
+  },
+  "abilityhand": {
+    "found": false
+  },
+  "digit360": {
+    "found": false
+  },
+  "faivehand": {
+    "found": false
+  },
+  "isyhand": {
+    "found": false
+  },
+  "leaphandv2": {
+    "found": false
+  },
+  "orcahand": {
+    "found": false
+  },
+  "rukahand": {
+    "found": false
+  },
+  "xhandinspirehand": {
+    "found": false
+  },
+  "anytouch": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=XToAemis1h",
+    "venue": "ICLR 2025 Poster",
+    "avg_rating": 7.0,
+    "num_reviews": 4,
+    "reviews": [
+      {
+        "rating": 6,
+        "confidence": 4,
+        "summary": "The author introduces an aligned multi-sensor tactile dataset to unify tactile data. The data across four optical-based sensors. Also, the author proposes a unified static-dynamic multi-sensor representation learning. The author also implements real world experiments to test their framework."
+      },
+      {
+        "rating": 8,
+        "confidence": 4,
+        "summary": "This paper proposes UltraTouch, a model that learns unified static-dynamic representations for multiple tactile sensors with different architectures. To train UltraTouch, a dataset called TacQuad is introduced by collecting multimodal data from four different tactile sensors. UltraTouch captures bot"
+      },
+      {
+        "rating": 6,
+        "confidence": 4,
+        "summary": "This paper presents a novel and comprehensive representation learning framework for tactile data that addresses (1) V-T-L modalities alignment, (2) capturing dynamic information in tactile modality, and (3) generalization across different sensors together. It constructs a multi-sensor dataset called"
+      },
+      {
+        "rating": 8,
+        "confidence": 4,
+        "summary": "This paper present a novel framework called UltraTouch and a large dataset TacQuad collected using 4 different tactile sensors. The UltraTouch framework has a multi-stage training in pixel level and semantic level. In stage 1, the authors use MAE to train on static and dynamic tactile images/videos."
+      }
+    ]
+  },
+  "neuralfeels": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=v0i2lCyFrX",
+    "venue": "Sci. Robotics 2024",
+    "reviews": []
+  },
+  "sparsh": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=EAPt6Upzb7",
+    "venue": "CoRL 2024",
+    "reviews": []
+  },
+  "unitouch": {
+    "found": false
+  },
+  "dexgraspvla": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=Jx1ZM6wYvF",
+    "venue": "CoRR 2025",
+    "reviews": []
+  },
+  "dexora": {
+    "found": false
+  },
+  "dexvla": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=xzXIzvXXkO",
+    "venue": "CoRR 2025",
+    "reviews": []
+  },
+  "graspasyousay": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=NR0oaKbqtF",
+    "venue": "NeurIPS 2024",
+    "reviews": []
+  },
+  "humanoidgen": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=Mk9ykil8eP",
+    "venue": "NeurIPS 2025 poster",
+    "avg_rating": 4.0,
+    "num_reviews": 4,
+    "reviews": [
+      {
+        "rating": 4,
+        "confidence": 5,
+        "summary": "This paper introduces HumanoidGen, a framework to automatically generate tasks and demonstrations for bimanual dexterous manipulation, addressing a key data scarcity problem for humanoid robots. It uses an LLM planner, enhanced with Monte Carlo Tree Search (MCTS), to produce a sequence of spatial co"
+      },
+      {
+        "rating": 3,
+        "confidence": 5,
+        "summary": "This paper presents HumanoidGen, a framework for automatic data generation in bimanual dexterous manipulation, leveraging LLM-based planning, spatial annotation, and MCTS-enhanced reasoning. The system annotates both assets and robot hands with spatial keypoints and axes, and uses LLMs to generate c"
+      },
+      {
+        "rating": 5,
+        "confidence": 3,
+        "summary": "This paper presents HumanoidGen, an automated framework for generating diverse bimanual dexterous manipulation tasks and collecting demonstrations for humanoid robots. The framework leverages atomic operations, extensive spatial annotations, and LLM-based task planners to generate chains of actionab"
+      },
+      {
+        "rating": 4,
+        "confidence": 3,
+        "summary": "This paper introduces HumanoidGen, an automated framework for generating high-quality demonstration data for humanoid robots performing bimanual dexterous manipulation tasks. Unlike existing robotics datasets that primarily focus on single-arm manipulation, HumanoidGen specifically addresses the com"
+      }
+    ]
+  },
+  "unidexvla": {
+    "found": false
+  },
+  "vladiffusionpolicyswitching": {
+    "found": false
+  },
+  "acp": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=32IHuRyrLh",
+    "venue": "IEEE J. Biomed. Health Informatics 2025",
+    "reviews": []
+  },
+  "craft": {
+    "found": false
+  },
+  "dreamtacvla": {
+    "found": false
+  },
+  "factr": {
+    "found": false
+  },
+  "farm": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=ZRMAhpZ3ED",
+    "venue": "",
+    "avg_rating": 6.7,
+    "num_reviews": 3,
+    "reviews": [
+      {
+        "rating": 8,
+        "confidence": 5,
+        "summary": "Besides the clarity of the paper, the strength lies in the development of the simulator for a topic of high interest. Moreover, various variants of the components of the benchmarking tool are possible according to one's needs."
+      },
+      {
+        "rating": 6,
+        "confidence": 4,
+        "summary": "WFCRL provides a wide range of wind farm layouts and wind condition scenarios, allowing researchers to test algorithms under various realistic conditions. The inclusion of both static (FLORIS) and dynamic (FAST.Farm) simulators is particularly valuable for evaluating algorithm performance across dif"
+      },
+      {
+        "rating": 6,
+        "confidence": 5,
+        "summary": "- The paper addresses a challenge in wind energy optimization, presenting a novel benchmark suite that can facilitate advancements in wind farm control using MARL."
+      }
+    ]
+  },
+  "favla": {
+    "found": false
+  },
+  "fdvla": {
+    "found": false
+  },
+  "foar": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=cbjluXVaJz",
+    "venue": "ICRA 2025 Workshop: Beyond Pick and Place SpotlightPoster",
+    "reviews": []
+  },
+  "forcemimic": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=lrJBZAeql4",
+    "venue": "",
+    "reviews": []
+  },
+  "forcevla": {
+    "found": false
+  },
+  "forcevla2": {
+    "found": false
+  },
+  "hapticvla": {
+    "found": false
+  },
+  "omnivtla": {
+    "found": false
+  },
+  "reactivediffusionpolicy": {
+    "found": false
+  },
+  "tavla": {
+    "found": false
+  },
+  "tacdiffusion": {
+    "found": false
+  },
+  "tactilevla": {
+    "found": false
+  },
+  "tafvla": {
+    "found": false
+  },
+  "tdex": {
+    "found": false
+  },
+  "vlatouch": {
+    "found": false
+  },
+  "compliantvlaadaptor": {
+    "found": false
+  },
+  "humanoidvlm": {
+    "found": false
+  },
+  "impedancegpt": {
+    "found": false
+  },
+  "omnivic": {
+    "found": false
+  },
+  "safehumanoid": {
+    "found": false
+  },
+  "cheq": {
+    "found": false
+  },
+  "chip": {
+    "found": false
+  },
+  "compact": {
+    "found": false
+  },
+  "davil": {
+    "found": false
+  },
+  "dcm": {
+    "found": false
+  },
+  "dexforce": {
+    "found": false
+  },
+  "diffimpedance": {
+    "found": false
+  },
+  "divideetimpera": {
+    "found": false
+  },
+  "filic": {
+    "found": false
+  },
+  "forcepolicy": {
+    "found": false
+  },
+  "industreal": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=vHXMsKjSGw",
+    "venue": "CoRR 2023",
+    "reviews": []
+  },
+  "vices": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=7qejm7ptpw",
+    "venue": "VizSEC 2018",
+    "reviews": []
+  },
+  "actalohalearningfinegrainedbimanualmanipulationwithlowcosthardware": {
+    "found": false
+  },
+  "cogactafoundationalvisionlanguageactionmodelforsynergizingcognitionandactioninroboticmanipulation": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=gG5kL0rFkV",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "dexwmdexterousworldmodelsformultifingerhandobjectinteraction": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=KvFGpgHmIA",
+    "venue": "CoRL 2025 Workshop Dexterous Manipulation Spotlight",
+    "avg_rating": 7.5,
+    "num_reviews": 2,
+    "reviews": [
+      {
+        "rating": 8,
+        "confidence": 4
+      },
+      {
+        "rating": 7,
+        "confidence": 4
+      }
+    ]
+  },
+  "diffusionpolicyvisuomotorpolicylearningviaactiondiffusion": {
+    "found": false
+  },
+  "dp33ddiffusionpolicygeneralizablevisuomotorpolicylearningviasimple3drepresentations": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=Xjvcxow3sM",
+    "venue": "ICRA 2024 Workshop on 3D Visual Representations for Robot Manipulation",
+    "reviews": []
+  },
+  "egoscalescalingegocentrichumanvideopretrainingfordexterousrobotmanipulation": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=Yw5QGNBkEN",
+    "venue": "CoRL 2024",
+    "reviews": []
+  },
+  "geminiroboticsfamily": {
+    "found": false
+  },
+  "nvidiagr00tfamily": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=e4vr5CIR5p",
+    "venue": "CoRR 2025",
+    "reviews": []
+  },
+  "hptheterogeneouspretrainedtransformers": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=Pf7kdIjHRf",
+    "venue": "NeurIPS 2024 spotlight",
+    "avg_rating": 5.5,
+    "num_reviews": 4,
+    "reviews": [
+      {
+        "rating": 6,
+        "confidence": 4,
+        "summary": "This paper presents an approach for training large transformer behavior models on diverse heterogenous data. This involves separate encoders for proprioception and image observations for each embodiment, as well as different action decoding heads. Experiments include validation loss comparisons."
+      },
+      {
+        "rating": 7,
+        "confidence": 4,
+        "summary": "This paper aims to pretrain a policy representation across a variety of simulated and real robotics datasets such that it can be quickly adapted to new downstream problem instances (embodiment, environment, task). The key technical contribution is the design of a Transformer architecture that can co"
+      },
+      {
+        "rating": 3,
+        "confidence": 4,
+        "summary": "This paper presents Heterogeneous Pre-trained Transformers (HPT), a method for training robotic models that addresses the challenge of heterogeneity across different robot embodiments and tasks. HPT pre-trains a shared neural network trunk to create a universal representation, which is then fine-tun"
+      },
+      {
+        "rating": 6,
+        "confidence": 4,
+        "summary": "The paper introduces HPT a large-scale transformer model pretrained on multi embodiment robotic data. The main idea is to split the policy into three parts: a dataset specific token encoder for images and proprioceptive information called Stem. A shared Trunk, that processes all latent tokens and a "
+      }
+    ]
+  },
+  "idp3improved3ddiffusionpolicyviaegocentricpointclouds": {
+    "found": false
+  },
+  "llarvavisionactioninstructiontuningenhancesrobotlearning": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=Q2lGXMZCv8",
+    "venue": "CoRL 2024",
+    "reviews": []
+  },
+  "octoanopensourcegeneralistrobotpolicy": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=ufOHpTwZG5",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "openvlaanopensourcevisionlanguageactionmodel": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=ZMnD6QZAE6",
+    "venue": "CoRL 2024",
+    "reviews": []
+  },
+  "openvlaoftopenvisionlanguageactionmodelwithoptimalfinetuning": {
+    "found": false
+  },
+  "physicalintelligencepifamily": {
+    "found": false
+  },
+  "rdt1broboticsdiffusiontransformer": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=n2ZtFVPUVt",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "rt2visionlanguageactionmodelstransferwebknowledgetoroboticcontrol": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=dddU8UlJPm",
+    "venue": "CoRL 2023",
+    "reviews": []
+  },
+  "simplevlarlreinforcementlearningfinetuningofvisionlanguageactionmodels": {
+    "found": false
+  },
+  "spatialvlaexploringspatialrepresentationsforvisuallanguageactionmodel": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=8OIwIEF1kV",
+    "venue": "",
+    "reviews": []
+  },
+  "tinyvlatowardsfastdataefficientvisionlanguageactionmodelsforroboticmanipulation": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=HOW7kYenH4",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "uniactuniversalactiontokenizationforroboticmanipulation": {
+    "found": false
+  },
+  "anygrasp": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=U26asOu6gd",
+    "venue": "IEEE Transactions on Robotics",
+    "reviews": []
+  },
+  "anyrotate": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=Bt5upUsbvu",
+    "venue": "LFDM",
+    "reviews": []
+  },
+  "bidexhands": {
+    "found": false
+  },
+  "bidexhd": {
+    "found": false
+  },
+  "bodex": {
+    "found": false
+  },
+  "closingrealitygap": {
+    "found": false
+  },
+  "comfreesim": {
+    "found": false
+  },
+  "complementarityfree": {
+    "found": false
+  },
+  "contacttrustregion": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=1FkgX44cJW",
+    "venue": "Dex-RSS-25",
+    "reviews": []
+  },
+  "crossdex": {
+    "found": false
+  },
+  "cyberdemo": {
+    "found": false
+  },
+  "dactylopenai": {
+    "found": false
+  },
+  "demostart": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=w8wXwbhEps",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "dexart": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=seQjCvbj3h",
+    "venue": "CVPR 2023",
+    "reviews": []
+  },
+  "dexdrummer": {
+    "found": false
+  },
+  "dexgarmentlab": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=ZZ09oX2Xpo",
+    "venue": "NeurIPS 2025 spotlight",
+    "avg_rating": 4.6,
+    "num_reviews": 5,
+    "reviews": [
+      {
+        "rating": 5,
+        "confidence": 4,
+        "summary": "This paper introduces DexGarmentLab, a novel simulation environment specifically designed for dexterous (especially bimanual) garment manipulation. The environment provides large-scale high-quality 3D 8 assets for 15 task scenarios, and refines simulation techniques tailored for garment 9 modeling t"
+      },
+      {
+        "rating": 4,
+        "confidence": 4,
+        "summary": "The authors introduce DexGarmentLab, a novel simulation environment designed for dexterous (especially bimanual) garment manipulation. Built on Isaac Sim, it offers over 2,500 garments across 8 categories and 15 task scenarios with high-quality 3D assets. They also propose an automated data collecti"
+      },
+      {
+        "rating": 5,
+        "confidence": 4,
+        "summary": "This paper is dedicated to solving the dexterous garment manipulation problem. It introduces a new simulation environment (DexGarmentLab), an effective method for automatically collecting demonstration data from a single expert example, and a hierarchical policy (HALO) that generalizes across divers"
+      },
+      {
+        "rating": 4,
+        "confidence": 4,
+        "summary": "The paper presents DexGarmentLab, a data generation pipeline for garment manipulation and a generalizable manipulation policy using dexterous hands. To eliminate the extensive human effort typically required in imitation and reinforcement learning, the authors propose an automated data collection st"
+      },
+      {
+        "rating": 5,
+        "confidence": 4,
+        "summary": "The paper introduces DexGarmentLab, a comprehensive framework for bimanual dexterous garment manipulation. Contributions include: (1) A new simulation environment built on Isaac Sim, featuring over 2,500 garment assets from ClothesNet across 15 task scenarios; (2) an automated data collection pipeli"
+      }
+    ]
+  },
+  "dexgraspanything": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=DVB8WDaofB",
+    "venue": "CoRR 2025",
+    "reviews": []
+  },
+  "dexgraspnet20": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=5BgqK8UBDv",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "dexhanddiff": {
+    "found": false
+  },
+  "dexmv": {
+    "found": false
+  },
+  "dexonomy": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=no55YX03LT",
+    "venue": "Dex-RSS-25",
+    "reviews": []
+  },
+  "dexpbt": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=DKR5vZBBW5",
+    "venue": "CoRR 2023",
+    "reviews": []
+  },
+  "dexpoint": {
+    "found": false
+  },
+  "dextrack": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=ajSmXqgS24",
+    "venue": "ICLR 2025 Poster",
+    "avg_rating": 6.8,
+    "num_reviews": 4,
+    "reviews": [
+      {
+        "rating": 8,
+        "confidence": 4,
+        "summary": "This paper proposes an approach for training generalizable neural tracking controllers from human reference trajectories for dexterous manipulation tasks with robot hands. The approach consists of three steps: The first step involves using reinforcement learning to successfully track single, per-tas"
+      },
+      {
+        "rating": 5,
+        "confidence": 4,
+        "summary": "The authors propose a neural IK controller for controlling dexterous robot hands. The results are validated in both simulated environments and the real world. The authors claim the proposed IK controller can achieve better tracking results than existing approaches."
+      },
+      {
+        "rating": 6,
+        "confidence": 3,
+        "summary": "This paper presents DexTrack, a generalizable neural tracking controller for dexterous manipulation, trained on large-scale robot tracking demonstrations based on human-object interactions. The method integrates reinforcement learning, imitation learning, and homotopy optimization to improve control"
+      },
+      {
+        "rating": 8,
+        "confidence": 3,
+        "summary": "The authors proposed a neural tracking controller that integrates the reinforcement learning and imitation learning by iteratively improving the controller and generating demonstrations in simulation. Specifically, they proposed a per-trajectory tracking scheme to generate diverse and high-quality t"
+      }
+    ]
+  },
+  "dextrahgrgb": {
+    "found": false
+  },
+  "dextreme": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=kRnSnRmIyA",
+    "venue": "ICRA 2023",
+    "reviews": []
+  },
+  "dqrise": {
+    "found": false
+  },
+  "dreureka": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=HQ4EVkgE2G",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "eureka": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=IEduRUO55F",
+    "venue": "ICLR 2024 poster",
+    "avg_rating": 6.2,
+    "num_reviews": 4,
+    "reviews": [
+      {
+        "rating": 6.0,
+        "confidence": 4.0,
+        "summary": "The paper presents a novel approach to leverage LLMs to plan/control complex low-level manipulation tasks in the form of an LLM-powered reward function generator. Its generation algorithm performs iterative improvements over an initially designed reward function without task-specific prompting nor a"
+      },
+      {
+        "rating": 6.0,
+        "confidence": 4.0,
+        "summary": "The main idea of the paper is to have a LLM provide the reward function for RL problems."
+      },
+      {
+        "rating": 5.0,
+        "confidence": 4.0,
+        "summary": "The paper introduces EUREKA, an LLM-powered method for reward design for reinforcement learning tasks. The proposed method utilizes the zero-shot generation and in-context improvement of LLM, enabling evolutionary optimization over reward code without task-specific prompting or pre-defined reward te"
+      },
+      {
+        "rating": 8.0,
+        "confidence": 4.0,
+        "summary": "This paper purpose a novel pipeline to harness the LLM to design reward for using reinforcement learning to do diverse tasks without any task-specific template. The pipeline use environment code and reward feedback as input to LLM, and let LLM to continously update the reward function. The comprehen"
+      }
+    ]
+  },
+  "generalinhandobjectrotationwithvisionandtouch": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=LCXaKL9w7d",
+    "venue": "CoRL 2023",
+    "reviews": []
+  },
+  "handelbot": {
+    "found": false
+  },
+  "hora": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=C5GlmrAI4d",
+    "venue": "CoRR 2022",
+    "reviews": []
+  },
+  "maniwhere": {
+    "found": false
+  },
+  "resdex": {
+    "found": false
+  },
+  "robopianist": {
+    "found": false
+  },
+  "robustdexgrasp": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=x6W3wkFrPb",
+    "venue": "CoRR 2025",
+    "reviews": []
+  },
+  "rotateit": {
+    "found": false
+  },
+  "rotatingwithoutseeing": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=vqWmMMFzgV",
+    "venue": "",
+    "reviews": []
+  },
+  "sapg": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=4dOJAfXhNV",
+    "venue": "ICML 2024 Oral",
+    "reviews": []
+  },
+  "seqdex": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=A29Y57m07B",
+    "venue": "CoRL 2023",
+    "reviews": []
+  },
+  "tcdm": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=EFXAJQWgCT",
+    "venue": "IEEE Trans. Vis. Comput. Graph. 2024",
+    "reviews": []
+  },
+  "ultradexgrasp": {
+    "found": false
+  },
+  "unidexgrasp": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=qmc6mxUoKb",
+    "venue": "CVPR 2023",
+    "reviews": []
+  },
+  "visualdexterity": {
+    "found": false
+  },
+  "vtdexmanip": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=jf7C7EGw21",
+    "venue": "ICLR 2025 Poster",
+    "avg_rating": 5.5,
+    "num_reviews": 4,
+    "reviews": [
+      {
+        "rating": 5,
+        "confidence": 4,
+        "summary": "The author introduces a unique dataset for visual-tactile with 10 daily tasks.  A new benchmark with six complex dexterous manipulation tasks is proposed, using a reinforcement learning-based vision-tactile skill learning framework."
+      },
+      {
+        "rating": 6,
+        "confidence": 3,
+        "summary": "This paper introduces a new visual-tactile dataset for training and benchmarking dexterous manipulation skills. It includes 10 tasks with 182 objects collected by human operators and provides a comprehensive benchmark of 6 challenging dexterous manipulation tasks. Additionally, the paper presents an"
+      },
+      {
+        "rating": 5,
+        "confidence": 4,
+        "summary": "This paper proposes a vision-tactile dataset and a novel benchmark for evaluating the vision-tactile pre-training methods. The experiments show that the tactile signals can provide guidance for the deployment of the tactile modality."
+      },
+      {
+        "rating": 6,
+        "confidence": 5,
+        "summary": "This paper introduces a dataset and benchmark to address the limitations in current robotic manipulation learning frameworks by incorporating both vision and tactile modalities. It collects human manipulation data with 182 objects and 10 daily tasks and uses low-cost tactile gloves to create a large"
+      }
+    ]
+  },
+  "842droid": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=dMVxcEQSVQ",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "841openxembodimentoxe": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=zraBtFgxT0",
+    "venue": "CoRL 2023 Workshop TGR Oral",
+    "avg_rating": 9.5,
+    "num_reviews": 2,
+    "reviews": [
+      {
+        "rating": 10.0,
+        "confidence": 4.0
+      },
+      {
+        "rating": 9.0,
+        "confidence": 3.0
+      }
+    ]
+  },
+  "adroit": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=iiDu422mKs",
+    "venue": "StudentWorkshop@CoNEXT 2024",
+    "reviews": []
+  },
+  "difftactile": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=eJHnSg783t",
+    "venue": "ICLR 2024 poster",
+    "avg_rating": 6.5,
+    "num_reviews": 4,
+    "reviews": [
+      {
+        "rating": 6.0,
+        "confidence": 3.0,
+        "summary": "This paper presents a differential simulator for tactile sensors which work on the principle of light reflection from coloured deformable surfaces. The deformable surface is simulated by a finite element model, with contact forces based on penetration penalty. Surface normals of the deformed tactile"
+      },
+      {
+        "rating": 6.0,
+        "confidence": 1.0,
+        "summary": "This paper is about creating a differentiable tactile stimulator that supports contact rich tasks. Having such a simulator is important to learn robust policies using tactile. The simulator consists of 4 components: 1) sensor deformation through FEM 2) Optical simulation model that maps sensor defor"
+      },
+      {
+        "rating": 6.0,
+        "confidence": 3.0,
+        "summary": "The paper presents DiffTactile, a simulator that uses FEM to simulate soft tactile sensors such as Gelsight, supports elastic, rigid, elasto-plastic, and cable-like objects, and is differentiable. The authors demonstrate the use of the simulator for three tasks. First, in system identification, the "
+      },
+      {
+        "rating": 8.0,
+        "confidence": 3.0,
+        "summary": "The paper presents a new tactile simulation framework for soft optical sensors applied on robotics manipulation tasks. This fully-differentiable pipeline is then used for system identification of sensor properties, and gradient-based trajectory optimization. This framework is the first differentiabl"
+      }
+    ]
+  },
+  "genesis": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=DFwul9oDQq",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "isaaclab": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=1f3EmdnMC7",
+    "venue": "CoRR 2025",
+    "reviews": []
+  },
+  "maniskill3": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=bpIKoHHUYI",
+    "venue": "CoRR 2024",
+    "reviews": []
+  },
+  "mujocomanipulus": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=b9Ne5lHJ8Y",
+    "venue": "Submitted to ICLR 2025",
+    "avg_rating": 3.4,
+    "num_reviews": 5,
+    "reviews": [
+      {
+        "rating": 3,
+        "confidence": 5,
+        "summary": "The paper presents a benchmark designed for robotic tool manipulation using the MuJoCo physics engine. It offers a diverse set of 14 tool manipulation tasks across categories such as pouring, stacking, scooping, gathering, hammering, and scraping. Each task features specific tools (e.g., cup, ladle,"
+      },
+      {
+        "rating": 5,
+        "confidence": 4,
+        "summary": "This paper presents Mujoco Manipulus, a tool use benchmark for RL research.  This benchmark is built on top of Mujoco and gynmasium, and supports a range of tasks and tools such as scooping, stacking and gathering.  The authors evaluate PPO and SAC on these tasks using both vision and state informat"
+      },
+      {
+        "rating": 3,
+        "confidence": 5,
+        "summary": "This paper introduced a MuJoCo-based simulation framework named \"MuJoCo Manipulus,\" which features tool-use tasks such as pouring, stacking, scooping, gathering, etc. In these benchmarking tasks, an \"idealized\" agent manipulates a free-floating tool to physically interact with objects and accomplish"
+      },
+      {
+        "rating": 3,
+        "confidence": 4,
+        "summary": "a Mujoco benchmark for policy learning including pouring, stacking, scooping, and various miscellaneous tasks, each with multiple tool options"
+      },
+      {
+        "rating": 3,
+        "confidence": 4,
+        "summary": "The paper introduces MuJoCo Manipulus, a new benchmark for robotic tool manipulation. Built on the MuJoCo simulation platform, the benchmark includes 14 tasks and offers a user-friendly gym interface. The paper also provides baseline evaluations using SAC and PPO algorithms on the proposed tasks."
+      }
+    ]
+  },
+  "mujocoplayground": {
+    "found": true,
+    "url": "https://openreview.net/forum?id=HyDRyN7fSz",
+    "venue": "CoRR 2025",
+    "reviews": []
+  }
+}

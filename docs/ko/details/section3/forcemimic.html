@@ -1,0 +1,33 @@
+<h2 class="dp-h2">3.15 ForceMimic</h2>
+<blockquote class="dp-quote"><strong>참고:</strong> VLA 아님 (언어 조건부 없음). 힘 출력 방법론을 위해 Section 3에 포함.</blockquote>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> ForceMimic: Force-Centric Imitation Learning with Force-Motion Capture System for Contact-Rich Manipulation</li>
+<li><strong>저자:</strong> SJTU / Flexiv et al.</li>
+<li><strong>학회/연도:</strong> ICRA 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2410.07554</li>
+</ul>
+<p class="dp-p"><strong>힘/촉각 입력 유형:</strong> 원격 조작 중 시연자의 동작과 상호작용 힘을 모두 기록하는 맞춤 힘-모션 캡처 시스템에서의 캡처된 상호작용 렌치.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> 예 -- 렌치-위치 하이브리드 출력. 원하는 엔드이펙터 위치와 상호작용 렌치를 모두 예측하여 능동적 접촉 힘 조절을 위한 하이브리드 컨트롤러 가능. <strong>힘 출력 유형: 전체 렌치 (6D).</strong></p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> Flexiv Rizon 로봇 팔 + 병렬 조 그리퍼.</p>
+<p class="dp-p"><strong>작업:</strong> 야채 껍질 벗기기 (주요 평가 작업) -- 야채를 손상시키지 않으면서 정밀한 힘 제어가 필요한 접촉이 풍부한 작업.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> ForceMimic는 시연 중 운동학적 궤적과 상호작용 힘을 모두 기록하는 힘-모션 캡처 시스템을 도입. 모방 학습 정책이 위치와 힘 목표를 모두 예측, 하이브리드 힘-위치 컨트롤러가 양 목표를 동시 실행. HybridIL 공식화는 힘과 위치를 공동 예측 대상으로 처리.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>시연 중 동작과 힘을 모두 캡처하는 힘-모션 캡처 시스템, 접촉이 풍부한 모방 학습에 풍부한 감독 제공</li>
+<li>위치와 힘 목표를 공동 예측하여 능동적 힘 조절을 가능하게 하는 HybridIL 제안</li>
+<li>야채 껍질 벗기기에서 하이브리드 힘-위치 모방이 위치 전용 모방을 유의하게 능가함을 시연</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> 단일 작업(야채 껍질 벗기기)에서 평가. VLA/언어 조건부 없음. 코드 공개(github.com/ForceMimic/hybridil)하나 사전 훈련 가중치 없음.</p>
+<p class="dp-p"><strong>결과:</strong> 야채 껍질 벗기기에서 위치 전용 모방 학습 기준선 대비 유의하게 높은 성공률 달성.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 보고되지 않음.</li>
+<li><strong>배포 하드웨어:</strong> ForceCapture 시스템이 장착된 Flexiv Rizon 팔 + 병렬 조 그리퍼.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>수집 방법:</strong> 원격 조작 중 운동학적 궤적과 상호작용 렌치를 동시 기록하는 ForceCapture 시스템. 조작자가 ~5분 내 시연 완료 (기존 힘 피드백 원격 조작의 13분+ 대비).</li>
+<li><strong>원격 조작 장비:</strong> ForceCapture 시스템 -- F/T 센서(1000 Hz), SLAM 카메라(200 Hz), RGB-D 카메라(30 Hz)를 통합한 맞춤 힘-모션 캡처 시스템.</li>
+<li><strong>공개 여부:</strong> 예. 처리된 데이터셋 Google Drive 이용 가능. 코드: <a href="https://github.com/ForceMimic/hybridil" target="_blank" rel="noopener">GitHub</a>. ForceCapture 시스템: <a href="https://github.com/ForceMimic/forcecapture" target="_blank" rel="noopener">GitHub</a>.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=lrJBZAeql4" target="_blank" rel="noopener">OpenReview</a></p></div></details>

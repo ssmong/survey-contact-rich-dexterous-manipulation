@@ -1,0 +1,54 @@
+<h2 class="dp-h2">3.3 FD-VLA</h2>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> FD-VLA: Force-Distilled Vision-Language-Action Model for Contact-Rich Manipulation</li>
+<li><strong>저자:</strong> National University of Singapore (NUS) et al.</li>
+<li><strong>학회/연도:</strong> ICRA 2026</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2602.02142</li>
+</ul>
+<p class="dp-p"><strong>힘/촉각 입력 유형:</strong> 증류 방식 -- 모델이 힘 지도하에 훈련되나 추론 시 힘 센서 불필요. 훈련 중 6축 F/T 데이터가 특권 모달리티로 사용; 배포 시 모델은 비전과 언어만으로 작동.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> 없음. 위치 전용 출력.</p>
+<blockquote class="dp-quote"><strong>한계 (위치 전용 출력):</strong> 위치 전용 출력; 힘/촉각 입력을 수신함에도 정책이 접촉 힘을 능동적으로 조절할 수 없다.</blockquote>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> UR5e 로봇 팔 + 병렬 조 그리퍼.</p>
+<p class="dp-p"><strong>작업:</strong> 3가지 접촉이 풍부한 작업: 표면 닦기, 페그 삽입, 버튼 누르기.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> FD-VLA는 교사 모델이 힘/토크 데이터에 접근하여 훈련되고, 학생 모델이 시각 및 언어 입력만으로 교사의 행동을 모방하도록 학습하는 지식 증류 프레임워크를 사용한다. 핵심 통찰은 훈련 중 힘 정보가 학생에게 시각 단서에서 접촉 상태를 추론하도록 암묵적으로 가르친다는 것이다(예: 변형, 상대 위치). 증류 손실은 행동 예측 손실과 학생의 시각 특징이 힘 관련 정보를 인코딩하도록 유도하는 중간 특징 정렬 손실을 결합한다.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong> 촉각 증류를 사용한 교사-학생 VLA 아키텍처. 교사는 비전 + 언어 + F/T를 입력으로 수신; 학생은 비전 + 언어만 수신. 둘 다 동일한 VLM 백본 아키텍처 공유. 배포 시 학생 모델만 사용되어 힘 센서 필요성 제거.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>힘 센서 없이 배포 시 비전 전용 정책을 개선하기 위한 훈련 전략으로 힘 증류를 제안</li>
+<li>증류된 모델이 접촉이 풍부한 작업에서 순수 비전 전용 모델과 나이브 힘 연결 접근법 모두를 능가함을 시연</li>
+<li>힘 센서가 없는 로봇에서 접촉이 풍부한 조작 정책을 개선하는 실용적 경로 제공</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> 증류된 모델은 근본적으로 시각 단서에서 추론할 수 있는 것으로 제한 -- 진정으로 가려진 접촉 정보(예: 깊은 소켓에서의 삽입 힘)는 복원 불가. 3개 작업에서만 평가. 접근법은 훈련 중 힘 데이터를 가정하여 데이터 수집에는 여전히 힘 센서 장착 로봇 필요. 정교한 핸드 실험 없음.</p>
+<p class="dp-p"><strong>결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>지표</th>
+<th>값</th>
+</tr></thead><tbody>
+<tr>
+<td>학생 vs. 교사 격차</td>
+<td>성공률 5-10% 이내</td>
+</tr>
+<tr>
+<td>학생 vs. 비전 전용 기준선</td>
+<td>15-25% 향상</td>
+</tr>
+<tr>
+<td>평가 작업 수</td>
+<td>3 (표면 닦기, 페그 삽입, 버튼 누르기)</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 보고되지 않음.</li>
+<li><strong>배포 하드웨어:</strong> UR5e 로봇 팔 + 병렬 조 그리퍼 + 카메라. 훈련/추론 GPU 미명시.</li>
+<li><strong>실시간 가능 여부:</strong> 미검증.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> 3가지 접촉이 풍부한 작업을 위한 맞춤 시연 데이터셋. 명명된 벤치마크 없음.</li>
+<li><strong>수집 방법:</strong> UR5e 팔에서의 원격 조작 시연. 교사 모델은 6축 F/T 데이터에 접근하여 훈련; 학생 모델은 비전과 언어만으로 증류를 통해 훈련.</li>
+<li><strong>데이터 규모:</strong> 보고되지 않음.</li>
+<li><strong>원격 조작 장비:</strong> 보고되지 않음.</li>
+<li><strong>데이터 포맷:</strong> 보고되지 않음.</li>
+<li><strong>공개 여부:</strong> 보고되지 않음.</li>
+</ul>

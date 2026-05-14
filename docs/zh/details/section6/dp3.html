@@ -1,0 +1,54 @@
+<h3 class="dp-h3">DP3: 3D Diffusion Policy --- Generalizable Visuomotor Policy Learning via Simple 3D Representations</h3>
+<p class="dp-p"><strong>完整标题：</strong> 3D Diffusion Policy: Generalizable Visuomotor Policy Learning via Simple 3D Representations</p>
+<p class="dp-p"><strong>作者：</strong> Yanjie Ze, Gu Zhang, Kangning Zhang, Chenyuan Hu, Muhan Wang, Huazhe Xu (清华大学)</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> RSS 2024</p>
+<p class="dp-p"><strong>架构：</strong> DP3将Diffusion Policy扩展为在3D点云观测上运行，而非2D图像。视觉编码器通过轻量级3D编码器（PointNet++或稀疏3D卷积，约5M参数）处理深度相机点云，产生逐点特征并聚合为全局3D场景表示。此3D表示作为条件输入到基于扩散的动作解码器（类似Diffusion Policy的1D卷积架构）。总模型大小约30M参数。</p>
+<p class="dp-p"><strong>动作空间：</strong> 连续，可变维度。在仿真中评估了高达22自由度的动作空间（Adroit灵巧手任务：24自由度Shadow手）。支持EEF和关节空间动作。继承自Diffusion Policy的动作块化。</p>
+<p class="dp-p"><strong>灵巧手支持？</strong> 部分（仅仿真）--- 在Adroit手部操作基准（door, pen, hammer）上评估，使用MuJoCo中的24自由度Shadow手。是首批在高自由度灵巧手上演示的扩散策略之一，共72个仿真任务。未演示真实机器人灵巧手部署。</p>
+<p class="dp-p"><strong>力/阻抗输出？</strong> ✗ --- 仅位置目标。</p>
+<p class="dp-p"><strong>核心方法论：</strong> DP3论证3D点云观测相比2D图像为操作提供更优越的空间推理和视角泛化。通过将观测提升到3D，策略对相机视角变化具有不变性，并能推理在2D中模糊的空间关系（如手指和物体的相对位置）。3D编码器刻意保持轻量以实现实时推理。结合扩散动作解码器，DP3在涵盖夹爪和灵巧手操作的72个仿真任务上取得强性能。</p>
+<p class="dp-p"><strong>训练数据：</strong> 任务特定演示数据集。仿真中通过脚本策略或RL训练的专家生成演示。通常每个任务100-200个演示。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>证明简单的3D点云表示相比基于2D图像的策略显著改善策略泛化和样本效率。</li>
+<li>是首批在仿真中高自由度灵巧手任务（Adroit基准）上评估的扩散策略之一。</li>
+<li>表明轻量级3D编码器（约5M参数）足以实现有效的3D策略学习，支持实时推理。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>基准/任务</th>
+<th>DP3</th>
+<th>Diffusion Policy (2D)</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td><em>（请查阅RSS 2024论文获取72个仿真任务的逐任务成功率，包括Adroit灵巧手基准和夹爪操作任务。）</em></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>需要深度相机生成点云，这在真实环境中并非总是可用或可靠。</li>
+<li>灵巧手任务仅限仿真评估；无真实机器人灵巧手结果。</li>
+<li>真实传感器的点云处理可能存在噪声，需要额外的滤波和处理。</li>
+<li>无语言条件化。</li>
+</ul>
+<p class="dp-p"><strong>开放权重/代码：</strong> ✅ 代码：<a href="https://github.com/YanjieZe/3D-Diffusion-Policy" target="_blank" rel="noopener">GitHub</a>。✗ 无预训练权重（任务特定训练）。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 轻量级3D编码器（约5M参数）和小型扩散动作头（总计约25M）实现快速推理。使用DDIM加速，估计在桌面GPU上约10-20 Hz。点云预处理（下采样、归一化）增加少量开销（约1-5ms）。</li>
+<li><strong>部署硬件：</strong> 桌面GPU用于推理。约30M参数的总模型轻量级，与Diffusion Policy相当。需要深度相机提供点云输入。</li>
+<li><strong>可实时运行？</strong> 是，使用DDIM加速。轻量级3D编码器刻意保持小型以实现实时推理。与Diffusion Policy相当的推理速度（约10-20 Hz），同时具有3D空间推理的额外优势。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 跨72个仿真任务的任务特定演示数据集。包括Adroit灵巧手基准（MuJoCo中24自由度Shadow手的door, pen, hammer）和夹爪操作任务。</li>
+<li><strong>收集方法：</strong> 通过脚本策略或RL训练的专家生成的仿真演示。来自仿真深度相机的点云观测。无真实机器人灵巧手数据。</li>
+<li><strong>数据规模：</strong> 72个仿真任务，每个任务100-200个演示。</li>
+<li><strong>遥操作设备：</strong> 不适用（来自脚本/RL专家策略的仿真演示）。</li>
+<li><strong>数据格式：</strong> 点云观测（3D）+ 关节位置。任务特定数据集。</li>
+<li><strong>是否公开？</strong> 代码在 https://github.com/YanjieZe/3D-Diffusion-Policy 。仿真环境为标准环境（Adroit/MuJoCo）。</li>
+</ul>
+<hr>

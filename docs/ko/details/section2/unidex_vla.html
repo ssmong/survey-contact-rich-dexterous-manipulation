@@ -1,0 +1,81 @@
+<h3 class="dp-h3">2.1 UniDex-VLA</h3>
+<p class="dp-p"><strong>전체 제목:</strong> UniDex-VLA: A Universal Dexterous Manipulation Framework with Vision-Language-Action Model</p>
+<p class="dp-p"><strong>저자:</strong> Chen, Y. et al. (UniDex-AI)</p>
+<p class="dp-p"><strong>학회/연도:</strong> CVPR 2026</p>
+<p class="dp-p"><strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.22264" target="_blank" rel="noopener">2603.22264</a></p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Fingertip-Aligned Action Space (FAAS)를 통해 8종 정교한 로봇 핸드: Allegro (16 DoF), LEAP (16 DoF), Shadow (24 DoF), Inspire (12 DoF), Wuji, Oymotion, Ability, Xhand. FAAS는 임의의 핸드 운동학을 통합된 손끝 중심 표현으로 투영하여, 구현체별 미세 조정 없이 단일 정책이 8종 핸드를 모두 제어할 수 있게 한다.</p>
+<p class="dp-p"><strong>작업:</strong></p>
+<ul class="dp-list">
+<li>도구 사용 (망치, 스크류드라이버, 주걱)</li>
+<li>물체 파지 및 방향 전환</li>
+<li>집기-놓기 조작</li>
+<li>관절 물체 조작</li>
+</ul>
+<p class="dp-p"><strong>핵심 방법론:</strong> UniDex-VLA는 3D VLA 백본과 flow-matching 행동 헤드를 결합한다. 핵심 혁신은 FAAS(Fingertip-Aligned Action Space)로, 이종 핸드 관절 공간을 공유 손끝 중심 좌표계로 매핑하는 교차 구현체 행동 표현이다. 언어 지시는 VLA의 언어 인코더를 통해 정책에 조건을 부여하여, 자연어를 통한 작업 지정을 가능하게 한다. 3D 표현은 정밀한 손가락-물체 상호작용을 위한 공간적 그라운딩을 제공한다.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong></p>
+<ul class="dp-list">
+<li>VLA 백본: 3D 비전-언어 모델 (서베이 시점에서 구체적 백본 크기 미공개)</li>
+<li>행동 헤드: flow-matching 생성 모델</li>
+<li>행동 공간: 8종 핸드 구현체에 걸친 FAAS 통합 표현</li>
+<li>훈련 데이터: 8종 핸드 유형에 걸쳐 900만 프레임, 5만+ 궤적 (UniDex 데이터셋)</li>
+</ul>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>FAAS (Fingertip-Aligned Action Space): 8종 서로 다른 정교한 핸드를 단일 정책으로 통합하여 핸드별 미세 조정 필요성을 제거하는 새로운 교차 구현체 행동 표현</li>
+<li>8종 플랫폼에서 교차 핸드 일반화를 시연한 최초의 VLA 중 하나(저자 주장)로, 물리적으로 다른 8종 핸드 플랫폼에 걸쳐 81% 작업 진행률 달성</li>
+<li>UniDex 데이터셋 (900만 프레임, 5만+ 궤적)과 사전 훈련된 모델 가중치 (3-에포크 및 32-에포크 체크포인트가 HuggingFace에) 공개</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>접촉이 풍부한 도구 사용 작업을 대상으로 함에도 불구하고 위치 목표만 출력; 힘이나 임피던스 출력 없음</li>
+<li>FAAS가 다양한 핸드 운동학을 손끝 자세로 축소하여, 특정 관절 구성이 필요한 작업(예: 파워 그랩, 손가락 걸음걸이)에서 손가락 내부 정교성이 손실될 가능성</li>
+<li>주요 평가가 시뮬레이션; 8종 핸드 전체의 실세계 배포는 시연되지 않음</li>
+<li>촉각이나 힘/토크 센싱 통합 없음</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>지표</th>
+<th>값</th>
+<th>비고</th>
+</tr></thead><tbody>
+<tr>
+<td>평균 작업 진행률</td>
+<td>81%</td>
+<td>8종 정교한 핸드 구현체에 걸쳐</td>
+</tr>
+<tr>
+<td>평가 핸드 수</td>
+<td>8</td>
+<td>DoF 범위: 12 (Inspire) ~ 24 (Shadow)</td>
+</tr>
+<tr>
+<td>훈련 데이터</td>
+<td>900만 프레임, 5만+ 궤적</td>
+<td>UniDex 데이터셋</td>
+</tr>
+<tr>
+<td>교차 핸드 전이</td>
+<td>제로샷</td>
+<td>단일 훈련된 정책이 8종 핸드 전체 제어</td>
+</tr>
+</tbody></table></div>
+<blockquote class="dp-quote"><strong>[편집 주 -- 지표 모호성]:</strong> 보고된 "81% 작업 진행률" 지표가 모호하다. 이것이 이진 작업 성공률(완료된 작업의 비율)인지 연속 진행률 지표(에피소드 전체에서 부분 완료가 분수적으로 기여하는 작업 완료 평균 백분율)인지 불분명하다. 연속 진행률인 경우 실질적 이진 성공률은 상당히 낮을 수 있으므로, 이 구분을 해소하기 위해 논문을 직접 참조해야 한다.</blockquote>
+<ul class="dp-list">
+<li>사전 훈련된 가중치 공개 (3-에포크 및 32-에포크, HuggingFace)</li>
+<li>코드 공개: <a href="https://github.com/unidex-ai/UniDex" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 보고되지 않음. 논문에서 단계별 추론 지연이나 제어 주파수를 공개하지 않음.</li>
+<li><strong>배포 하드웨어:</strong> 사전 훈련에 8x NVIDIA H800 GPU 사용 (총 배치 크기 128; 후 훈련에 작업당 2x H800 GPU). 실세계 설정은 7-DoF Franka 팔과 3종 정교한 엔드이펙터, 자기중심 RGB-D를 위한 Intel RealSense L515 사용. 추론 GPU 미명시.</li>
+<li><strong>실시간 가능 여부:</strong> 미검증. 훈련 하드웨어(H800)는 공개되나 추론 하드웨어와 지연이 보고되지 않아 공개 정보로는 실시간 능력 평가 불가.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> UniDex-Dataset (본 연구를 위해 구축된 맞춤 로봇 중심 데이터셋). 또한 휴대용 캡처 설정을 통해 인간-로봇 데이터 공동 훈련을 가능하게 하는 UniDex-Cap도 사용.</li>
+<li><strong>수집 방법:</strong> 자기중심 인간 비디오 데이터셋에서의 인간 참여 리타게팅. 연구진은 그럴듯한 손-물체 접촉을 보존하면서 손끝 궤적을 정렬하는 리타게팅 절차 사용. 인간 손이 마스킹된 3D 포인트 클라우드에서 작동하여 인간과 로봇 데이터 간 운동학적 및 시각적 격차를 좁힘.</li>
+<li><strong>데이터 규모:</strong> 8종 정교한 핸드 유형에 걸쳐 900만 프레임, 5만+ 궤적 (DoF 범위: 12~24).</li>
+<li><strong>원격 조작 장비:</strong> UniDex-Cap 휴대용 캡처 설정 (논문에 세부 사항). 자기중심 인간 비디오를 소스로 하여 로봇 구현체로 리타게팅.</li>
+<li><strong>데이터 포맷:</strong> 동기화된 RGB-D 스트림과 인간 손 자세가 FAAS(Fingertip-Aligned Action Space)를 통해 로봇 실행 가능 궤적으로 변환.</li>
+<li><strong>공개 여부:</strong> 사전 훈련된 가중치(3-에포크 및 32-에포크 체크포인트)가 HuggingFace에 공개. 코드: <a href="https://github.com/unidex-ai/UniDex" target="_blank" rel="noopener">GitHub</a>. UniDex-Dataset 자체의 공개 여부는 이용 가능한 자료에서 확인되지 않음.</li>
+</ul>

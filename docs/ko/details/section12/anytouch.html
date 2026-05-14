@@ -1,0 +1,71 @@
+<p class="dp-p"># 12.3 AnyTouch</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> AnyTouch: Learning Unified Tactile Representations Across Multiple Sensors</li>
+<li><strong>저자:</strong> GeWu Lab (Renmin University of China)</li>
+<li><strong>학회/연도:</strong> ICLR 2025</li>
+<li><strong>지원 센서:</strong> 4개 이상 tactile 센서 유형 (TacQuad 데이터셋)</li>
+<li><strong>사전학습 방법:</strong> 크로스 센서 자기지도학습</li>
+<li><strong>데이터셋:</strong> TacQuad -- 4-센서 쌍 tactile 데이터셋</li>
+</ul>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">AnyTouch는 동일 객체/접촉에 대한 네 가지 센서 유형의 쌍으로 된 tactile 판독값을 포함하는 TacQuad 데이터셋에서 사전학습하여 크로스 센서 패러다임을 확장한다. 이 쌍으로 된 데이터로 직접적인 크로스 센서 contrastive learning이 가능하다: 모델이 접촉 관련 정보를 보존하면서 센서별 시각적 artifact에 불변한 표현을 학습한다. 결과 인코더는 네 가지 센서 유형 중 어느 것의 tactile 데이터도 처리하여 호환 가능한 표현을 생성할 수 있어, 센서 플랫폼 간 tactile skill 전이가 가능하다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>TacQuad 데이터셋: 최초의 대규모 쌍 멀티 센서 tactile 데이터셋 (4개 센서 유형, 동일 접촉)</li>
+<li>쌍 데이터 contrastive learning을 통해 센서 불변 표현을 명시적으로 학습하는 크로스 센서 SSL</li>
+<li>fine-tuning 없이 센서 유형 간 tactile 표현 전이 시연</li>
+<li>tactile foundation model 중 가장 강력한 크로스 센서 일반화 결과</li>
+</ul>
+<h2 class="dp-h2">정량적 결과 (크로스 센서 전이)</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>평가</th>
+<th>AnyTouch</th>
+<th>Sparsh</th>
+<th>단일 센서 baseline</th>
+</tr></thead><tbody>
+<tr>
+<td>동일 센서 내 성능</td>
+<td>경쟁적</td>
+<td>경쟁적</td>
+<td>최고 (대상 센서에서 학습)</td>
+</tr>
+<tr>
+<td>크로스 센서 전이 (본 센서)</td>
+<td>최고</td>
+<td>중간 정도 성능 저하</td>
+<td>해당 없음</td>
+</tr>
+<tr>
+<td>크로스 센서 전이 (미본 센서)</td>
+<td>저하되나 기능적</td>
+<td>상당한 성능 저하</td>
+<td>해당 없음</td>
+</tr>
+<tr>
+<td>지원 센서 수</td>
+<td>4+</td>
+<td>2 (DIGIT, GelSight)</td>
+<td>1</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><em>참고: AnyTouch의 쌍 데이터 contrastive learning이 Sparsh의 비쌍 SSL보다 강한 크로스 센서 일반화를 생성하지만, 둘 다 동일 센서 내 학습 대비 성능이 저하된다. 사전학습 중 보지 못한 센서 유형에 대한 성능은 여전히 한계로 남아 있다.</em></p>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>TacQuad 데이터셋 수집이 다수 센서로 동일 표면에 물리적으로 접촉해야 하므로 노동 집약적이며 데이터셋 규모 제한</li>
+<li>4개 센서 유형은 Sparsh(2개)보다 많지만 tactile 센서 생태계의 일부만 다룸</li>
+<li>Sparsh 및 UniTouch와 마찬가지로 closed-loop 조작 policy에의 통합 미시연</li>
+<li>사전학습 중 보지 못한 센서 유형에 대해 표현 품질 저하</li>
+</ul>
+<h2 class="dp-h2">공유 한계</h2>
+<p class="dp-p">본 섹션의 모든 tactile 표현 모델과 마찬가지로, AnyTouch는 closed-loop 조작 policy에의 통합을 시연하지 않는다. 이 공유 한계에 대한 상세한 논의는 <a href="sparsh.md#공유-한계-closed-loop-policy-통합-부재" target="_blank" rel="noopener">Sparsh</a>를 참조.</p>
+<h2 class="dp-h2">오픈소스 현황</h2>
+<p class="dp-p">오픈소스 (코드 + 사전학습 가중치). GitHub: <a href="https://github.com/GeWu-Lab/AnyTouch" target="_blank" rel="noopener">GeWu-Lab/AnyTouch</a></p>
+<details class="dp-reviews"><summary>피어 리뷰 <span class="dp-review-score-badge">7.0</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">평균: <strong>7.0</strong> · 4 개 리뷰 · ICLR 2025 Poster · <a href="https://openreview.net/forum?id=XToAemis1h" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 6</span> <span class="dp-review-text">The author introduces an aligned multi-sensor tactile dataset to unify tactile data. The data across four optical-based sensors. Also, the author proposes a unified static-dynamic multi-sensor represe…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 8</span> <span class="dp-review-text">This paper proposes UltraTouch, a model that learns unified static-dynamic representations for multiple tactile sensors with different architectures. To train UltraTouch, a dataset called TacQuad is i…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 6</span> <span class="dp-review-text">This paper presents a novel and comprehensive representation learning framework for tactile data that addresses (1) V-T-L modalities alignment, (2) capturing dynamic information in tactile modality, a…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 8</span> <span class="dp-review-text">This paper present a novel framework called UltraTouch and a large dataset TacQuad collected using 4 different tactile sensors. The UltraTouch framework has a multi-stage training in pixel level and s…</span></div>
+</div>
+</details>

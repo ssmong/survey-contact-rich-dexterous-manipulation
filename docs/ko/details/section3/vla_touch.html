@@ -1,0 +1,31 @@
+<h2 class="dp-h2">3.12 VLA-Touch</h2>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> VLA-Touch: Vision-Language-Action Model with Tactile Sensing for Contact-Rich Manipulation</li>
+<li><strong>저자:</strong> National University of Singapore (NUS) et al.</li>
+<li><strong>학회/연도:</strong> arXiv 프리프린트, 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2507.17294</li>
+</ul>
+<p class="dp-p"><strong>힘/촉각 입력 유형:</strong> 고해상도 접촉 이미지를 제공하는 GelSight 비전 기반 촉각 센서.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> 직접 힘 출력 없음. 잔차 보정 메커니즘 사용 -- 촉각 신호가 기본 VLA의 위치 전용 행동 출력을 보정하는 학습된 잔차를 구동. 명시적 힘 목표 없이 암묵적 힘 반응 행동 제공.</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> GelSight 센서가 장착된 로봇 팔 + 병렬 조 그리퍼.</p>
+<p class="dp-p"><strong>작업:</strong> 촉각 피드백이 성공에 필요한 접촉이 풍부한 조작 작업.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> 2단계 아키텍처: 사전 훈련된 VLA가 비전과 언어에서 기본 위치 행동을 생성, 촉각 잔차 모듈이 GelSight 이미지에 기반하여 행동을 보정. 핵심 통찰은 사전 훈련된 VLA가 시각 이해에서 좋은 대략적 운동 계획을 제공하고, 촉각 잔차가 접촉 단계에서 세밀한 보정을 제공한다는 것.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>VLA 아키텍처를 수정하거나 VLA 사전 훈련 중 촉각 데이터를 요구하지 않고, 모든 사전 훈련된 VLA에 촉각 반응성을 추가하는 촉각 잔차 보정 접근법 제안</li>
+<li>코드와 모델 체크포인트를 공개(GitHub 및 HuggingFace)하여, 가장 재현성 높은 촉각 VLA 접근법 중 하나</li>
+<li>경량 잔차 모듈이 대략적 VLA 행동과 세밀한 접촉이 풍부한 요구 사항 사이의 격차를 효과적으로 메울 수 있음을 시연</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> 잔차 보정이 위치 공간에서 적용, 힘 공간이 아님. 2단계 설계가 엔드-투-엔드 접근법 대비 지연 도입 가능. GelSight 촉각 센서로 제한.</p>
+<p class="dp-p"><strong>결과:</strong> VLA-Touch가 촉각 입력 없는 기본 VLA 대비 접촉이 풍부한 작업에서 성공률 향상. 코드와 체크포인트가 GitHub 및 HuggingFace에 공개.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 보고되지 않음.</li>
+<li><strong>배포 하드웨어:</strong> GelSight 센서가 장착된 로봇 팔 + 병렬 조 그리퍼. 추론 하드웨어 미명시.</li>
+<li><strong>실시간 가능 여부:</strong> 미검증. 경량 촉각 잔차 네트워크(CNN)는 기본 VLA 추론에 최소 오버헤드 추가.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> GelSight 촉각 데이터를 포함하는 맞춤 접촉이 풍부한 조작 작업 시연.</li>
+<li><strong>공개 여부:</strong> 예. 코드 및 모델 체크포인트가 GitHub 및 HuggingFace에 공개.</li>
+</ul>

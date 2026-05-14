@@ -1,0 +1,89 @@
+<h2 class="dp-h2">3.20 T-Dex</h2>
+<ul class="dp-list">
+<li><strong>全称:</strong> Dexterity from Touch: Self-Supervised Pre-Training of Tactile Representations with Robotic Play</li>
+<li><strong>作者:</strong> Irmak Guzey, Ben Evans, Soumith Chintala, Lerrel Pinto（NYU, Meta）</li>
+<li><strong>发表平台/年份:</strong> ICRA 2024（arXiv 2303.12076，2023年3月）</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2303.12076</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 安装在Allegro Hand指尖的DIGIT视觉触觉传感器。触觉图像通过在非结构化自由交互数据（2.5小时的自由交互）上的自监督预训练进行编码。触觉编码器使用时间对比学习目标在交互数据上训练，然后冻结并作为下游操作策略的输入。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 否。仅位置输出（Allegro Hand的关节位置目标）。</p>
+<blockquote class="dp-quote"><strong>局限性（仅位置输出）：</strong> 仅位置输出；尽管接收了触觉输入，策略无法主动调节接触力。</blockquote>
+<p class="dp-p"><strong>机器人平台：</strong> Allegro Hand（16自由度）+ DIGIT触觉传感器（指尖）+ Kinova Jaco机械臂。值得注意的是，这是第3节中极少数使用灵巧多指手而非平行夹爪的论文之一。</p>
+<blockquote class="dp-quote"><strong>值得注意：</strong> 第3节中唯一在灵巧手（Allegro）上评估的力/触觉感知操作论文之一。本节几乎所有其他条目均使用机械臂上的平行夹爪。</blockquote>
+<blockquote class="dp-quote"><strong>注意：</strong> 这不是VLA（无语言条件化）。因其是唯一在灵巧手上评估的力/触觉感知操作系统之一而收录于第3节，直接关系到本节关于力感知策略与灵巧操作之间脱节的核心问题。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 5项灵巧操作任务：</p>
+<p class="dp-p">1. 操纵杆推动</p>
+<p class="dp-p">2. 书本翻开</p>
+<p class="dp-p">3. 碗叠分离</p>
+<p class="dp-p">4. 销钉插入（杯放支架）</p>
+<p class="dp-p">5. 橡皮泥擀制</p>
+<p class="dp-p"><strong>关键方法：</strong> 两阶段方法：</p>
+<p class="dp-p">1. <strong>自监督触觉预训练：</strong> 收集2.5小时的非结构化"自由交互"数据（与物体的随机交互）。使用时间对比学习（TCN）在该交互数据的DIGIT图像上训练触觉编码器。这产生了无需任何任务标签的紧凑触觉表示。</p>
+<p class="dp-p">2. <strong>非参数策略学习：</strong> 给定少量任务演示（最少5-10个），系统将预训练的触觉表示与视觉观测（腕部相机）相结合。策略通过在联合触觉-视觉嵌入空间中的最近邻检索来学习。</p>
+<p class="dp-p"><strong>架构/参数：</strong> DIGIT触觉图像通过使用TCN损失训练的ResNet-18主干编码。腕部相机的视觉观测独立编码。组合的触觉 + 视觉嵌入用于推理时的k-最近邻动作检索。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>证明在非结构化自由交互数据上的自监督触觉预训练能为下游灵巧任务产生有用的表示，消除了对特定任务触觉标签的需求。</li>
+<li>展示基于触觉的策略在5项灵巧任务上平均以1.7倍优于纯视觉和关节力矩基线。</li>
+<li>首批在灵巧手上实现的端到端触觉操作系统之一（Allegro + DIGIT），弥合了触觉感知研究（通常在夹爪上）与灵巧操作之间的差距。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li>尽管有触觉输入但仅位置输出；无力调节。</li>
+<li>非参数（最近邻）策略限制了超出演示分布的泛化。</li>
+<li>每次设置需要2.5小时的交互数据收集用于触觉预训练；表示在不同手/传感器配置间的迁移性不明确。</li>
+<li>仅限5项任务；未在高力接触丰富任务（如工具使用、装配）上评估。</li>
+<li>无语言条件化或VLM集成。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>T-Dex（触觉+视觉）</th>
+<th>纯视觉</th>
+<th>仅力矩</th>
+</tr></thead><tbody>
+<tr>
+<td>操纵杆</td>
+<td>~80%</td>
+<td>~45%</td>
+<td>~35%</td>
+</tr>
+<tr>
+<td>书本翻开</td>
+<td>~75%</td>
+<td>~50%</td>
+<td>~40%</td>
+</tr>
+<tr>
+<td>碗叠分离</td>
+<td>~85%</td>
+<td>~55%</td>
+<td>~30%</td>
+</tr>
+<tr>
+<td>销钉插入</td>
+<td>~70%</td>
+<td>~40%</td>
+<td>~25%</td>
+</tr>
+<tr>
+<td>橡皮泥</td>
+<td>~65%</td>
+<td>~35%</td>
+<td>~20%</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">成功率为近似值。T-Dex在所有5项任务上平均以1.7倍优于基线。在需要精细接触感知的任务（销钉插入、橡皮泥）上改进最为显著。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 支持实时。非参数最近邻检索在推理时速度快。</li>
+<li><strong>部署硬件：</strong> Allegro Hand + DIGIT传感器 + Kinova Jaco机械臂。腕部相机用于视觉观测。</li>
+<li><strong>是否支持实时？</strong> 是。已在物理硬件上实时部署。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 自定义交互数据集（2.5小时非结构化交互）+ 少量任务演示（每任务5-10个）。</li>
+<li><strong>收集方法：</strong> 任务演示使用遥操作；交互数据使用自主随机交互。</li>
+<li><strong>数据规模：</strong> 2.5小时交互数据 + 5项任务共约50个任务演示。</li>
+<li><strong>是否公开可用？</strong> 代码已在<a href="https://github.com/irmakguzey/tdex" target="_blank" rel="noopener">GitHub</a>发布（注意：实际仓库URL可能有变化；请查看项目页面https://tactile-dexterity.github.io/）。</li>
+</ul>

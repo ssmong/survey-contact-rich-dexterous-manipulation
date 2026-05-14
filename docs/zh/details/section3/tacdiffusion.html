@@ -1,0 +1,50 @@
+<h2 class="dp-h2">3.18 TacDiffusion</h2>
+<ul class="dp-list">
+<li><strong>全称:</strong> TacDiffusion: Environment-Aware Tactile-Conditioned Diffusion Policy for Contact-Rich Manipulation</li>
+<li><strong>作者:</strong> popnut123等（慕尼黑工业大学MIRMI）</li>
+<li><strong>发表平台/年份:</strong> ICRA 2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2409.11047</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 触觉传感器，提供抓取和操作反馈的接触信息。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 是——6D力旋量输出。扩散策略生成期望的6D力旋量（3个力 + 3个力矩）作为动作表示，在力空间而非位置空间中运行。<strong>力输出类型：完整力旋量（6D）。</strong></p>
+<p class="dp-p"><strong>机器人平台：</strong> 带有集成触觉传感器的夹爪。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 在力域扩散框架下评估的接触丰富操作任务。</p>
+<p class="dp-p"><strong>关键方法：</strong> TacDiffusion是一种在力/力旋量域而非位置域运行的扩散策略。模型基于触觉观测和环境上下文生成6D力旋量目标。这种力域公式自然适用于接触丰富任务，其中期望行为用力来描述更好（例如"施加5N向下力同时横向滑动"）而非位置。扩散模型生成多模态力旋量分布，允许策略表示多样化的力交互策略。环境感知条件化机制根据估计的接触几何和表面属性调整力策略。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 具有力/力旋量动作空间（6D输出）的扩散策略。模型以触觉观测和环境上下文为条件。扩散过程生成力旋量轨迹。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出力空间中的扩散策略，从根本上区别于位置域扩散策略，更好地表示接触丰富操作。</li>
+<li>实现95.7%的零样本迁移成功率，证明力域策略可以泛化到新场景。</li>
+<li>引入环境感知条件化，根据估计的接触几何自适应力生成。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 代码已发布（GitHub），但无预训练权重。力域公式需要机器人具有精确的力控制能力。主要在夹爪任务上评估——无灵巧手实验。6D力旋量输出假设单接触点；多接触场景（如灵巧操作）需要逐指力旋量生成。</p>
+<p class="dp-p"><strong>结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>零样本迁移成功率</td>
+<td>95.7%</td>
+</tr>
+<tr>
+<td>与位置域扩散策略对比</td>
+<td>力域公式在需要精确力交互的任务上更优</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 取决于模型规模。DF1（128神经元）：503.8 Hz；DF2（256神经元）：297.5 Hz；<strong>DF3（512神经元，选用）：141.8 Hz</strong>；DF4（1024神经元）：51.2 Hz。机器人控制循环以1000 Hz运行，需要基于动态系统的滤波器来插值预测并弥合频率差距。</li>
+<li><strong>部署硬件：</strong> NVIDIA RTX 3090 GPU，使用PyTorch和ONNX优化推理。实时控制PC配备Intel i9-10900K CPU，运行Ubuntu 20.04实时内核。</li>
+<li><strong>是否支持实时？</strong> 是。选用模型（DF3）达到141.8 Hz推理速度，虽低于1000 Hz机器人控制循环——通过基于动态系统的滤波器进行插值弥合。这是综述文献中最快的推理速率之一，得益于在力空间运行的相对小型扩散模型。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 带触觉反馈的销孔装配任务自定义数据集。专家策略使用原语切换逻辑生成训练数据。</li>
+<li><strong>收集方法：</strong> 高精度装配任务的专家策略展开。数据由包含原语切换逻辑的专家策略生成，非人类遥操作。</li>
+<li><strong>数据规模：</strong> 未明确报告。</li>
+<li><strong>遥操作设备：</strong> 不适用（专家策略展开，非遥操作）。</li>
+<li><strong>数据格式：</strong> 存储在<code>$TacDiffusion_ROOT/dataset/</code>目录中。具体文件格式未记录。</li>
+<li><strong>是否公开可用？</strong> 是。数据集可在Google Drive获取（<a href="https://drive.google.com/drive/folders/10Ix8utcx51R8NejvGRF-ujWEGy5MK05R" target="_blank" rel="noopener">TacDiffusion Dataset</a>）。代码在GitHub。注意："禁止商用！"许可限制。</li>
+</ul>

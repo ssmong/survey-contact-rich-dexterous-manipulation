@@ -1,0 +1,55 @@
+<h3 class="dp-h3">7.2 Rotating without Seeing</h3>
+<p class="dp-p"><strong>完整标题：</strong> Rotating without Seeing: Towards In-hand Dexterity through Touch</p>
+<p class="dp-p"><strong>作者：</strong> Zhao-Heng Yin, Binghao Huang, Yuzhe Qin, Qifeng Chen, Xiaolong Wang</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> RSS 2023</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2303.10880</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 教师-学生蒸馏。教师策略使用特权状态（物体姿态、接触力）训练；学生策略蒸馏为仅使用本体感觉和触觉输入。</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）+ 覆盖指尖、指节和手掌的密集二值触觉传感器（接触/未接触）</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是。零样本仿真到真实迁移。使用二值触觉传感器（接触/未接触）最小化仿真到真实差距，因为二值接触信号比高分辨率触觉图像更容易精确仿真。对物理参数进行域随机化。</p>
+<p class="dp-p"><strong>任务：</strong> 仅使用触觉反馈（无视觉）的指定轴手内物体旋转。在多样物体上测试包括立方体、圆柱体和不规则形状。</p>
+<p class="dp-p"><strong>核心方法论：</strong> 展示仅触觉传感（无任何视觉输入）足以进行灵巧手内旋转。使用密集二值力传感器提供手部表面广泛覆盖。传感器的二值特性（接触 vs 未接触）被刻意选择以最小化仿真到真实差距，因为二值接触信号可高保真仿真。教师-学生框架先用特权信息训练，然后蒸馏为仅使用本体感觉和二值触觉信号的策略。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>首个基于RL的仅触觉（无视觉）手内物体旋转展示并带仿真到真实迁移</li>
+<li>证明广覆盖的密集二值触觉传感器在仿真到真实灵巧操作中优于稀疏高分辨率传感器</li>
+<li>使用可简单仿真的二值（接触/未接触）传感模态最小化仿真到真实差距</li>
+<li>在真实世界实验中泛化至训练期间未见的新颖物体</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>旋转成功率（仿真）</td>
+<td>跨物体>90%</td>
+</tr>
+<tr>
+<td>真实世界迁移</td>
+<td>零样本，多个物体</td>
+</tr>
+<tr>
+<td>传感模态</td>
+<td>仅二值触觉（无视觉）</td>
+</tr>
+<tr>
+<td>手部</td>
+<td>Allegro（16自由度）</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li><strong>力控：</strong> 仅二值触觉（接触/未接触）；无连续力测量或阻抗控制</li>
+<li><strong>VLA/语言：</strong> 无语言条件或VLA集成</li>
+<li><strong>仿真到真实：</strong> 二值触觉简化了迁移但牺牲了力幅值信息</li>
+<li><strong>代码：</strong> 项目页面位于 https://touchdexterity.github.io；代码可用性有限</li>
+<li><strong>任务范围：</strong> 仅限旋转；不涉及功能性操作或工具使用</li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。触觉条件MLP策略每次前向传播 <1ms。二值触觉处理计算量极小。</li>
+<li><strong>部署硬件：</strong> Allegro Hand（16自由度）+ 密集二值触觉传感器。策略在IsaacGym中训练；通过零样本仿真到真实迁移部署。</li>
+<li><strong>支持实时？</strong> 是。在真实Allegro Hand上使用二值触觉反馈展示了实时手内旋转。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=vqWmMMFzgV" target="_blank" rel="noopener">OpenReview</a></p></div></details>

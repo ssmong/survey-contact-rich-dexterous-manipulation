@@ -1,0 +1,80 @@
+<h3 class="dp-h3">TinyVLA: Towards Fast, Data-Efficient Vision-Language-Action Models for Robotic Manipulation</h3>
+<p class="dp-p"><strong>전체 제목:</strong> TinyVLA: Towards Fast, Data-Efficient Vision-Language-Action Models for Robotic Manipulation</p>
+<p class="dp-p"><strong>저자:</strong> Junjie Wen, Yichen Zhu, Jinming Li, Minjie Zhu, Kun Wu, Zhiyuan Xu, Ning Liu, Ran Cheng, Chaomin Shen, Yaxin Peng, Feifei Feng, Jian Tang (East China Normal University, Midea Group AI Lab Shanghai, Syracuse University, Beijing Innovation Center of Humanoid Robotics, Shanghai University)</p>
+<p class="dp-p"><strong>학회/연도:</strong> AAAI 2025</p>
+<p class="dp-p"><strong>아키텍처:</strong> Compact VLA in three size variants: TinyVLA-S (422M, 101M trainable), TinyVLA-B (740M, 138M trainable), and TinyVLA-H (1.3B, 143M trainable). The backbone follows the LLaVA training pipeline with Pythia as the language model and a vision encoder. The action head is a diffusion policy decoder using Denoising Diffusion Probabilistic Models (DDPM), which generates continuous actions conditioned on VLM features. Fine-tuning uses LoRA adapters on attention Q/K/V weights, limiting trainable parameters to ~5% of the transformer. The key design choice is initializing the policy backbone from a pretrained multimodal model rather than training from scratch, eliminating the need for large-scale robotic pretraining.</p>
+<p class="dp-p"><strong>행동 공간:</strong> 7D continuous (3D position + 3D rotation + gripper width), generated via diffusion decoding with action chunking. The diffusion head uses adaptive pooling, layer normalization, concatenation with proprioceptive state, and a 3-layer MLP for conditional embeddings.</p>
+<p class="dp-p"><strong>다지 핸드 지원:</strong> ✗ --- Evaluated on single-arm gripper and bimanual gripper (UR5) systems only.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> ✗ --- Position targets only.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> TinyVLA demonstrates that large-scale robotic pretraining (e.g., on OXE's 970K episodes) is unnecessary if the VLA backbone is initialized from a strong pretrained vision-language model. By coupling a compact VLM backbone (1.3B) with a diffusion policy decoder and applying LoRA fine-tuning, TinyVLA achieves performance matching or exceeding the 7B OpenVLA while being 5.5x smaller and 20x faster at inference. The diffusion decoder generates action chunks conditioned on the VLM's latent representations, enabling smooth, temporally coherent actions without autoregressive token-by-token decoding.</p>
+<p class="dp-p"><strong>훈련 데이터:</strong> No large-scale robotic pretraining. Fine-tuned directly on task-specific demonstrations: 100 teleoperated trajectories per task for real-robot experiments. MetaWorld simulation tasks for additional evaluation.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated that a 1.3B VLA initialized from a pretrained VLM and fine-tuned with LoRA + diffusion decoder matches the 7B OpenVLA's performance without any robotic pretraining stage, challenging the assumption that large-scale robot data pretraining is essential.</li>
+<li>Achieved 20x faster inference than OpenVLA (14ms vs. 292ms per action) with 5.5x fewer parameters, making real-time deployment feasible on consumer hardware.</li>
+<li>Showed strong generalization across language instructions, novel objects, unseen positions, appearance/background variations, and environmental shifts despite compact size and limited training data.</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>TinyVLA-H (1.3B)</th>
+<th>OpenVLA (7B)</th>
+<th>Diffusion Policy</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Real-world single-arm avg (5 tasks)</td>
+<td>94.0%</td>
+<td>68.3%</td>
+<td>—</td>
+<td>+25.7% over OpenVLA</td>
+</tr>
+<tr>
+<td>Bimanual UR5 avg</td>
+<td>44.5%</td>
+<td>0%</td>
+<td>—</td>
+<td>OpenVLA fails completely</td>
+</tr>
+<tr>
+<td>MetaWorld 50 tasks avg (sim)</td>
+<td>31.6%</td>
+<td>—</td>
+<td>10.5%</td>
+<td></td>
+</tr>
+<tr>
+<td>Inference latency</td>
+<td>14 ms</td>
+<td>292 ms</td>
+<td>—</td>
+<td>20x speedup</td>
+</tr>
+<tr>
+<td>Parameters (total / trainable)</td>
+<td>1.3B / 143M</td>
+<td>7.2B / —</td>
+<td>—</td>
+<td>5.5x smaller</td>
+</tr>
+</tbody></table></div>
+<blockquote class="dp-quote"><strong>Note:</strong> This comparison uses the authors' own 5 real-world single-arm tasks, not a community-standardized benchmark. OpenVLA was fine-tuned with the same protocol (100 demos). Results should be interpreted with caution as task selection may favor TinyVLA's design.</blockquote>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>OpenVLA slightly outperforms TinyVLA on extreme out-of-distribution spatial generalization, likely because OXE pretraining provides broader data diversity.</li>
+<li>Evaluated only on gripper-based systems; no dexterous hand evaluation.</li>
+<li>No force/compliance awareness.</li>
+<li>MetaWorld simulation results (31.6%) remain modest in absolute terms.</li>
+<li>GitHub repository and model weights availability unclear from the paper; project page exists at https://tiny-vla.github.io/.</li>
+</ul>
+<p class="dp-p"><strong>공개 가중치/코드:</strong> Project page: <a href="https://tiny-vla.github.io/" target="_blank" rel="noopener">tiny-vla.github.io</a>. Explicit GitHub link or model weight download not confirmed in the paper.</p>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> No large-scale pretraining dataset. Task-specific teleoperated demonstrations for fine-tuning (100 trajectories per task). MetaWorld simulation for sim evaluation.</li>
+<li><strong>수집 방법:</strong> Teleoperation for real-robot tasks.</li>
+<li><strong>데이터 규모:</strong> 100 demonstrations per task (real). No OXE-scale pretraining.</li>
+<li><strong>원격 조작 장비:</strong> Not specified in the paper.</li>
+<li><strong>데이터 포맷:</strong> Not specified.</li>
+<li><strong>공개 여부:</strong> Project page exists but explicit data/weight release status unclear.</li>
+</ul>
+<hr>

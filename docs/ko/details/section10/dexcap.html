@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.1 DexCap</p>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation</li>
+<li><strong>저자:</strong> Chen Wang, Haochen Shi, Weizhuo Wang, Ruohan Zhang, Li Fei-Fei, C. Karen Liu (Stanford)</li>
+<li><strong>학회/연도:</strong> RSS 2024 (arXiv 2403.07788, 2024년 3월)</li>
+<li><strong>입력 모달리티:</strong> SLAM 기반 핸드 트래킹 + 전자기 손가락 센서 (StretchSense 글러브)</li>
+<li><strong>대상 hand:</strong> LEAP Hand (16 DoF)</li>
+<li><strong>Force feedback:</strong> 없음</li>
+<li><strong>비용:</strong> ~$2,000 (글러브 + 센서)</li>
+</ul>
+<h2 class="dp-h2">핵심 방법론/설계</h2>
+<p class="dp-p">DexCap은 각 손가락에 부착된 전자기 트래킹 센서와 전역 위치 파악을 위한 SLAM 기반 wrist 트래킹을 결합하여 인간 손 동작을 캡처한다. 시스템은 인간 손가락 kinematics를 로봇 hand의 관절 공간에 매핑하는 최적화 기반 retargeting 파이프라인을 사용하여 캡처된 인간 손 동작을 LEAP Hand로 retarget한다. 외부 모션 캡처 인프라가 필요 없이 착용 센서만 요구하는 휴대형 설계로, 실험실에 한정되지 않고 다양한 실제 환경에서 데이터 수집이 가능하다.</p>
+<h2 class="dp-h2">주요 기여</h2>
+<ul class="dp-list">
+<li>외부 카메라나 마커 없이 착용 센서만 필요한 휴대용, 인프라 불필요 dexterous 모션 캡처 시스템</li>
+<li>kinematic 실현 가능성 제약 조건을 갖춘 인간 손 동작을 LEAP Hand에 매핑하는 최적화 기반 retargeting 파이프라인</li>
+<li>dexterous 조작 policy의 imitation learning을 위한 확장 가능한 데이터 수집 입증</li>
+</ul>
+<h2 class="dp-h2">한계점</h2>
+<ul class="dp-list">
+<li>운영자에게 force/haptic feedback이 없어 contact-rich 작업 수행을 제한 (운영자가 grasp force를 느끼지 못함)</li>
+<li>전자기 센서가 금속 환경에서 간섭을 받을 수 있음</li>
+<li>인간과 로봇 hand kinematics가 크게 다를 때 retargeting이 motion artifact를 유발</li>
+<li>주로 LEAP Hand에서 시연됨; 다른 hand 플랫폼 적응 시 재보정 필요</li>
+</ul>
+<h2 class="dp-h2">데이터 품질 영향</h2>
+<p class="dp-p">시연은 손가락 관절 궤적을 캡처하지만 힘 또는 접촉 정보가 부족하다. DexCap 데이터로 학습된 policy는 힘 조절 없는 위치 기반 grasp 전략을 학습하여, 실제 하드웨어로 전이 시 과도한 힘(파손) 또는 불충분한 힘(낙하)을 가하는 취약한 grasp을 초래한다. force feedback의 부재로 운영자가 수집 중 grasp force를 조절할 수 없어, 시연이 삽입이나 부하 하 in-hand reorientation 같은 contact-rich 작업에 필요한 힘 프로파일을 인코딩하지 않는다.</p>
+<h2 class="dp-h2">오픈소스 현황</h2>
+<p class="dp-p">오픈소스. GitHub: <a href="https://github.com/j96w/DexCap" target="_blank" rel="noopener">j96w/DexCap</a></p>

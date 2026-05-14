@@ -1,0 +1,71 @@
+<p class="dp-p"># 12.3 AnyTouch</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> AnyTouch: Learning Unified Tactile Representations Across Multiple Sensors</li>
+<li><strong>作者：</strong> GeWu Lab（中国人民大学）</li>
+<li><strong>发表场所/年份：</strong> ICLR 2025</li>
+<li><strong>支持的传感器：</strong> 4+种触觉传感器类型（TacQuad数据集）</li>
+<li><strong>预训练方法：</strong> 跨传感器自监督学习</li>
+<li><strong>数据集：</strong> TacQuad——4传感器配对触觉数据集</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">AnyTouch扩展了跨传感器范式，在TacQuad数据集上进行预训练。该数据集包含四种不同传感器类型在相同物体/接触上的配对触觉读数。这种配对数据实现了直接的跨传感器对比学习：模型学习对传感器特定视觉伪影不变但保留接触相关信息的表征。生成的编码器可以处理来自四种传感器类型中任何一种的触觉数据并产生兼容的表征，从而实现跨传感器平台的触觉技能迁移。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>TacQuad数据集：首个大规模配对多传感器触觉数据集（4种传感器类型，相同接触）</li>
+<li>跨传感器SSL，通过配对数据对比学习显式学习传感器不变表征</li>
+<li>已验证跨传感器类型的触觉表征迁移，无需微调</li>
+<li>在触觉基础模型中实现最强的跨传感器泛化结果</li>
+</ul>
+<h2 class="dp-h2">定量结果（跨传感器迁移）</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>评估</th>
+<th>AnyTouch</th>
+<th>Sparsh</th>
+<th>单传感器基线</th>
+</tr></thead><tbody>
+<tr>
+<td>传感器内性能</td>
+<td>有竞争力</td>
+<td>有竞争力</td>
+<td>最优（在目标传感器上训练）</td>
+</tr>
+<tr>
+<td>跨传感器迁移（已见传感器）</td>
+<td>最优</td>
+<td>中等退化</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>跨传感器迁移（未见传感器）</td>
+<td>退化但可用</td>
+<td>显著退化</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>支持的传感器数量</td>
+<td>4+</td>
+<td>2（DIGIT, GelSight）</td>
+<td>1</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><em>注：AnyTouch基于配对数据的对比学习产生了比Sparsh非配对SSL更强的跨传感器泛化能力，但两者相对于传感器内训练均有退化。在预训练中未见过的传感器类型上的性能仍是局限。</em></p>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>TacQuad数据集收集需要用多个传感器物理接触相同表面，这一过程劳动密集且限制了数据集规模</li>
+<li>4种传感器类型虽多于Sparsh（2种），但仍仅覆盖触觉传感器生态的一小部分</li>
+<li>与Sparsh和UniTouch一样，未展示集成到闭环操作策略中的能力</li>
+<li>在预训练中未见过的传感器类型上表征质量下降</li>
+</ul>
+<h2 class="dp-h2">共同局限性</h2>
+<p class="dp-p">与本节所有触觉表征模型一样，AnyTouch未展示集成到闭环操作策略中的能力。详见<a href="sparsh.md#shared-limitation-no-closed-loop-policy-integration" target="_blank" rel="noopener">Sparsh</a>中对此共同局限性的详细讨论。</p>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">开源（代码 + 预训练权重）。GitHub：<a href="https://github.com/GeWu-Lab/AnyTouch" target="_blank" rel="noopener">GeWu-Lab/AnyTouch</a></p>
+<details class="dp-reviews"><summary>同行评审 <span class="dp-review-score-badge">7.0</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">平均分: <strong>7.0</strong> · 4 条评审 · ICLR 2025 Poster · <a href="https://openreview.net/forum?id=XToAemis1h" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 6</span> <span class="dp-review-text">The author introduces an aligned multi-sensor tactile dataset to unify tactile data. The data across four optical-based sensors. Also, the author proposes a unified static-dynamic multi-sensor represe…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 8</span> <span class="dp-review-text">This paper proposes UltraTouch, a model that learns unified static-dynamic representations for multiple tactile sensors with different architectures. To train UltraTouch, a dataset called TacQuad is i…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 6</span> <span class="dp-review-text">This paper presents a novel and comprehensive representation learning framework for tactile data that addresses (1) V-T-L modalities alignment, (2) capturing dynamic information in tactile modality, a…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R4: 8</span> <span class="dp-review-text">This paper present a novel framework called UltraTouch and a large dataset TacQuad collected using 4 different tactile sensors. The UltraTouch framework has a multi-stage training in pixel level and s…</span></div>
+</div>
+</details>

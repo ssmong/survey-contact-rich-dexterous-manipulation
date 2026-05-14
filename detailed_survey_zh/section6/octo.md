@@ -1,0 +1,55 @@
+### Octo: An Open-Source Generalist Robot Policy
+
+**完整标题：** Octo: An Open-Source Generalist Robot Policy
+
+**作者：** Octo Model Team: Dibya Ghosh, Homer Walke, Karl Pertsch, Kevin Black, Oier Mees, Sudeep Dasari, Joey Hejna, Tobias Kreiman, Charles Xu, Jianlan Luo, You Liang Tan, Lawrence Yunliang Chen, Pannag Sanketi, Quan Vuong, Ted Xiao, Dorsa Sadigh, Chelsea Finn, Sergey Levine
+
+**发表期刊/年份：** RSS 2024
+
+**架构：** Octo是93M参数的基于transformer的策略（严格来说不是VLA，因为它没有大型预训练VLM骨干）。它使用模块化架构，包含用于图像、语言（通过冻结语言模型编码器）和本体感受状态的独立token化器。这些通过关注所有输入token的transformer骨干组合。动作头是基于扩散的解码器，在transformer的读出token条件下生成连续动作。
+
+**动作空间：** 每个具身可配置。通常7D（6自由度EEF + 夹爪），但通过模块化token化器设计支持任意动作维度。可表示绝对和增量动作。
+
+**灵巧手支持？** ✗ --- 仅在基于夹爪的系统上评估，尽管如果训练数据包含此类演示，模块化动作头可适应更高维动作空间。
+
+**力/阻抗输出？** ✗ --- 仅位置目标。
+
+**核心方法论：** Octo被设计为轻量级、模块化的通用策略，可高效微调到新的机器人具身、传感器配置和动作空间。与继承大量VLM骨干的VLA不同，Octo在机器人数据上从头训练transformer，保持模型足够小以实现快速推理和微调。扩散动作头支持多模态动作分布，避免基于回归的策略的模式平均问题。模块化token化器设计允许在不改变架构的情况下添加或移除观测模态（如腕部相机、不同本体感受格式）。
+
+**训练数据：** 在来自Open X-Embodiment（OXE）数据集的800K机器人episode上预训练。在WidowX、Franka和各种操作平台上演示微调，最少50个演示即可。
+
+**主要贡献：**
+- 证明小型（93M）通用策略可以在微调的下游任务上匹配或超越大得多的VLA*在特定测试基准上*，挑战了VLA性能主要随模型大小扩展的假设。（这一优势是否在更广泛的任务分布上成立仍需验证。）
+- 引入模块化token化器架构，无需重新训练完整模型即可直接适配新的观测和动作空间。
+- 提供首个带标准化微调API的开源通用机器人策略。
+
+**定量结果：**
+
+| 基准/任务 | Octo (93M) | RT-1-X | RT-2-X | 备注 |
+|---|---|---|---|---|
+| *（结果未经独立验证——arXiv页面无法获取。论文报告在微调的WidowX和Franka任务上与RT-1-X具有竞争力或更优的性能。请查阅RSS 2024论文获取逐任务成功率。）* | | | | |
+
+**局限性/差距：**
+- 小模型大小限制了与十亿参数VLA相比的零样本泛化。
+- 无预训练VLM骨干意味着Octo缺乏RT-2或OpenVLA等VLA的语义推理和指令执行能力。
+- 未在灵巧手系统上演示。
+- 冻结语言编码器仅提供与协同微调VLM相比的粗粒度语言条件化。
+
+**开放权重/代码：** ✅ 完全开放。[GitHub](https://github.com/octo-models/octo), [HuggingFace](https://huggingface.co/rail-berkeley/octo-base)。
+
+## 推理/部署
+
+- **推理延迟：** 仅93M参数，Octo显著快于十亿参数VLA。扩散动作头使用少量去噪步骤。Octo被设计为"可在标准消费级GPU上几小时内微调"，暗示高效推理。估计在消费级GPU上约10-30 Hz，尽管未显著报告具体基准数据。
+- **部署硬件：** 设计用于消费级GPU部署。可在标准消费级GPU（如RTX 3090/4090）上微调。93M参数占用足够小，适合边缘部署场景，尽管未报告Jetson Orin基准数据。
+- **可实时运行？** 是，很可能。小模型大小（93M参数，比OpenVLA 7B小约75倍）和高效扩散头应该支持在消费级硬件上以适合操作的频率（10-30 Hz）进行实时控制。模块化token化器设计增加的开销最小。
+
+## 数据集/数据收集
+
+- **使用的数据集：** Open X-Embodiment（OXE）数据集——来自多样化操作数据集的800K机器人episode。在WidowX、Franka和各种平台上演示微调。
+- **收集方法：** 从OXE聚合的跨具身数据（遥操作、脚本策略、人类演示）。微调仅需50个演示即可。
+- **数据规模：** 800K机器人episode用于预训练（OXE子集）。微调：每个任务最少50个演示。
+- **遥操作设备：** 因OXE组成数据集而异。
+- **数据格式：** RLDS（TensorFlow Datasets）格式，遵循OXE标准。
+- **是否公开？** 是。OXE数据集公开。Octo权重在 https://huggingface.co/rail-berkeley/octo-base 。
+
+---

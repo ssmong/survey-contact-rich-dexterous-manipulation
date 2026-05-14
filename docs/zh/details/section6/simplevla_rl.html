@@ -1,0 +1,53 @@
+<h3 class="dp-h3">SimpleVLA-RL: Reinforcement Learning Fine-Tuning of Vision-Language-Action Models</h3>
+<p class="dp-p"><strong>完整标题：</strong> SimpleVLA-RL: Reinforcement Learning for Vision-Language-Action Models</p>
+<p class="dp-p"><strong>作者：</strong> PRIME-RL团队</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> ICLR 2026</p>
+<p class="dp-p"><strong>架构：</strong> SimpleVLA-RL将强化学习（RL）微调应用于预训练VLA模型。基础VLA是视觉-语言-动作模型（架构细节遵循标准Prismatic/OpenVLA设计）。RL微调在VLA上添加价值头，使用策略梯度方法（PPO风格）优化任务性能，超越模仿学习所能达到的水平。VLA骨干在RL微调期间保持冻结或最小限度适配。</p>
+<p class="dp-p"><strong>动作空间：</strong> 继承基础VLA的动作空间（通常为7D EEF + 夹爪）。</p>
+<p class="dp-p"><strong>灵巧手支持？</strong> ✗ --- 在使用夹爪机器人的标准操作基准上评估。</p>
+<p class="dp-p"><strong>力/阻抗输出？</strong> ✗ --- 仅位置目标。</p>
+<p class="dp-p"><strong>核心方法论：</strong> SimpleVLA-RL解决模仿学习（IL）只能匹配演示数据性能的根本限制。通过对预训练VLA应用RL微调，模型可以发现超越人类演示性能的策略。该方法使用VLA的预训练表示作为RL初始化，提供强先验以加速RL训练并避免从头训练的样本低效。任务特定奖励函数引导RL优化。</p>
+<p class="dp-p"><strong>训练数据：</strong> 预训练VLA来自标准跨具身数据集（OXE）。RL微调使用环境交互，而非演示。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>将RL微调应用于预训练VLA，验证了RL可以超越模仿学习上限的已知原理，特别是在VLA上下文中。贡献在于具体方案——展示如何在不发生灾难性遗忘的情况下将PPO风格RL实际应用于预训练VLA——而非理论洞察本身（这在更广泛的RL文献中已经确立）。</li>
+<li>提供了将RL应用于预训练VLA的简单且可复现的方案。</li>
+<li>表明VLA表示提供强初始化，使RL相比从头训练具有高样本效率。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>基准/任务</th>
+<th>SimpleVLA-RL</th>
+<th>仅IL的VLA</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td><em>（请查阅ICLR 2026论文获取逐任务结果。论文报告在操作基准上优于仅模仿学习的VLA基线。）</em></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>RL微调需要奖励函数，对于接触丰富或灵巧任务可能难以指定。</li>
+<li>仅在基于夹爪的操作上评估；对高自由度灵巧系统的适用性未知。</li>
+<li>奖励或动作空间中无力/柔顺感知。</li>
+</ul>
+<p class="dp-p"><strong>开放权重/代码：</strong> ✅ 代码：<a href="https://github.com/PRIME-RL/SimpleVLA-RL" target="_blank" rel="noopener">GitHub</a>。✗ 模型权重未公开。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 继承基础VLA的推理速度。如果基于OpenVLA级别架构（约7B参数），推理频率约为4-6 Hz（高端GPU）。RL微调不改变模型架构，因此推理速度与预训练VLA相同。</li>
+<li><strong>部署硬件：</strong> 与基础VLA相同（7B级别模型需要高端GPU）。RL微调需要仿真环境用于在线交互。</li>
+<li><strong>可实时运行？</strong> 取决于基础VLA。如果基础VLA可实时运行，RL微调版本继承相同的推理速度。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 预训练VLA来自标准跨具身数据集（OXE）。RL微调使用在线环境交互，而非预收集演示。</li>
+<li><strong>收集方法：</strong> 两阶段：(1) VLA通过模仿学习在OXE跨具身数据上预训练，(2) RL微调通过与任务环境的在线交互（PPO风格策略梯度）。RL阶段无额外演示数据。</li>
+<li><strong>数据规模：</strong> OXE预训练规模（继承自基础VLA）。RL微调：在线交互，episode数量取决于任务复杂度。</li>
+<li><strong>遥操作设备：</strong> 不适用于RL微调阶段。预训练数据使用标准OXE遥操作方法。</li>
+<li><strong>数据格式：</strong> 预训练（OXE）使用RLDS。微调期间进行在线RL rollout。</li>
+<li><strong>是否公开？</strong> OXE预训练数据公开。RL微调在线生成数据（无离线数据集可发布）。</li>
+</ul>
+<hr>

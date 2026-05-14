@@ -1,0 +1,56 @@
+<p class="dp-p"># 9.5 Genesis</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> Genesis: A Universal and Generative Physics Engine for Robotics and Beyond</li>
+<li><strong>作者：</strong> Genesis-Embodied-AI团队（多机构合作）</li>
+<li><strong>发表venue/年份：</strong> 2024年12月（预印本，2025年1月发布性能基准报告）</li>
+<li><strong>仿真平台：</strong> 自研多物理引擎</li>
+<li><strong>灵巧手支持：</strong> 任意基于URDF的手部模型；支持刚体、可变形体和流体交互</li>
+<li><strong>物理求解器：</strong> 刚体动力学、MPM（物质点法）、SPH（光滑粒子流体动力学）、FEM（有限元法）、PBD（基于位置的动力学）、Stable Fluid</li>
+<li><strong>性能：</strong> 在单张RTX 4090上仿真Franka机械臂超过4300万FPS</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">Genesis被设计为通用物理平台，在单一API下统一了六种不同的物理求解器。它面向通用机器人和具身智能应用，同时作为物理引擎、机器人仿真平台、照片级渲染系统和生成式数据引擎。系统设计为完全可微（目前MPM和Tool Solver已支持，其他求解器计划中）。支持跨平台执行，包括CPU、NVIDIA/AMD GPU和Apple Metal。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>统一的多物理引擎，在单一API下集成刚体、软体、流体和布料仿真</li>
+<li>高仿真速度（刚体4300万+ FPS），通过GPU并行计算实现</li>
+<li>可微仿真支持操作任务的基于梯度优化</li>
+<li>跨平台支持（Linux、macOS、Windows），多种GPU后端可选</li>
+<li>支持多种机器人类型（机械臂、足式机器人、无人机、软体机器人）和文件格式（.xml、.urdf、.obj、.glb、.ply、.stl）</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>可微性目前仅限于MPM和Tool Solver；刚体和FEM求解器尚不可微</li>
+<li>平台较新，社区采用度和预构建任务环境少于MuJoCo或Isaac Lab</li>
+<li>灵巧操作的接触动力学精度尚未与成熟仿真器进行充分基准对比</li>
+<li>照片级渲染能力已声明但尚未在仿真到真实视觉迁移中广泛验证</li>
+</ul>
+<h2 class="dp-h2">覆盖缺口</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>标准</th>
+<th>是否覆盖？</th>
+</tr></thead><tbody>
+<tr>
+<td>力/力矩评估指标</td>
+<td>否（尽管支持物理计算，但无标准化的力评估指标）</td>
+</tr>
+<tr>
+<td>可变形物体任务</td>
+<td>是（MPM、FEM、PBD求解器支持可变形交互）</td>
+</tr>
+<tr>
+<td>触觉传感</td>
+<td>否（无触觉传感器仿真模块）</td>
+</tr>
+<tr>
+<td>多阶段/长时程任务</td>
+<td>否（无预构建的长时程任务套件；平台支持自定义任务）</td>
+</tr>
+<tr>
+<td>多手协调</td>
+<td>否</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">开源。通过 <code>pip install genesis-world</code> 安装。GitHub: <a href="https://github.com/Genesis-Embodied-AI/genesis" target="_blank" rel="noopener">Genesis-Embodied-AI/Genesis</a></p>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=DFwul9oDQq" target="_blank" rel="noopener">OpenReview</a></p></div></details>

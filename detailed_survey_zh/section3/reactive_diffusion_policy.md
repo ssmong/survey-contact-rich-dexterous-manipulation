@@ -1,0 +1,46 @@
+## 3.16 Reactive Diffusion Policy
+
+- **全称:** Reactive Diffusion Policy: Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation
+- **作者:** xiaoxiaoxh等
+- **发表平台/年份:** RSS 2025
+- **arXiv:** https://arxiv.org/abs/2503.02881
+
+**力/触觉输入类型：** GelSight Mini视觉触觉传感器，在夹爪每个指尖提供高分辨率接触图像。
+
+**力/阻抗输出：** 无显式力/阻抗输出，但策略学习了"类阻抗"反应行为。扩散策略生成的位置动作隐式编码了以触觉反馈为条件的柔顺行为，产生类似阻抗控制器的适应接触状态的运动。
+
+> **局限性（仅位置输出）：** 仅位置输出；尽管接收了力/触觉输入，策略无法主动调节接触力。
+
+**机器人平台：** Flexiv Rizon 4机械臂 + 平行夹爪，配备GelSight Mini传感器。
+
+> **局限性（仅夹爪）：** 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。
+
+**任务：** 3项需要反应式触觉行为的接触丰富操作任务。
+
+**关键方法：** Reactive Diffusion Policy引入了用于视觉-触觉策略学习的慢-快架构。"慢"通道通过扩散策略处理视觉观测以生成粗略动作规划。"快"通道以高频处理触觉（GelSight Mini）图像以生成对慢规划的反应式修正。快通道类似于学习到的阻抗控制器——它根据通过触觉图像检测到的接触事件调整机器人运动，而不显式计算或命令力。扩散策略框架支持多模态动作分布，允许策略表示多样化的反应策略。
+
+**架构/参数：** 双速度扩散策略：慢视觉通道（标准扩散策略推理频率）+ 快触觉通道（更高频率的反应式修正）。触觉通道是一个轻量级网络，处理GelSight Mini图像并输出位置修正。
+
+**主要贡献：**
+- 提出慢-快架构，将视觉规划（慢）与触觉反应（快）分离，匹配视觉和触觉感知的自然时间尺度。
+- 证明快触觉通道在不需要显式力控制的情况下学习了类阻抗反应行为，通过学习到的位置修正提供柔顺性。
+- 公开发布代码和检查点（GitHub和HuggingFace），支持可复现性。
+
+**局限性：** 尽管有类阻抗行为但仅位置输出。学习到的反应式修正可能无法泛化到训练分布之外的力范围。仅限3项任务。需要GelSight Mini传感器，增加了成本和脆弱性。
+
+**结果：** 慢-快架构在3项接触丰富任务上均优于触觉无关扩散策略和单速度触觉扩散策略。代码和模型检查点可在GitHub（github.com/xiaoxiaoxh/reactive_diffusion_policy）和HuggingFace获取。
+
+## 推理/部署
+
+- **推理延迟：** 快策略（不对称分词器）：每步**<1 ms**（理论>300 Hz）。慢策略（潜在扩散策略）：每步**约100 ms**（高层规划约1--2 Hz）。组合系统在实验中以**24 FPS**运行（匹配触觉传感器约束）。
+- **部署硬件：** NVIDIA RTX 4090 GPU + Intel Core i9-14900K CPU。Flexiv Rizon 4机械臂 + 平行夹爪配备GelSight Mini传感器。
+- **是否支持实时？** 是。分层慢-快设计实现了真正的闭环反应性：快网络提供亚毫秒级触觉/力反馈控制，而慢网络以较低频率处理复杂轨迹建模。这是综述文献中最快的反应系统之一。
+
+## 数据集/数据收集
+
+- **使用的数据集：** 3项接触丰富任务的自定义演示数据集。无命名基准。
+- **收集方法：** 通过TactAR收集遥操作演示，这是一个基于VR的遥操作系统，使用Meta Quest 3头盔通过增强现实提供实时触觉反馈。多传感器数据以24 fps记录，涵盖视觉和触觉模态。
+- **数据规模：** 示例数据集包含25,710个时间步（在HuggingFace上公开发布）。完整训练数据集规模未明确报告。
+- **遥操作设备：** TactAR系统配备Meta Quest 3 VR头盔、两个机械臂（Flexiv Rizon 4或Franka Research 3）、RealSense D435/D415相机以及可选的GelSight Mini触觉传感器。
+- **数据格式：** Zarr格式。包含：动作、RGB图像、触觉嵌入、夹爪状态、TCP位姿/速度、力和时间戳，按传感器/机器人分层组织。
+- **是否公开可用？** 是。数据集在HuggingFace（[WendiChen/reactive_diffusion_policy_dataset](https://huggingface.co/datasets/WendiChen/reactive_diffusion_policy_dataset)）。模型检查点在HuggingFace（[WendiChen/reactive_diffusion_policy_model](https://huggingface.co/WendiChen/reactive_diffusion_policy_model)）。代码在[GitHub](https://github.com/xiaoxiaoxh/reactive_diffusion_policy)。

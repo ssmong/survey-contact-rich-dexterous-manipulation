@@ -1,0 +1,34 @@
+<h3 class="dp-h3">7.2 Hora</h3>
+<p class="dp-p"><strong>完整标题：</strong> In-Hand Object Rotation via Rapid Motor Adaptation</p>
+<p class="dp-p"><strong>作者：</strong> Haozhi Qi, Ashish Kumar, Roberto Calandra, Yi Ma, Jitendra Malik</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CoRL 2022</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 快速运动自适应（RMA）；训练基础策略和在线自适应模块，从近期交互历史中推断环境参数</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym Preview 4</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是；使用RMA进行在线自适应的零样本仿真到真实迁移（真实）。训练期间对物理参数（质量、摩擦、尺度）进行域随机化；自适应模块在部署时从本体感觉历史推断这些参数</p>
+<p class="dp-p"><strong>物体数量：</strong> 多种物体包括立方体、圆柱体和YCB物体；在真实世界中评估了约10+物体</p>
+<p class="dp-p"><strong>任务：</strong> 围绕指定轴的连续手内物体旋转（手掌中物体的z轴旋转）</p>
+<p class="dp-p"><strong>核心方法论：</strong> 基于快速运动自适应（RMA）进行手内操作。在随机化环境中使用PPO训练基础策略。自适应模块（小型MLP）被训练为从短期本体感觉观察历史中预测潜在环境参数。在部署时，自适应模块提供隐式系统辨识，使策略能够适应真实世界动力学而无需显式校准。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>首次在真实Allegro Hand上展示用于灵巧手内旋转的快速运动自适应（真实）</li>
+<li>在线自适应消除了手动系统辨识或手动调节域随机化的需求</li>
+<li>在真实硬件上对多样物体形状和尺寸实现鲁棒零样本迁移（真实）</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅限单轴旋转（非任意SE(3)重定向）；仅依赖本体感觉（无视觉或触觉）；物体必须保持掌心朝上的姿态；仅限刚性物体</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确报告。带RMA自适应模块的MLP策略每次前向传播 <1ms，支持高频控制。</li>
+<li><strong>部署硬件：</strong> Allegro Hand（16自由度）。策略在IsaacGym中训练；通过零样本仿真到真实迁移加在线RMA自适应部署。MLP策略足够轻量，可在任何计算平台上运行。</li>
+<li><strong>支持实时？</strong> 是。基于MLP的RL策略加轻量RMA模块可在Allegro Hand上实时运行。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。纯RL（PPO）+ 快速运动自适应（RMA）——所有数据在仿真中生成。</li>
+<li><strong>收集方法：</strong> IsaacGym中的纯RL，对物理参数（质量、摩擦、尺度）进行域随机化。在线自适应模块从本体感觉历史训练。零样本仿真到真实迁移。立方体、圆柱体和YCB物体。</li>
+<li><strong>数据规模：</strong> IsaacGym中标准并行RL训练。真实世界评估约10+物体。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 代码发布状态未报告。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=C5GlmrAI4d" target="_blank" rel="noopener">OpenReview</a></p></div></details>

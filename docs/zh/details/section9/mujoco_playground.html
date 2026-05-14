@@ -1,0 +1,52 @@
+<p class="dp-p"># 9.2 MuJoCo Playground</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> MuJoCo Playground</li>
+<li><strong>作者：</strong> Google DeepMind MuJoCo团队（Kevin Zakka、Baruch Tabanpour及合作者）</li>
+<li><strong>发表venue/年份：</strong> RSS 2025（系统演示方向）</li>
+<li><strong>仿真平台：</strong> MuJoCo MJX（JAX加速的MuJoCo）</li>
+<li><strong>灵巧手支持：</strong> 包含LEAP Hand任务；通过MuJoCo标准模型库可使用Shadow Hand变体</li>
+<li><strong>任务：</strong> 运动控制、灵巧操作（手内重定向、方块旋转）、全身控制；单GPU上可在数分钟内完成训练</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">MuJoCo Playground利用MuJoCo MJX（MuJoCo物理引擎的JAX编译版本），实现完全在GPU/TPU上运行的大规模并行仿真。它提供了一组精选的环境，包含奖励函数和训练脚本，展示了如何在数分钟而非数小时内从零开始训练策略。系统强调利用MuJoCo精确的接触动力学实现零样本仿真到真实迁移。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>证明了精确的接触物理（MuJoCo）结合JAX编译可在消费级硬件上数分钟内训练灵巧策略</li>
+<li>预构建的LEAP Hand操作环境，附带零样本仿真到真实迁移结果</li>
+<li>基于浏览器的可视化和交互式环境探索</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>与ManiSkill3或Isaac Lab相比，任务多样性较窄；侧重于展示速度而非全面基准测试</li>
+<li>无内置触觉仿真或可变形物体支持</li>
+<li>相比成熟平台，文档和社区采用度仍在增长中</li>
+</ul>
+<h2 class="dp-h2">覆盖缺口</h2>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>标准</th>
+<th>是否覆盖？</th>
+</tr></thead><tbody>
+<tr>
+<td>力/力矩评估指标</td>
+<td>否</td>
+</tr>
+<tr>
+<td>可变形物体任务</td>
+<td>否</td>
+</tr>
+<tr>
+<td>触觉传感</td>
+<td>否</td>
+</tr>
+<tr>
+<td>多阶段/长时程任务</td>
+<td>否（专注于单目标任务如方块旋转）</td>
+</tr>
+<tr>
+<td>多手协调</td>
+<td>否</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">基于Apache 2.0协议开源。通过 <code>pip install playground</code> 安装。GitHub: <a href="https://github.com/google-deepmind/mujoco_playground" target="_blank" rel="noopener">google-deepmind/mujoco_playground</a></p>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=HyDRyN7fSz" target="_blank" rel="noopener">OpenReview</a></p></div></details>

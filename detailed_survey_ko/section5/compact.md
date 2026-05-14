@@ -1,0 +1,48 @@
+### 5.1 Comp-ACT
+
+**전체 제목:** Compliance-Aware Action Chunking with Transformers for Contact-Rich Manipulation
+
+**저자:** Tatsuya Kamijo, Kei Ota, Devesh K. Jha, Masayoshi Tomizuka (OMRON SINIC X / University of Tokyo)
+
+**학회/연도:** IROS 2024
+
+**K/D 결정 방법:** Imitation learning (IL) via an ACT-style transformer policy trained on VR teleoperation demonstrations. The policy learns to predict both position trajectories and stiffness parameters simultaneously from demonstration data. Stiffness is parameterized via Cholesky decomposition to ensure the predicted stiffness matrix is always symmetric positive definite. No damping prediction -- damping is derived from stiffness via a fixed damping ratio.
+
+**출력:** 12D stiffness output: a 6x6 Cartesian stiffness matrix K parameterized as the lower-triangular Cholesky factor (12 unique elements for 6D Cartesian space, ensuring K = L L^T is SPD). The policy simultaneously outputs position action chunks (following the ACT framework). Damping D is not independently predicted.
+
+**로봇 플랫폼:** Dual UR5e robot arms + parallel-jaw grippers. No dexterous hand.
+
+**작업:** Bimanual contact-rich assembly and manipulation in simulation (Robosuite/MuJoCo): peg-in-hole insertion, gear meshing, object handover with compliance, and multi-step assembly sequences requiring varying stiffness profiles.
+
+**핵심 방법론:** Comp-ACT extends the Action Chunking with Transformers (ACT) framework by adding a compliance prediction head. The transformer encoder-decoder processes visual observations and proprioception, and the decoder outputs both action chunks (position trajectories over a horizon) and stiffness matrices. The Cholesky parameterization is critical: by predicting the lower-triangular factor L rather than K directly, the system guarantees that the resulting stiffness matrix K = L L^T is always symmetric positive definite, which is a physical requirement for stable impedance control. VR teleoperation demonstrations capture both the position trajectory and the user's intended compliance (inferred from the teleoperator's behavior).
+
+**아키텍처/파라미터:** ACT architecture (CVAE + transformer encoder-decoder). Visual encoder (ResNet-18 or similar) for image observations. Action chunk size follows ACT convention (~100 steps). Additional linear head for 12D Cholesky factor prediction. Training on VR demonstration datasets collected in Robosuite.
+
+**주요 기여:**
+- Integrates learned variable stiffness prediction into the ACT imitation learning framework
+- Cholesky parameterization guarantees physically valid (SPD) stiffness matrices, avoiding degenerate or unstable impedance predictions
+- Demonstrates that co-learning position and stiffness from demonstrations improves contact-rich task success compared to position-only ACT or fixed-stiffness baselines
+
+**한계점:**
+- No dexterous hand -- dual UR5e with grippers only
+- Damping is not independently learned; derived from stiffness via fixed ratio
+- Evaluated primarily in simulation (Robosuite); real-robot validation is limited
+- VR teleoperation demonstrations may not capture ground-truth desired stiffness -- the "intended compliance" is inferred, not directly measured
+- Does not scale to high-DoF systems (e.g., multi-finger hands)
+
+**결과:** Comp-ACT outperformed position-only ACT and fixed-stiffness ACT baselines on contact-rich assembly tasks in Robosuite. The learned stiffness profiles showed qualitatively reasonable patterns (e.g., lower stiffness during search/alignment phases, higher stiffness during insertion). Code available at github.com/omron-sinicx/CompACT.
+
+## 추론 / 배포
+
+- **추론 지연 시간:** Not explicitly reported. The architecture follows ACT (Action Chunking with Transformers) with an additional linear head for 12D Cholesky factor prediction, adding negligible overhead to standard ACT inference. ACT-style policies typically run at 10-50 Hz on a desktop GPU.
+- **배포 하드웨어:** Dual UR5e arms. Training and evaluation in Robosuite/MuJoCo simulation. Specific GPU for policy inference not reported.
+- **실시간 가능 여부:** Yes, likely. The lightweight ACT architecture (ResNet-18 encoder + transformer decoder) with a small additional compliance head should support real-time control at typical manipulation frequencies (10-50 Hz). Action chunking further reduces inference frequency requirements.
+
+## 데이터셋 / 데이터 수집
+
+- **사용 데이터셋:** Custom teleoperation demonstrations collected in simulation (Robosuite/MuJoCo) for bimanual tasks, and real-world demonstrations for single-arm and bimanual tasks on dual UR5e.
+- **수집 방법:** VR teleoperation using HTC Vive Cosmos Elite controllers with haptic feedback (vibrotactile force feedback mapped to controller vibrations). PyOpenVR for pose tracking at 90 Hz. F/T sensor measurements at robot wrist provide haptic feedback. Each demonstration captures Cartesian trajectory, F/T sensor data, compliance parameters (stiffness values), camera images, and gripper commands.
+- **데이터 규모:** 20-30 demonstrations per task. Simulation (bimanual wiping): 30 demonstrations. Real-world single-arm and bimanual tasks: 20-30 demonstrations each. 6 tasks total (1 simulation, 5 real-world).
+- **원격 조작 장비:** HTC Vive Cosmos Elite VR controllers with vibrotactile haptic feedback.
+- **데이터 포맷:** Not explicitly specified. Includes Cartesian EE pose, gripper command, and desired compliance degree per timestep.
+- **공개 여부:** Code at https://github.com/omron-sinicx/CompACT. Demonstration datasets not explicitly released.

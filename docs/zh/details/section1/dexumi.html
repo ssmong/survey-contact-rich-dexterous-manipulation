@@ -1,0 +1,93 @@
+<h3 class="dp-h3">DexUMI</h3>
+<p class="dp-p"><strong>全称：</strong> DexUMI: Dexterous Universal Manipulation Interface</p>
+<p class="dp-p"><strong>作者：</strong> Stanford等研究人员</p>
+<p class="dp-p"><strong>会议/年份：</strong> CoRL 2025（最佳论文提名）</p>
+<p class="dp-p"><strong>手部硬件：</strong> XHand和Inspire Hand。DexUMI设计为硬件无关的接口，支持多种灵巧手平台进行真实世界操作数据采集和策略部署。</p>
+<p class="dp-p"><strong>任务：</strong> 真实世界灵巧操作任务。系统专注于使用灵巧手在非结构化真实世界环境中进行多样操作场景的数据采集和策略学习。具体任务涵盖日常操作行为。</p>
+<p class="dp-p"><strong>核心方法：</strong> DexUMI将通用操作接口（UMI）范式扩展到灵巧多指手。该方法提供了一个便携、低成本的数据采集框架，将人类手部运动映射到灵巧机器人手以进行自然场景中的演示收集。与大多数依赖仿真的灵巧操作工作不同，DexUMI完全在真实世界中运行，使用通过该接口收集的人类演示训练模仿学习策略。重点在于实际可部署性和以最低设置开销实现广泛的任务覆盖。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 从通过DexUMI硬件接口收集的真实世界演示训练的模仿学习策略。具体策略架构遵循UMI框架，适配了更高维度的灵巧手动作空间。</p>
+<p class="dp-p"><strong>仿真平台：</strong> 纯真实世界——不使用仿真。整个流程（数据采集、训练、部署）均在物理硬件上运行。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>将UMI框架扩展到灵巧手，为多指操作提供了便携且易用的数据采集接口——此前的灵巧手遥操作系统需要昂贵的运动捕捉设备或定制手套硬件，而DexUMI使用低成本便携设备。</li>
+<li>展示了无需任何仿真的纯真实世界灵巧操作学习，与该领域占主导的仿真到真实范式形成对比——这表明真实世界模仿学习对高自由度手是可行的，而不仅限于平行夹爪。</li>
+<li>CoRL 2025最佳论文提名。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。未引入力/力矩传感或阻抗控制。模仿学习策略从演示中学习位置轨迹，无显式力调节。对于需要精确接触力控制的任务（如插入易碎物体、控制工具施力），仅基于位置的控制方案可能不够充分。</li>
+<li><strong>VLA/语言条件化：</strong> 无。流程使用基于演示的模仿学习，无语言条件化或VLA主干。任务通过物理演示指定，而非语言指令。</li>
+<li><strong>仿真到真实：</strong> 不适用。系统完全在真实世界中运行，无仿真组件。这消除了仿真到真实的差距，但与基于仿真的方法相比限制了数据采集的可扩展性。</li>
+<li><strong>代码/权重可用性：</strong> 评审时未公开记录。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 跨任务平均成功率为86%，在欠驱动（Inspire Hand，6个主动自由度）和全驱动（XHand，12个主动自由度）平台上均进行了评估。最佳配置使用相对手指动作、触觉传感和基于图像修复的视觉适应。</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>手</th>
+<th>成功率</th>
+</tr></thead><tbody>
+<tr>
+<td>方块拾取</td>
+<td>Inspire Hand</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>蛋盒打开</td>
+<td>Inspire Hand</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>茶叶拾取（工具）</td>
+<td>Inspire Hand</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>茶叶拾取（叶子）</td>
+<td>Inspire Hand</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>厨房 - 旋钮</td>
+<td>XHand</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>厨房 - 平底锅</td>
+<td>XHand</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>厨房 - 盐罐</td>
+<td>XHand</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td>厨房 - 整体</td>
+<td>XHand</td>
+<td>0.75</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">数据采集效率比传统遥操作方法高3.2倍（在15分钟采集周期内）。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 策略以<strong>10 Hz</strong>执行。UR5机械臂以125 Hz执行命令，Inspire Hand以10 Hz运行，XHand以60 Hz运行。策略预测16个未来动作步骤，仅执行前8个，频率为10 Hz。</li>
+<li><strong>部署硬件：</strong> UR5机器人臂 + XHand或Inspire Hand。使用预训练的DINO-V2进行视觉特征提取。推理GPU未指定。</li>
+<li><strong>是否实时：</strong> 是，策略频率为10 Hz。系统通过时间对齐（tcapture = treceive - lsensor）补偿传感器延迟。10 Hz频率适合手臂级别的操作，但低于XHand原生的60 Hz能力。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> 通过DexUMI硬件接口收集的自定义真实世界演示。无命名基准数据集。</li>
+<li><strong>收集方法：</strong> 通过DexUMI便携手持设备收集的自然场景人类演示，该设备将人类手部运动映射到灵巧机器人手（XHand、Inspire Hand）。系统设计为低成本、便携式数据采集，无需运动捕捉或VR设备。</li>
+<li><strong>数据规模：</strong> 未在公开材料中报告。应查阅论文以获取每个任务收集的演示数量。</li>
+<li><strong>遥操作设备：</strong> DexUMI手持设备——一种便携、低成本的接口，将通用操作接口（UMI）范式扩展到多指灵巧手。无需昂贵的手套、外骨骼或运动捕捉。</li>
+<li><strong>数据格式：</strong> 未报告。遵循适配了更高维度灵巧手动作空间的UMI框架。</li>
+<li><strong>是否公开：</strong> 评审时未公开记录。</li>
+</ul>
+<blockquote class="dp-quote"><em>结果已根据arXiv:2505.21864验证。逐任务成功率从表1提取。确认平均86%的成功率。</em></blockquote>
+<hr>
+<details class="dp-reviews"><summary>同行评审 <span class="dp-review-score-badge">9.0</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">平均分: <strong>9.0</strong> · 1 条评审 · CoRL 2025 Workshop Dexterous Manipulation Spotlight · <a href="https://openreview.net/forum?id=EkigXMH9Ik" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 9</span></div>
+</div>
+</details>

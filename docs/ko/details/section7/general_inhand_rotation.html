@@ -1,0 +1,58 @@
+<h3 class="dp-h3">7.2 General In-Hand Object Rotation with Vision and Touch</h3>
+<p class="dp-p"><strong>전체 제목:</strong> General In-Hand Object Rotation with Vision and Touch</p>
+<p class="dp-p"><strong>저자:</strong> Haozhi Qi, Brent Yi, Sudharshan Suresh, Mike Lambeta, Yi Ma, Roberto Calandra, Jitendra Malik</p>
+<p class="dp-p"><strong>학회/연도:</strong> CoRL 2023</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2309.09979</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO with teacher-student distillation and a visuotactile transformer for multimodal fusion. Teacher has access to ground-truth object state; student uses vision and touch.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Allegro Hand (16 DoF) with DIGIT tactile sensors on fingertips</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes. Zero-shot sim-to-real transfer. Trains with privileged state in simulation, then distills to realistic sensor modalities (RGB vision + DIGIT tactile images). The visuotactile transformer performs online inference of object shape and physical properties during deployment.</p>
+<p class="dp-p"><strong>작업:</strong> Multi-axis fingertip-based in-hand object rotation. Rotates objects around multiple axes (not limited to single-axis as in prior work like Hora). Tested on diverse objects.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Extends the Hora/RotateIt line of work by fusing vision and touch through a visuotactile transformer architecture. The system trains in simulation with access to ground-truth object state, then uses a distillation process to transfer to policies that operate on realistic noisy sensory inputs (RGB images + DIGIT tactile readings). The transformer architecture fuses multimodal information to implicitly infer object shape and physical properties online, enabling generalization to unseen objects. This achieves general multi-axis in-hand rotation with combined vision and touch.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>First learned policy combining vision and tactile sensing for multi-axis in-hand rotation with sim-to-real transfer</li>
+<li>Visuotactile transformer architecture that fuses RGB and tactile modalities for implicit object property inference</li>
+<li>Demonstrated improvement over vision-only and tactile-only baselines, showing complementary benefits of multimodal sensing</li>
+<li>Zero-shot sim-to-real transfer with realistic sensor simulation (DIGIT tactile + RGB)</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Multi-axis rotation</td>
+<td>Yes (improvement over single-axis Hora)</td>
+</tr>
+<tr>
+<td>Sensor fusion</td>
+<td>Vision (RGB) + Touch (DIGIT)</td>
+</tr>
+<tr>
+<td>Baseline improvement</td>
+<td>Outperforms vision-only and touch-only variants</td>
+</tr>
+<tr>
+<td>Hand</td>
+<td>Allegro (16 DoF) + DIGIT sensors</td>
+</tr>
+<tr>
+<td>Real-world transfer</td>
+<td>Zero-shot sim-to-real</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li><strong>Force control:</strong> DIGIT provides tactile images, not explicit force vectors; no impedance control</li>
+<li><strong>VLA/Language:</strong> No language conditioning or VLA integration</li>
+<li><strong>Sim2Real:</strong> Tactile simulation fidelity (DIGIT image rendering in sim) remains a challenge; binary contact may transfer better</li>
+<li><strong>Code:</strong> Part of the Hora codebase ecosystem; specific code release status varies</li>
+<li><strong>Task scope:</strong> Focused on rotation; does not address grasping, tool use, or functional manipulation</li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not explicitly reported. The visuotactile transformer with DIGIT tactile encoder adds overhead compared to pure MLP policies, but should still run at ~20-50 Hz on a desktop GPU.</li>
+<li><strong>배포 하드웨어:</strong> Allegro Hand (16 DoF) with DIGIT tactile sensors on fingertips. Policy trained in IsaacGym; deployed via zero-shot sim-to-real transfer.</li>
+<li><strong>실시간 가능 여부:</strong> Yes. Demonstrated real-time in-hand rotation on real Allegro Hand with visuotactile input.</li>
+</ul>

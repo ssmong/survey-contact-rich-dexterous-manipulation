@@ -1,0 +1,110 @@
+<h3 class="dp-h3">Scaffolding+VLM</h3>
+<p class="dp-p"><strong>全称：</strong> Scaffolding Dexterous Manipulation with Vision-Language Models</p>
+<p class="dp-p"><strong>作者：</strong> Vincent de Bakker, Joey Hejna, Tyler Ga Wei Lum, Onur Celik, Aleksandar Taranovic, Denis Blessing, Gerhard Neumann, Jeannette Bohg, Dorsa Sadigh (Stanford / KIT)</p>
+<p class="dp-p"><strong>会议/年份：</strong> NeurIPS 2025 (arXiv:2506.19212)</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度），安装在KUKA机器人臂上。真实世界设置使用右手Allegro配置，具有16个关节控制维度。</p>
+<p class="dp-p"><strong>任务：</strong></p>
+<ul class="dp-list">
+<li><em>仿真（8个任务）：</em> 苹果抓取、瓶子操作、锤子使用、抽屉开关、冰箱交互、海绵操作、钳子操作、剪刀使用。</li>
+<li><em>真实世界（3个任务）：</em> 带机械臂的箱子操作（box_arm）、带机械臂的瓶子操作（bottle_arm）、带机械臂的锤子使用（hammer_arm）。</li>
+</ul>
+<p class="dp-p"><strong>核心方法：</strong> 该框架使用视觉语言模型（Gemini 2.5 Flash Thinking）来辅助生成灵巧操作演示，然后用于训练强化学习策略。流程分为两个阶段：（1）VLM引导的数据集生成，其中Gemini生成操作路径点（实验了3、5、10和40个路径点）、少样本演示和脚本化基线；（2）基于VLM生成数据的强化学习训练。该方法无需人类遥操作演示，利用VLM的空间推理能力来引导灵巧操作策略。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 使用Gemini 2.5 Flash Thinking作为VLM主干。强化学习策略在VLM生成的数据上训练。真实世界部署栈集成了ROS、ZED相机、FoundationPose（物体姿态估计）、Segment Anything 2（分割）和关键点跟踪。</p>
+<p class="dp-p"><strong>仿真平台：</strong> 自定义Gymnasium环境（EnvApple-v0、EnvBottle-v0等）。已展示仿真到真实迁移——使用VLM辅助数据在仿真中训练的策略部署在真实Allegro + KUKA系统上。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>引入了VLM辅助演示生成作为灵巧操作中人类遥操作的替代方案，利用Gemini的空间推理能力生成操作路径点——此前的灵巧操作流程要么需要人类演示，要么需要手动设计奖励函数。</li>
+<li>证明了VLM生成的演示可以成功训练8个仿真任务和3个真实世界任务的灵巧操作策略，确立了VLM空间推理足以引导灵巧任务。</li>
+<li>本章中唯一将VLA/语言模型集成到灵巧操作流程中的论文；所有其他工作使用纯强化学习或人类演示流程。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong></p>
+<ul class="dp-list">
+<li><strong>力/阻抗感知：</strong> 无。未使用力/阻抗控制。VLM仅生成位置路径点；工具使用或物体交互过程中的接触力分布未被显式辅助或控制。对于需要精确施力的任务（如锤击力、剪刀剪切压力），力调节需要由下游强化学习策略隐式学习。</li>
+<li><strong>VLA/语言条件化：</strong> 是（用于演示生成）。Gemini 2.5 Flash Thinking用作辅助的VLM主干，但它离线生成演示，而非作为实时策略主干。VLM的角色是数据集生成，而非闭环控制。</li>
+<li><strong>仿真到真实：</strong> 是。使用VLM辅助数据在仿真中训练的策略部署在真实Allegro + KUKA系统上完成3个任务。</li>
+<li><strong>代码/权重可用性：</strong> 未发布模型权重。该方法依赖于Gemini API（辅助阶段）和FoundationPose（真实世界物体姿态估计）的访问权限。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 在8个仿真任务和3个真实世界任务上进行了评估。成功率基于3个随机种子（仿真）和每任务20次试验（真实世界）报告。</p>
+<p class="dp-p">仿真零样本成功率（近似值，来自图4）：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>零样本成功率</th>
+<th>少样本成功率</th>
+</tr></thead><tbody>
+<tr>
+<td>移动苹果</td>
+<td>~75%</td>
+<td>~85%</td>
+</tr>
+<tr>
+<td>移动瓶子</td>
+<td>~70%</td>
+<td>~80%</td>
+</tr>
+<tr>
+<td>打开抽屉</td>
+<td>~85%</td>
+<td>~90%</td>
+</tr>
+<tr>
+<td>打开冰箱</td>
+<td>~45%</td>
+<td>~80%</td>
+</tr>
+<tr>
+<td>锤击</td>
+<td>~65%</td>
+<td>~75%</td>
+</tr>
+<tr>
+<td>海绵擦拭</td>
+<td>~60%</td>
+<td>~70%</td>
+</tr>
+<tr>
+<td>合拢剪刀</td>
+<td>~80%</td>
+<td>~85%</td>
+</tr>
+<tr>
+<td>将瓶子放到盘子上</td>
+<td>~70%</td>
+<td>~80%</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">真实世界成功率（每任务20次试验）：</p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>任务</th>
+<th>成功率</th>
+</tr></thead><tbody>
+<tr>
+<td>将瓶子放到盘子上</td>
+<td>90%</td>
+</tr>
+<tr>
+<td>将箱子滑向瓶子</td>
+<td>85%</td>
+</tr>
+<tr>
+<td>锤击三次</td>
+<td>65%</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">少样本性能使用VLM生成演示中的3个成功示例。该方法消除了对人类演示或手工设计奖励的需求。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。VLM（Gemini 2.5 Flash Thinking）用于离线演示生成，不在推理时使用。下游强化学习策略推理速度未表征。</li>
+<li><strong>部署硬件：</strong> 真实世界系统使用Allegro Hand（16自由度）+ KUKA机器人臂、ZED相机，配合FoundationPose和Segment Anything 2进行感知。用于策略推理的GPU未指定。</li>
+<li><strong>是否实时：</strong> 强化学习策略可能实时运行（标准基于MLP的强化学习策略为亚毫秒级），但论文未报告控制频率或推理延迟。VLM辅助阶段是离线的，不影响部署时性能。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用数据集：</strong> 自定义VLM生成的演示（无命名数据集）。演示由Gemini 2.5 Flash Thinking合成，非人类采集。</li>
+<li><strong>收集方法：</strong> VLM辅助合成生成。Gemini 2.5 Flash Thinking生成操作路径点（实验了3、5、10和40个路径点）、少样本演示和脚本化基线。演示生成无需人类遥操作。</li>
+<li><strong>数据规模：</strong> 未报告。每个任务生成的演示数量未在公开材料中指定。</li>
+<li><strong>遥操作设备：</strong> 不适用（VLM生成的演示，非遥操作）。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开：</strong> 否。未发布数据集或模型权重。该方法依赖于Gemini API（辅助阶段）的访问权限。</li>
+</ul>
+<hr>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=XSdKoJKyH2" target="_blank" rel="noopener">OpenReview</a></p></div></details>

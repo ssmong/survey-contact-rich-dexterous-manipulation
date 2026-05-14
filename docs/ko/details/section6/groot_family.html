@@ -1,0 +1,118 @@
+<h2 class="dp-h2">6.2 NVIDIA GR00T Family</h2>
+<h3 class="dp-h3">GR00T N1 / N1.5 / N1.6 / N1.7</h3>
+<p class="dp-p"><strong>전체 제목:</strong> GR00T N1: An Open Foundation Model for Generalist Humanoid Robot (initial release); subsequent versions released as model updates without separate publications.</p>
+<p class="dp-p"><strong>저자:</strong> NVIDIA Isaac Robotics team (Jim Fan, Yuke Zhu, Linxi "Jim" Fan, Dieter Fox, Anima Anandkumar, et al.)</p>
+<p class="dp-p"><strong>학회/연도:</strong> GR00T N1 announced GTC Mar 2025; N1.5 mid-2025; N1.6 late 2025; N1.7 May 2026. Associated technical reports published via NVIDIA Research blog and HuggingFace model cards.</p>
+<p class="dp-p"><strong>아키텍처:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Version</th>
+<th>Date</th>
+<th>Params</th>
+<th>VLM Backbone</th>
+<th>DiT Layers</th>
+<th>Key Change</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>GR00T N1</strong></td>
+<td>Mar 2025</td>
+<td>2.2B</td>
+<td>Eagle-2 (InternVL-based)</td>
+<td>16</td>
+<td>Initial release; dual-encoder (SigLIP vision + T5 language) with DiT action head</td>
+</tr>
+<tr>
+<td><strong>GR00T N1.5</strong></td>
+<td>Mid 2025</td>
+<td>3B</td>
+<td>Eagle 2.5 (frozen)</td>
+<td>16</td>
+<td>Increased parameter count; frozen VLM backbone; improved cross-embodiment generalization</td>
+</tr>
+<tr>
+<td><strong>GR00T N1.6</strong></td>
+<td>Late 2025</td>
+<td>3B</td>
+<td>Cosmos-2B</td>
+<td>32</td>
+<td>Doubled DiT depth; switched VLM to Cosmos-2B; native video understanding</td>
+</tr>
+<tr>
+<td><strong>GR00T N1.7</strong></td>
+<td>May 2026</td>
+<td>3B</td>
+<td>Cosmos-Reason2-2B (Qwen3-VL architecture)</td>
+<td>32</td>
+<td>Flexible-resolution vision (native aspect ratio); relative EEF action space; 20K hrs human video pretraining</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">The architecture consists of three main components: (1) a vision encoder (SigLIP2 in N1.7) processes RGB camera frames, (2) a language encoder (T5) processes text instructions, and (3) a Diffusion Transformer (DiT) with adaptive layer normalization (AdaLN) denoises continuous action vectors conditioned on vision-language embeddings and proprioceptive state. A per-embodiment MLP maps between the shared latent action space and embodiment-specific joint configurations.</p>
+<p class="dp-p"><strong>행동 공간:</strong> Variable dimensionality depending on robot embodiment. N1.7 adopted relative end-effector (EEF) actions --- representing actions as deltas from the current pose rather than absolute targets --- which improved cross-embodiment transfer. The per-embodiment MLP handles the mapping from shared action representations to robot-specific joint commands. Proprioception input uses configurable max-length padding indexed by embodiment ID to handle variable DoF counts.</p>
+<p class="dp-p"><strong>다지 핸드 지원:</strong> Limited. The humanoid embodiments (Unitree G1 via SONIC whole-body control) include integrated hand DoFs (Dex3-1: 7 DoF per hand), but the VLA does not natively support standalone multi-finger dexterous hands like Allegro or Shadow. The "22-DoF hand" capability referenced in EgoScale pretraining refers to the Sharpa hand action representation used during human video pretraining, not the deployment hand. GR00T-Dexterity (a separate RL workflow based on DextrAH-G, not part of the VLA) supports Allegro Hand 16-DoF with geometric fabrics in Isaac Lab.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> ✗ --- All versions output position targets only.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> GR00T combines a pre-trained vision-language foundation model with a diffusion transformer action head. The DiT denoises continuous action vectors over 4 diffusion steps, conditioned on visual observations, language instructions, and proprioceptive state via AdaLN. N1.7 introduced two key innovations: (1) relative EEF action representation that is consistent across both human and robot embodiments, enabling direct transfer of manipulation priors from human video to robot control; and (2) pretraining on 20K hours of EgoScale human video data alongside diverse robot demonstrations. The per-embodiment MLP architecture allows a single model to control different robots by learning embodiment-specific action encoders/decoders.</p>
+<p class="dp-p"><strong>훈련 데이터:</strong> N1.7 is pretrained on 21.6M data points from 13 datasets, collected via hybrid methods (human teleoperation, robot autonomy, simulation). Key datasets include DROID (~76K trajectories, 350 hours, 564 scenes), Bridge (60K trajectories, 24 environments), LIBERO (130 language-conditioned tasks), and 20K hours of EgoScale human egocentric video. Post-training checkpoints are provided for specific dataset/embodiment combinations.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated that a single VLA architecture can generalize across multiple robot embodiments (arms, bimanual systems, humanoids) via per-embodiment MLP adapters and a shared DiT action head.</li>
+<li>Established relative EEF actions as a unifying action representation that bridges human video and robot demonstrations, enabling large-scale pretraining on human manipulation data.</li>
+<li>Provided a complete open-source ecosystem (Isaac-GR00T) with fine-tuning, ONNX/TensorRT export, and deployment pipelines, including real-time inference on edge devices (NVIDIA Jetson Orin: 4.6 Hz with TensorRT).</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Benchmark / Task</th>
+<th>GR00T N1.7</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td><em>(Results not independently verified --- consult the NVIDIA technical report and HuggingFace model card for per-task success rates on DROID, Bridge, LIBERO, and humanoid benchmarks.)</em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>Licensing changes across versions:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Version</th>
+<th>License</th>
+</tr></thead><tbody>
+<tr>
+<td>N1</td>
+<td>Non-commercial (NVIDIA research license)</td>
+</tr>
+<tr>
+<td>N1.5</td>
+<td>Non-commercial (NVIDIA research license)</td>
+</tr>
+<tr>
+<td>N1.6</td>
+<td>NVIDIA Open Model License (more permissive)</td>
+</tr>
+<tr>
+<td>N1.7</td>
+<td>NVIDIA Open Model License (commercial use permitted)</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">The progression from non-commercial to commercially permissive licensing is notable, enabling industrial adoption.</p>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>Standalone dexterous hands are not supported by the VLA itself; GR00T-Dexterity provides dexterous hand control but as a separate RL system without language conditioning.</li>
+<li>No force/impedance output: position-only control limits applicability to contact-rich tasks.</li>
+<li>The per-embodiment MLP requires embodiment-specific training data and an embodiment ID at inference, limiting zero-shot transfer to entirely new robot morphologies.</li>
+<li>Inference speed on edge devices (2.9-4.6 Hz on Orin) may be insufficient for high-frequency dexterous manipulation requiring 20+ Hz control.</li>
+</ul>
+<p class="dp-p"><strong>공개 가중치/코드:</strong> ✅ All versions available on <a href="https://huggingface.co/nvidia/GR00T-N1.7-3B" target="_blank" rel="noopener">HuggingFace</a> and <a href="https://github.com/NVIDIA/Isaac-GR00T" target="_blank" rel="noopener">GitHub</a>. Code is Apache 2.0; model weights use NVIDIA Open Model License (commercially permissive from N1.6 onward).</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> GR00T N1.7 runs at 2.9 Hz (PyTorch) to 4.6 Hz (TensorRT-optimized) on NVIDIA Jetson AGX Orin, using 4 DiT diffusion steps per action chunk. On a desktop GPU (e.g., A100), inference is faster but specific Hz figures for desktop deployment are not prominently reported.</li>
+<li><strong>배포 하드웨어:</strong> Primary edge target is NVIDIA Jetson AGX Orin (64GB). The Isaac-GR00T toolchain provides ONNX export and TensorRT optimization pipelines for edge deployment. Desktop GPUs (A100, RTX 4090) used for training and faster-than-real-time inference. Deployed on Unitree G1 humanoid via SONIC whole-body controller.</li>
+<li><strong>실시간 가능 여부:</strong> Marginal. At 2.9-4.6 Hz on Jetson Orin, GR00T N1.7 is suitable for slow to moderate manipulation tasks but insufficient for high-frequency dexterous control (20+ Hz). Action chunking partially compensates by predicting multiple future steps per inference. TensorRT optimization provides ~1.6x speedup over PyTorch on the same hardware.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> N1.7 pretrained on 21.6M data points from 13 datasets. Key datasets: DROID (~76K trajectories, 350 hours, 564 scenes), Bridge V2 (60K trajectories, 24 environments), LIBERO (130 language-conditioned tasks), and 20K hours of EgoScale human egocentric video (Ego4D, Ego-Exo4D, proprietary sources). Additional simulation and robot autonomy data.</li>
+<li><strong>수집 방법:</strong> Hybrid: human teleoperation (DROID, Bridge V2), robot autonomy (self-collected), simulation (Isaac Sim), and human egocentric video (EgoScale pipeline with 22-DoF Sharpa hand pose extraction). Post-training checkpoints provided for specific dataset/embodiment combinations.</li>
+<li><strong>데이터 규모:</strong> 21.6M data points across 13 datasets. 20K hours of human video pretraining (EgoScale). DROID: 76K trajectories / 350 hours. Bridge: 60K trajectories. LIBERO: 130 tasks.</li>
+<li><strong>원격 조작 장비:</strong> Varies by dataset -- VR controllers (DROID), keyboard/SpaceMouse (Bridge V2), leader-follower (ALOHA-style). Human video data requires no teleoperation.</li>
+<li><strong>데이터 포맷:</strong> LeRobot format for public datasets; RLDS for OXE-compatible components. NVIDIA Isaac-GR00T provides data loading utilities.</li>
+<li><strong>공개 여부:</strong> Partially. DROID, Bridge V2, LIBERO are publicly available. EgoScale human video data and proprietary robot data are not released. Model weights are open (NVIDIA Open Model License from N1.6 onward).</li>
+</ul>
+<hr>

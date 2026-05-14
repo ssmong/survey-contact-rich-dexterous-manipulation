@@ -1,0 +1,29 @@
+<p class="dp-p"># 10.7 Open TeleDex</p>
+<ul class="dp-list">
+<li><strong>全称：</strong> Open TeleDex: Phone-Based Teleoperation for Dexterous Manipulation</li>
+<li><strong>作者：</strong> Omar Rayyan等</li>
+<li><strong>发表venue/年份：</strong> arXiv 2510.14771, 2025年10月</li>
+<li><strong>输入模态：</strong> 基于智能手机的手部追踪（手机相机+端上机器学习）</li>
+<li><strong>目标手：</strong> 任意机械臂+灵巧手组合</li>
+<li><strong>力反馈：</strong> 无</li>
+<li><strong>成本：</strong> 极低（使用现有智能手机）</li>
+</ul>
+<h2 class="dp-h2">核心方法/设计</h2>
+<p class="dp-p">Open TeleDex利用智能手机相机和端上机器学习模型进行手部姿态估计，实现灵巧遥操作。操作者手持或放置手机以捕捉手部运动，在设备端处理后流式传输到机器人控制器。通过使用大多数研究者已有的硬件，消除了所有专用输入设备成本。系统通过模块化重定向层支持任意机械臂+手组合。</p>
+<h2 class="dp-h2">主要贡献</h2>
+<ul class="dp-list">
+<li>零额外硬件成本（使用现有智能手机）实现灵巧遥操作</li>
+<li>端上手部追踪消除了姿态估计对专用工作站的需求</li>
+<li>对多样化机械臂+手组合的模块化支持</li>
+</ul>
+<h2 class="dp-h2">局限性/不足</h2>
+<ul class="dp-list">
+<li>基于智能手机的追踪精度和延迟低于专用追踪系统</li>
+<li>单视角相机限制了对遮挡手指的追踪</li>
+<li>完全没有力反馈</li>
+<li>手机必须保持对操作者手部的视线，限制了工作空间</li>
+</ul>
+<h2 class="dp-h2">数据质量影响</h2>
+<p class="dp-p">基于智能手机的追踪在本节遥操作系统中引入了最高的位置噪声和延迟。示教数据仅包含位置信息，无力信息，且追踪质量因受限的手机视角（单相机、可能的遮挡）而进一步降低。基于Open TeleDex数据训练的策略同时继承了所有无反馈系统共有的力盲问题以及低保真追踪管线带来的额外轨迹噪声。这种组合使Open TeleDex数据最不适合精密接触丰富任务，但对于精确手指放置和力控制要求不高的粗糙抓取任务可能足够。</p>
+<h2 class="dp-h2">开源状态</h2>
+<p class="dp-p">开源。GitHub: <a href="https://github.com/omarrayyann/TeleDex" target="_blank" rel="noopener">omarrayyann/TeleDex</a></p>

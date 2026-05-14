@@ -1,0 +1,87 @@
+<h2 class="dp-h2">3.20 T-Dex</h2>
+<ul class="dp-list">
+<li><strong>전체 제목:</strong> Dexterity from Touch: Self-Supervised Pre-Training of Tactile Representations with Robotic Play</li>
+<li><strong>저자:</strong> Irmak Guzey, Ben Evans, Soumith Chintala, Lerrel Pinto (NYU, Meta)</li>
+<li><strong>학회/연도:</strong> ICRA 2024 (arXiv 2303.12076, 2023년 3월)</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2303.12076</li>
+</ul>
+<p class="dp-p"><strong>힘/촉각 입력 유형:</strong> Allegro Hand 손끝에 장착된 DIGIT 비전 기반 촉각 센서. 비구조화된 놀이 데이터(2.5시간 자유 상호작용)에서의 자기 지도 사전 훈련을 통해 촉각 이미지 인코딩. 시간 대비 학습 목표로 훈련된 촉각 인코더가 동결 후 하류 조작 정책 입력으로 사용.</p>
+<p class="dp-p"><strong>힘/임피던스 출력:</strong> 없음. 위치 전용 출력 (Allegro Hand 관절 위치 목표).</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> Allegro Hand (16 DoF) + DIGIT 촉각 센서 + Kinova Jaco 팔. Section 3에서 병렬 조 그리퍼가 아닌 정교한 다지 핸드를 사용하는 극소수 논문 중 하나.</p>
+<blockquote class="dp-quote"><strong>주목:</strong> Section 3에서 정교한 핸드(Allegro)에서 평가된 유일한 힘/촉각 인식 조작 논문 중 하나.</blockquote>
+<blockquote class="dp-quote"><strong>참고:</strong> VLA 아님 (언어 조건부 없음). 힘/촉각 인식 정책과 정교한 조작 사이의 단절이라는 섹션의 핵심 질문에 직접 관련되어 포함.</blockquote>
+<p class="dp-p"><strong>작업:</strong> 5가지 정교한 조작 작업:</p>
+<p class="dp-p">1. 조이스틱 밀기</p>
+<p class="dp-p">2. 책 열기</p>
+<p class="dp-p">3. 그릇 분리</p>
+<p class="dp-p">4. 페그 삽입 (컵-홀더)</p>
+<p class="dp-p">5. 점토 밀기</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> 2단계 접근:</p>
+<p class="dp-p">1. <strong>자기 지도 촉각 사전 훈련:</strong> 2.5시간 비구조화 "놀이" 데이터(물체와의 무작위 상호작용) 수집. DIGIT 이미지에서 시간 대비 학습(TCN)으로 촉각 인코더 훈련. 작업 레이블 없이 컴팩트한 촉각 표현 생성.</p>
+<p class="dp-p">2. <strong>비파라메트릭 정책 학습:</strong> 소수 작업 시연(5-10개)이 주어지면, 사전 훈련된 촉각 표현을 시각 관측(손목 카메라)과 결합. 공동 촉각-시각 임베딩 공간에서 최근접 이웃 검색을 통해 정책 학습.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>비구조화 놀이 데이터에서의 자기 지도 촉각 사전 훈련이 하류 정교한 작업에 유용한 표현을 생성함을 시연</li>
+<li>촉각 기반 정책이 5가지 정교한 작업에서 비전 전용 및 관절 토크 기반 기준선을 평균 1.7배 능가</li>
+<li>정교한 핸드(Allegro + DIGIT)에서의 최초 엔드-투-엔드 촉각 조작 시스템 중 하나</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>촉각 입력에도 위치 전용 출력; 힘 조절 없음</li>
+<li>비파라메트릭(최근접 이웃) 정책이 시연 분포 이상 일반화 제한</li>
+<li>촉각 사전 훈련에 설정당 2.5시간 놀이 데이터 수집 필요</li>
+<li>5개 작업 제한; 고힘 접촉이 풍부한 작업(도구 사용, 조립) 미평가</li>
+<li>언어 조건부나 VLM 통합 없음</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>작업</th>
+<th>T-Dex (촉각+비전)</th>
+<th>비전 전용</th>
+<th>토크 전용</th>
+</tr></thead><tbody>
+<tr>
+<td>조이스틱</td>
+<td>~80%</td>
+<td>~45%</td>
+<td>~35%</td>
+</tr>
+<tr>
+<td>책 열기</td>
+<td>~75%</td>
+<td>~50%</td>
+<td>~40%</td>
+</tr>
+<tr>
+<td>그릇 분리</td>
+<td>~85%</td>
+<td>~55%</td>
+<td>~30%</td>
+</tr>
+<tr>
+<td>페그 삽입</td>
+<td>~70%</td>
+<td>~40%</td>
+<td>~25%</td>
+</tr>
+<tr>
+<td>점토</td>
+<td>~65%</td>
+<td>~35%</td>
+<td>~20%</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">성공률은 근사값. T-Dex가 5개 작업 전체에서 기준선 대비 평균 1.7배 향상. 세밀한 접촉 센싱이 필요한 작업(페그 삽입, 점토)에서 향상 가장 큼.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 실시간 가능. 비파라메트릭 최근접 이웃 검색은 추론 시 빠름.</li>
+<li><strong>배포 하드웨어:</strong> Allegro Hand + DIGIT 센서 + Kinova Jaco 팔. 시각 관측용 손목 장착 카메라.</li>
+<li><strong>실시간 가능 여부:</strong> 예. 물리 하드웨어에서 실시간 배포.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> 맞춤 놀이 데이터셋(2.5시간 비구조화 상호작용) + 소수 작업 시연(작업당 5-10개).</li>
+<li><strong>수집 방법:</strong> 작업 시연은 원격 조작; 놀이 데이터는 자율 무작위 상호작용.</li>
+<li><strong>데이터 규모:</strong> 2.5시간 놀이 데이터 + 5개 작업에 걸쳐 ~50개 작업 시연.</li>
+<li><strong>공개 여부:</strong> 코드 공개: <a href="https://github.com/irmakguzey/tdex" target="_blank" rel="noopener">GitHub</a> (프로젝트 페이지: https://tactile-dexterity.github.io/).</li>
+</ul>

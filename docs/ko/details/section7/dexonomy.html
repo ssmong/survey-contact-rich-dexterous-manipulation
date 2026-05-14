@@ -1,0 +1,61 @@
+<h3 class="dp-h3">7.1 Dexonomy</h3>
+<p class="dp-p"><strong>전체 제목:</strong> Dexonomy: A Taxonomy and a Scalable Generation Pipeline for Dexterous Grasping</p>
+<p class="dp-p"><strong>저자:</strong> Jiayi Chen, Yuxing Chen, C. Karen Liu, He Wang</p>
+<p class="dp-p"><strong>학회/연도:</strong> RSS 2025</p>
+<p class="dp-p"><strong>PKU-EPIC lineage:</strong> Extends BODex with 31 grasp types (vs untyped in BODex); the bilevel optimization core is shared with BODex, but Dexonomy adds a systematic grasp taxonomy derived from human grasping literature. The taxonomy-driven contact region templates are the primary contribution beyond BODex.</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> Optimization-based (not RL); extends BODex with a taxonomy-driven grasp generation pipeline; uses cuRobo for IK solving</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Shadow Hand (24 DoF), Allegro Hand (16 DoF), LEAP Hand (16 DoF), Unitree G1 humanoid hand</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> MuJoCo + cuRobo</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes; 82.3% real-world success rate (real)</p>
+<p class="dp-p"><strong>객체 수:</strong> 10,700 objects across 31 grasp types; 9.5 million generated grasps</p>
+<p class="dp-p"><strong>작업:</strong> Taxonomy-guided dexterous grasp generation with 31 distinct grasp types (precision, power, lateral, etc.)</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Introduces a comprehensive grasp taxonomy with 31 types derived from human grasping literature, then builds a scalable pipeline that generates type-specific grasps for arbitrary objects. For each grasp type, contact region templates specify which hand surfaces contact which object surfaces. The optimization pipeline matches these templates to object geometry and solves for feasible hand configurations.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>First systematic grasp taxonomy (31 types) applied to robotic dexterous grasp generation</li>
+<li>Scalable pipeline generating 9.5M grasps across 10.7K objects and 4 hand embodiments</li>
+<li>Cross-embodiment generalization across Shadow, Allegro, LEAP, and Unitree G1 hands</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Real-world success rate</td>
+<td>82.3% (real)</td>
+</tr>
+<tr>
+<td>Object set size</td>
+<td>10,700</td>
+</tr>
+<tr>
+<td>Grasp types</td>
+<td>31</td>
+</tr>
+<tr>
+<td>Generated grasps</td>
+<td>9.5M</td>
+</tr>
+<tr>
+<td>Hands supported</td>
+<td>Shadow, Allegro, LEAP, Unitree G1</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong> Taxonomy is static and may not capture task-specific grasp requirements; optimization-based (no learned closed-loop policy); real-world validation limited to a subset of grasp types; assumes known object geometry</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Optimization-based grasp computation is offline. cuRobo-accelerated IK solving. Deployment executes pre-computed grasps open-loop.</li>
+<li><strong>배포 하드웨어:</strong> Real deployment on multiple hand platforms (Shadow, Allegro, LEAP, Unitree G1). 82.3% real-world success rate.</li>
+<li><strong>실시간 가능 여부:</strong> Yes, at deployment (pre-computed grasps executed open-loop). No online inference bottleneck.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> Procedurally generated taxonomy-driven grasp dataset. 10,700 objects, 31 grasp types, 9.5 million grasps total.</li>
+<li><strong>수집 방법:</strong> Optimization-based (extends BODex pipeline with taxonomy-driven contact region templates). cuRobo for IK solving. Cross-embodiment: Shadow, Allegro, LEAP, Unitree G1 hands. No RL, no demonstrations.</li>
+<li><strong>데이터 규모:</strong> 9.5 million generated grasps across 10,700 objects and 4 hand embodiments. 31 grasp types (precision, power, lateral, etc.).</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (optimization-based, no demonstrations).</li>
+<li><strong>데이터 포맷:</strong> Grasp configurations indexed by object, hand, and grasp type.</li>
+<li><strong>공개 여부:</strong> Dataset release status not reported. CAD and code availability not specified.</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=no55YX03LT" target="_blank" rel="noopener">OpenReview</a></p></div></details>

@@ -1,0 +1,61 @@
+<h3 class="dp-h3">7.4 DrEureka</h3>
+<p class="dp-p"><strong>完整标题：</strong> DrEureka: Language Model Guided Sim-To-Real Transfer</p>
+<p class="dp-p"><strong>作者：</strong> Yecheng Jason Ma, William Liang, Hung-Ju Wang, Sam Wang, Yuke Zhu, Linxi Fan, Osbert Bastani, Dinesh Jayaraman</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> RSS 2024</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2406.01967</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO用于策略训练；LLM（GPT-4）同时生成奖励函数和域随机化分布。通过添加自动仿真到真实配置扩展Eureka。</p>
+<p class="dp-p"><strong>手部硬件：</strong> Shadow Hand（仿真，灵巧操作任务）；Unitree Go1（四足运动任务，真实世界）</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 是。关键贡献在于自动化仿真到真实迁移配置。LLM生成域随机化参数分布（质量、摩擦、电机增益等的范围）以及奖励函数，消除手动DR调优。在四足运动（瑜伽球平衡）和灵巧操作上展示真实世界迁移。</p>
+<p class="dp-p"><strong>任务：</strong> 四足运动（行走、瑜伽球平衡——新颖任务）和灵巧操作任务。瑜伽球平衡任务是先前未解决的新颖真实世界演示。</p>
+<p class="dp-p"><strong>核心方法论：</strong> 将Eureka从仅奖励生成扩展到完整仿真到真实流程自动化。给定环境源代码和任务描述，GPT-4生成：(1) 奖励函数（如Eureka）和(2) 域随机化分布，指定训练期间要随机化的物理参数范围。这消除了仿真到真实RL中两个最耗时的组件：奖励工程和域随机化调优。LLM基于训练数据中编码的物理直觉推理哪些物理参数相关并提出合理随机化范围。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>提出通过LLM自动化奖励设计和域随机化，将Eureka扩展到仿真到真实设置</li>
+<li>在标准基准上达到与人类设计配置相当或更优的仿真到真实性能</li>
+<li>解决新颖真实世界任务（四足瑜伽球平衡）无需任何手动仿真到真实调优</li>
+<li>将Eureka框架从仅仿真扩展到真实世界部署</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>仿真到真实方法</td>
+<td>LLM生成的域随机化</td>
+</tr>
+<tr>
+<td>使用的LLM</td>
+<td>GPT-4</td>
+</tr>
+<tr>
+<td>真实世界任务</td>
+<td>四足瑜伽球平衡、灵巧操作</td>
+</tr>
+<tr>
+<td>vs 人类设计DR</td>
+<td>相当或更优</td>
+</tr>
+<tr>
+<td>需要手动调优</td>
+<td>无（全自动）</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li><strong>力控：</strong> 无力/阻抗控制；仅位置驱动</li>
+<li><strong>VLA/语言：</strong> LLM用作配置工具（非策略）；无语言条件策略</li>
+<li><strong>仿真到真实：</strong> LLM提议的DR范围不保证覆盖真实世界条件；依赖LLM的物理直觉</li>
+<li><strong>代码：</strong> <a href="https://github.com/eureka-research/DrEureka" target="_blank" rel="noopener">GitHub</a> 可用</li>
+<li><strong>灵巧结果：</strong> 真实世界灵巧操作结果验证不如运动结果充分</li>
+<li><strong>计算：</strong> 继承Eureka的计算需求加仿真到真实训练开销</li>
+</ul>
+<blockquote class="dp-quote"><strong>注：</strong> 主要真实世界演示为运动任务（四足瑜伽球平衡）；灵巧操作结果验证较少。</blockquote>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。训练后的MLP策略每次前向传播 <1ms。基于LLM的奖励和DR生成为离线。</li>
+<li><strong>部署硬件：</strong> 展示了真实世界部署（Unitree Go1四足运动；Shadow Hand灵巧操作）。LLM（GPT-4）仅离线使用。</li>
+<li><strong>支持实时？</strong> 是。部署的MLP策略支持实时控制。LLM仅在离线训练配置阶段使用。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=HQ4EVkgE2G" target="_blank" rel="noopener">OpenReview</a></p></div></details>

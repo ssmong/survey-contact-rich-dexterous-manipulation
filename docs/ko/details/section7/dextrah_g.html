@@ -1,0 +1,33 @@
+<h3 class="dp-h3">7.1 DextrAH-G/RGB</h3>
+<p class="dp-p"><strong>전체 제목:</strong> DextrAH-G: Dexterous Arm-Hand Grasping with Geometric Fabrics</p>
+<p class="dp-p"><strong>저자:</strong> Maximilian Haas-Heger, Viktor Makoviychuk, Ankur Handa, et al.</p>
+<p class="dp-p"><strong>학회/연도:</strong> CoRL 2024</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO for grasp policy + geometric fabrics for arm motion planning; the RL policy controls the hand while geometric fabrics handle arm trajectory generation</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> Allegro Hand (16 DoF) + Kuka arm</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> Isaac Lab (NVIDIA)</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes; demonstrated real-world arm-hand grasping with zero-shot transfer (real)</p>
+<p class="dp-p"><strong>객체 수:</strong> Multiple objects evaluated; specific count not reported in the table</p>
+<p class="dp-p"><strong>작업:</strong> Coordinated arm-hand dexterous grasping -- reaching, pre-shaping, and grasping objects on a table</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Combines a learned dexterous grasp policy (PPO) with geometric fabrics for arm motion planning. Geometric fabrics provide a reactive, geometry-aware motion generation framework that handles arm trajectory and obstacle avoidance, while the RL policy focuses on finger control for grasping. This separation of concerns simplifies the learning problem and enables modular sim-to-real transfer. DextrAH-RGB extends this to RGB-based perception.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Integration of geometric fabrics with learned dexterous grasping for coordinated arm-hand control</li>
+<li>Modular architecture separating arm planning (geometric fabrics) from hand control (RL), simplifying each subproblem</li>
+<li>Demonstrated sim-to-real transfer on Allegro + Kuka system (real); forms the basis of NVIDIA GR00T-Dexterity</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> Geometric fabrics require hand-tuned parameters; limited to grasping (no in-hand manipulation or tool use); the separation between arm and hand control may limit performance on tasks requiring tight arm-hand coordination; evaluation on a relatively small object set compared to UniDexGrasp/ResDex</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not explicitly reported. The MLP hand policy runs in <1ms; geometric fabrics for arm control compute analytically in <1ms. Combined system supports high-frequency control.</li>
+<li><strong>배포 하드웨어:</strong> Allegro Hand (16 DoF) + Kuka arm. Policy trained in Isaac Lab; deployed via zero-shot sim-to-real transfer. Forms the basis of NVIDIA GR00T-Dexterity.</li>
+<li><strong>실시간 가능 여부:</strong> Yes. Both the MLP policy and geometric fabrics are computationally lightweight, supporting real-time arm-hand control on real hardware.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> No pre-collected dataset. Pure RL (PPO) for hand policy in Isaac Lab; geometric fabrics for arm motion (analytical, no learning).</li>
+<li><strong>수집 방법:</strong> Pure RL in Isaac Lab for dexterous grasp policy. Geometric fabrics provide reactive arm trajectory generation (no training data needed). Sim-to-real transfer via domain randomization. DextrAH-RGB extends to RGB-based perception.</li>
+<li><strong>데이터 규모:</strong> Standard parallel RL training in Isaac Lab. Object set size not prominently reported.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (pure RL + analytical fabrics).</li>
+<li><strong>데이터 포맷:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>공개 여부:</strong> Forms basis of NVIDIA GR00T-Dexterity. Code release via Isaac Lab ecosystem.</li>
+</ul>

@@ -1,0 +1,41 @@
+<h3 class="dp-h3">5.3 VICES</h3>
+<p class="dp-p"><strong>전체 제목:</strong> Variable Impedance Control in End-Effector Space: An Action Space for Reinforcement Learning in Contact-Rich Tasks</p>
+<p class="dp-p"><strong>저자:</strong> Roberto Martin-Martin, Michelle A. Lee, Rachel Gardner, Silvio Savarese, Jeannette Bohg, Animesh Garg (Stanford / NVIDIA)</p>
+<p class="dp-p"><strong>학회/연도:</strong> IROS 2019</p>
+<p class="dp-p"><strong>K/D 결정 방법:</strong> Reinforcement learning (policy gradient methods). The RL policy directly outputs impedance parameters as part of the action space. The key insight is that parameterizing the action space as variable impedance in Cartesian end-effector space (rather than joint torques or position targets) dramatically improves RL sample efficiency and task success for contact-rich manipulation.</p>
+<p class="dp-p"><strong>출력:</strong> Cartesian end-effector stiffness K (diagonal) and damping D (diagonal), along with a desired end-effector pose. The full action is (desired_pose, K, D), which is executed by a Cartesian impedance controller. The policy outputs per-axis stiffness and damping values.</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> Franka Emika Panda / Sawyer + parallel-jaw grippers in simulation. No dexterous hand.</p>
+<p class="dp-p"><strong>작업:</strong> Contact-rich manipulation in Robosuite (MuJoCo): door opening, peg insertion, nut threading, and lift-and-place with contact constraints. These tasks require modulating compliance during different contact phases.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> VICES proposes variable impedance control in end-effector space (VICES) as an action space for RL. Rather than learning joint torques or position targets, the RL agent outputs desired Cartesian pose + diagonal K and D matrices. A Cartesian impedance controller converts these to joint torques. This action space encodes the physical structure of impedance control, making it easier for RL to discover contact-rich strategies: the agent can learn to be stiff when pushing and compliant when aligning. The paper demonstrates that this action space outperforms joint torque, joint position, and end-effector position action spaces across all tested contact-rich tasks.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong> Standard RL policy network (MLP, ~256-256 hidden units). Policy gradient algorithm (PPO or SAC). Action space: 6D desired pose + 6D diagonal K + 6D diagonal D = 18D total. Cartesian impedance controller as the low-level executor. Trained in Robosuite/MuJoCo.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Establishes variable impedance in end-effector space as a superior RL action space for contact-rich manipulation, outperforming position, velocity, and torque action spaces</li>
+<li>Demonstrates that encoding impedance structure in the action space improves sample efficiency and final performance for RL in contact-rich tasks</li>
+<li>Provides systematic comparison of action space choices for contact-rich RL, which has influenced subsequent work</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>No dexterous hand -- gripper only (Franka/Sawyer)</li>
+<li>Simulation only (Robosuite/MuJoCo) -- no real-robot validation</li>
+<li>Diagonal K and D only -- does not learn full (off-diagonal) impedance matrices</li>
+<li>RL sample efficiency, while improved over torque-space, is still substantial</li>
+<li>2019 paper; RL algorithms and simulation fidelity have advanced significantly since</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong> VICES action space achieved higher success rates and faster convergence than joint torque, joint position, and Cartesian position action spaces on all four contact-rich tasks in Robosuite. Door opening: ~90% vs. ~50% (position space). Peg insertion: ~85% vs. ~30% (torque space). The learned impedance profiles showed interpretable patterns (e.g., low lateral stiffness during insertion search).</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not reported. The policy is a standard MLP (~256-256 hidden units), which runs in <1ms per forward pass on any modern hardware. The bottleneck is the simulation step, not policy inference.</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (Robosuite/MuJoCo). No real-robot deployment. Policy inference uses standard MLP, deployable on any hardware.</li>
+<li><strong>실시간 가능 여부:</strong> Yes, for the policy itself. MLP inference is trivially fast (<1ms). However, the system was only evaluated in simulation; real-time deployment on physical hardware was not demonstrated.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> No pre-collected dataset. Pure RL -- data generated through online interaction with simulation environments.</li>
+<li><strong>수집 방법:</strong> Pure RL (PPO or SAC) in Robosuite/MuJoCo simulation. No human demonstrations. The agent learns entirely from reward-driven exploration in simulated contact-rich tasks (path following, door opening, surface wiping, peg insertion).</li>
+<li><strong>데이터 규모:</strong> Standard RL training scale (millions of simulation steps across parallel environments). Specific episode counts not reported.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>데이터 포맷:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>공개 여부:</strong> Simulation environments are standard Robosuite tasks. No separate dataset release (pure RL).</li>
+</ul>
+<details class="dp-reviews"><summary>피어 리뷰</summary><div class="dp-review-body"><p class="dp-p"><a href="https://openreview.net/forum?id=7qejm7ptpw" target="_blank" rel="noopener">OpenReview</a></p></div></details>

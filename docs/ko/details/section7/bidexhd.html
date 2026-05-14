@@ -1,0 +1,35 @@
+<h3 class="dp-h3">7.4 BiDexHD</h3>
+<p class="dp-p"><strong>전체 제목:</strong> BiDexHD: Bimanual Dexterous Manipulation from Human Demonstrations</p>
+<p class="dp-p"><strong>저자:</strong> Yuanpei Chen, Yaodong Yang, et al. (PKU)</p>
+<p class="dp-p"><strong>학회/연도:</strong> arXiv 2025</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2501.09821</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> RL (PPO) with human demonstration-guided exploration. Uses retargeted human bimanual demonstrations to initialize and guide RL training on 141 tasks from the TACO benchmark.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> 2x Shadow Hands (48 DoF total)</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> No. Simulation-only.</p>
+<p class="dp-p"><strong>작업:</strong> 141 bimanual dexterous manipulation tasks from the TACO dataset. Tasks include: bimanual object handover, coordinated assembly, tool use with two hands, container manipulation, and other tasks requiring tight bimanual coordination. This is the largest bimanual dexterous task set reported.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> BiDexHD addresses the challenge of learning bimanual dexterous policies at scale. Human bimanual demonstrations are retargeted to the dual Shadow Hand setup and used to initialize RL exploration. The demonstration-guided approach significantly reduces the exploration burden for complex bimanual tasks where random exploration rarely discovers useful behaviors. The TACO benchmark provides a standardized evaluation across 141 tasks with varying complexity.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Scaled bimanual dexterous RL to 141 tasks -- the largest reported bimanual dexterous task set</li>
+<li>Demonstrated that human demonstration-guided RL substantially outperforms pure RL on complex bimanual tasks</li>
+<li>Built on and extended the TACO benchmark for systematic bimanual evaluation</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong> Simulation-only with dual Shadow Hands (48 DoF), which are impractical for most real-world labs. No vision-based policies (uses privileged state). Quality of retargeted demonstrations depends on the human-to-robot morphology mapping. Code not publicly available.</p>
+<p class="dp-p"><strong>시뮬레이션 전용 한계:</strong> 시뮬레이션에서만 평가됨; sim-to-real 전이 미입증, 실제 환경 실행 가능성 미검증.</p>
+<p class="dp-p"><strong>결과:</strong> Achieved successful learning on a large fraction of the 141 TACO tasks (sim), significantly outperforming baselines without demonstration guidance.</p>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> TACO benchmark (141 bimanual dexterous tasks). Human bimanual demonstrations retargeted to dual Shadow Hands.</li>
+<li><strong>수집 방법:</strong> RL + human demo-guided exploration (DAPG-style). Human bimanual demonstrations retargeted to dual Shadow Hand setup (48 DoF total) to initialize and guide PPO exploration on 141 tasks. Privileged state observations (no vision).</li>
+<li><strong>데이터 규모:</strong> 141 bimanual tasks from TACO dataset. Human demonstrations used for exploration guidance.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (retargeted human MoCap/video demonstrations, not live robot teleoperation).</li>
+<li><strong>데이터 포맷:</strong> Retargeted demonstration trajectories for dual Shadow Hands.</li>
+<li><strong>공개 여부:</strong> Code not publicly available. TACO benchmark available separately.</li>
+</ul>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not reported. The MLP policy runs in <1ms per forward pass.</li>
+<li><strong>배포 하드웨어:</strong> Simulation only (IsaacGym). No real-robot deployment demonstrated.</li>
+<li><strong>실시간 가능 여부:</strong> Yes, for the policy itself (MLP inference is trivially fast). However, only simulation evaluation was performed.</li>
+</ul>

@@ -1,0 +1,37 @@
+<h3 class="dp-h3">4.1 CompliantVLA-adaptor</h3>
+<p class="dp-p"><strong>전체 제목:</strong> Compliant Action Generation via VLA Adaptor for Impedance-Controlled Robot Manipulation</p>
+<p class="dp-p"><strong>저자:</strong> Luigi Penco, Niko Suenderhauf, Fares Abu-Dakka (IIT Genoa / TU Darmstadt)</p>
+<p class="dp-p"><strong>학회/연도:</strong> arXiv 프리프린트, 2026</p>
+<p class="dp-p"><strong>K/D 결정 방법:</strong> VLM (GPT-4o-mini) 제로샷 프롬프팅. VLM이 현재 장면 이미지와 작업 설명을 수신하고, 축별 직교 강성 및 감쇠 값을 출력. VLM의 훈련이나 미세 조정 불필요 -- 시스템은 전적으로 훈련 불필요로, VLM의 다양한 작업과 접촉 조건에 대한 적절한 유연성 수준에 대한 제로샷 추론에 의존.</p>
+<p class="dp-p"><strong>출력:</strong> 6D 직교 임피던스 파라미터: 병진 강성(Kx, Ky, Kz) 및 병진 감쇠(Dx, Dy, Dz). 동결 VLA(예: OpenVLA 또는 pi0)가 생성한 위치 궤적을 추적하는 직교 임피던스 컨트롤러에 입력.</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> Franka Emika Panda + 병렬 조 그리퍼. 정교한 핸드 없음.</p>
+<p class="dp-p"><strong>작업:</strong> 표면 닦기, 플러그 삽입, 서랍 열기/닫기, 유연성을 포함한 물체 전달 등 접촉이 풍부한 조작 작업. LIBERO 시뮬레이션 벤치마크와 실제 Franka 하드웨어 모두에서 평가.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> 동결 VLA(위치 궤적 생성)와 로봇 임피던스 컨트롤러 사이에 위치하는 "어댑터" 모듈 도입. VLM이 시각 입력과 언어 맥락에서 작업 의미와 접촉 요구 사항을 추론하여 작업별 훈련 없이 적절한 강성/감쇠 프로파일 생성. VLA의 위치 궤적과 VLM 어댑터의 임피던스 파라미터가 임피던스 컨트롤러 수준에서 결합되어, VLA의 작업 실행 능력을 유지하면서 유연한 행동 가능.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong> 2모듈 파이프라인: (1) 엔드이펙터 위치 궤적을 생성하는 동결 사전 훈련 VLA(OpenVLA 7B 또는 pi0 3.3B), (2) API 호출을 통해 K/D 값을 생성하는 임피던스 어댑터로서의 GPT-4o-mini. 추가 신경망 훈련 불필요.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>동결 VLA를 VLM 생성 임피던스 파라미터로 보강하여, VLA 재훈련 없이 유연한 조작 가능</li>
+<li>VLM이 시각 및 언어 맥락만으로 접촉이 풍부한 작업에 적절한 강성/감쇠를 제로샷으로 추론할 수 있음을 시연</li>
+<li>모든 위치 궤적 VLA를 유연성 능력으로 감쌀 수 있는 모듈식, 훈련 불필요 접근법 제공</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>정교한 핸드 미지원 -- Franka Panda 그리퍼 전용</li>
+<li>K/D 값이 접촉 중 연속 적응이 아닌 작업 세그먼트별 생성 -- 본질적으로 개루프 임피던스 스케줄링</li>
+<li>상용 API(GPT-4o-mini)에 의존, 관련 지연 및 비용</li>
+<li>VLM 생성 임피던스 값에 대한 공식적 안정성 또는 수동성 보장 없음</li>
+<li>VLM 추론 지연(~100ms-1s)이 임피던스 업데이트를 ~1-10 Hz로 제한</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong> LIBERO에서 위치 전용 VLA 기준선 대비 접촉이 풍부한 작업에서 향상된 성공률 시연. 삽입 및 전달 작업 중 접촉 힘 감소. Franka Panda 실제 로봇 실험에서 VLM 생성 임피던스 파라미터가 질적으로 적절한 유연성 행동 생성 확인.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 명시적 벤치마크 없음. VLM 어댑터(GPT-4o-mini API 호출)가 임피던스 파라미터 업데이트당 ~100ms-1s 추가.</li>
+<li><strong>배포 하드웨어:</strong> Franka Emika Panda. VLM 추론은 클라우드 API(GPT-4o-mini) 사용.</li>
+<li><strong>실시간 가능 여부:</strong> 부분적. VLA의 위치 궤적과 저수준 임피던스 컨트롤러는 실시간 속도(Franka에서 1 kHz)로 실행. 그러나 VLM 기반 임피던스 업데이트는 API 지연으로 ~1-10 Hz 제한.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> LIBERO 벤치마크(8개 중 6개 작업)와 ManiSkill 벤치마크(8개 중 2개 작업). RAG 구성 요소를 위한 맞춤 힘-토크-임피던스-시나리오 맥락 데이터셋 공개.</li>
+<li><strong>데이터 규모:</strong> 실세계 미세 조정을 위한 작업당 50개 시연; 8개 대표 작업에 걸쳐 시뮬레이션 평가.</li>
+<li><strong>공개 여부:</strong> 코드, 프롬프트, 힘-토크-임피던스-시나리오 맥락 데이터셋 공개: https://sites.google.com/view/compliantvla</li>
+</ul>

@@ -1,0 +1,51 @@
+<h2 class="dp-h2">3.8 Tactile-VLA</h2>
+<ul class="dp-list">
+<li><strong>全称:</strong> Tactile-VLA: Tactile Vision-Language-Action Model with Hybrid Position-Force Control</li>
+<li><strong>作者:</strong> 清华大学等</li>
+<li><strong>发表平台/年份:</strong> arXiv预印本，2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2507.09160</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 触觉传感器（综述表中未详细说明具体类型）。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 是——混合位置-力输出。模型同时生成位置目标和力目标，通过混合位置-力控制器执行。<strong>力输出类型：部分（混合位置-力，非完整6D力旋量）。</strong></p>
+<p class="dp-p"><strong>机器人平台：</strong> 未详细指定。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 充电器插入作为主要评估任务。达到90%成功率。</p>
+<p class="dp-p"><strong>关键方法：</strong> Tactile-VLA将触觉输入集成到VLA框架中，并将动作空间扩展到同时包含位置和力目标。混合输出使机器人能够根据推断的任务阶段在位置控制（自由空间运动）和力控制（接触阶段）之间切换。触觉输入提供丰富的接触信息，帮助模型判断何时在控制模式之间转换以及在接触期间应命令什么力目标。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 具有触觉编码器和混合位置-力动作头的VLA。动作空间同时包含笛卡尔位置目标和期望接触力。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>少数输出混合位置-力动作的VLA模型之一，实现接触期间的主动力调节。</li>
+<li>证明将触觉输入与混合力-位置输出结合，在精密插入任务上达到高成功率（充电器插入90%）。</li>
+<li>提出一种集成方法，VLA本身根据触觉反馈决定何时使用位置控制与力控制。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 未发布代码或权重。机器人平台细节不充分。主要在单一任务（充电器插入）上评估。混合控制器设计和力目标标定可能需要逐任务调优。</p>
+<p class="dp-p"><strong>结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>充电器插入成功率</td>
+<td>90%</td>
+</tr>
+<tr>
+<td>与仅位置基线对比</td>
+<td>混合位置-力输出优于仅位置</td>
+</tr>
+</tbody></table></div>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。论文未公开每步推理延迟、控制频率或部署硬件。</li>
+<li><strong>部署硬件：</strong> 未指定。机器人平台细节在可用材料中不充分。</li>
+<li><strong>是否支持实时？</strong> 未验证。未报告推理延迟和部署硬件。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 充电器插入任务的自定义演示数据集。无命名基准。论文使用"少量演示"将VLM知识连接到机器人触觉传感器。</li>
+<li><strong>收集方法：</strong> 使用触觉传感器输入的遥操作演示。具体收集细节未报告。</li>
+<li><strong>数据规模：</strong> 少量演示（具体数量未报告）。</li>
+<li><strong>遥操作设备：</strong> 未报告。</li>
+<li><strong>数据格式：</strong> 未报告。</li>
+<li><strong>是否公开可用？</strong> 否。未发布代码或权重。</li>
+</ul>
+<blockquote class="dp-quote"><em>数据集详情来源于训练知识，未经原始来源验证——arXiv摘要未披露数据具体信息。</em></blockquote>

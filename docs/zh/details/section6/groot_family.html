@@ -1,0 +1,118 @@
+<h2 class="dp-h2">6.2 NVIDIA GR00T系列</h2>
+<h3 class="dp-h3">GR00T N1 / N1.5 / N1.6 / N1.7</h3>
+<p class="dp-p"><strong>完整标题：</strong> GR00T N1: An Open Foundation Model for Generalist Humanoid Robot（初始版本）；后续版本作为模型更新发布，无单独出版物。</p>
+<p class="dp-p"><strong>作者：</strong> NVIDIA Isaac Robotics团队 (Jim Fan, Yuke Zhu, Linxi "Jim" Fan, Dieter Fox, Anima Anandkumar等)</p>
+<p class="dp-p"><strong>发表期刊/年份：</strong> GR00T N1于2025年3月GTC发布；N1.5于2025年中；N1.6于2025年末；N1.7于2026年5月。相关技术报告通过NVIDIA Research博客和HuggingFace模型卡发布。</p>
+<p class="dp-p"><strong>架构：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>版本</th>
+<th>日期</th>
+<th>参数量</th>
+<th>VLM骨干网络</th>
+<th>DiT层数</th>
+<th>关键变化</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>GR00T N1</strong></td>
+<td>2025年3月</td>
+<td>2.2B</td>
+<td>Eagle-2（基于InternVL）</td>
+<td>16</td>
+<td>初始版本；双编码器（SigLIP视觉 + T5语言）+ DiT动作头</td>
+</tr>
+<tr>
+<td><strong>GR00T N1.5</strong></td>
+<td>2025年中</td>
+<td>3B</td>
+<td>Eagle 2.5（冻结）</td>
+<td>16</td>
+<td>增加参数量；冻结VLM骨干；改进跨具身泛化</td>
+</tr>
+<tr>
+<td><strong>GR00T N1.6</strong></td>
+<td>2025年末</td>
+<td>3B</td>
+<td>Cosmos-2B</td>
+<td>32</td>
+<td>DiT深度翻倍；VLM切换为Cosmos-2B；原生视频理解</td>
+</tr>
+<tr>
+<td><strong>GR00T N1.7</strong></td>
+<td>2026年5月</td>
+<td>3B</td>
+<td>Cosmos-Reason2-2B（Qwen3-VL架构）</td>
+<td>32</td>
+<td>灵活分辨率视觉（原生宽高比）；相对末端执行器动作空间；20K小时人类视频预训练</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">该架构由三个主要组件组成：(1) 视觉编码器（N1.7中为SigLIP2）处理RGB相机帧，(2) 语言编码器（T5）处理文本指令，(3) 扩散Transformer（DiT）使用自适应层归一化（AdaLN），在视觉-语言嵌入和本体感受状态的条件下对连续动作向量进行去噪。每个具身平台配备MLP，在共享潜在动作空间和具身特定关节配置之间进行映射。</p>
+<p class="dp-p"><strong>动作空间：</strong> 维度因机器人具身而异。N1.7采用相对末端执行器（EEF）动作——将动作表示为相对于当前姿态的增量而非绝对目标——这改善了跨具身迁移。每个具身的MLP处理从共享动作表示到机器人特定关节命令的映射。本体感受输入使用按具身ID索引的可配置最大长度填充来处理可变自由度数量。</p>
+<p class="dp-p"><strong>灵巧手支持？</strong> 有限。人形具身（通过SONIC全身控制的Unitree G1）包含集成的手部自由度（Dex3-1：每只手7自由度），但VLA本身不原生支持独立的多指灵巧手，如Allegro或Shadow。EgoScale预训练中提到的"22自由度手"指的是人类视频预训练期间使用的Sharpa手动作表示，而非部署手。GR00T-Dexterity（基于DextrAH-G的独立RL工作流，不属于VLA的一部分）在Isaac Lab中通过几何织构支持Allegro Hand 16自由度。</p>
+<p class="dp-p"><strong>力/阻抗输出？</strong> ✗ --- 所有版本仅输出位置目标。</p>
+<p class="dp-p"><strong>核心方法论：</strong> GR00T将预训练的视觉-语言基础模型与扩散transformer动作头相结合。DiT在4个扩散步骤中对连续动作向量进行去噪，以视觉观测、语言指令和本体感受状态通过AdaLN进行条件化。N1.7引入了两项关键创新：(1) 相对EEF动作表示，在人类和机器人具身之间保持一致，能够将人类视频中的操作先验直接迁移到机器人控制；(2) 在20K小时EgoScale人类视频数据和多样化机器人演示上进行预训练。每个具身的MLP架构允许单一模型通过学习具身特定的动作编码器/解码器来控制不同的机器人。</p>
+<p class="dp-p"><strong>训练数据：</strong> N1.7在来自13个数据集的21.6M数据点上进行预训练，通过混合方法收集（人类遥操作、机器人自主、仿真）。关键数据集包括DROID（约76K轨迹，350小时，564个场景）、Bridge（60K轨迹，24个环境）、LIBERO（130个语言条件化任务）和20K小时EgoScale人类第一人称视频。针对特定数据集/具身组合提供后训练检查点。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>证明单一VLA架构可以通过每个具身的MLP适配器和共享DiT动作头在多种机器人具身（机械臂、双臂系统、人形机器人）之间泛化。</li>
+<li>确立相对EEF动作作为桥接人类视频和机器人演示的统一动作表示，实现在人类操作数据上的大规模预训练。</li>
+<li>提供完整的开源生态系统（Isaac-GR00T），包括微调、ONNX/TensorRT导出和部署流程，包括在边缘设备上的实时推理（NVIDIA Jetson Orin：使用TensorRT达4.6 Hz）。</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>基准/任务</th>
+<th>GR00T N1.7</th>
+<th>备注</th>
+</tr></thead><tbody>
+<tr>
+<td><em>（结果未经独立验证——请查阅NVIDIA技术报告和HuggingFace模型卡获取DROID、Bridge、LIBERO和人形基准上的逐任务成功率。）</em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>各版本许可证变更：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>版本</th>
+<th>许可证</th>
+</tr></thead><tbody>
+<tr>
+<td>N1</td>
+<td>非商业（NVIDIA研究许可证）</td>
+</tr>
+<tr>
+<td>N1.5</td>
+<td>非商业（NVIDIA研究许可证）</td>
+</tr>
+<tr>
+<td>N1.6</td>
+<td>NVIDIA开放模型许可证（更宽松）</td>
+</tr>
+<tr>
+<td>N1.7</td>
+<td>NVIDIA开放模型许可证（允许商业使用）</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p">从非商业到商业宽松许可的演进值得注意，使工业应用成为可能。</p>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>VLA本身不支持独立灵巧手；GR00T-Dexterity提供灵巧手控制，但作为独立的RL系统，没有语言条件化。</li>
+<li>无力/阻抗输出：仅位置控制限制了对接触丰富任务的适用性。</li>
+<li>每个具身的MLP需要具身特定的训练数据和推理时的具身ID，限制了对全新机器人形态的零样本迁移。</li>
+<li>边缘设备上的推理速度（Orin上2.9-4.6 Hz）对于需要20+ Hz控制的高频灵巧操作可能不足。</li>
+</ul>
+<p class="dp-p"><strong>开放权重/代码：</strong> ✅ 所有版本可在<a href="https://huggingface.co/nvidia/GR00T-N1.7-3B" target="_blank" rel="noopener">HuggingFace</a>和<a href="https://github.com/NVIDIA/Isaac-GR00T" target="_blank" rel="noopener">GitHub</a>获取。代码采用Apache 2.0；模型权重从N1.6起使用NVIDIA开放模型许可证（商业宽松）。</p>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> GR00T N1.7在NVIDIA Jetson AGX Orin上运行频率为2.9 Hz（PyTorch）至4.6 Hz（TensorRT优化），每个动作块使用4个DiT扩散步骤。在桌面GPU（如A100）上推理更快，但桌面部署的具体Hz数据未显著报告。</li>
+<li><strong>部署硬件：</strong> 主要边缘目标为NVIDIA Jetson AGX Orin（64GB）。Isaac-GR00T工具链提供ONNX导出和TensorRT优化流程用于边缘部署。桌面GPU（A100, RTX 4090）用于训练和超实时推理。通过SONIC全身控制器部署在Unitree G1人形机器人上。</li>
+<li><strong>可实时运行？</strong> 勉强。在Jetson Orin上2.9-4.6 Hz，GR00T N1.7适合慢速到中速操作任务，但不足以支持高频灵巧控制（20+ Hz）。动作块化通过每次推理预测多个未来步骤来部分补偿。TensorRT优化在相同硬件上提供约1.6倍的PyTorch加速。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> N1.7在来自13个数据集的21.6M数据点上预训练。关键数据集：DROID（约76K轨迹，350小时，564个场景）、Bridge V2（60K轨迹，24个环境）、LIBERO（130个语言条件化任务）和20K小时EgoScale人类第一人称视频（Ego4D, Ego-Exo4D，专有来源）。另有仿真和机器人自主数据。</li>
+<li><strong>收集方法：</strong> 混合：人类遥操作（DROID, Bridge V2）、机器人自主（自行收集）、仿真（Isaac Sim）和人类第一人称视频（EgoScale流程，含22自由度Sharpa手姿态提取）。针对特定数据集/具身组合提供后训练检查点。</li>
+<li><strong>数据规模：</strong> 跨13个数据集的21.6M数据点。20K小时人类视频预训练（EgoScale）。DROID：76K轨迹/350小时。Bridge：60K轨迹。LIBERO：130个任务。</li>
+<li><strong>遥操作设备：</strong> 因数据集而异——VR控制器（DROID）、键盘/SpaceMouse（Bridge V2）、主从式（ALOHA风格）。人类视频数据无需遥操作。</li>
+<li><strong>数据格式：</strong> 公开数据集使用LeRobot格式；OXE兼容组件使用RLDS。NVIDIA Isaac-GR00T提供数据加载工具。</li>
+<li><strong>是否公开？</strong> 部分公开。DROID、Bridge V2、LIBERO公开可用。EgoScale人类视频数据和专有机器人数据未发布。模型权重开放（从N1.6起使用NVIDIA开放模型许可证）。</li>
+</ul>
+<hr>

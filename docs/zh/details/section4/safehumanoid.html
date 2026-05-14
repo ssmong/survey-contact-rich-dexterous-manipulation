@@ -1,0 +1,40 @@
+<h3 class="dp-h3">4.4 SafeHumanoid</h3>
+<p class="dp-p"><strong>完整标题：</strong> Safe Physical Human-Robot Interaction with Variable Impedance Control on Humanoid Robots</p>
+<p class="dp-p"><strong>作者：</strong> 与HumanoidVLM同一团队（伴随/扩展论文）</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> HRI 2026</p>
+<p class="dp-p"><strong>K/D如何确定：</strong> VLM + RAG检索，与HumanoidVLM相同的框架。这篇伴随论文可能侧重于VLM引导阻抗框架的安全分析和正式安全方面，而HumanoidVLM侧重于VLM/RAG流水线本身。</p>
+<p class="dp-p"><strong>输出内容：</strong> 人形机器人阻抗控制器的笛卡尔刚度K和阻尼D，强调安全约束的参数范围。</p>
+<p class="dp-p"><strong>机器人平台：</strong> Unitree G1人形机器人。无独立灵巧手。</p>
+<p class="dp-p"><strong>任务：</strong> 安全关键的物理人机交互：人形机器人必须在保持安全约束（如力限制、能量边界）的同时与人类进行物理交互的任务。</p>
+<p class="dp-p"><strong>核心方法：</strong> 在HumanoidVLM框架基础上增加了对VLM生成阻抗参数的显式安全约束。系统可能包含安全边界（最大刚度、最小阻尼），约束VLM的输出以保证交互力保持在伤害阈值以下。安全分析可能包括基于无源性的论证或能量罐公式，以确保无论VLM输出质量如何都能实现稳定交互。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 与HumanoidVLM相同的VLM + RAG流水线（Molmo-7B + FAISS）。额外的安全约束层在将VLM提议的阻抗参数应用于机器人控制器之前，对其进行裁剪或修改以满足正式安全标准。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>为pHRI中VLM引导的阻抗控制提供安全分析和正式保证</li>
+<li>证明VLM生成的阻抗参数可以在不损失任务性能的情况下被约束以满足安全标准</li>
+<li>作为HumanoidVLM的伴随论文，提供同一框架的安全视角</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong></p>
+<ul class="dp-list">
+<li>无灵巧手——与HumanoidVLM相同的平台限制</li>
+<li>安全保证可能过于保守，限制了可实现任务的范围</li>
+<li>与HumanoidVLM共享关于任务级（非连续）阻抗自适应的限制</li>
+<li>公开信息有限；可能以不同标题发表或作为HumanoidVLM的一部分</li>
+<li>VLM推理延迟（约100ms-1s）将阻抗更新限制在约1-10 Hz，比实时阻抗控制器所需的100-1000 Hz低三个数量级。</li>
+</ul>
+<p class="dp-p"><strong>结果：</strong> 展示了安全约束的VLM引导阻抗控制在Unitree G1与人类pHRI过程中将交互力保持在ISO 10218 / ISO/TS 15066安全阈值以下，同时为协作操作场景保持了足够的任务性能。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未明确进行基准测试。与HumanoidVLM相同的VLM + RAG流水线（Molmo-7B + FAISS），增加了安全约束检查开销（相对于VLM推理可忽略不计）。阻抗参数按任务阶段设定。</li>
+<li><strong>部署硬件：</strong> Unitree G1人形机器人。与HumanoidVLM相同：Molmo-7B在本地GPU上运行，FAISS检索在本地运行。具体GPU型号未报告。</li>
+<li><strong>是否支持实时？</strong> 阻抗自适应不支持实时。安全约束层为VLM流水线增加了最小的开销，但VLM推理的根本瓶颈（约1-10 Hz更新率）仍然存在。底层阻抗控制器以实时速率运行在G1上。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据采集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 与HumanoidVLM（伴随论文）相同的RAG数据库框架。基于FAISS的自定义阻抗配置数据库，带有安全约束参数范围。</li>
+<li><strong>采集方法：</strong> 与HumanoidVLM相同——RAG数据库填充来自Unitree G1上pHRI试验的阻抗配置。额外的安全约束层将VLM提议的参数裁剪至满足ISO 10218 / ISO/TS 15066力阈值。</li>
+<li><strong>数据规模：</strong> 未报告。与HumanoidVLM共享基础设施。</li>
+<li><strong>遥操作设备：</strong> 不适用。</li>
+<li><strong>数据格式：</strong> 包含阻抗参数和安全边界的FAISS向量数据库条目。</li>
+<li><strong>是否公开可用？</strong> 未报告。论文venue为HRI 2026；公开信息有限。</li>
+</ul>

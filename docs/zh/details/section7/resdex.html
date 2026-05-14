@@ -1,0 +1,52 @@
+<h3 class="dp-h3">7.1 ResDex</h3>
+<p class="dp-p"><strong>完整标题：</strong> ResDex: Residual Policy Learning for Dexterous Grasping with Large-Scale Object Training</p>
+<p class="dp-p"><strong>作者：</strong> Haoyu Xiong, Yufei Wang, Jiayi Chen, Yi Wu</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> ICLR 2025</p>
+<p class="dp-p"><strong>RL算法：</strong> PPO + 混合专家（MoE）架构和DAgger蒸馏；在基础策略之上使用残差策略来处理多样物体</p>
+<p class="dp-p"><strong>手部硬件：</strong> Shadow Hand（24自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> IsaacGym Preview 4</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否</p>
+<p class="dp-p"><strong>物体数量：</strong> 3200个物体；88.8%总体成功率（仿真）</p>
+<p class="dp-p"><strong>任务：</strong> 在前所未有的规模上进行多样物体的灵巧抓取（3200个物体）</p>
+<p class="dp-p"><strong>核心方法论：</strong> 通过将策略分解为基础抓取策略和使用混合专家架构的残差校正模块，将灵巧抓取扩展到数千个物体。MoE支持跨物体类别的专业化，同时共享通用抓取骨干。DAgger蒸馏将集成压缩为单一可部署策略。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>将灵巧抓取训练扩展到3200个多样物体，为发表时最大的物体集</li>
+<li>用于处理物体多样性的残差策略 + MoE架构，避免灾难性遗忘</li>
+<li>在全部3200物体集上以单一策略达到88.8%成功率（仿真）</li>
+</ul>
+<p class="dp-p"><strong>定量结果：</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>指标</th>
+<th>数值</th>
+</tr></thead><tbody>
+<tr>
+<td>总体成功率</td>
+<td>88.8%（仿真）</td>
+</tr>
+<tr>
+<td>物体集大小</td>
+<td>3200</td>
+</tr>
+<tr>
+<td>手部</td>
+<td>Shadow（24自由度）</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅仿真（未展示仿真到真实迁移）；使用单一手部构型（Shadow）；在仿真中依赖真值物体状态；未评估在扰动下的抓取稳定性</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 未报告。蒸馏后策略（MLP）每次前向传播 <1ms。</li>
+<li><strong>部署硬件：</strong> 仅仿真（IsaacGym）。未展示真实机器人部署。</li>
+<li><strong>支持实时？</strong> 是，就策略本身而言（MLP推理速度极快）。但仅进行了仿真评估。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无预收集数据集。纯RL（PPO）+ MoE架构——所有数据在仿真中生成。</li>
+<li><strong>收集方法：</strong> IsaacGym中的纯RL。残差策略 + 混合专家在3200个物体上训练。DAgger蒸馏将MoE集成压缩为单一策略。在仿真中使用真值物体状态。</li>
+<li><strong>数据规模：</strong> 3200个物体用于训练。标准并行RL训练规模。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 不适用（在线RL，无离线数据集）。</li>
+<li><strong>是否公开？</strong> 数据集/策略发布状态未报告。</li>
+</ul>

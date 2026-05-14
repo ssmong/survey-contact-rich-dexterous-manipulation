@@ -1,0 +1,34 @@
+<h3 class="dp-h3">4.4 SafeHumanoid</h3>
+<p class="dp-p"><strong>전체 제목:</strong> Safe Physical Human-Robot Interaction with Variable Impedance Control on Humanoid Robots</p>
+<p class="dp-p"><strong>저자:</strong> HumanoidVLM과 동일 그룹 (동반/확장 논문)</p>
+<p class="dp-p"><strong>학회/연도:</strong> HRI 2026</p>
+<p class="dp-p"><strong>K/D 결정 방법:</strong> VLM + RAG 검색, HumanoidVLM과 동일 프레임워크. 이 동반 논문은 VLM 안내 임피던스 프레임워크의 안전 분석과 공식적 안전 측면에 초점, HumanoidVLM은 VLM/RAG 파이프라인 자체에 초점.</p>
+<p class="dp-p"><strong>출력:</strong> 안전 제약 파라미터 범위를 강조한 휴머노이드 임피던스 컨트롤러용 직교 강성 K 및 감쇠 D.</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> Unitree G1 휴머노이드. 독립 정교한 핸드 없음.</p>
+<p class="dp-p"><strong>작업:</strong> 안전 중요 물리적 인간-로봇 상호작용: 안전 제약을 유지하면서 인간과 물리적으로 상호작용해야 하는 작업(예: 힘 한계, 에너지 한계).</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> HumanoidVLM 프레임워크를 VLM 생성 임피던스 파라미터에 대한 명시적 안전 제약으로 확장. 안전 한계(최대 강성, 최소 감쇠)를 포함하여 VLM 출력이 상호작용 힘이 부상 임계값 이하로 유지되도록 보장. 안전 분석은 VLM 출력 품질에 관계없이 안정적 상호작용을 보장하기 위한 수동성 기반 논증이나 에너지 탱크 공식화를 포함할 수 있음.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>pHRI에서의 VLM 안내 임피던스 제어에 대한 안전 분석과 공식적 보장 제공</li>
+<li>VLM 생성 임피던스 파라미터가 작업 성능을 잃지 않으면서 안전 기준을 충족하도록 제약될 수 있음을 시연</li>
+<li>동일 프레임워크의 안전 중심 관점을 제공하는 HumanoidVLM의 동반 논문</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>정교한 핸드 없음 -- HumanoidVLM과 동일 플랫폼 한계</li>
+<li>안전 보장이 보수적이어서 달성 가능한 작업 범위 제한 가능</li>
+<li>연속적이 아닌 작업 수준 임피던스 적응에 대한 공유 한계</li>
+<li>VLM 추론 지연(~100ms-1s)이 임피던스 업데이트를 ~1-10 Hz로 제한</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong> 안전 제약 VLM 안내 임피던스 제어가 Unitree G1과의 pHRI 중 상호작용 힘을 ISO 10218 / ISO/TS 15066 안전 임계값 이하로 유지하면서, 협동 조작 시나리오에 충분한 작업 성능 보존을 시연.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> 명시적 벤치마크 없음. HumanoidVLM과 동일 파이프라인(Molmo-7B + FAISS), 안전 제약 확인 오버헤드 추가(VLM 추론 대비 무시할 수 있음).</li>
+<li><strong>배포 하드웨어:</strong> Unitree G1 휴머노이드.</li>
+<li><strong>실시간 가능 여부:</strong> 임피던스 적응에 대해 아니오.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> HumanoidVLM(동반 논문)과 동일 RAG 데이터베이스 프레임워크.</li>
+<li><strong>공개 여부:</strong> 보고되지 않음. HRI 2026 학회; 제한된 공개 정보.</li>
+</ul>

@@ -1,0 +1,46 @@
+<h2 class="dp-h2">3.19 FARM</h2>
+<ul class="dp-list">
+<li><strong>全称:</strong> FARM: Force-Aware Robotic Manipulation with Tactile Feedback</li>
+<li><strong>作者:</strong> 慕尼黑工业大学MIRMI等</li>
+<li><strong>发表平台/年份:</strong> arXiv预印本，2025</li>
+<li><strong>arXiv:</strong> https://arxiv.org/abs/2510.13324</li>
+</ul>
+<p class="dp-p"><strong>力/触觉输入类型：</strong> 集成在改进型UMI夹爪中的GelSight Mini视觉触觉传感器。</p>
+<p class="dp-p"><strong>力/阻抗输出：</strong> 是——抓取力预测。模型联合预测末端执行器位置和抓取力，基于触觉反馈实现闭环抓取力控制。<strong>力输出类型：部分（仅抓取力，非完整6D力旋量）。</strong></p>
+<p class="dp-p"><strong>机器人平台：</strong> 改进型UMI（通用操作接口）夹爪，集成GelSight Mini触觉传感器。</p>
+<blockquote class="dp-quote"><strong>局限性（仅夹爪）：</strong> 仅在平行夹爪上进行了评估；未在多指灵巧手上验证。</blockquote>
+<p class="dp-p"><strong>任务：</strong> 需要协调位置和抓取力控制的操作任务。模型联合预测关节位置和抓取力轨迹。</p>
+<p class="dp-p"><strong>关键方法：</strong> FARM将GelSight Mini触觉传感器集成到UMI夹爪中，并学习联合预测位置和抓取力的策略。GelSight图像通过CNN编码器处理，提取接触特征（压力分布、滑动检测、表面纹理）。这些特征条件化一个同时输出关节位置轨迹和抓取力目标的策略。抓取力预测对于处理脆弱或可变形物体（过大抓取力会造成损坏）的任务尤为重要。该方法扩展了UMI框架（通常仅从人类演示中提供位置轨迹），使其具备力感知能力。</p>
+<p class="dp-p"><strong>架构/参数：</strong> 带有GelSight CNN编码器的策略模型，输出关节位置 + 抓取力轨迹。扩展了UMI数据收集和策略框架，增加触觉感知和力预测。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>将流行的UMI操作框架与触觉感知（GelSight Mini）和抓取力预测相扩展。</li>
+<li>证明联合位置 + 力预测在力敏感物体操作上优于仅位置的UMI策略。</li>
+<li>为在现有广泛使用的操作框架（UMI）中实际集成视觉触觉感知提供了方案。</li>
+</ul>
+<p class="dp-p"><strong>局限性：</strong> 未发布代码或权重。抓取力预测仅限于夹爪的闭合力——不提供完整6D力旋量控制。改进型UMI夹爪设计可能与标准UMI硬件不兼容。评估范围有限。</p>
+<p class="dp-p"><strong>结果：</strong></p>
+<blockquote class="dp-quote"><strong>定量结果：不可用。</strong> 无法从公开信息中验证具体成功率或数值比较。论文报告在力敏感任务上的操作性能优于标准UMI（仅位置），且抓取力预测使得能够处理标准UMI策略会损坏的脆弱物体。</blockquote>
+<h2 class="dp-h2">推理/部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 扩散策略以<strong>7 Hz</strong>运行（高层动作预测间约143 ms）。底层力控制器以25 Hz运行（与GelSight Mini图像采集同步），夹爪执行器以约50 Hz运行。</li>
+<li><strong>部署硬件：</strong> Franka Research 3机器人 + 集成GelSight Mini触觉传感器的驱动型UMI夹爪。推理GPU未指定。</li>
+<li><strong>是否支持实时？</strong> 是，通过分层控制。7 Hz策略提供目标，更快的底层控制器以25--50 Hz执行，弥合"高层动作选择与实时电机驱动"之间的差距。</li>
+</ul>
+<h2 class="dp-h2">数据集/数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 使用集成GelSight Mini触觉传感器的改进型UMI夹爪收集的自定义演示数据集。无命名基准。</li>
+<li><strong>收集方法：</strong> 使用改进型手持通用操作接口（UMI）夹爪收集人类演示，该夹爪集成了GelSight Mini视觉触觉传感器。演示同时捕获位置轨迹和触觉接触信息。</li>
+<li><strong>数据规模：</strong> 未报告。</li>
+<li><strong>遥操作设备：</strong> 集成GelSight Mini视觉触觉传感器的改进型UMI手持夹爪。GelSight Mini在演示过程中提供接触图像。</li>
+<li><strong>数据格式：</strong> 未报告。遵循扩展了触觉数据的UMI框架。</li>
+<li><strong>是否公开可用？</strong> 代码库和设计文件已在<a href="https://tactile-farm.github.io" target="_blank" rel="noopener">tactile-farm.github.io</a>开源。是否公开发布演示数据集本身未确认。未发布预训练权重。</li>
+</ul>
+<details class="dp-reviews"><summary>同行评审 <span class="dp-review-score-badge">6.7</span></summary>
+<div class="dp-review-body">
+<p class="dp-review-meta">平均分: <strong>6.7</strong> · 3 条评审 · <a href="https://openreview.net/forum?id=ZRMAhpZ3ED" target="_blank" rel="noopener">OpenReview</a></p>
+<div class="dp-review-item"><span class="dp-review-r">R1: 8</span> <span class="dp-review-text">Besides the clarity of the paper, the strength lies in the development of the simulator for a topic of high interest. Moreover, various variants of the components of the benchmarking tool are possible…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R2: 6</span> <span class="dp-review-text">WFCRL provides a wide range of wind farm layouts and wind condition scenarios, allowing researchers to test algorithms under various realistic conditions. The inclusion of both static (FLORIS) and dyn…</span></div>
+<div class="dp-review-item"><span class="dp-review-r">R3: 6</span> <span class="dp-review-text">- The paper addresses a challenge in wind energy optimization, presenting a novel benchmark suite that can facilitate advancements in wind farm control using MARL.</span></div>
+</div>
+</details>

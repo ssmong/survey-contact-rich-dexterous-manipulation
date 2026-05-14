@@ -1,0 +1,36 @@
+<h3 class="dp-h3">7.4 RoboPianist</h3>
+<p class="dp-p"><strong>完整标题：</strong> RoboPianist: Dexterous Piano Playing with Deep Reinforcement Learning</p>
+<p class="dp-p"><strong>作者：</strong> Kevin Zakka, Philipp Wu, Laura Smith, Nimrod Gileadi, Taylor Howell, Xue Bin Peng, Sumeet Singh, Yuval Tassa, Pete Florence, Andy Zeng, Pieter Abbeel</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> CoRL 2023</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2304.04150</p>
+<p class="dp-p"><strong>乐器演奏差异化：</strong> 贡献在于基准（150首曲目、可量化指标），而非钢琴演奏本身。价值在于为高自由度接触丰富RL提供标准化、多样的评估套件，带有自然成功指标（音符准确性、节拍）。仅仿真。</p>
+<p class="dp-p"><strong>RL算法：</strong> 无模型RL（MPO——Maximum a Posteriori Policy Optimization，来自DeepMind）+ 乐谱条件奖励。多目标奖励平衡音符准确性、节拍和能量效率。</p>
+<p class="dp-p"><strong>手部硬件：</strong> 拟人双手（仿真，基于人手解剖，总计约46自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> MuJoCo（DeepMind）</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否。仅仿真基准。</p>
+<p class="dp-p"><strong>任务：</strong> 演奏PIG数据集的150首古典钢琴曲。智能体必须演奏需要独立手指控制、双手协调和精确节拍的多声部钢琴曲。曲目从简单音阶到复杂肖邦练习曲。</p>
+<p class="dp-p"><strong>核心方法论：</strong> RoboPianist将钢琴演奏表述为约46自由度拟人手的高维RL问题。观测包括即将到来的乐谱（音符、节拍）、当前手部本体感觉和键状态。奖励惩罚错过的音符、错误音符和节拍错误，同时鼓励能量高效运动。基准提供跨150首不同难度曲目的标准化评估套件，支持接触丰富协调任务的RL算法系统比较。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>创建了150首曲目的灵巧钢琴演奏标准化基准，支持高自由度RL的可复现评估</li>
+<li>展示无模型RL可学习音乐表演所需的复杂双手手指协调</li>
+<li>开源了带真实键机制和多样曲目的高质量MuJoCo钢琴环境</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 仅仿真；未展示真实世界钢琴演奏。拟人手模型不对应任何商用机器人手。DeepMind的MPO算法不如PPO广泛使用。</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<p class="dp-p"><strong>结果：</strong> 成功学会演奏中等难度曲目（仿真）。在需要宽手幅或快速段落的复杂曲目上性能下降。代码和环境公开可用。</p>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> PIG数据集（Piano Informatics for Genomics）——150首古典钢琴曲提供作为任务规格的乐谱。</li>
+<li><strong>收集方法：</strong> MuJoCo仿真中的纯RL（MPO）。无演示。来自PIG数据集的乐谱定义目标音符序列和节拍。智能体从奖励反馈学习（音符准确性、节拍、能量效率）。约46自由度拟人双手。</li>
+<li><strong>数据规模：</strong> 150首不同难度的古典曲目（简单音阶到复杂肖邦练习曲）。</li>
+<li><strong>遥操作设备：</strong> 不适用（纯RL，无演示）。</li>
+<li><strong>数据格式：</strong> 乐谱（带节拍的类MIDI音符序列）。MuJoCo仿真环境。</li>
+<li><strong>是否公开？</strong> 是——MuJoCo钢琴环境、PIG数据集和代码公开可用。</li>
+</ul>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> 不适用（仿真基准）。策略推理（MLP/LSTM）每次前向传播 <1ms。</li>
+<li><strong>部署硬件：</strong> 仅仿真（MuJoCo）。无真实机器人部署。</li>
+<li><strong>支持实时？</strong> 不适用（仿真基准；无真实机器人部署）。</li>
+</ul>

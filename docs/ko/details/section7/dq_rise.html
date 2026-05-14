@@ -1,0 +1,52 @@
+<h3 class="dp-h3">7.4 DQ-RISE</h3>
+<p class="dp-p"><strong>전체 제목:</strong> DQ-RISE: Dexterous Quasi-Static Robotic In-Hand Skill Execution via Sim-to-Real Reinforcement Learning</p>
+<p class="dp-p"><strong>저자:</strong> Chengzhong Ma, Wenzhao Lian, Changhao Wang, et al.</p>
+<p class="dp-p"><strong>학회/연도:</strong> ICRA 2026</p>
+<p class="dp-p"><strong>arXiv:</strong> https://arxiv.org/abs/2503.01766</p>
+<p class="dp-p"><strong>RL 알고리즘:</strong> PPO-based sim-to-real RL with teacher-student distillation. Teacher uses privileged state; student uses proprioception and tactile/force input. Domain randomization for sim-to-real transfer.</p>
+<p class="dp-p"><strong>핸드 하드웨어:</strong> OyMotion RoHand (dexterous hand) + Flexiv Rizon 4 arm</p>
+<p class="dp-p"><strong>시뮬레이션 플랫폼:</strong> IsaacGym (inferred from Flexiv/dexterous RL pipeline norms)</p>
+<p class="dp-p"><strong>Sim2Real 여부:</strong> Yes. Zero-shot sim-to-real transfer demonstrated on 6 real-world tasks with 85.83% average success rate (real).</p>
+<p class="dp-p"><strong>작업:</strong> 6 real-world dexterous manipulation tasks involving quasi-static in-hand manipulation: object reorientation, precision placement, tool re-grasping, and functional manipulation. Tasks require careful force regulation and stable multi-finger coordination.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> DQ-RISE focuses on quasi-static dexterous manipulation -- tasks where objects move slowly and forces must be carefully controlled to maintain stable grasps during manipulation. The approach uses teacher-student RL: a teacher policy trained with privileged simulation state (object pose, contact forces) is distilled into a student that relies on proprioception and available sensing. Domain randomization over dynamics parameters (friction, mass, motor gains) enables zero-shot sim-to-real transfer.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Demonstrated sim-to-real dexterous in-hand manipulation with the OyMotion RoHand, expanding the set of validated dexterous hand platforms</li>
+<li>Achieved 85.83% average success rate across 6 real tasks via zero-shot transfer (real)</li>
+<li>Focused on quasi-static manipulation, which is practically important for precise assembly and tool-use tasks</li>
+</ul>
+<p class="dp-p"><strong>정량적 결과:</strong></p>
+<div class="dp-tbl-wrap"><table class="dp-tbl"><thead><tr>
+<th>Metric</th>
+<th>Value</th>
+</tr></thead><tbody>
+<tr>
+<td>Average real-world success rate</td>
+<td>85.83% (real)</td>
+</tr>
+<tr>
+<td>Number of real tasks</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Hand</td>
+<td>OyMotion RoHand + Flexiv Rizon 4</td>
+</tr>
+</tbody></table></div>
+<p class="dp-p"><strong>한계점:</strong> Quasi-static assumption limits applicability to dynamic tasks. 85.83% success rate leaves room for improvement. Limited object diversity in real-world evaluation.</p>
+<p class="dp-p"><strong>결과:</strong> 85.83% average success rate on 6 real-world tasks (real). Code publicly available.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not explicitly reported. The distilled student MLP policy runs in <1ms per forward pass, enabling high-frequency control.</li>
+<li><strong>배포 하드웨어:</strong> OyMotion RoHand (dexterous hand) + Flexiv Rizon 4 arm. Policy trained in IsaacGym; deployed via zero-shot sim-to-real transfer.</li>
+<li><strong>실시간 가능 여부:</strong> Yes. MLP-based policy supports real-time control. Demonstrated on real hardware with 85.83% success across 6 tasks.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> No pre-collected dataset. Pure RL (PPO) with teacher-student distillation -- all data generated in simulation.</li>
+<li><strong>수집 방법:</strong> Pure RL in IsaacGym (inferred). Teacher trained with privileged state (object pose, contact forces); student uses proprioception and tactile/force input. Domain randomization for sim-to-real (friction, mass, motor gains). Zero-shot transfer to OyMotion RoHand + Flexiv Rizon 4 system.</li>
+<li><strong>데이터 규모:</strong> Standard parallel RL training. 6 real-world quasi-static dexterous manipulation tasks for evaluation.</li>
+<li><strong>원격 조작 장비:</strong> Not applicable (pure RL, no demonstrations).</li>
+<li><strong>데이터 포맷:</strong> Not applicable (online RL, no offline dataset).</li>
+<li><strong>공개 여부:</strong> Code publicly available.</li>
+</ul>

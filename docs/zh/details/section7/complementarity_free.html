@@ -1,0 +1,37 @@
+<h3 class="dp-h3">7.3 Complementarity-Free</h3>
+<h3 class="dp-h3">基于模型的MPC（非RL）</h3>
+<p class="dp-p"><strong>注：基于模型的轨迹优化/MPC，非RL。</strong></p>
+<p class="dp-p"><strong>完整标题：</strong> Differentiable Compliant Contact Simulation for Dexterous Manipulation (Complementarity-Free Multi-Contact Model)</p>
+<p class="dp-p"><strong>作者：</strong> Tao Pang, Russ Tedrake研究组（MIT CSAIL）</p>
+<p class="dp-p"><strong>发表venue/年份：</strong> RSS 2025（2024年提交）</p>
+<p class="dp-p"><strong>arXiv：</strong> https://arxiv.org/abs/2408.07855</p>
+<p class="dp-p"><strong>方法：</strong> 用于轨迹优化和MPC的可微分仿真。用平滑、封闭形式的柔性接触模型替代非光滑互补性约束，允许通过接触事件的梯度计算。</p>
+<p class="dp-p"><strong>手部硬件：</strong> Allegro Hand（16自由度）</p>
+<p class="dp-p"><strong>仿真平台：</strong> Drake（MIT）</p>
+<p class="dp-p"><strong>仿真到真实？</strong> 否。仅仿真。</p>
+<p class="dp-p"><strong>任务：</strong> Allegro Hand的接触丰富灵巧操作。需要50-100 Hz MPC的多指接触任务，包括手内枢转、手指步态和接触模式切换操作。</p>
+<p class="dp-p"><strong>核心方法论：</strong> 标准刚体接触仿真使用互补性约束（LCP），在接触模式转换处非光滑且不可微。本工作用具有封闭形式可微表达式的柔性（基于惩罚的）接触模型替代它们。这使基于梯度的轨迹优化和MPC能"看穿"接触事件，即使在接触正在建立和断开时也能计算有信息量的梯度。由此的MPC以50-100 Hz运行用于多指操作。</p>
+<p class="dp-p"><strong>主要贡献：</strong></p>
+<ul class="dp-list">
+<li>推导出封闭形式可微接触模型，消除互补性约束的需求同时保持物理真实性</li>
+<li>为多指接触丰富操作达到50-100 Hz的MPC速率——相比先前接触隐式优化器显著加速</li>
+<li>实现通过接触模式转换的基于梯度的规划，先前方法依赖组合或采样方法</li>
+</ul>
+<p class="dp-p"><strong>局限性/差距：</strong> 柔性接触模型引入近似误差（穿透）。未在真实硬件上验证。需要精确模型参数（刚度、阻尼）。仅限于柔性模型有效的准静态或慢动态区域。</p>
+<p class="dp-p"><strong>仅仿真限制：</strong> 仅在仿真中评估；未展示仿真到真实迁移，真实世界可行性未验证。</p>
+<p class="dp-p"><strong>结果：</strong> 在Drake中展示了50-100 Hz的Allegro Hand接触丰富操作实时MPC（仿真）。在RSS 2025发表。</p>
+<h2 class="dp-h2">推理 / 部署</h2>
+<ul class="dp-list">
+<li><strong>推理延迟：</strong> MPC在Drake仿真中以50-100 Hz（每控制步10-20ms）运行Allegro Hand接触丰富操作。</li>
+<li><strong>部署硬件：</strong> 仅仿真（Drake）。未展示真实机器人部署。</li>
+<li><strong>支持实时？</strong> 是，在仿真中。可微接触模型支持50-100 Hz的实时MPC，足以进行灵巧操作。真实硬件部署未验证。</li>
+</ul>
+<h2 class="dp-h2">数据集 / 数据收集</h2>
+<ul class="dp-list">
+<li><strong>使用的数据集：</strong> 无数据集。基于模型的可微仿真和MPC（非学习方法）。</li>
+<li><strong>收集方法：</strong> 不适用。可微柔性接触仿真用平滑封闭形式接触模型替代互补性约束。支持50-100 Hz的基于梯度的轨迹优化和MPC。无需训练数据。</li>
+<li><strong>数据规模：</strong> 不适用（基于模型，无训练数据）。</li>
+<li><strong>遥操作设备：</strong> 不适用。</li>
+<li><strong>数据格式：</strong> 不适用。</li>
+<li><strong>是否公开？</strong> Drake仿真器开源。论文特定代码发布状态未报告。</li>
+</ul>

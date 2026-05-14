@@ -1,0 +1,40 @@
+<h3 class="dp-h3">5.2 Diff-Impedance</h3>
+<p class="dp-p"><strong>전체 제목:</strong> Diffusion-Based Impedance Learning for Contact-Rich Manipulation</p>
+<p class="dp-p"><strong>저자:</strong> Fan Yang, Hanna Ziesche, Zhichao Wen, Marco Ewerton, Leonel Rozo (KIT / MIT)</p>
+<p class="dp-p"><strong>학회/연도:</strong> arXiv preprint, 2025</p>
+<p class="dp-p"><strong>K/D 결정 방법:</strong> Diffusion model + energy-based optimization. A diffusion policy is trained to jointly predict position trajectories and impedance profiles (both K and D). The diffusion model generates samples from the learned joint distribution of positions and impedance parameters, and an energy-based refinement step optimizes the impedance profiles for stability and task performance. Both stiffness and damping are independently learned.</p>
+<p class="dp-p"><strong>출력:</strong> Full Cartesian stiffness K and damping D matrices, jointly predicted with position trajectories. The diffusion model outputs the complete impedance profile over a trajectory horizon, not just instantaneous values.</p>
+<p class="dp-p"><strong>로봇 플랫폼:</strong> KUKA LBR iiwa 14 R820 (7-DoF torque-controlled arm). Evaluated in both simulation and on real hardware. No dexterous hand.</p>
+<p class="dp-p"><strong>작업:</strong> Contact-rich manipulation tasks including: surface polishing with force regulation, peg insertion with lateral compliance, wiping tasks requiring constant contact force, and object pivoting.</p>
+<p class="dp-p"><strong>핵심 방법론:</strong> Diff-Impedance formulates impedance trajectory prediction as a conditional denoising diffusion process. The model takes visual observations and task conditioning as input and iteratively denoises a joint trajectory of positions and impedance parameters. The energy-based component introduces a physics-informed loss that penalizes impedance profiles that would violate passivity or produce unstable contact behavior. This hybrid approach combines the expressiveness of diffusion models (capturing multimodal demonstration distributions) with physics-based constraints on the impedance output.</p>
+<p class="dp-p"><strong>아키텍처/파라미터:</strong> Conditional denoising diffusion probabilistic model (DDPM). UNet-based denoiser with visual conditioning (ResNet encoder). Joint output space: position trajectory (6D x horizon) + K trajectory (6D or 36D x horizon) + D trajectory (6D or 36D x horizon). Energy function for stability-aware refinement. Trained on kinesthetic teaching demonstrations on the KUKA iiwa.</p>
+<p class="dp-p"><strong>주요 기여:</strong></p>
+<ul class="dp-list">
+<li>Proposes a diffusion-based approach to jointly learn position trajectories and full impedance profiles (both K and D)</li>
+<li>Energy-based refinement provides physics-informed constraints on the generated impedance, improving stability</li>
+<li>Demonstrates sim-to-real transfer of learned impedance policies on the KUKA iiwa</li>
+</ul>
+<p class="dp-p"><strong>한계점:</strong></p>
+<ul class="dp-list">
+<li>No dexterous hand -- KUKA arm with end-effector tool only</li>
+<li>Diffusion inference is computationally expensive (~10-50 denoising steps), limiting control frequency</li>
+<li>Energy-based refinement adds additional computation; real-time applicability depends on hardware</li>
+<li>Trained on kinesthetic teaching demonstrations, which are labor-intensive to collect</li>
+<li>Does not address multi-contact scenarios (e.g., multiple fingertips)</li>
+</ul>
+<p class="dp-p"><strong>결과:</strong> Outperformed fixed-impedance and position-only diffusion policy baselines on all contact-rich tasks. The learned impedance profiles adapted across task phases (e.g., lower stiffness during approach, higher during contact). Successful sim-to-real transfer on the real KUKA iiwa. Code at github.com/StrokeAIRobotics/DiffusionBasedImpedanceLearning.</p>
+<h2 class="dp-h2">추론 / 배포</h2>
+<ul class="dp-list">
+<li><strong>추론 지연 시간:</strong> Not explicitly benchmarked. Diffusion-based inference requires ~10-50 denoising steps per trajectory prediction, which is computationally expensive. Typical diffusion policy inference latency is 50-500ms per action on a modern GPU, depending on denoising steps and network size.</li>
+<li><strong>배포 하드웨어:</strong> KUKA LBR iiwa 14 R820 for real-robot experiments. GPU for diffusion model inference not specified.</li>
+<li><strong>실시간 가능 여부:</strong> Limited. Diffusion inference is the bottleneck -- the multi-step denoising process limits control frequency to approximately 2-20 Hz depending on hardware and number of denoising steps. The trajectory-level prediction (outputting an impedance profile over a horizon) partially mitigates this by reducing the required inference frequency.</li>
+</ul>
+<h2 class="dp-h2">데이터셋 / 데이터 수집</h2>
+<ul class="dp-list">
+<li><strong>사용 데이터셋:</strong> Custom kinesthetic teaching demonstrations collected on KUKA LBR iiwa 14 R820.</li>
+<li><strong>수집 방법:</strong> Kinesthetic teaching (human physically guides the robot arm). The robot's joint torque sensors capture the demonstrated trajectories and impedance profiles. Sim-to-real transfer evaluated from MuJoCo simulation to real KUKA iiwa.</li>
+<li><strong>데이터 규모:</strong> Not explicitly reported. Multiple demonstrations per task (surface polishing, peg insertion, wiping, object pivoting).</li>
+<li><strong>원격 조작 장비:</strong> Kinesthetic teaching (no teleoperation device; direct physical guidance of the KUKA iiwa torque-controlled arm).</li>
+<li><strong>데이터 포맷:</strong> Position trajectories (6D x horizon) + stiffness K trajectories + damping D trajectories. Specific file format not reported.</li>
+<li><strong>공개 여부:</strong> Code at https://github.com/StrokeAIRobotics/DiffusionBasedImpedanceLearning. Dataset release status not specified.</li>
+</ul>
